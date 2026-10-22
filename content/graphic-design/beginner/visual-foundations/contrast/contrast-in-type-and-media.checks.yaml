@@ -1,0 +1,31 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: Light grey text on a cream background measures 1.87:1. How is it best described?
+    options: [Hard to read for many people, Fine because it looks refined, Required by accessibility standards, Equivalent to text at 4.5:1]
+    answer: Hard to read for many people
+    explanation: 1.87:1 is far below the 4.5:1 normally expected for body text. See the four-ratio demo.
+    competency: contrast-recognition
+  - type: MULTIPLE_CHOICE
+    prompt: White captions are unreadable over a bright, busy video frame. Which fix addresses the actual problem?
+    options: [Add a darkening scrim or bar behind the text, Make the font thinner, Match the text colour to the frame, Slow the video down]
+    answer: Add a darkening scrim or bar behind the text
+    explanation: The problem is value contrast between text and what is behind it. A scrim restores it. Changing weight or speed does not.
+    competency: contrast-application
+  - type: MULTIPLE_SELECT
+    prompt: Which statements about contrast and brand are true? Select all that apply.
+    options: [A logo with low contrast against its background can look faint or uncertain, Contrast has no effect on how a brand is perceived, A logo has to remain readable at small sizes where contrast matters more, Higher contrast is always better in every design]
+    answer: [A logo with low contrast against its background can look faint or uncertain, A logo has to remain readable at small sizes where contrast matters more]
+    explanation: Contrast affects perceived confidence and small-size legibility. "Always better" is wrong because contrast must be limited and purposeful.
+    competency: contrast-recognition
+  - type: MULTIPLE_CHOICE
+    prompt: A small object moves across a background of a very similar tone. What is the most likely result?
+    options: [Viewers lose track of the object, The object looks more premium, The animation plays faster, "Nothing, tone does not matter in motion"]
+    answer: Viewers lose track of the object
+    explanation: Moving elements need separation from their background in value or colour to be followed. See the motion demo.
+    competency: contrast-recognition
+  - type: ERROR_DETECTION
+    prompt: A heading is set at 48px in light grey on white, with 16px black body text beneath. A reviewer says the heading looks dominant but is hard to read. What explains this?
+    options: [Size gives it prominence but weak value contrast makes it hard to read, The heading is too large, The body text is too dark, The heading needs a serif face]
+    answer: Size gives it prominence but weak value contrast makes it hard to read
+    explanation: Prominence and legibility are different. Size creates the first; value contrast creates the second.
+    competency: contrast-application

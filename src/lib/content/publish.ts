@@ -68,6 +68,7 @@ export async function publishContent(db: PrismaClient, content: LoadedContent) {
     });
 
     const lessonIds = new Map<string, string>();
+    const keepQuestions = new Set<string>(); // lessons whose published questions are kept as-is
     for (const [i, l] of m.lessons.entries()) {
       const key = { moduleId_slug_version: { moduleId: mod.id, slug: l.meta.slug, version: l.meta.version } };
       const existing = await db.lesson.findUnique({ where: key, include: { questions: true } });
@@ -84,8 +85,17 @@ export async function publishContent(db: PrismaClient, content: LoadedContent) {
       });
       lessonIds.set(l.meta.slug, lesson.id);
 
-      await db.quizQuestion.deleteMany({ where: { lessonId: lesson.id } });
-      for (const q of l.questions) {
+      // Question ids are referenced by attempt history, so published questions are immutable too.
+      const sig = (qs: { prompt: string; options?: unknown; answer: unknown }[]) =>
+        JSON.stringify(qs.map((q) => [q.prompt, q.options ?? null, q.answer]));
+      if (existing?.status === "PUBLISHED" && existing.questions.length > 0) {
+        const stored = sig(existing.questions.map((q) => ({ prompt: q.prompt, options: q.options, answer: q.answerKey })));
+        if (stored !== sig(l.questions)) throw new Error(`Lesson ${l.meta.slug} v${l.meta.version} questions changed after publishing; bump the version.`);
+        keepQuestions.add(l.meta.slug);
+      } else {
+        await db.quizQuestion.deleteMany({ where: { lessonId: lesson.id } });
+      }
+      for (const q of keepQuestions.has(l.meta.slug) ? [] : l.questions) {
         await db.quizQuestion.create({
           data: {
             lessonId: lesson.id, type: q.type, prompt: q.prompt, options: q.options ? toJson(q.options) : undefined,

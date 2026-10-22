@@ -1,0 +1,31 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: What is the minimum contrast ratio for normal-size text at WCAG level AA?
+    options: ["3:1", "4.5:1", "7:1", "21:1"]
+    answer: "4.5:1"
+    explanation: AA requires 4.5:1 for normal text. 3:1 applies to large text and interface components; 7:1 is the AAA level.
+    competency: accessibility-contrast
+  - type: MULTIPLE_CHOICE
+    prompt: For body text on a white background, which statement is correct?
+    options: ["#767676 passes AA and #777777 fails", "Both pass AA", "Both fail AA", "#777777 passes AA and #767676 fails"]
+    answer: "#767676 passes AA and #777777 fails"
+    explanation: "#767676 on white is 4.54:1, just above the line. #777777 is 4.48:1, just below it."
+    competency: accessibility-contrast
+  - type: MULTIPLE_CHOICE
+    prompt: What is the contrast ratio of black text on a white background?
+    options: ["7:1", "12:1", "21:1", "100:1"]
+    answer: "21:1"
+    explanation: 21:1 is the maximum possible ratio and is black on white.
+    competency: accessibility-contrast
+  - type: MULTIPLE_SELECT
+    prompt: Which of these have a 3:1 minimum under AA, rather than 4.5:1? Select all that apply.
+    options: [Large headline text, The border of a text input that identifies the field, An icon that carries essential meaning, A normal-size body paragraph]
+    answer: [Large headline text, The border of a text input that identifies the field, An icon that carries essential meaning]
+    explanation: Large text and meaningful interface components and graphics need 3:1. Normal-size body text needs 4.5:1.
+    competency: accessibility-contrast
+  - type: ERROR_DETECTION
+    prompt: White text on a yellow button (#f2b705) measures 1.82:1. Which repair actually fixes the failure?
+    options: ["Change the text to a dark colour such as #1a1a1a", Make the white text bold, Make the button larger, Add a drop shadow to the text]
+    answer: "Change the text to a dark colour such as #1a1a1a"
+    explanation: Only the colour difference changes the ratio. #1a1a1a on that yellow is 9.57:1. Bold, size and shadows leave the ratio unchanged.
+    competency: accessibility-contrast

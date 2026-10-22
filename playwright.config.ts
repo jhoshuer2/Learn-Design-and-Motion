@@ -8,7 +8,7 @@ export default defineConfig({
   },
   webServer: {
     command: "npx next start -p 3100",
-    env: { AUTH_TRUST_HOST: "true" },
+    env: { AUTH_TRUST_HOST: "true", CONTENT_PREVIEW: "true" },
     url: "http://localhost:3100",
     reuseExistingServer: true,
   },

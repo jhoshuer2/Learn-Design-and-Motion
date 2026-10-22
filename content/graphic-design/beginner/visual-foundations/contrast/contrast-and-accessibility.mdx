@@ -1,14 +1,73 @@
 ---
 slug: contrast-and-accessibility
 title: Contrast and accessibility
-objective: Check text and background pairs against WCAG contrast ratios and fix failing pairs.
+objective: Measure text and background pairs against WCAG contrast ratios, decide whether they pass, and correct failing pairs.
 version: 1
 status: DRAFT
 competencies: [accessibility-contrast]
-prerequisites: [what-contrast-does]
+prerequisites: [contrast-in-type-and-media]
+reviewNotes: Thresholds follow WCAG 2.1 success criteria 1.4.3 and 1.4.11. Verify wording against the current standard in editorial review.
 ---
 
 ## {objective} What you will be able to do
-Measure a text and background pair against 4.5:1 and 3:1 and correct a failing pair.
+- State the minimum ratios for normal text, large text and interface components;
+- measure a pair and decide whether it passes;
+- repair a failing pair without losing the design's character;
+- explain why some people need these minimums.
 
-> M2 authors the full lesson.
+## {concept} A ratio, not an opinion
+The Web Content Accessibility Guidelines (WCAG) define contrast as a ratio between the relative luminance of two colours, from 1:1 (identical) to 21:1 (black on white).
+
+At level AA the main minimums are:
+
+- **Normal text:** 4.5:1
+- **Large text** (roughly 24px regular, or 18.5px bold, and up): 3:1
+- **Interface components and meaningful graphics** (for example the border of an input, or an icon that carries meaning): 3:1
+
+Purely decorative elements and disabled controls are exempt. Level AAA asks for more: 7:1 for normal text.
+
+These numbers exist because many people see less contrast than you do: low vision, ageing eyes, colour-vision differences, a dim screen, or sunlight on a phone. Meeting the minimum is a floor, not a target.
+
+## {demo} Measure it yourself
+Type any two hex colours. The lab computes the ratio and tells you which thresholds are met.
+
+<<demo:contrast-lab|An interactive contrast checker. It starts on #767676 text on white, which just passes AA for normal text at 4.54:1. Change one digit and watch it cross the line.>>
+
+Try these pairs: `#767676` on `#ffffff`, then `#777777` on `#ffffff`, then `#949494` on `#ffffff`.
+
+## {realWorld} Where designs fail
+Common real-world failures: placeholder text in form fields set in pale grey; text on brand-coloured buttons where the brand colour is light (white on yellow is a classic); thin icon strokes in a light tone; and disabled-looking links that are actually active.
+
+Teams check this in design tools and automated audits, but the audits only measure pairs they can see. A person still has to decide which text sits on gradients, images and states like hover and focus.
+
+## {goodVsBad} Failing and passing, side by side
+| Pair | Ratio | Verdict |
+| --- | --- | --- |
+| Black on white | 21:1 | Passes everything |
+| `#767676` on white | 4.54:1 | Passes AA for normal text |
+| `#777777` on white | 4.48:1 | Fails AA for normal text (by a hair) |
+| `#949494` on white | 3.03:1 | Passes only for large text and UI components |
+| White on `#f2b705` (yellow) | 1.82:1 | Fails everything |
+| `#1a1a1a` on `#f2b705` | 9.57:1 | Passes comfortably |
+
+The yellow button shows the usual repair: keep the brand colour, change the text colour. Making the text bold does not change the ratio, so it does not fix the failure.
+
+Never rely on colour alone to carry meaning, such as red for errors with no icon or text. Contrast and colour-independence are separate checks, and you need both.
+
+## {guided} Try it with support
+1. In the lab, set the background to `#f2b705` and the text to white. Read the verdict.
+2. Change only the text colour until all AA lines pass. How dark did it need to be?
+3. Set the text to `#767676` on white, then change one hex digit at a time. Find the exact step where it fails.
+4. Decide: would you ship the passing pair for a 12px legal footnote? Why might you want more than the minimum?
+
+## {check} Check your understanding
+This competency is treated as critical for accessibility. You need 80% to complete the lesson.
+
+## {task} Independent task
+Audit five text and background pairs from a real interface. Record the measured ratio of each, whether it passes AA for its size, and a fix for each failure. Do not use the example pairs from this lesson.
+
+## {reflection} Reflect
+Which failing pair surprised you most, and what did you expect before measuring? What does that tell you about judging contrast by eye?
+
+## {feedback} What to practise next
+If the threshold questions were shaky, rewrite the three AA numbers from memory until they stick. If the repair questions were shaky, repeat the yellow-button exercise with two other brand colours. After this module comes the module assessment, which is not built yet in this prototype.

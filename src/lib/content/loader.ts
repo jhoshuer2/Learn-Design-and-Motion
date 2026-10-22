@@ -2,10 +2,13 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import YAML from "yaml";
+import { ZodError } from "zod";
 import {
   BLOCK_KINDS, checksSchema, competenciesSchema, lessonFrontmatter, moduleSchema, rubricSchema,
   type LessonFrontmatter, type ModuleDef, type Question, type RubricDef,
 } from "./schemas";
+import { DEMO_NAMES, DEMO_TOKEN } from "./demos";
+import { MACHINE_SCORED } from "../progression/scoring";
 
 export type Block = { kind: (typeof BLOCK_KINDS)[number]; title: string; body: string };
 export type LoadedLesson = { meta: LessonFrontmatter; blocks: Block[]; questions: Question[] };
@@ -43,6 +46,16 @@ function readYaml(file: string) {
   return YAML.parse(fs.readFileSync(file, "utf8"));
 }
 
+/** Parse with a schema and name the offending file in the error. */
+function parseFile<T>(file: string, parse: () => T): T {
+  try {
+    return parse();
+  } catch (e) {
+    const detail = e instanceof ZodError ? e.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ") : String(e);
+    throw new Error(`${file}: ${detail}`);
+  }
+}
+
 function walk(dir: string, name: string, out: string[] = []): string[] {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
@@ -68,7 +81,7 @@ export function loadContent(root = path.join(process.cwd(), "content")): LoadedC
     const lessons = def.lessons.map((slug): LoadedLesson => {
       const lf = path.join(dir, `${slug}.mdx`);
       const parsed = matter(fs.readFileSync(lf, "utf8"));
-      const meta = lessonFrontmatter.parse(parsed.data);
+      const meta = parseFile(lf, () => lessonFrontmatter.parse(parsed.data));
       if (meta.slug !== slug) throw new Error(`${lf}: frontmatter slug "${meta.slug}" != "${slug}"`);
       const blocks = parseBlocks(parsed.content, lf);
       if (!blocks.some((b) => b.kind === "objective")) throw new Error(`${lf}: missing {objective} block`);
@@ -77,8 +90,21 @@ export function loadContent(root = path.join(process.cwd(), "content")): LoadedC
         if (p === slug || !def.lessons.includes(p)) throw new Error(`${lf}: prerequisite "${p}" is not another lesson in this module`);
       }
       const cf = path.join(dir, `${slug}.checks.yaml`);
-      const questions = fs.existsSync(cf) ? checksSchema.parse(readYaml(cf)).questions : [];
+      const questions = fs.existsSync(cf) ? parseFile(cf, () => checksSchema.parse(readYaml(cf)).questions) : [];
       for (const q of questions) if (q.competency && !known.has(q.competency)) throw new Error(`${cf}: unknown competency "${q.competency}"`);
+      for (const b of blocks) {
+        for (const line of b.body.split("\n")) {
+          if (!line.trim().startsWith("<<demo")) continue;
+          const m = DEMO_TOKEN.exec(line.trim());
+          if (!m) throw new Error(`${lf}: malformed demo token (needs a caption): ${line.trim()}`);
+          if (!(DEMO_NAMES as readonly string[]).includes(m[1])) throw new Error(`${lf}: unknown demo "${m[1]}"`);
+        }
+      }
+      for (const q of questions) {
+        if (!(MACHINE_SCORED as readonly string[]).includes(q.type)) {
+          throw new Error(`${cf}: knowledge checks are machine-scored; "${q.type}" questions belong in assessed tasks`);
+        }
+      }
       if (blocks.some((b) => b.kind === "check") && questions.length === 0) {
         throw new Error(`${lf}: has a {check} block but no ${slug}.checks.yaml questions`);
       }

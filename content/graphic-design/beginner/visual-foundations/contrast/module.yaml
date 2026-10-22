@@ -6,9 +6,10 @@ title: Understanding Contrast
 position: 0
 objectives:
   - Recognise contrast, and its absence, in real layouts.
-  - Explain how contrast drives reading order, legibility and accessibility.
-  - Apply contrast deliberately to a practical design problem.
+  - Explain how contrast drives reading order, grouping, legibility, brand perception and accessibility.
+  - Apply contrast deliberately and verify it with measurements.
 status: DRAFT
 lessons:
   - what-contrast-does
+  - contrast-in-type-and-media
   - contrast-and-accessibility

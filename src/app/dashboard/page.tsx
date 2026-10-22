@@ -1,7 +1,9 @@
 import { revalidatePath } from "next/cache";
 import { signOut } from "@/auth";
 import { db } from "@/lib/db";
+import Link from "next/link";
 import { requireUser } from "@/lib/session";
+import { getTimeline, getWeakCompetencies } from "@/lib/progression";
 import { Button } from "@/components/ui/Button";
 import { StateBadge } from "@/components/ui/StateBadge";
 
@@ -31,6 +33,9 @@ export default async function Dashboard() {
     db.enrollment.findMany({ where: { userId: user.id } }),
   ]);
   const enrolled = new Set(enrollments.map((e) => e.pathId));
+  const timelines = await Promise.all(enrollments.map((e) => getTimeline(user.id, e.pathId)));
+  const next = timelines.find((t) => t?.next)?.next ?? null;
+  const weak = await getWeakCompetencies(user.id);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
@@ -38,9 +43,23 @@ export default async function Dashboard() {
         <h1 className="font-display text-4xl">Welcome, {user.name ?? user.email}</h1>
         <form action={logout}><Button variant="secondary" type="submit">Sign out</Button></form>
       </header>
-      <p className="mt-4 text-muted">
-        Lessons, assessments and progression arrive in the next milestones. For now you can enroll in a path.
-      </p>
+      <section className="mt-8 grid gap-6 border-y border-line py-6 sm:grid-cols-3">
+        <div>
+          <h2 className="text-sm uppercase tracking-widest text-muted">Where am I</h2>
+          <p className="mt-2">{timelines.find((t) => t)?.pathTitle ?? "Not enrolled yet"}</p>
+          <Link href="/learn" className="text-sm underline">My learning</Link>
+        </div>
+        <div>
+          <h2 className="text-sm uppercase tracking-widest text-muted">Do next</h2>
+          {next ? <Link className="mt-2 inline-block underline" href={`/learn/lesson/${next.lessonId}`}>{next.title}</Link>
+            : <p className="mt-2 text-muted">Enroll in a path to get a next step.</p>}
+        </div>
+        <div>
+          <h2 className="text-sm uppercase tracking-widest text-muted">Improve</h2>
+          {weak.length === 0 ? <p className="mt-2 text-muted">No weak areas found yet. This is based on check results only.</p>
+            : <ul className="mt-2 text-sm">{weak.map((w) => <li key={w.title}>{w.title} ({w.score}%)</li>)}</ul>}
+        </div>
+      </section>
       <h2 className="mt-12 font-display text-2xl">Learning paths</h2>
       {paths.length === 0 && <p className="mt-4 text-muted">No paths published yet. Run the seed script.</p>}
       <ul className="mt-4 divide-y divide-line border-y border-line">

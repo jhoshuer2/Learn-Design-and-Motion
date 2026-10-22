@@ -213,6 +213,16 @@ model QuizQuestion {
   competency  Competency?  @relation(fields: [competencyId], references: [id])
 }
 
+// Proof a learner was shown a lesson block, in order. Required (with a passing check) for completion.
+model BlockView {
+  userId     String
+  lessonId   String
+  blockIndex Int
+  createdAt  DateTime @default(now())
+
+  @@id([userId, lessonId, blockIndex])
+}
+
 model QuizAttempt {
   id        String   @id @default(cuid())
   userId    String

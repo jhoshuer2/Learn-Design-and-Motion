@@ -52,3 +52,27 @@ describe("rubric schema", () => {
     expect(r.success).toBe(true);
   });
 });
+
+describe("authored content hygiene", () => {
+  const lessons = loadContent().modules.flatMap((m) => m.lessons);
+
+  it("has no choice option that looks like a YAML comma-split fragment", () => {
+    for (const l of lessons) for (const q of l.questions) for (const o of q.options ?? []) {
+      expect(o, `${l.meta.slug}: "${o}"`).not.toMatch(/^[a-z]/);
+    }
+  });
+
+  it("makes every answer one of the options for choice questions", () => {
+    for (const l of lessons) for (const q of l.questions) {
+      if (!q.options) continue;
+      for (const a of Array.isArray(q.answer) ? q.answer : [q.answer]) expect(q.options).toContain(a);
+    }
+  });
+
+  it("gives every lesson with a check at least 4 questions and all ten loop blocks", () => {
+    for (const l of lessons) {
+      expect(l.questions.length, l.meta.slug).toBeGreaterThanOrEqual(4);
+      expect(new Set(l.blocks.map((b) => b.kind)).size, l.meta.slug).toBe(10);
+    }
+  });
+});

@@ -1,7 +1,31 @@
 questions:
   - type: MULTIPLE_CHOICE
     prompt: Two buttons on a page are the same size. The primary action has strong contrast with the background and the secondary one does not. Which is the viewer most likely to notice first?
-    options: [The low-contrast button, The high-contrast button, Neither, they are the same size]
+    options: [The low-contrast button, The high-contrast button, "Neither, they are the same size"]
     answer: The high-contrast button
-    explanation: Contrast against the surroundings is one of the strongest cues for what is seen first, even when size is equal.
+    explanation: Difference from the surroundings is one of the strongest cues for what is seen first, even when size is equal. Revisit the button comparison.
+    competency: contrast-recognition
+  - type: MULTIPLE_CHOICE
+    prompt: A page gives every element a similar weight, size and colour. What is the most likely problem for the viewer?
+    options: [They cannot tell what to read first, The page will load more slowly, The text is too large, The palette has too many colours]
+    answer: They cannot tell what to read first
+    explanation: With no difference in emphasis nothing leads, so the viewer has to decide the order themselves. See the flat version in the reading-order demo.
+    competency: contrast-recognition
+  - type: MULTIPLE_SELECT
+    prompt: Which of these create contrast that can direct attention? Select all that apply.
+    options: [A much larger heading above small body text, A dark title on a pale background, The same mid-grey used for every element, A saturated button on an otherwise muted page]
+    answer: [A much larger heading above small body text, A dark title on a pale background, A saturated button on an otherwise muted page]
+    explanation: Size, value and colour differences all create contrast. Using one grey everywhere removes difference, which removes contrast.
+    competency: contrast-recognition
+  - type: ERROR_DETECTION
+    prompt: A settings page puts three sections on one flat background with identical styling. Users cannot tell where one section ends. Which fix uses contrast?
+    options: [Give each section its own tonal surface or a clear spacing step, Make every heading bold, Add more sections, Reduce the text size]
+    answer: Give each section its own tonal surface or a clear spacing step
+    explanation: Grouping is created by difference between groups. Making everything bold removes difference again. See the grouping comparison.
+    competency: contrast-recognition
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the figure-ground demo, which treatment separates the silhouette from its background most strongly?
+    options: [Dark figure on a pale ground, Pale figure on a slightly different pale ground, Dark figure on a mid-tone ground]
+    answer: Dark figure on a pale ground
+    explanation: The largest value difference between figure and ground gives the strongest separation.
     competency: contrast-recognition

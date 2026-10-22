@@ -35,3 +35,6 @@
 body { background: var(--surface); color: var(--ink); font-family: var(--font-sans); }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+@keyframes demo-slide { from { left: 4%; } to { left: calc(96% - 2rem); } }
+.demo-slide { animation: demo-slide 2.4s ease-in-out infinite alternate; left: 4%; }

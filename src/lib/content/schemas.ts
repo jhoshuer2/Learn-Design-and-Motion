@@ -28,6 +28,8 @@ export const lessonFrontmatter = z.object({
   competencies: z.array(slug).default([]),
   prerequisites: z.array(slug).default([]),
   assets: z.array(assetSchema).default([]),
+  /** Editorial notes for reviewers; never shown to learners and not stored. */
+  reviewNotes: z.string().optional(),
 });
 
 export const moduleSchema = z.object({
