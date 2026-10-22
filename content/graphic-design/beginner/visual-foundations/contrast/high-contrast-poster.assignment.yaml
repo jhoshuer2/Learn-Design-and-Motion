@@ -1,0 +1,28 @@
+slug: high-contrast-event-poster
+kind: MODULE_ASSESSMENT
+title: Create a high-contrast event poster
+objective: Apply contrast to build a clear reading hierarchy that stays legible at small size, and explain your decisions.
+scenario: >
+  A local creative conference, Open Studio 2026, needs a poster that communicates the event name,
+  the date (Saturday 14 March), the location (Harbour Hall, Pier 4) and one call to action
+  (register at openstudio.example). The poster will be printed A3 and also shared as a small image in group chats.
+requirements:
+  - "Establish a clear reading hierarchy: event name, then date and place, then the call to action."
+  - "Use typography intentionally, with no more than two typefaces."
+  - "Apply contrast to separate the essential information from everything else."
+  - "Keep essential text readable at the small preview size."
+  - "Use spacing and alignment consistently."
+  - "Explain three key design decisions in your rationale, each tied to contrast."
+constraints:
+  - "Original work only. Any photograph or illustration must be one you are licensed to use."
+  - "Do not copy a template or one of the lesson demos."
+  - "Include all four pieces of event information. Do not invent extra details."
+deliverables:
+  - { key: final, label: Final poster, description: "PNG, JPEG or WebP export of the full poster.", role: final, required: true }
+  - { key: preview, label: Small-scale preview, description: "The same poster exported at about 400 px on its long side, as it would look in a chat thread.", role: preview, required: true }
+  - { key: process, label: Process image, description: "Optional: a sketch or earlier version.", role: process, required: false }
+difficulty: 2
+estimatedMinutes: 90
+rubric: { slug: high-contrast-poster, version: 1 }
+maxAttempts: 3
+status: DRAFT

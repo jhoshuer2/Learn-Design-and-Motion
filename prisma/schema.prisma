@@ -63,6 +63,12 @@ enum ProgressState {
   COMPLETED
 }
 
+enum AppealStatus {
+  OPEN
+  UPHELD
+  OVERRIDDEN
+}
+
 enum Visibility {
   PRIVATE
   LINK
@@ -88,6 +94,7 @@ model User {
   portfolio     PortfolioProject[]
   peerReviews   PeerReview[]
   certificates  Certificate[]
+  appeals       Appeal[]
   auditEvents   AuditEvent[]
 }
 
@@ -310,6 +317,7 @@ model Submission {
   files        Json             // storage keys, never public URLs
   links        String[]
   rationale    String?
+  changesNote  String?          // required from attempt 2: what the learner changed after feedback
   createdAt    DateTime         @default(now())
   evaluations  Evaluation[]
   portfolio    PortfolioProject?
@@ -334,8 +342,31 @@ model Evaluation {
   feedback         Json            // strengths, weaknesses, recommendations
   criticalFailures String[]
   humanReviewed    Boolean         @default(false)
+  rawOutput        Json?           // model output as received, kept as evidence
+  deterministicChecks Json         @default("{}")
+  inputTokens      Int?
+  outputTokens     Int?
+  // A human override is a NEW row pointing at the evaluation it supersedes; history is never edited.
+  supersedesId     String?
   createdAt        DateTime        @default(now())
   scores           CriterionScore[]
+  appeal           Appeal?
+}
+
+model Appeal {
+  id           String       @id @default(cuid())
+  evaluationId String       @unique
+  evaluation   Evaluation   @relation(fields: [evaluationId], references: [id])
+  userId       String
+  user         User         @relation(fields: [userId], references: [id])
+  reason       String
+  status       AppealStatus @default(OPEN)
+  reviewerId   String?
+  resolution   String?
+  createdAt    DateTime     @default(now())
+  resolvedAt   DateTime?
+
+  @@index([status])
 }
 
 model CriterionScore {

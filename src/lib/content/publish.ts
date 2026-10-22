@@ -111,6 +111,21 @@ export async function publishContent(db: PrismaClient, content: LoadedContent) {
         await db.lessonCompetency.create({ data: { lessonId: lesson.id, competencyId: comp.get(c)! } });
       }
     }
+    for (const a of m.assignments) {
+      const rv = await db.rubricVersion.findFirstOrThrow({ where: { version: a.rubric.version, rubric: { slug: a.rubric.slug } } });
+      const brief = { requirements: a.requirements, constraints: a.constraints, deliverables: a.deliverables };
+      const existing = await db.assignment.findUnique({ where: { slug: a.slug } });
+      if (existing && existing.status === "PUBLISHED" &&
+          (existing.rubricVersionId !== rv.id || !sameJson(existing.brief, brief) || existing.scenario !== a.scenario)) {
+        throw new Error(`Assignment ${a.slug} is published and immutable; create a new assignment or bump its rubric through a new slug.`);
+      }
+      const data = {
+        kind: a.kind, levelId: level.id, moduleId: mod.id, title: a.title, objective: a.objective, scenario: a.scenario,
+        brief: toJson(brief), difficulty: a.difficulty, estimatedMinutes: a.estimatedMinutes,
+        rubricVersionId: rv.id, maxAttempts: a.maxAttempts, status: a.status,
+      };
+      await db.assignment.upsert({ where: { slug: a.slug }, update: data, create: { slug: a.slug, ...data } });
+    }
     for (const l of m.lessons) {
       const lessonId = lessonIds.get(l.meta.slug)!;
       await db.lessonPrerequisite.deleteMany({ where: { lessonId } });

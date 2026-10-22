@@ -76,3 +76,24 @@ describe("authored content hygiene", () => {
     }
   });
 });
+
+describe("assignment content", () => {
+  const c = loadContent();
+  const a = c.modules[0].assignments[0];
+
+  it("loads the poster assignment and resolves its rubric", () => {
+    expect(a.slug).toBe("high-contrast-event-poster");
+    expect(c.rubrics.find((r) => r.slug === a.rubric.slug && r.version === a.rubric.version)).toBeDefined();
+  });
+
+  it("requires a final and a preview deliverable", () => {
+    const roles = a.deliverables.filter((d) => d.required).map((d) => d.role);
+    expect(roles).toEqual(expect.arrayContaining(["final", "preview"]));
+  });
+
+  it("has a poster rubric with the two mandatory criteria the brief calls for", () => {
+    const r = c.rubrics.find((x) => x.slug === "high-contrast-poster")!;
+    expect(r.criteria.filter((x) => x.mandatory).map((x) => x.key).sort()).toEqual(["contrast", "legibility-at-small-size"]);
+    expect(r.criteria.reduce((n, x) => n + x.weight, 0)).toBe(100);
+  });
+});

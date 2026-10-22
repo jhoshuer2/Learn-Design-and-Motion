@@ -104,6 +104,28 @@ export const rubricSchema = z
     }
   });
 
+export const assignmentSchema = z.object({
+  slug,
+  kind: z.enum(["PRACTICE_TASK", "MODULE_ASSESSMENT", "CAPSTONE"]),
+  title: z.string().min(1),
+  objective: z.string().min(10),
+  scenario: z.string().min(20),
+  requirements: z.array(z.string().min(1)).min(1),
+  constraints: z.array(z.string().min(1)).default([]),
+  deliverables: z.array(z.object({
+    key: slug, label: z.string().min(1), description: z.string().min(1),
+    role: z.enum(["final", "preview", "process"]), required: z.boolean(),
+  })).min(1),
+  difficulty: z.number().int().min(1).max(5),
+  estimatedMinutes: z.number().int().positive(),
+  rubric: z.object({ slug, version: z.number().int().positive() }),
+  maxAttempts: z.number().int().positive().max(10).default(3),
+  status: status.default("DRAFT"),
+}).superRefine((a, ctx) => {
+  if (!a.deliverables.some((d) => d.required)) ctx.addIssue({ code: "custom", message: "at least one deliverable must be required" });
+});
+
+export type AssignmentDef = z.infer<typeof assignmentSchema>;
 export type LessonFrontmatter = z.infer<typeof lessonFrontmatter>;
 export type ModuleDef = z.infer<typeof moduleSchema>;
 export type Question = z.infer<typeof questionSchema>;

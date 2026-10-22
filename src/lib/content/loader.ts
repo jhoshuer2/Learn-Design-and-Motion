@@ -4,15 +4,15 @@ import matter from "gray-matter";
 import YAML from "yaml";
 import { ZodError } from "zod";
 import {
-  BLOCK_KINDS, checksSchema, competenciesSchema, lessonFrontmatter, moduleSchema, rubricSchema,
-  type LessonFrontmatter, type ModuleDef, type Question, type RubricDef,
+  BLOCK_KINDS, assignmentSchema, checksSchema, competenciesSchema, lessonFrontmatter, moduleSchema, rubricSchema,
+  type AssignmentDef, type LessonFrontmatter, type ModuleDef, type Question, type RubricDef,
 } from "./schemas";
 import { DEMO_NAMES, DEMO_TOKEN } from "./demos";
 import { MACHINE_SCORED } from "../progression/scoring";
 
 export type Block = { kind: (typeof BLOCK_KINDS)[number]; title: string; body: string };
 export type LoadedLesson = { meta: LessonFrontmatter; blocks: Block[]; questions: Question[] };
-export type LoadedModule = { def: ModuleDef; lessons: LoadedLesson[] };
+export type LoadedModule = { def: ModuleDef; lessons: LoadedLesson[]; assignments: AssignmentDef[] };
 export type LoadedContent = {
   competencies: { slug: string; title: string; critical: boolean }[];
   modules: LoadedModule[];
@@ -72,7 +72,7 @@ export function loadContent(root = path.join(process.cwd(), "content")): LoadedC
   const rubricDir = path.join(root, "rubrics");
   const rubrics = fs.existsSync(rubricDir)
     ? fs.readdirSync(rubricDir).filter((f) => f.endsWith(".yaml"))
-        .map((f) => rubricSchema.parse(readYaml(path.join(rubricDir, f))))
+        .map((f) => parseFile(path.join(rubricDir, f), () => rubricSchema.parse(readYaml(path.join(rubricDir, f)))))
     : [];
 
   const modules: LoadedModule[] = walk(root, "module.yaml").map((file) => {
@@ -111,7 +111,15 @@ export function loadContent(root = path.join(process.cwd(), "content")): LoadedC
       return { meta, blocks, questions };
     });
     assertAcyclic(lessons, file);
-    return { def, lessons };
+    const assignments = fs.readdirSync(dir).filter((f) => f.endsWith(".assignment.yaml")).map((f) => {
+      const af = path.join(dir, f);
+      const a = parseFile(af, () => assignmentSchema.parse(readYaml(af)));
+      const rubric = rubrics.find((r) => r.slug === a.rubric.slug && r.version === a.rubric.version);
+      if (!rubric) throw new Error(`${af}: rubric ${a.rubric.slug}@${a.rubric.version} does not exist`);
+      for (const c of rubric.criteria) if (c.competency && !known.has(c.competency)) throw new Error(`${af}: rubric criterion "${c.key}" has unknown competency "${c.competency}"`);
+      return a;
+    });
+    return { def, lessons, assignments };
   });
 
   return { competencies: comp, modules, rubrics };
