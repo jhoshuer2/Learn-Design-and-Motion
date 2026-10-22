@@ -1,0 +1,4 @@
+competencies:
+  - { slug: contrast-recognition, title: Recognising contrast in real work }
+  - { slug: contrast-application, title: Applying contrast to establish hierarchy }
+  - { slug: accessibility-contrast, title: Accessible colour contrast, critical: true }

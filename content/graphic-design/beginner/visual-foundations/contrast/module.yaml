@@ -1,0 +1,14 @@
+discipline: graphic-design
+path: graphic-design
+level: BEGINNER
+slug: understanding-contrast
+title: Understanding Contrast
+position: 0
+objectives:
+  - Recognise contrast, and its absence, in real layouts.
+  - Explain how contrast drives reading order, legibility and accessibility.
+  - Apply contrast deliberately to a practical design problem.
+status: DRAFT
+lessons:
+  - what-contrast-does
+  - contrast-and-accessibility

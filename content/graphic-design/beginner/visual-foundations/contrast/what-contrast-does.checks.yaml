@@ -1,0 +1,7 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: Two buttons on a page are the same size. The primary action has strong contrast with the background and the secondary one does not. Which is the viewer most likely to notice first?
+    options: [The low-contrast button, The high-contrast button, Neither, they are the same size]
+    answer: The high-contrast button
+    explanation: Contrast against the surroundings is one of the strongest cues for what is seen first, even when size is equal.
+    competency: contrast-recognition
