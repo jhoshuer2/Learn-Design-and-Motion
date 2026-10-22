@@ -117,6 +117,7 @@ test("Public needs a reviewer's approval, and any later change needs it again", 
   await rev.page.goto(`/review/moderation/approvals/${owner.id}`);
   await rev.page.getByLabel(/^Note to the owner/).fill("Please use a clearer image.");
   await rev.page.getByRole("button", { name: "Do not approve" }).click();
+  await expect(rev.page).toHaveURL(/\/review\/moderation$/); // the decision is recorded before the redirect
   await owner.page.goto(`/portfolio/${owner.id}`);
   await expect(owner.page.getByTestId("approval")).toContainText("Not approved for public sharing: Please use a clearer image.");
   await shot(owner.page, "m7-owner-rejected");
@@ -143,7 +144,8 @@ test("anyone can report content; a reviewer takes it down and the owner is told"
   const item = rev.page.getByRole("listitem").filter({ hasText: "should not be hosted on this site" }).last();
   await item.getByLabel(/^Reason/).fill("Confirmed against the content policy.");
   await item.getByRole("button", { name: "Take down (hold)" }).click();
-  await expect(rev.page).toHaveURL(/\/review\/takedowns$/);
+  // The action redirects to the same URL, so wait for the request to leave the queue rather than for the URL.
+  await expect(rev.page.getByRole("listitem").filter({ hasText: "should not be hosted on this site" })).toHaveCount(0);
 
   expect((await anon.goto(`/p/${owner.slug}`))?.status()).toBe(404);
   await owner.page.goto("/notifications");

@@ -42,7 +42,6 @@ criteria:
   - key: format-adaptation
     title: Adaptation to format
     weight: 15
-    competency: brand-system-consistency
     description: |
       Is each piece designed for its size and use: the card readable at hand distance, the avatar at thumbnail size, the header at its wide, short shape?
       Strong (85-100): each is clearly designed for its format. Adequate (60-84): mostly, with one piece that feels like a resized copy. Weak (0-59): pieces are crops or stretches that do not suit their format.

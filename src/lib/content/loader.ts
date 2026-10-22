@@ -146,6 +146,9 @@ export function loadContent(root = path.join(process.cwd(), "content")): LoadedC
         if (!rubric.criteria.some((cr) => cr.competency === c)) {
           throw new Error(`${af}: rubric has no criterion for required competency "${c}", so the capstone could not produce evidence for it`);
         }
+        if (rubric.criteria.filter((cr) => cr.competency === c).length > 1) {
+          throw new Error(`${af}: required competency "${c}" must be measured by exactly one criterion, otherwise the level gate would depend on which criterion was written last`);
+        }
         if (!rubric.criteria.some((cr) => cr.competency === c && cr.mandatory)) {
           throw new Error(`${af}: the criterion for required competency "${c}" must be mandatory`);
         }

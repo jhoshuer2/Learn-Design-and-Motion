@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 type Status = { phase: string; submissionStatus: string; position: number | null; message: string };
 
 /**
- * Keeps an in-progress assessment page current. Polls every 3 s, easing to 10 s, and gives up after 10 minutes
+ * Keeps an in-progress assessment page current. Polls every 2 s, easing to 6 s, and gives up after 10 minutes
  * (it says so; the page still works without it). When the submission's status changes it refreshes the page.
  */
 export function AssessmentWatcher({ submissionId, initial }: { submissionId: string; initial: Status }) {
@@ -16,7 +16,7 @@ export function AssessmentWatcher({ submissionId, initial }: { submissionId: str
 
   useEffect(() => {
     const started = Date.now();
-    let delay = 3000;
+    let delay = 2000;
     let timer: ReturnType<typeof setTimeout>;
     let cancelled = false;
     const tick = async () => {
@@ -32,7 +32,7 @@ export function AssessmentWatcher({ submissionId, initial }: { submissionId: str
           known.current = key;
         }
       } catch { /* offline or restarting: try again */ }
-      delay = Math.min(10_000, Math.round(delay * 1.3));
+      delay = Math.min(6_000, Math.round(delay * 1.3));
       timer = setTimeout(tick, delay);
     };
     timer = setTimeout(tick, delay);

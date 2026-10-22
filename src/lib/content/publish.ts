@@ -27,8 +27,10 @@ export async function publishContent(db: PrismaClient, content: LoadedContent) {
       include: { criteria: true },
     });
     if (existing) {
-      const stored = existing.criteria.map((c) => `${c.key}:${c.weight}:${c.mandatory}:${c.minScore ?? ""}`).sort();
-      const next = r.criteria.map((c) => `${c.key}:${c.weight}:${c.mandatory}:${c.minScore ?? ""}`).sort();
+      // The competency a criterion measures decides what skill evidence it writes, so it is part of what is immutable.
+      const compSlugById = new Map([...comp.entries()].map(([slug, id]) => [id, slug]));
+      const stored = existing.criteria.map((c) => `${c.key}:${c.weight}:${c.mandatory}:${c.minScore ?? ""}:${c.competencyId ? compSlugById.get(c.competencyId) ?? "" : ""}`).sort();
+      const next = r.criteria.map((c) => `${c.key}:${c.weight}:${c.mandatory}:${c.minScore ?? ""}:${c.competency ?? ""}`).sort();
       if (existing.threshold !== r.threshold || !sameJson(stored, next)) {
         throw new Error(`Rubric ${r.slug} v${r.version} is published and immutable; bump the version.`);
       }

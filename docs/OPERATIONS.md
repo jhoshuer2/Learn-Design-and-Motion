@@ -27,7 +27,7 @@ Assessment runs outside the web request. The web app stores work and queues a jo
 While paused nothing is scored, no attempts are used, and jobs wait in order. Learners see: "Assessment is temporarily paused. Your work is saved and queued."
 
 ## What learners see
-Queued (with how many are ahead), being assessed, paused, trying again shortly, or "needs a person to look at it". They never see provider messages. The page polls every 3 s (easing to 10 s, stopping after 10 minutes with a refresh link).
+Queued (with how many are ahead), being assessed, paused, trying again shortly, or "needs a person to look at it". They never see provider messages. The page polls every 2 s (easing to 6 s, stopping after 10 minutes with a refresh link).
 
 ## What needs a person
 The attention list shows: refused submissions, jobs that gave up, submissions waiting over an hour with nothing explaining it (stuck), and low-confidence results nobody appealed. A reviewer can **assess it themselves** (`/review/assess/<id>`); an administrator can **try automatic again** (re-queues, no attempt used).

@@ -62,6 +62,10 @@ describe("level and capstone content", () => {
     expect(withEdit((r) => edit(rubricFile(r), (o) => { for (const k of o.criteria) if (k.competency === "accessibility-contrast") { delete k.mandatory; delete k.minScore; } }))).toThrow(/must be mandatory/);
   });
 
+  it("rejects a required competency measured by more than one criterion", () => {
+    expect(withEdit((r) => edit(rubricFile(r), (o) => { o.criteria.find((k: any) => k.key === "typography").competency = "accessibility-contrast"; }))).toThrow(/exactly one criterion/);
+  });
+
   it("rejects a non-capstone next to level.yaml, and a capstone inside a module", () => {
     expect(withEdit((r) => edit(capFile(r), (o) => { o.kind = "MODULE_ASSESSMENT"; }))).toThrow(/must be CAPSTONE/);
     expect(withEdit((r) => {

@@ -32,6 +32,13 @@ describe("publisher", () => {
     await expect(publishContent(db, c)).rejects.toThrow(/immutable/);
   });
 
+  it("refuses to change which competency a published criterion measures", async () => {
+    const c = loadContent();
+    const r = c.rubrics.find((x) => x.slug === "high-contrast-poster")!;
+    r.criteria.find((x) => x.key === "typography")!.competency = "accessibility-contrast";
+    await expect(publishContent(db, c)).rejects.toThrow(/immutable/);
+  });
+
   it("refuses to change the mandatory minimum of a published rubric version", async () => {
     const c = loadContent();
     c.rubrics.find((x) => x.slug === "high-contrast-poster")!.criteria.find((x) => x.key === "contrast")!.minScore = 10;

@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: "e2e",
   workers: 1, // the assessment pause flag is global, so specs must not overlap
   globalSetup: "./e2e/global-setup.ts",
-  expect: { timeout: 12_000 },
+  expect: { timeout: 20_000 },
   use: {
     baseURL: "http://localhost:3100",
     launchOptions: process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},

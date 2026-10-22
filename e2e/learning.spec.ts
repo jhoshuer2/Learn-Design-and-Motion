@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { db } from "../src/lib/db";
 import { loadContent } from "../src/lib/content/loader";
 
-const lessons = loadContent().modules[0].lessons;
+const lessons = loadContent().modules.find((m) => m.def.slug === "understanding-contrast")!.lessons;
 const spec = (slug: string) => lessons.find((l) => l.meta.slug === slug)!;
 
 async function signUp(page: Page) {
