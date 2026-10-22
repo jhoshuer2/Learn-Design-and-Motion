@@ -2,6 +2,7 @@ import { hexContrast } from "@/lib/contrast";
 import type { DemoName } from "@/lib/content/demos";
 import { ContrastLab } from "./ContrastLab";
 import { ReadingOrder } from "./ReadingOrder";
+import { FormStates, SpacingRhythm, TouchTargets } from "./UiDemos";
 import { LockupMisuse, LogoClearspace, PaletteRoles, PositionCompare } from "./BrandDemos";
 
 // Demo artwork uses fixed colours on purpose: the colours ARE the lesson, so they must not follow the theme.
@@ -132,4 +133,7 @@ export const DEMOS: Record<DemoName, () => React.ReactElement> = {
   "logo-clearspace": () => <LogoClearspace />,
   "lockup-misuse": () => <LockupMisuse />,
   "palette-roles": () => <PaletteRoles />,
+  "spacing-rhythm": () => <SpacingRhythm />,
+  "touch-targets": () => <TouchTargets />,
+  "form-states": () => <FormStates />,
 };

@@ -1,0 +1,53 @@
+slug: mobile-screen
+title: Mobile screen design
+version: 1
+threshold: 80
+criteria:
+  - key: hierarchy-and-layout
+    title: Hierarchy and layout
+    weight: 20
+    competency: ui-hierarchy
+    description: |
+      Does the screen make the reading order obvious (route and date, then departures, then the one main action) and use layout to support it?
+      Strong (85-100): a viewer can say within two seconds what the screen is for and what to do next; levels of importance differ clearly in size, weight or value.
+      Adequate (60-84): the main idea leads, but two levels compete or the main action is not the most prominent.
+      Weak (0-59): several elements have similar emphasis, or the main action is hard to find.
+  - key: spacing-and-grouping
+    title: Spacing and grouping
+    weight: 15
+    competency: ui-hierarchy
+    description: |
+      Is one spacing scale used consistently, and are related items grouped so that proximity shows what belongs together?
+      Strong (85-100): a consistent rhythm, clear groups, aligned edges. Adequate (60-84): mostly consistent, with some uneven gaps or loose alignment. Weak (0-59): arbitrary spacing, items that look grouped but are not, or the reverse.
+  - key: targets-and-states
+    title: Touch targets and states
+    weight: 20
+    mandatory: true
+    minScore: 60
+    competency: ui-touch-targets-and-states
+    description: |
+      Are interactive elements large enough (about 44 by 44 points) with room between them, and are states clear (the sold-out departure shown as disabled, selected versus unselected)? You cannot measure exact sizes from pixels: judge what is visible, say it is an estimate, and compare with the sizes the rationale reports.
+      Strong (85-100): all targets are comfortably sized and spaced; every state shown is distinct without relying on colour alone.
+      Adequate (60-84): targets are probably adequate but one is tight, or a state relies mostly on colour.
+      Weak (0-59): targets are visibly small or crowded, or the disabled and selected states cannot be told apart.
+  - key: readable-text-and-contrast
+    title: Readable text and contrast
+    weight: 20
+    mandatory: true
+    minScore: 60
+    competency: accessibility-contrast
+    description: |
+      Is body text a readable size (about 16 points or more) and does essential text meet accessibility minimums (about 4.5:1 for normal text, 3:1 for large text and meaningful graphics)? You cannot measure exact ratios from pixels. Judge what is visible, say it is an estimate, flag anything borderline, and check that any measured ratios in the rationale are plausible.
+      Strong (85-100): essential text is clearly well above the minimums and comfortably sized. Adequate (60-84): probably adequate, with one borderline pair. Weak (0-59): essential text visibly fails or is too small.
+  - key: legibility-at-small-size
+    title: Legibility at small size
+    weight: 10
+    description: |
+      Judge the small-scale preview. Does the hierarchy still read: the route, the departures and the main action?
+      Strong (85-100): the structure and the main action survive clearly. Adequate (60-84): the structure survives but the main action or one level is strained. Weak (0-59): the hierarchy is lost, or the preview is missing or not a smaller version of the final.
+  - key: design-rationale
+    title: Design rationale
+    weight: 15
+    description: |
+      Does the rationale explain three real decisions, report the measurements used (target sizes, font sizes, at least two contrast ratios), and match what is visible? Judge reasoning, not writing style.
+      Strong (85-100): three specific decisions with reasons and measurements that match the work. Adequate (60-84): decisions named, measurements thin or missing. Weak (0-59): generic statements, or claims the work does not show.

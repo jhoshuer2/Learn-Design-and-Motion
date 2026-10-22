@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: A phone screen has five buttons of the same size and colour. What is the most likely problem?
+    options: [Nobody can tell which action is the main one, The screen will load slowly, The text is too small, The colours are too dark]
+    answer: Nobody can tell which action is the main one
+    explanation: With no difference in emphasis nothing leads. A screen usually needs one main action that stands out from quieter secondary actions.
+    competency: ui-hierarchy
+  - type: MULTIPLE_CHOICE
+    prompt: What does proximity tell a viewer on a screen?
+    options: [Items that sit close together belong together, Items near the top are less important, Large gaps mean an error, Small items are disabled]
+    answer: Items that sit close together belong together
+    explanation: Closeness reads as grouping and larger gaps read as separation, so spacing should follow the grouping you intend.
+    competency: ui-hierarchy
+  - type: MULTIPLE_SELECT
+    prompt: Which of these help a viewer rank information? Select all that apply.
+    options: [Larger and heavier title text, A strong contrast between the main action and its background, Using the same grey for every element, A consistent spacing scale]
+    answer: [Larger and heavier title text, A strong contrast between the main action and its background, A consistent spacing scale]
+    explanation: Size weight value and spacing can all create ranking. Using one grey for everything removes difference and so removes ranking.
+    competency: ui-hierarchy
+  - type: ERROR_DETECTION
+    prompt: A form uses a different gap between every pair of fields so the groups cannot be seen. What is the best fix?
+    options: [Use a small set of gaps from one scale and make groups closer than the gaps between them, Add a border to every field, Make all text bold, Remove the labels]
+    answer: Use a small set of gaps from one scale and make groups closer than the gaps between them
+    explanation: A consistent scale makes gaps deliberate and lets proximity show the groups. Borders and bold text add emphasis without fixing the structure.
+    competency: ui-hierarchy
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the spacing-rhythm demo, which version makes the main action easiest to find?
+    options: [The ranked version with one strong action, The flat version with one size and one gap]
+    answer: The ranked version with one strong action
+    explanation: Ranking by size and value plus a single strong action leads the eye. The flat version gives every element the same weight.
+    competency: ui-hierarchy
+  - type: MULTIPLE_CHOICE
+    prompt: A designer adds a second bright filled button next to the main one so both are easy to find. What is the likely result?
+    options: [The two compete and the main action is less clear, The main action becomes clearer, Nothing changes, The screen becomes more accessible]
+    answer: The two compete and the main action is less clear
+    explanation: Two equally loud actions split attention. A quieter secondary action keeps the main one obvious.
+    competency: ui-hierarchy

@@ -8,7 +8,7 @@ const PATHS = [...new Set(c.levels.map((l) => l.def.path))].sort();
 
 describe("authored curriculum", () => {
   it("has the three MVP disciplines, each with a Beginner level", () => {
-    expect(PATHS).toEqual(expect.arrayContaining(["brand-design", "graphic-design"]));
+    expect(PATHS).toEqual(["brand-design", "graphic-design", "ui-design"]);
     for (const p of PATHS) expect(c.levels.some((l) => l.def.path === p && l.def.tier === "BEGINNER"), p).toBe(true);
   });
 

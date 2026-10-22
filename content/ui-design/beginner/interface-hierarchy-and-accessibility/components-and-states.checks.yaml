@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: What is a commonly recommended minimum size for a touch target?
+    options: [About 44 by 44 points, About 12 by 12 points, About 20 by 20 points, About 100 by 100 points]
+    answer: About 44 by 44 points
+    explanation: About 44 points is widely recommended so a fingertip can hit the target reliably. Smaller targets cause mis-taps.
+    competency: ui-touch-targets-and-states
+  - type: MULTIPLE_CHOICE
+    prompt: Why leave space between neighbouring targets?
+    options: [So a slightly off tap does not trigger the wrong one, So the screen looks emptier, So fewer items are needed, So text can be smaller]
+    answer: So a slightly off tap does not trigger the wrong one
+    explanation: Spacing between targets reduces accidental taps. See the touch-targets comparison.
+    competency: ui-touch-targets-and-states
+  - type: MULTIPLE_SELECT
+    prompt: Which are states a component can be in? Select all that apply.
+    options: [Default, Focused, Disabled, Error]
+    answer: [Default, Focused, Disabled, Error]
+    explanation: A component can be in all of these conditions and each one needs to be designed. A design that shows only the default is incomplete.
+    competency: ui-touch-targets-and-states
+  - type: ERROR_DETECTION
+    prompt: A form shows an error only by turning a field border red. What is the problem?
+    options: [People who cannot tell the colours apart get no signal, The border is too thin, The field is too wide, Red is never allowed]
+    answer: People who cannot tell the colours apart get no signal
+    explanation: A state should never rely on colour alone. Add a message and an icon or shape so the problem is visible in more than one way.
+    competency: ui-touch-targets-and-states
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the form-states demo, which error treatment is clearer?
+    options: [The one with an outline and icon and a message saying how to fix it, The one that only changes the border colour]
+    answer: The one with an outline and icon and a message saying how to fix it
+    explanation: A second cue and a specific message help everyone recover. Colour alone helps only some people.
+    competency: ui-touch-targets-and-states
+  - type: MULTIPLE_CHOICE
+    prompt: Which error message is best for a field that needs a 6-digit code?
+    options: [Enter the 6-digit code from your message, Invalid input, Error 400, Something went wrong]
+    answer: Enter the 6-digit code from your message
+    explanation: A good message says what is needed and how to fix it. Generic messages leave the person guessing.
+    competency: ui-touch-targets-and-states

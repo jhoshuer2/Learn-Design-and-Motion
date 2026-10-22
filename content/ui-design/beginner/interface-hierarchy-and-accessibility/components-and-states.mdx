@@ -1,0 +1,80 @@
+---
+slug: components-and-states
+title: Components, touch targets and states
+objective: Size interactive components so they are easy to hit, and design the states a component can be in (default, selected, focused, error and disabled) so each is clear without relying on colour alone.
+version: 1
+status: DRAFT
+competencies: [ui-touch-targets-and-states]
+prerequisites: [hierarchy-and-layout]
+reviewNotes: Target-size figures (about 44 by 44 points) follow common platform guidance and WCAG advice but vary by platform; verify against current guidance before publishing. Needs review by a working product designer.
+---
+
+## {objective} What you will be able to do
+By the end of this lesson you can:
+
+- size and space tappable elements so a thumb can hit them reliably;
+- list the states a component can be in and design each one;
+- make states distinct with more than colour (shape, icon, text, weight);
+- write an error message that says what went wrong and how to fix it.
+
+## {concept} Make it easy to hit, and clear about its state
+An interface is used with fingers, in motion, often one-handed. A tappable element therefore needs a **target** big enough to hit: guidance commonly recommends about **44 by 44 points** as a minimum, with **space between neighbouring targets** so a slip does not trigger the wrong one. The visible shape may be smaller than the target, but the tappable area should not be.
+
+A component is rarely in one condition. Common **states** are:
+
+- **default**: ready to use;
+- **selected** or **active**: chosen;
+- **focused**: the one receiving keyboard or assistive-technology input, shown by a visible outline;
+- **disabled**: unavailable, and ideally explained;
+- **error**: something needs fixing, shown with a message.
+
+Do not signal a state with **colour alone**: some people cannot tell the colours apart, and screens get used in bright light. Add a second cue such as an icon, a shape change, a label or a heavier outline.
+
+An **error message** should be specific, sit next to the field, and say how to fix it ("Enter a 6-digit code"), not just that something failed.
+
+## {demo} Targets and states side by side
+Compare small, tight targets with comfortable ones, and a state shown by colour alone with one shown by colour plus a second cue.
+
+<<demo:touch-targets|Two rows of buttons: one with small, tightly packed targets, and one with targets of at least 44 points and clear gaps. The tappable area of each is outlined so you can see the difference.>>
+
+<<demo:form-states|The same field in default, focused, error and disabled states. The weak versions rely on colour only. The strong versions add an outline, an icon and a text message that says how to fix the problem.>>
+
+Notice that the better versions are not larger overall. They are sized and spaced on purpose.
+
+## {realWorld} Where you meet this every day
+On a phone you have probably mis-tapped a link that sat too close to another, or a tiny "close" icon on an advert. Those are small, crowded targets.
+
+Think of a sign-up form that turns a field border red when something is wrong and says nothing else. A person who cannot see red has no idea what happened. A good form places a short message below the field, adds an icon, and keeps focus visible.
+
+## {goodVsBad} Compare these
+**Targets.** The shapes look similar; the tappable areas do not.
+
+<<demo:touch-targets|First version: small, packed targets that are easy to mis-tap. Second version: targets at least 44 points with clear spacing, so each tap is unambiguous.>>
+
+**States.** Colour alone versus colour plus other cues.
+
+<<demo:form-states|First version: errors and disabled fields shown by colour only. Second version: each state has a second cue (outline, icon, message) that does not depend on telling colours apart.>>
+
+Why the good versions work: size and space make accidents unlikely, and every state is visible in more than one way.
+
+## {guided} Try it with support
+Take any form or list screen you can open. Work through these steps:
+
+1. Estimate the size of three tappable elements. Which is under 44 points in either direction?
+2. Check the gap between neighbours. Would a thumb hit the wrong one?
+3. List the states you can find (default, selected, disabled, error). Which depend on colour alone?
+4. Rewrite one vague error message so it says what went wrong and how to fix it.
+
+Keep your notes. You will use them in the independent task.
+
+## {check} Check your understanding
+Answer the questions below. You need 80% to complete this lesson. If you miss, read the explanation, revisit the step it points to, and try again.
+
+## {task} Independent task
+Design a small component sheet for a mobile sign-up form: a text field in default, focused, error and disabled states, and a primary button in default and disabled states. Show target sizes and gaps, and add a short note on the second cue you used for each state.
+
+## {reflection} Reflect
+Which state is most often forgotten in the designs you have seen or made? What might happen to a real person when it is missing?
+
+## {feedback} What to practise next
+If targets were hard to judge, measure five buttons in screenshots against 44 points. If states were shaky, list every state of one component and design the one you forgot. Next lesson: readable and accessible interfaces.

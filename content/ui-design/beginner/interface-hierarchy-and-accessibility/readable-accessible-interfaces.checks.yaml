@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: What is the usual WCAG minimum contrast ratio for normal body text?
+    options: [4.5 to 1, 2 to 1, 3 to 1, 10 to 1]
+    answer: 4.5 to 1
+    explanation: Normal text needs about 4.5:1 against its background. Large text and meaningful graphics need about 3:1.
+    competency: accessibility-contrast
+  - type: MULTIPLE_CHOICE
+    prompt: Why should you measure contrast rather than judge it by eye?
+    options: [Screens and lighting vary and eyes are unreliable for borderline pairs, Because measuring is required by law everywhere, Because ratios never change, Because colour does not matter]
+    answer: Screens and lighting vary and eyes are unreliable for borderline pairs
+    explanation: Borderline pairs are hard to judge by eye and conditions differ. A measured ratio with some margin is the dependable check.
+    competency: accessibility-contrast
+  - type: MULTIPLE_SELECT
+    prompt: Which of these help keep meaning from depending on colour alone? Select all that apply.
+    options: [A text label such as Overdue, An icon or shape change, Using red for errors and nothing else, A different outline weight]
+    answer: [A text label such as Overdue, An icon or shape change, A different outline weight]
+    explanation: Labels icons shapes and outline changes carry meaning without needing colour vision. Red alone does not.
+    competency: accessibility-contrast
+  - type: ERROR_DETECTION
+    prompt: Placeholder text in a form field is a pale grey on white and measures 2.2 to 1. What is the problem?
+    options: [It is below the minimum so many people cannot read it, It is too dark, It is too large, There is no problem because placeholders are decorative]
+    answer: It is below the minimum so many people cannot read it
+    explanation: Placeholders carry information and still need enough contrast. 2.2:1 is well under the 4.5:1 minimum.
+    competency: accessibility-contrast
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the type-readability demo, which text colours are suitable for body text?
+    options: [Those whose measured ratio meets 4.5 to 1, Those that look the most fashionable, Those with the lowest ratio, Those in the lightest grey]
+    answer: Those whose measured ratio meets 4.5 to 1
+    explanation: The ratio shown with each sample tells you whether it meets the minimum. Appearance alone is not a reliable guide.
+    competency: accessibility-contrast
+  - type: MULTIPLE_CHOICE
+    prompt: Your large heading (about 24 points) measures 3.4 to 1 on its background. Does it meet the minimum?
+    options: [Yes because large text needs about 3 to 1, No because all text needs 4.5 to 1, Only if it is bold, Only on a phone]
+    answer: Yes because large text needs about 3 to 1
+    explanation: Large text has a lower minimum of about 3:1. The same pair would fail for small body text.
+    competency: accessibility-contrast

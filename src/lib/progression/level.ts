@@ -90,11 +90,11 @@ export async function assessLevel(client: Db, userId: string, levelId: string): 
 
   const checks: CompetencyCheck[] = [];
   for (const slug of level.requiredCompetencies) {
-    const comp = await client.competency.findUnique({ where: { slug }, include: { lessons: { include: { lesson: true } } } });
+    const comp = await client.competency.findUnique({ where: { slug }, include: { lessons: { include: { lesson: { include: { module: { select: { level: { select: { pathId: true } } } } } } } } } });
     if (!comp) continue;
     const ev = await latestEvidence(client, userId, comp.id);
     const retake = [...new Map(
-      comp.lessons.filter((l) => visibleStatuses().includes(l.lesson.status)).sort((a, b) => b.lesson.version - a.lesson.version).map((l) => [l.lesson.slug, l.lesson]),
+      comp.lessons.filter((l) => visibleStatuses().includes(l.lesson.status) && l.lesson.module.level.pathId === level.pathId).sort((a, b) => b.lesson.version - a.lesson.version).map((l) => [l.lesson.slug, l.lesson]),
     ).values()];
     checks.push({
       slug, title: comp.title, latestScore: ev?.score ?? null, needed: CRITICAL_COMPETENCY_PASS_MARK,

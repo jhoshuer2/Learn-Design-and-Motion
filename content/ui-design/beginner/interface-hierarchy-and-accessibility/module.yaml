@@ -1,0 +1,15 @@
+discipline: ui-design
+path: ui-design
+level: BEGINNER
+slug: interface-hierarchy-and-accessibility
+title: Interface Hierarchy and Accessibility
+position: 0
+objectives:
+  - Build a clear hierarchy and a consistent spacing rhythm on a mobile screen.
+  - "Size touch targets and show interface states: default, focus, error and disabled."
+  - Keep text readable, and never rely on colour alone, then check contrast against accessibility minimums.
+status: DRAFT
+lessons:
+  - hierarchy-and-layout
+  - components-and-states
+  - readable-accessible-interfaces

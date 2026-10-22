@@ -1,0 +1,30 @@
+slug: mobile-screen
+kind: MODULE_ASSESSMENT
+title: Design one mobile screen
+objective: "Show that you can design a single mobile screen with clear hierarchy, consistent spacing, usable targets and states, and readable text, and explain your decisions with measurements."
+scenario: >
+  Tidewater Ferries runs a small passenger ferry between two towns. Its app needs one screen where a rider
+  picks a departure. The screen shows the route (Harbour Quay to Northpoint), a date, three departure times with
+  seats left (07:40 with 12 seats, 09:10 with 3 seats, 11:30 sold out), and one main action: continue to
+  passenger details. The screen is for a phone about 390 by 844 points. It is fictional: nothing you make is used
+  by a real operator.
+requirements:
+  - "Establish a clear hierarchy: the route and date first, then the departures, then the one main action."
+  - "Show all three departures, including the sold-out one in a clearly disabled state that does not rely on colour alone."
+  - "Make every interactive element at least 44 by 44 points, with space between neighbouring targets."
+  - "Use body text of at least 16 points and keep essential text at or above the accessibility contrast minimums."
+  - "Use one spacing scale consistently (for example multiples of 8 points) and group related items."
+  - "In your rationale explain three design decisions and give the measurements you used: target sizes, font sizes and at least two measured contrast ratios."
+constraints:
+  - "Original work only. Any icon, illustration or typeface must be one you are licensed to use."
+  - "Do not copy a real app's screen or a template."
+  - "Use only the information in the brief. Do not invent extra features, fares or contact details."
+deliverables:
+  - { key: final, label: Screen design, description: "PNG, JPEG or WebP export of the full screen at phone size or larger.", role: final, required: true }
+  - { key: preview, label: Small-scale preview, description: "The same screen exported at about 400 px on its long side, to check that the hierarchy still reads at thumbnail size.", role: preview, required: true }
+  - { key: process, label: Process image, description: "A sketch or an earlier version, if you want to show your process.", role: process, required: false }
+difficulty: 2
+estimatedMinutes: 120
+rubric: { slug: mobile-screen, version: 1 }
+maxAttempts: 3
+status: DRAFT

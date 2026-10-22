@@ -1,0 +1,30 @@
+slug: booking-flow-capstone
+kind: CAPSTONE
+title: Booking flow capstone
+objective: Design a coherent three-screen mobile flow in which hierarchy, targets, states and text stay accessible and consistent from the first screen to the last.
+scenario: >
+  Tidewater Ferries now needs the whole short flow for booking a seat: choose a departure, enter passenger
+  details, and see the confirmation. The details screen must show a form with at least two fields, one of them
+  in an error state with a clear message, and a main action. The confirmation shows the route, the departure,
+  the number of seats and a reference. The work is fictional: nothing you make is used by a real operator.
+requirements:
+  - "Deliver three phone-sized screens: choose a departure, passenger details (with one field in an error state), and confirmation."
+  - "Each screen has a clear hierarchy and one main action; the same components, spacing scale and type roles are used across all three."
+  - "Every interactive element is at least 44 by 44 points with space between neighbours, in every screen."
+  - "Show states clearly: selected and disabled departures; focused or filled fields; and an error that uses text and an icon or shape, not colour alone."
+  - "Essential text meets accessibility contrast minimums on every screen. Measure at least three pairs and report the ratios in your rationale."
+  - "Explain three design decisions in your rationale, including how you kept the screens consistent and how the error state helps the rider recover."
+constraints:
+  - "Original work only. Any icon, illustration or typeface must be one you are licensed to use."
+  - "Do not reuse your module assessment screen unchanged. This is a new, longer flow."
+  - "Use only the information in the brief. Do not invent fares, extra features or contact details."
+deliverables:
+  - { key: screen-choose, label: "Screen 1 (choose a departure)", description: "Phone-sized screen exported as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: screen-details, label: "Screen 2 (passenger details)", description: "Phone-sized screen with one field in an error state, exported as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: screen-confirm, label: "Screen 3 (confirmation)", description: "Phone-sized confirmation screen exported as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: process, label: "Process image", description: "A flow sketch or an earlier version, if you want to show your process.", role: process, required: false }
+difficulty: 3
+estimatedMinutes: 240
+rubric: { slug: booking-flow-capstone, version: 1 }
+maxAttempts: 3
+status: DRAFT

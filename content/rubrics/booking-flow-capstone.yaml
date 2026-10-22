@@ -1,0 +1,50 @@
+slug: booking-flow-capstone
+title: Booking flow capstone
+version: 1
+threshold: 85
+criteria:
+  - key: flow-hierarchy
+    title: Hierarchy across the flow
+    weight: 15
+    competency: ui-hierarchy
+    description: |
+      On each screen is the reading order obvious and the one main action easy to find, and does the flow make sense from the first screen to the last?
+      Strong (85-100): every screen has a clear order and a single obvious next step. Adequate (60-84): mostly clear, with one screen where levels compete. Weak (0-59): several screens have similar emphasis or an unclear main action.
+  - key: targets-and-states
+    title: Touch targets and states
+    weight: 20
+    mandatory: true
+    minScore: 60
+    competency: ui-touch-targets-and-states
+    description: |
+      Are all interactive elements large enough (about 44 by 44 points) with room between them in every screen, and are states (selected, disabled, focused or filled, error) clearly distinct without relying on colour alone? You cannot measure exact sizes from pixels: judge what is visible, say it is an estimate, and compare with sizes the rationale reports.
+      Strong (85-100): comfortable targets and clearly distinct states throughout. Adequate (60-84): probably adequate, with one tight target or a state that relies mostly on colour. Weak (0-59): visibly small or crowded targets, or states that cannot be told apart.
+  - key: accessible-contrast
+    title: Accessible contrast
+    weight: 20
+    mandatory: true
+    minScore: 60
+    competency: accessibility-contrast
+    description: |
+      Does essential text meet accessibility minimums (about 4.5:1 for normal text, 3:1 for large text and meaningful graphics) on every screen? You cannot measure exact ratios from pixels. Judge what is visible, say it is an estimate, and flag anything borderline. If the rationale reports measured ratios, check that they are plausible given what you see.
+      Strong (85-100): essential text is clearly above the minimums on all screens. Adequate (60-84): probably adequate, with one borderline pair. Weak (0-59): essential text visibly fails or is likely to fail.
+  - key: consistency-across-screens
+    title: Consistency across screens
+    weight: 15
+    mandatory: true
+    minScore: 60
+    description: |
+      Do the screens use the same components, spacing scale, type roles and colour roles, so they read as one product?
+      Strong (85-100): clearly one system throughout. Adequate (60-84): related, with some drift in components, spacing or type. Weak (0-59): the screens look like different products, or components change meaning from screen to screen.
+  - key: error-and-feedback
+    title: Error and feedback clarity
+    weight: 15
+    description: |
+      Does the error state say what went wrong and how to fix it, near the field, using text and a shape or icon as well as colour, and does the confirmation clearly show what the rider has booked?
+      Strong (85-100): a specific, well-placed message that helps recovery; a complete confirmation. Adequate (60-84): an error is shown but vague or distant from the field; confirmation is mostly complete. Weak (0-59): the error is only a colour change or generic, or the confirmation omits key details.
+  - key: design-rationale
+    title: Design rationale
+    weight: 15
+    description: |
+      Does the rationale explain three real decisions (including consistency and error recovery), report the measured ratios and sizes, and match what is visible? Judge reasoning, not writing style.
+      Strong (85-100): three specific decisions with measurements that match the work. Adequate (60-84): decisions named, measurements thin. Weak (0-59): generic statements or claims the work does not show.

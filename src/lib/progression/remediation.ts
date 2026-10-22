@@ -20,9 +20,12 @@ const WEAK_BELOW = 70;
 export async function remediationLessons(client: Db, evaluationId: string) {
   const ev = await client.evaluation.findUnique({
     where: { id: evaluationId },
-    include: { scores: { include: { criterion: true } } },
+    include: { scores: { include: { criterion: true } }, submission: { include: { assignment: { include: { module: { include: { level: true } }, level: true } } } } },
   });
   if (!ev || ev.status !== "complete") return [];
+  // A competency can be taught in more than one path. Only lessons of the learner's own path are offered.
+  const asg = ev.submission.assignment;
+  const pathId = asg.level?.pathId ?? asg.module?.level.pathId;
   const weak = ev.scores.filter((s) => {
     const c = s.criterion;
     const belowMin = c.mandatory && c.minScore !== null && s.score < c.minScore;
@@ -31,7 +34,7 @@ export async function remediationLessons(client: Db, evaluationId: string) {
   const compIds = [...new Set(weak.map((s) => s.criterion.competencyId!))];
   if (compIds.length === 0) return [];
   const links = await client.lessonCompetency.findMany({
-    where: { competencyId: { in: compIds }, lesson: { status: { in: visibleStatuses() } } },
+    where: { competencyId: { in: compIds }, lesson: { status: { in: visibleStatuses() }, ...(pathId ? { module: { level: { pathId } } } : {}) } },
     include: { lesson: true, competency: true },
   });
   return [...new Map(links.sort((a, b) => b.lesson.version - a.lesson.version).map((l) => [l.lesson.slug, { lessonId: l.lesson.id, title: l.lesson.title, competency: l.competency.title }])).values()];

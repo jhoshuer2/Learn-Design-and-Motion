@@ -4,6 +4,8 @@ export const DEMO_NAMES = [
   "motion-clarity", "brand-lockup", "figure-ground", "contrast-lab",
   // Brand Design
   "position-compare", "logo-clearspace", "lockup-misuse", "palette-roles",
+  // UI Design
+  "spacing-rhythm", "touch-targets", "form-states",
 ] as const;
 export type DemoName = (typeof DEMO_NAMES)[number];
 
