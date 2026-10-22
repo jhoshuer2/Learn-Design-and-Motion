@@ -10,7 +10,7 @@ Source of truth: `prisma/schema.prisma`. Relational, explicit constraints; JSON 
 - **Assessment:** Assignment (practice / module assessment / capstone) → Submission (attempt-numbered, `changesNote`, files as private storage keys) → Evaluation (rubricVersionId, server-computed score, `rawOutput`, `deterministicChecks`, token counts, `supersedesId` for human overrides) → CriterionScore. Appeal (one per evaluation, OPEN/UPHELD/OVERRIDDEN). BlockView records lesson blocks shown, in order.
 - **Progression:** Enrollment, Progress (unique per user+node; nodeType LESSON | ASSIGNMENT | LEVEL), Competency, SkillEvidence, LevelCompletion (evidence snapshot, deliberately not a "certificate"), Remediation (one row per reset; unique per user+assignment+reset). Level carries `scopeLabel`, `scopeNote` and `requiredCompetencies`.
 - **Community:** PortfolioProject (visibility default PRIVATE, random `slug`, `shownFiles`, `moderationHold`), PeerReview (hidden flag, unique per project+reviewer; no relation to Progress by design), ReviewerBlock, Report (project or review). User has `displayName` and a random `portfolioHandle`. See `PRIVACY_AND_SHARING.md`.
-- **Ops:** AuditEvent.
+- **Ops:** AuditEvent; EvaluationJob (QUEUED/RUNNING/DONE/FAILED_FINAL; `activeKey` unique while active); SystemFlag (e.g. `assessment.paused`).
 
 ## Invariants (enforced in code and tests)
 - Criterion weights per RubricVersion sum to 100; mandatory criteria have `minScore`.

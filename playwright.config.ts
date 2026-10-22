@@ -2,6 +2,7 @@ import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   testDir: "e2e",
+  workers: 1, // the assessment pause flag is global, so specs must not overlap
   globalSetup: "./e2e/global-setup.ts",
   expect: { timeout: 12_000 },
   use: {

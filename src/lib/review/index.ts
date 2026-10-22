@@ -5,7 +5,7 @@ import { InvalidEvaluationError, computeResult } from "@/lib/assessment/scoring"
 
 export type ReviewErrorCode =
   | "not_found" | "forbidden" | "not_appealable" | "already_appealed" | "reason_required"
-  | "resolution_required" | "not_open" | "own_submission" | "invalid_scores" | "cannot_revoke_pass" | "comment_required";
+  | "resolution_required" | "not_open" | "own_submission" | "invalid_scores" | "cannot_revoke_pass" | "comment_required" | "not_assessable";
 export class ReviewError extends Error {
   constructor(public code: ReviewErrorCode, message?: string) {
     super(message ?? code);

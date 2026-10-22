@@ -19,7 +19,7 @@ export type SubmissionView = {
   evaluation: null | {
     id: string; status: string; provider: string; isTestEvaluator: boolean; model: string | null;
     score: number | null; passed: boolean | null; threshold: number; confidence: string | null; reviewFlag: boolean;
-    humanReviewed: boolean; reasons: string[]; strengths: string[]; weaknesses: string[];
+    humanReviewed: boolean; reviewerNote: string | null; reasons: string[]; strengths: string[]; weaknesses: string[];
     missingRequirements: string[]; criticalFailures: string[]; missingEvidence: string[]; failureReason: string | null;
   };
   criteria: CriterionView[];
@@ -74,7 +74,7 @@ export async function getSubmissionView(viewer: { id: string; role: Role }, subm
     evaluation: ev && {
       id: ev.id, status: ev.status, provider: ev.provider, isTestEvaluator: ev.provider === FAKE_PROVIDER_NAME, model: ev.model,
       score: ev.overallScore, passed: ev.passed, threshold: rv.threshold, confidence: ev.confidence, reviewFlag: ev.reviewFlag,
-      humanReviewed: ev.humanReviewed, reasons: arr(fb.reasons), strengths: arr(fb.strengths), weaknesses: arr(fb.weaknesses),
+      humanReviewed: ev.humanReviewed, reviewerNote: typeof fb.reviewerNote === "string" ? fb.reviewerNote : null, reasons: arr(fb.reasons), strengths: arr(fb.strengths), weaknesses: arr(fb.weaknesses),
       missingRequirements: arr(fb.missingRequirements), criticalFailures: arr(fb.criticalFailures), missingEvidence: ev.missingEvidence,
       failureReason: typeof fb.reason === "string" ? fb.reason : null,
     },

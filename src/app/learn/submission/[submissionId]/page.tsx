@@ -133,7 +133,8 @@ export default async function SubmissionPage({ params, searchParams }: { params:
             {(ev.reviewFlag || ev.confidence === "low") && (
               <p className="mt-3 text-sm text-warn">The assessor was not fully confident about this result. It has been flagged so a person can look at it.</p>
             )}
-            <p className="mt-3 text-sm text-muted">This was assessed by an AI assessor against the published rubric. It is a learning aid, not an unquestionable verdict.</p>
+            {ev.provider === "human" && ev.reviewerNote && <p className="mt-3 whitespace-pre-line"><span className="font-medium">Note from the reviewer: </span>{ev.reviewerNote}</p>}
+            <p className="mt-3 text-sm text-muted">{ev.provider === "human" ? "This was assessed by a person against the published rubric." : "This was assessed by an AI assessor against the published rubric. It is a learning aid, not an unquestionable verdict."}</p>
           </section>
 
           <section className="mt-8 grid gap-6 sm:grid-cols-2">

@@ -17,7 +17,7 @@ const concurrency = Number(process.env.WORKER_CONCURRENCY ?? 2);
 const pollMs = Number(process.env.WORKER_POLL_MS ?? 2000);
 const probeMs = Number(process.env.WORKER_PROBE_MS ?? 300_000);
 let stopping = false;
-let lastProbe = 0;
+let lastProbe = Date.now(); // first health probe is one interval after start
 
 const log = (msg: string, extra?: unknown) => console.log(`[${new Date().toISOString()}] ${workerId} ${msg}`, extra ?? "");
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));

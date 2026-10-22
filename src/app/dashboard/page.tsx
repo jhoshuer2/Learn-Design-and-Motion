@@ -52,6 +52,7 @@ export default async function Dashboard() {
           <>
             <Link href="/review" className="underline">Review appeals</Link>
             <Link href="/review/moderation" className="underline">Review reports</Link>
+            <Link href="/admin/assessments" className="underline">Assessment queue</Link>
           </>
         )}
       </nav>
