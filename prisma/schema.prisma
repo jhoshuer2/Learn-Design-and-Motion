@@ -1,0 +1,460 @@
+// Creative Mastery data model. See docs/DATA_MODEL.md.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ───────── Enums
+
+enum Role {
+  LEARNER
+  REVIEWER
+  AUTHOR
+  ADMIN
+}
+
+enum PublishStatus {
+  DRAFT
+  IN_REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum LevelTier {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  PROFESSIONAL
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  MULTIPLE_SELECT
+  SHORT_ANSWER
+  CONCEPT_EXPLANATION
+  VISUAL_IDENTIFICATION
+  ERROR_DETECTION
+}
+
+enum AssignmentKind {
+  PRACTICE_TASK
+  MODULE_ASSESSMENT
+  CAPSTONE
+}
+
+enum SubmissionStatus {
+  DRAFT
+  SUBMITTED
+  EVALUATING
+  NEEDS_EVIDENCE
+  EVALUATED
+  IN_HUMAN_REVIEW
+  FAILED_TO_EVALUATE
+}
+
+enum ProgressState {
+  LOCKED
+  AVAILABLE
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum Visibility {
+  PRIVATE
+  LINK
+  PUBLIC
+}
+
+// ───────── Identity
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String?
+  role          Role     @default(LEARNER)
+  goal          String?
+  createdAt     DateTime @default(now())
+
+  enrollments   Enrollment[]
+  progress      Progress[]
+  quizAttempts  QuizAttempt[]
+  submissions   Submission[]
+  evidence      SkillEvidence[]
+  portfolio     PortfolioProject[]
+  peerReviews   PeerReview[]
+  certificates  Certificate[]
+  auditEvents   AuditEvent[]
+}
+
+// ───────── Curriculum (content is versioned; see docs/CONTENT_AUTHORING.md)
+
+model Discipline {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String
+  paths       Path[]
+}
+
+model Path {
+  id           String     @id @default(cuid())
+  disciplineId String
+  discipline   Discipline @relation(fields: [disciplineId], references: [id])
+  slug         String
+  title        String
+  levels       Level[]
+  enrollments  Enrollment[]
+
+  @@unique([disciplineId, slug])
+}
+
+model Level {
+  id               String        @id @default(cuid())
+  pathId           String
+  path             Path          @relation(fields: [pathId], references: [id])
+  tier             LevelTier
+  objectives       String[]
+  capstoneThreshold Int          @default(85)
+  status           PublishStatus @default(DRAFT)
+  modules          Module[]
+  assignments      Assignment[]
+
+  @@unique([pathId, tier])
+}
+
+model Module {
+  id                  String        @id @default(cuid())
+  levelId             String
+  level               Level         @relation(fields: [levelId], references: [id])
+  slug                String
+  title               String
+  position            Int
+  objectives          String[]
+  assessmentThreshold Int           @default(80)
+  status              PublishStatus @default(DRAFT)
+  lessons             Lesson[]
+  assignments         Assignment[]
+  // Shared foundation modules are reused across paths via ModuleUse.
+  uses                ModuleUse[]
+
+  @@unique([levelId, slug])
+}
+
+// Reuse of a (shared) module inside other levels without duplication.
+model ModuleUse {
+  id       String @id @default(cuid())
+  moduleId String
+  module   Module @relation(fields: [moduleId], references: [id])
+  levelId  String
+  position Int
+
+  @@unique([moduleId, levelId])
+}
+
+model Lesson {
+  id             String        @id @default(cuid())
+  moduleId       String
+  module         Module        @relation(fields: [moduleId], references: [id])
+  slug           String
+  title          String
+  position       Int
+  objective      String
+  checkThreshold Int           @default(80)
+  status         PublishStatus @default(DRAFT)
+  version        Int           @default(1)
+  blocks         Json          // validated by zod at publish time; ordered lesson-loop blocks
+  prerequisites  LessonPrerequisite[] @relation("lesson")
+  requiredBy     LessonPrerequisite[] @relation("prereq")
+  questions      QuizQuestion[]
+  assets         ContentAsset[]
+  competencies   LessonCompetency[]
+
+  @@unique([moduleId, slug, version])
+}
+
+model LessonPrerequisite {
+  lessonId       String
+  lesson         Lesson @relation("lesson", fields: [lessonId], references: [id])
+  prerequisiteId String
+  prerequisite   Lesson @relation("prereq", fields: [prerequisiteId], references: [id])
+
+  @@id([lessonId, prerequisiteId])
+}
+
+model ContentAsset {
+  id        String  @id @default(cuid())
+  lessonId  String?
+  lesson    Lesson? @relation(fields: [lessonId], references: [id])
+  kind      String  // image | video | transcript | file | interactive
+  url       String
+  altText   String?
+  caption   String?
+  source    String
+  licence   String
+}
+
+// ───────── Knowledge checks (answer keys are server-only)
+
+model QuizQuestion {
+  id          String       @id @default(cuid())
+  lessonId    String
+  lesson      Lesson       @relation(fields: [lessonId], references: [id])
+  type        QuestionType
+  prompt      String
+  options     Json?
+  answerKey   Json         // never sent to clients
+  explanation String
+  competencyId String?
+  competency  Competency?  @relation(fields: [competencyId], references: [id])
+}
+
+model QuizAttempt {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  lessonId  String
+  score     Int
+  passed    Boolean
+  responses Json
+  createdAt DateTime @default(now())
+
+  @@index([userId, lessonId])
+}
+
+// ───────── Rubrics (published versions are immutable)
+
+model Rubric {
+  id          String          @id @default(cuid())
+  slug        String          @unique
+  title       String
+  versions    RubricVersion[]
+}
+
+model RubricVersion {
+  id          String            @id @default(cuid())
+  rubricId    String
+  rubric      Rubric            @relation(fields: [rubricId], references: [id])
+  version     Int
+  threshold   Int
+  publishedAt DateTime?
+  criteria    RubricCriterion[]
+  assignments Assignment[]
+  evaluations Evaluation[]
+
+  @@unique([rubricId, version])
+}
+
+model RubricCriterion {
+  id              String        @id @default(cuid())
+  rubricVersionId String
+  rubricVersion   RubricVersion @relation(fields: [rubricVersionId], references: [id])
+  key             String
+  title           String
+  description     String
+  weight          Int           // percent; weights per version sum to 100
+  mandatory       Boolean       @default(false)
+  minScore        Int?          // required when mandatory
+  competencyId    String?
+  competency      Competency?   @relation(fields: [competencyId], references: [id])
+  scores          CriterionScore[]
+
+  @@unique([rubricVersionId, key])
+}
+
+// ───────── Assignments and submissions
+
+model Assignment {
+  id              String         @id @default(cuid())
+  kind            AssignmentKind
+  levelId         String?
+  level           Level?         @relation(fields: [levelId], references: [id])
+  moduleId        String?
+  module          Module?        @relation(fields: [moduleId], references: [id])
+  slug            String         @unique
+  title           String
+  objective       String
+  scenario        String
+  brief           Json           // requirements, constraints, deliverables, references
+  difficulty      Int
+  estimatedMinutes Int
+  rubricVersionId String
+  rubricVersion   RubricVersion  @relation(fields: [rubricVersionId], references: [id])
+  maxAttempts     Int?
+  status          PublishStatus  @default(DRAFT)
+  submissions     Submission[]
+}
+
+model Submission {
+  id           String           @id @default(cuid())
+  userId       String
+  user         User             @relation(fields: [userId], references: [id])
+  assignmentId String
+  assignment   Assignment       @relation(fields: [assignmentId], references: [id])
+  attempt      Int
+  status       SubmissionStatus @default(DRAFT)
+  files        Json             // storage keys, never public URLs
+  links        String[]
+  rationale    String?
+  createdAt    DateTime         @default(now())
+  evaluations  Evaluation[]
+  portfolio    PortfolioProject?
+
+  @@unique([userId, assignmentId, attempt])
+}
+
+model Evaluation {
+  id               String          @id @default(cuid())
+  submissionId     String
+  submission       Submission      @relation(fields: [submissionId], references: [id])
+  rubricVersionId  String
+  rubricVersion    RubricVersion   @relation(fields: [rubricVersionId], references: [id])
+  provider         String
+  model            String?
+  status           String          // complete | needs_evidence | failed
+  overallScore     Int?            // computed server-side
+  passed           Boolean?
+  confidence       String?
+  reviewFlag       Boolean         @default(false)
+  missingEvidence  String[]
+  feedback         Json            // strengths, weaknesses, recommendations
+  criticalFailures String[]
+  humanReviewed    Boolean         @default(false)
+  createdAt        DateTime        @default(now())
+  scores           CriterionScore[]
+}
+
+model CriterionScore {
+  id           String          @id @default(cuid())
+  evaluationId String
+  evaluation   Evaluation      @relation(fields: [evaluationId], references: [id])
+  criterionId  String
+  criterion    RubricCriterion @relation(fields: [criterionId], references: [id])
+  score        Int
+  evidence     String
+  explanation  String
+  improvement  String
+
+  @@unique([evaluationId, criterionId])
+}
+
+// ───────── Progression and skills
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  pathId    String
+  path      Path     @relation(fields: [pathId], references: [id])
+  startTier LevelTier @default(BEGINNER)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, pathId])
+}
+
+// One row per (user, node). Unique constraint makes transitions idempotent.
+model Progress {
+  id          String        @id @default(cuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+  nodeType    String        // LESSON | MODULE | LEVEL
+  nodeId      String
+  state       ProgressState @default(LOCKED)
+  updatedAt   DateTime      @updatedAt
+  completedAt DateTime?
+
+  @@unique([userId, nodeType, nodeId])
+}
+
+model Competency {
+  id         String   @id @default(cuid())
+  slug       String   @unique
+  title      String
+  critical   Boolean  @default(false)
+  questions  QuizQuestion[]
+  criteria   RubricCriterion[]
+  lessons    LessonCompetency[]
+  evidence   SkillEvidence[]
+}
+
+model LessonCompetency {
+  lessonId     String
+  lesson       Lesson     @relation(fields: [lessonId], references: [id])
+  competencyId String
+  competency   Competency @relation(fields: [competencyId], references: [id])
+
+  @@id([lessonId, competencyId])
+}
+
+// Skill ratings derive only from assessed evidence.
+model SkillEvidence {
+  id           String     @id @default(cuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id])
+  competencyId String
+  competency   Competency @relation(fields: [competencyId], references: [id])
+  source       String     // QUIZ | EVALUATION
+  sourceId     String
+  score        Int
+  tier         LevelTier
+  createdAt    DateTime   @default(now())
+
+  @@index([userId, competencyId])
+}
+
+model Certificate {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  pathId    String
+  tier      LevelTier
+  evaluationId String
+  issuedAt  DateTime  @default(now())
+
+  @@unique([userId, pathId, tier])
+}
+
+// ───────── Community
+
+model PortfolioProject {
+  id           String     @id @default(cuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id])
+  submissionId String     @unique
+  submission   Submission @relation(fields: [submissionId], references: [id])
+  slug         String     @unique
+  title        String
+  visibility   Visibility @default(PRIVATE)
+  showEvaluation Boolean  @default(false)
+  reviews      PeerReview[]
+}
+
+model PeerReview {
+  id         String           @id @default(cuid())
+  projectId  String
+  project    PortfolioProject @relation(fields: [projectId], references: [id])
+  reviewerId String
+  reviewer   User             @relation(fields: [reviewerId], references: [id])
+  strengths  String
+  improvements String
+  questions  String?
+  createdAt  DateTime         @default(now())
+  // Deliberately no link to Progress: peer feedback never affects progression.
+}
+
+// ───────── Audit
+
+model AuditEvent {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id])
+  action    String
+  subject   String
+  detail    Json
+  createdAt DateTime @default(now())
+
+  @@index([subject])
+}
