@@ -5,9 +5,9 @@ import { retryEvaluation } from "@/lib/submissions";
 import { ReviewError, createAppeal } from "@/lib/review";
 import { getSubmissionView, type CriterionView } from "@/lib/submissions/view";
 import { Button } from "@/components/ui/Button";
+import { AssessmentWatcher } from "@/components/submission/AssessmentWatcher";
+import { getAssessmentStatus } from "@/lib/jobs/status";
 import { StateBadge } from "@/components/ui/StateBadge";
-
-export const maxDuration = 300;
 
 async function retry(formData: FormData) {
   "use server";
@@ -73,6 +73,8 @@ export default async function SubmissionPage({ params, searchParams }: { params:
   if (!v) notFound();
   const ev = v.evaluation;
   const done = ev?.status === "complete";
+  const live = v.isOwner ? await getAssessmentStatus(v.id) : null;
+  const waiting = live && (live.phase === "queued" || live.phase === "paused" || live.phase === "retrying" || live.phase === "running");
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
@@ -86,16 +88,22 @@ export default async function SubmissionPage({ params, searchParams }: { params:
         </p>
       )}
 
-      {!ev && v.status === "SUBMITTED" && (
+      {waiting && live && (
+        <section className="mt-8 rounded border border-line bg-raised p-5">
+          <StateBadge state="awaiting" />
+          <h2 className="mt-3 font-display text-2xl">
+            {live.phase === "running" ? "Being assessed" : live.phase === "paused" ? "Assessment is paused" : live.phase === "retrying" ? "Trying again shortly" : "In the queue"}
+          </h2>
+          <div className="mt-2"><AssessmentWatcher submissionId={v.id} initial={live} /></div>
+        </section>
+      )}
+      {!waiting && !ev && v.status === "SUBMITTED" && (
         <section className="mt-8 rounded border border-line bg-raised p-5">
           <StateBadge state="awaiting" />
           <h2 className="mt-3 font-display text-2xl">Not assessed yet</h2>
-          <p className="mt-2 text-muted">Your work is saved, but no assessment has run. Automated assessment may not be configured on this server. No score has been recorded and no attempt has been used.</p>
-          {v.isOwner && <form action={retry} className="mt-4"><input type="hidden" name="submissionId" value={v.id} /><Button type="submit">Try assessment again</Button></form>}
+          <p className="mt-2 text-muted">Your work is saved, but no assessment is queued. No score has been recorded and no attempt has been used.</p>
+          {v.isOwner && <form action={retry} className="mt-4"><input type="hidden" name="submissionId" value={v.id} /><Button type="submit">Queue assessment</Button></form>}
         </section>
-      )}
-      {v.status === "EVALUATING" && (
-        <section className="mt-8 rounded border border-line bg-raised p-5"><StateBadge state="awaiting" /><h2 className="mt-3 font-display text-2xl">Being assessed</h2><p className="mt-2 text-muted">Refresh this page in a minute.</p></section>
       )}
       {v.status === "NEEDS_EVIDENCE" && ev && (
         <section className="mt-8 rounded border border-line bg-raised p-5">
@@ -106,11 +114,11 @@ export default async function SubmissionPage({ params, searchParams }: { params:
           {v.isOwner && <p className="mt-4"><Link className="underline" href={`/learn/assignment/${v.assignment.id}`}>Add the missing items</Link></p>}
         </section>
       )}
-      {v.status === "FAILED_TO_EVALUATE" && (
+      {v.status === "FAILED_TO_EVALUATE" && !waiting && (
         <section className="mt-8 rounded border border-line bg-raised p-5">
           <StateBadge state="failed" />
           <h2 className="mt-3 font-display text-2xl">Assessment did not complete</h2>
-          <p className="mt-2 text-muted">{FAILURE[ev?.failureReason ?? ""] ?? "Assessment did not complete."} This did not use an attempt.</p>
+          <p className="mt-2 text-muted">{live?.phase === "attention" && live.message ? live.message : (FAILURE[ev?.failureReason ?? ""] ?? "Assessment did not complete.")} This did not use an attempt.</p>
           {v.isOwner && <form action={retry} className="mt-4"><input type="hidden" name="submissionId" value={v.id} /><Button type="submit">Try assessment again</Button></form>}
         </section>
       )}

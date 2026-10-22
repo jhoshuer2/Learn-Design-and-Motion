@@ -4,11 +4,9 @@ import { db } from "@/lib/db";
 import { requireUser } from "@/lib/session";
 import { getAssignmentAccess, type AssignmentDenied } from "@/lib/progression";
 import { SubmissionError, UploadError, createSubmission, type UploadedFile } from "@/lib/submissions";
-import { evaluateSubmission } from "@/lib/assessment/evaluate";
+import { enqueue } from "@/lib/jobs/queue";
 import { Button } from "@/components/ui/Button";
 import { StateBadge } from "@/components/ui/StateBadge";
-
-export const maxDuration = 300; // evaluation runs inside the submit action in this milestone
 
 type Brief = {
   requirements: string[]; constraints: string[];
@@ -53,7 +51,7 @@ async function submitWork(formData: FormData) {
       files, rationale: String(formData.get("rationale") ?? ""), changesNote: String(formData.get("changesNote") ?? ""),
     });
     target = `/learn/submission/${submissionId}`;
-    await evaluateSubmission(submissionId); // result, or a clear state, is shown on the results page
+    await enqueue(submissionId); // assessed in the background; the results page shows progress
   } catch (e) {
     if (e instanceof SubmissionError) target = `/learn/assignment/${assignmentId}?error=${e.code}`;
     else if (e instanceof UploadError) target = `/learn/assignment/${assignmentId}?upload=${encodeURIComponent(e.message)}`;

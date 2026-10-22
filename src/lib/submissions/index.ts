@@ -88,12 +88,17 @@ export async function createSubmission(
 
 export { UploadError };
 
-import { evaluateSubmission, type EvaluateOutcome } from "@/lib/assessment/evaluate";
+import { enqueue, JobError } from "@/lib/jobs/queue";
 
-/** Owner-only. Re-runs evaluation for a submission that never produced a result (failed, or the assessor was not configured). */
-export async function retryEvaluation(userId: string, submissionId: string): Promise<EvaluateOutcome> {
+/** Owner-only. Queues the submission for assessment again (failed, or never queued). Uses no attempt. */
+export async function retryEvaluation(userId: string, submissionId: string): Promise<{ queued: boolean }> {
   const sub = await db.submission.findFirst({ where: { id: submissionId, userId } });
-  if (!sub) return { state: "failed", reason: "provider_error" };
-  if (sub.status !== "SUBMITTED" && sub.status !== "FAILED_TO_EVALUATE") return { state: "busy" };
-  return evaluateSubmission(sub.id);
+  if (!sub) return { queued: false };
+  try {
+    await enqueue(sub.id);
+    return { queued: true };
+  } catch (e) {
+    if (e instanceof JobError) return { queued: false };
+    throw e;
+  }
 }

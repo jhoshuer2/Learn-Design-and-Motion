@@ -234,3 +234,46 @@ describe("evaluateSubmission deferral", () => {
     for (let i = 0; i < 12; i++) expect((await evaluateSubmission(s.id, { provider: fake })).state).toBe("deferred");
   });
 });
+
+describe("learner-facing status", () => {
+  it("walks queued -> running -> paused -> finished without leaking provider detail", async () => {
+    const { getAssessmentStatus } = await import("../src/lib/jobs/status");
+    const { retryEvaluation } = await import("../src/lib/submissions");
+    const u = await makeUser();
+    const s = await makeSubmission(u);
+    expect((await getAssessmentStatus(s.id))?.phase).toBe("idle");
+    expect(await retryEvaluation(u, s.id)).toEqual({ queued: true });
+    expect(await retryEvaluation(u, s.id)).toEqual({ queued: true }); // idempotent
+    expect(await db.evaluationJob.count({ where: { submissionId: s.id } })).toBe(1);
+    expect(await getAssessmentStatus(s.id)).toMatchObject({ phase: "queued", position: 0 });
+    await setPause("billing", null, "no credit left on the anthropic account");
+    const paused = await getAssessmentStatus(s.id);
+    expect(paused?.phase).toBe("paused");
+    expect(paused?.message).not.toMatch(/credit|anthropic|billing/i);
+    await clearPause(null);
+    await db.submission.update({ where: { id: s.id }, data: { status: "EVALUATING" } });
+    expect((await getAssessmentStatus(s.id))?.phase).toBe("running");
+    await db.submission.update({ where: { id: s.id }, data: { status: "EVALUATED" } });
+    expect((await getAssessmentStatus(s.id))?.phase).toBe("finished");
+  });
+
+  it("a retry is owner-only", async () => {
+    const { retryEvaluation } = await import("../src/lib/submissions");
+    const owner = await makeUser(); const other = await makeUser();
+    const s = await makeSubmission(owner);
+    expect(await retryEvaluation(other, s.id)).toEqual({ queued: false });
+    expect(await db.evaluationJob.count({ where: { submissionId: s.id } })).toBe(0);
+  });
+
+  it("shows 'needs a person' after a final failure", async () => {
+    const { getAssessmentStatus } = await import("../src/lib/jobs/status");
+    const s = await sub("[fake:error=refusal]");
+    const { job } = await enqueue(s.id);
+    await claimNext("w");
+    await failFinal(job.id, "refusal", "declined");
+    await db.submission.update({ where: { id: s.id }, data: { status: "FAILED_TO_EVALUATE" } });
+    const st = await getAssessmentStatus(s.id);
+    expect(st?.phase).toBe("attention");
+    expect(st?.message).toMatch(/person/);
+  });
+});
