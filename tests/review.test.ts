@@ -26,7 +26,7 @@ async function failedSubmission(marker = "[fake:score=60]", changes?: string) {
 }
 async function submit(u: string, marker: string, changes?: string) {
   const { submissionId } = await createSubmission(u, assignmentId, {
-    files: [{ role: "final", name: "p.png", data: await img(800, 1200) }, { role: "preview", name: "s.png", data: await img(267, 400) }],
+    files: [{ slot: "final", name: "p.png", data: await img(800, 1200) }, { slot: "preview", name: "s.png", data: await img(267, 400) }],
     rationale: `${RATIONALE} ${marker}`, changesNote: changes,
   });
   const out = await evaluateSubmission(submissionId, { provider: fake });

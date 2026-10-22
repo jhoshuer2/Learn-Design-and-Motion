@@ -69,8 +69,8 @@ export default async function ReviewAppeal({ params, searchParams }: { params: {
         {files.map((f, i) => (
           <figure key={i} className="rounded border border-line bg-raised p-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/api/submissions/${sub.id}/files/${i}`} alt={`${f.role} image: ${f.name}`} className="max-h-96 w-full object-contain" />
-            <figcaption className="mt-2 text-sm text-muted">{f.role} · {f.width}×{f.height}px</figcaption>
+            <img src={`/api/submissions/${sub.id}/files/${i}`} alt={`${f.slot} image: ${f.name}`} className="max-h-96 w-full object-contain" />
+            <figcaption className="mt-2 text-sm text-muted">{f.slot} · {f.width}×{f.height}px</figcaption>
           </figure>
         ))}
       </section>

@@ -15,13 +15,18 @@ type Brief = {
   deliverables: { key: string; label: string; description: string; role: string; required: boolean }[];
 };
 
-const DENIED: Record<AssignmentDenied | "changes_note_required" | "no_files" | "rationale_too_long", string> = {
+const DENIED: Record<AssignmentDenied | "changes_note_required" | "no_files" | "rationale_too_long" | "unknown_deliverable" | "duplicate_deliverable", string> = {
   not_found: "This assessment does not exist.",
   not_published: "This assessment is not available yet.",
   not_enrolled: "Enroll in this learning path to open its assessment.",
+  level_locked: "This level opens when you complete the previous level.",
   lessons_incomplete: "Complete every lesson in this module first.",
+  modules_incomplete: "Finish every module in this level first, including its assessment.",
+  remediation_required: "You have used all your attempts. Complete targeted remediation to earn more.",
+  unknown_deliverable: "That file does not match anything this assessment asks for.",
+  duplicate_deliverable: "Each deliverable can be uploaded once.",
   already_passed: "You have already passed this assessment.",
-  no_attempts_left: "You have used all your attempts. You can appeal your last result for human review.",
+  no_attempts_left: "You have used all your attempts and any remediation resets. You can appeal your last result for human review.",
   in_progress: "You already have a submission being assessed.",
   retry_evaluation: "Your last submission could not be assessed. Open it to retry; this does not use up an attempt.",
   changes_note_required: "Tell us what you changed since the last attempt (at least a few words).",
@@ -33,10 +38,13 @@ async function submitWork(formData: FormData) {
   "use server";
   const user = await requireUser();
   const assignmentId = String(formData.get("assignmentId"));
+  // Fields are the assignment's own deliverable keys. The server maps each to a role; the client cannot choose one.
+  const asg = await db.assignment.findUnique({ where: { id: assignmentId } });
+  const defs = ((asg?.brief ?? {}) as { deliverables?: { key: string }[] }).deliverables ?? [];
   const files: UploadedFile[] = [];
-  for (const role of ["final", "preview", "process"] as const) {
-    const f = formData.get(role);
-    if (f instanceof File && f.size > 0) files.push({ role, name: f.name, data: Buffer.from(await f.arrayBuffer()) });
+  for (const d of defs) {
+    const f = formData.get(d.key);
+    if (f instanceof File && f.size > 0) files.push({ slot: d.key, name: f.name, data: Buffer.from(await f.arrayBuffer()) });
   }
 
   let target = `/learn/assignment/${assignmentId}`;
@@ -64,7 +72,7 @@ export default async function AssignmentPage({
   });
   const access = await getAssignmentAccess(user.id, params.assignmentId);
   const blocked = !a ? "not_found"
-    : !access.allowed && ["not_found", "not_published", "not_enrolled"].includes(access.reason) ? access.reason : null;
+    : !access.allowed && ["not_found", "not_published", "not_enrolled", "level_locked"].includes(access.reason) ? access.reason : null;
   if (!a || blocked) {
     return (
       <div className="mx-auto max-w-xl px-6 py-24">
@@ -83,7 +91,7 @@ export default async function AssignmentPage({
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <nav className="text-sm"><Link href="/learn" className="underline">My learning</Link></nav>
-      <p className="mt-6 text-sm uppercase tracking-widest text-muted">Module assessment</p>
+      <p className="mt-6 text-sm uppercase tracking-widest text-muted">{a.kind === "CAPSTONE" ? "Level capstone" : "Module assessment"}</p>
       <h1 className="mt-1 font-display text-4xl">{a.title}</h1>
       <p className="mt-3 max-w-measure text-muted">{a.objective}</p>
       <p className="mt-2 text-sm text-muted">About {a.estimatedMinutes} minutes · difficulty {a.difficulty} of 5 · pass mark {rv.threshold}%</p>
@@ -135,12 +143,14 @@ export default async function AssignmentPage({
           <form action={submitWork} encType="multipart/form-data" className="mt-4 space-y-5">
             <input type="hidden" name="assignmentId" value={a.id} />
             {amending && <p className="rounded border border-line bg-raised p-3 text-sm">Your last submission needs more evidence. Add the missing items below and it will be assessed again. This does not use another attempt.</p>}
-            <div><label htmlFor="final" className="block text-sm font-medium">Final poster (required)</label>
-              <input id="final" name="final" type="file" accept="image/png,image/jpeg,image/webp" required className="mt-1 block min-h-11" /></div>
-            <div><label htmlFor="preview" className="block text-sm font-medium">Small-scale preview (required, about 400 px on the long side)</label>
-              <input id="preview" name="preview" type="file" accept="image/png,image/jpeg,image/webp" className="mt-1 block min-h-11" /></div>
-            <div><label htmlFor="process" className="block text-sm font-medium">Process image (optional)</label>
-              <input id="process" name="process" type="file" accept="image/png,image/jpeg,image/webp" className="mt-1 block min-h-11" /></div>
+            {brief.deliverables.map((d) => (
+              <div key={d.key}>
+                <label htmlFor={d.key} className="block text-sm font-medium">{d.label} ({d.required ? "required" : "optional"})</label>
+                <p id={`${d.key}-hint`} className="text-sm text-muted">{d.description}</p>
+                {/* Only the first required file is browser-required: a missing one is reported by the server as needs-evidence. */}
+                <input id={d.key} name={d.key} type="file" accept="image/png,image/jpeg,image/webp" aria-describedby={`${d.key}-hint`} className="mt-1 block min-h-11" />
+              </div>
+            ))}
             <div><label htmlFor="rationale" className="block text-sm font-medium">Rationale: explain three design decisions and how each uses contrast</label>
               <textarea id="rationale" name="rationale" required rows={6} maxLength={4000} className="mt-1 w-full rounded border border-line bg-raised p-3" /></div>
             {!amending && access.attemptsUsed > 0 && (

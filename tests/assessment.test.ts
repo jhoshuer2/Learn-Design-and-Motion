@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { runChecks } from "../src/lib/assessment/checks";
+import { runChecks, type Deliverable } from "../src/lib/assessment/checks";
 import { NotConfiguredProvider, ProviderNotConfiguredError, getProvider } from "../src/lib/assessment/provider";
 import { InvalidEvaluationError, computeResult, type RubricDef } from "../src/lib/assessment/scoring";
 import { modelOutput } from "../src/lib/assessment/schema";
@@ -92,24 +92,29 @@ describe("model output schema", () => {
 });
 
 describe("deterministic checks", () => {
+  const D: Deliverable[] = [
+    { key: "final", label: "Final poster", description: "Export of the poster.", role: "final", required: true },
+    { key: "preview", label: "Small-scale preview", description: "The poster at about 400 px.", role: "preview", required: true },
+    { key: "process", label: "Process image", description: "Optional.", role: "process", required: false },
+  ];
   const f = (role: "final" | "preview", w: number, h: number) =>
     ({ key: "k", name: "n", mime: "image/png", size: 1, sha256: "x", width: w, height: h, role }) as const;
   const words = (n: number) => Array(n).fill("word").join(" ");
 
   it("blocks on a missing preview, final, or rationale", () => {
-    expect(runChecks([f("final", 800, 1200)], words(30)).missingEvidence.join(" ")).toMatch(/preview/);
-    expect(runChecks([f("preview", 200, 300)], words(30)).missingEvidence.join(" ")).toMatch(/final poster/);
-    expect(runChecks([f("final", 800, 1200), f("preview", 200, 300)], words(5)).missingEvidence.join(" ")).toMatch(/rationale/);
+    expect(runChecks([f("final", 800, 1200)], words(30), D).missingEvidence.join(" ")).toMatch(/preview/);
+    expect(runChecks([f("preview", 200, 300)], words(30), D).missingEvidence.join(" ")).toMatch(/Final poster/);
+    expect(runChecks([f("final", 800, 1200), f("preview", 200, 300)], words(5), D).missingEvidence.join(" ")).toMatch(/rationale/);
   });
 
   it("reports facts when complete", () => {
-    const c = runChecks([f("final", 800, 1200), f("preview", 267, 400)], words(25));
+    const c = runChecks([f("final", 800, 1200), f("preview", 267, 400)], words(25), D);
     expect(c).toMatchObject({ missingEvidence: [], previewIsSmaller: true, aspectRatioMatches: true, rationaleWords: 25 });
   });
 
   it("notes a preview that is not smaller or not the same shape", () => {
-    expect(runChecks([f("final", 800, 1200), f("preview", 800, 1200)], words(25)).previewIsSmaller).toBe(false);
-    expect(runChecks([f("final", 800, 1200), f("preview", 400, 400)], words(25)).aspectRatioMatches).toBe(false);
+    expect(runChecks([f("final", 800, 1200), f("preview", 800, 1200)], words(25), D).previewIsSmaller).toBe(false);
+    expect(runChecks([f("final", 800, 1200), f("preview", 400, 400)], words(25), D).aspectRatioMatches).toBe(false);
   });
 });
 

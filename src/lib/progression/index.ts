@@ -1,6 +1,11 @@
-import type { Prisma, PublishStatus } from "@prisma/client";
+import type { LevelTier, Prisma, PublishStatus } from "@prisma/client";
 import { db } from "@/lib/db";
 import { competencyScores, scoreQuiz } from "./scoring";
+import { EXTRA_ATTEMPTS_PER_RESET, MAX_RESETS, incompleteLessons, visibleStatuses } from "./common";
+import { assessLevel, completeLevelIfEligible, isLevelOpen, recheckLevelsAfterEvidence, type BlockedBy, type CompetencyCheck } from "./level";
+import type { NextStep } from "./links";
+
+export { visibleStatuses };
 
 /**
  * The single server-side authority for lesson access and progression.
@@ -13,12 +18,7 @@ export const REQUIRED_KINDS = ["objective", "concept", "demo", "realWorld", "goo
 
 export type StoredBlock = { kind: string; title: string; body: string };
 
-/** Published content is always visible. Draft content is visible only when CONTENT_PREVIEW=true (dev/staging). */
-export function visibleStatuses(): PublishStatus[] {
-  return process.env.CONTENT_PREVIEW === "true" ? ["PUBLISHED", "IN_REVIEW", "DRAFT"] : ["PUBLISHED"];
-}
-
-export type AccessDenied = "not_found" | "not_published" | "not_enrolled" | "prerequisites";
+export type AccessDenied = "not_found" | "not_published" | "not_enrolled" | "prerequisites" | "level_locked";
 export type LessonAccess =
   | { allowed: true; lesson: LessonRecord }
   | { allowed: false; reason: AccessDenied; missing?: string[] };
@@ -59,6 +59,7 @@ export async function getLessonAccess(userId: string, lessonId: string): Promise
     where: { userId_pathId: { userId, pathId: lesson.module.level.pathId } },
   });
   if (!enrolled) return { allowed: false, reason: "not_enrolled" };
+  if (!(await isLevelOpen(db, userId, lesson.module.level))) return { allowed: false, reason: "level_locked" };
   const { missing } = await completedPrerequisiteSlugs(userId, lesson);
   if (missing.length > 0) return { allowed: false, reason: "prerequisites", missing };
   return { allowed: true, lesson };
@@ -135,6 +136,7 @@ export async function submitCheck(userId: string, lessonId: string, answers: Rec
   });
   if (passed) await db.blockView.createMany({ data: [{ userId, lessonId, blockIndex: checkIndex }], skipDuplicates: true });
   const completed = passed ? await tryCompleteLesson(userId, lesson) : false;
+  if (perCompetency.length > 0) await recheckLevelsAfterEvidence(userId);
   return { attemptId: attempt.id, score, passed, threshold, completed };
 }
 
@@ -219,26 +221,55 @@ export type LessonNode = {
   missing: string[];
 };
 export type AssessmentNode = {
-  id: string; title: string; state: "locked" | "available" | "in_progress" | "passed" | "needs_work";
+  id: string; title: string; state: "locked" | "available" | "in_progress" | "passed" | "needs_work" | "remediation";
   missing: string[]; attemptsUsed: number; maxAttempts: number;
 };
 export type ModuleNode = { id: string; title: string; lessons: LessonNode[]; assessment: AssessmentNode | null; complete: boolean };
+export type LevelNode = {
+  id: string | null; tier: LevelTier; title: string; scopeNote: string;
+  state: "complete" | "active" | "locked" | "not_authored";
+  /** The previous level is complete, so this one is open to the learner (even if it has no content yet). */
+  unlocked: boolean;
+  modules: ModuleNode[]; capstone: AssessmentNode | null;
+  checks: CompetencyCheck[]; blockedBy: BlockedBy[];
+};
 export type Timeline = {
-  pathTitle: string; modules: ModuleNode[];
-  next: { lessonId: string; title: string } | { assignmentId: string; title: string } | null;
+  pathTitle: string;
+  levels: LevelNode[];
+  /** Every authored module across levels, in order. */
+  modules: ModuleNode[];
+  next: NextStep | null;
 };
 
-/** Per-learner timeline for a path. Beginner-level only until level gating lands in M4. */
+const TIER_ORDER: LevelTier[] = ["BEGINNER", "INTERMEDIATE", "ADVANCED", "PROFESSIONAL"];
+const titleCase = (t: string) => t.charAt(0) + t.slice(1).toLowerCase();
+
+function assessmentState(acc: AssignmentAccess): AssessmentNode["state"] {
+  if (acc.allowed) return acc.amending ? "in_progress" : "available";
+  switch (acc.reason) {
+    case "already_passed": return "passed";
+    case "in_progress": case "retry_evaluation": return "in_progress";
+    case "remediation_required": return "remediation";
+    case "no_attempts_left": return "needs_work";
+    default: return "locked";
+  }
+}
+
+/** Per-learner timeline for a path: every level, with its modules, capstone and requirement status. */
 export async function getTimeline(userId: string, pathId: string): Promise<Timeline | null> {
   const path = await db.path.findUnique({
     where: { id: pathId },
     include: {
-      levels: { where: { tier: "BEGINNER" }, include: { modules: { where: { status: { in: visibleStatuses() } }, orderBy: { position: "asc" } } } },
+      levels: { where: { status: { in: visibleStatuses() } }, include: { modules: { where: { status: { in: visibleStatuses() } }, orderBy: { position: "asc" } } } },
     },
   });
   if (!path) return null;
+  path.levels.sort((x, y) => TIER_ORDER.indexOf(x.tier) - TIER_ORDER.indexOf(y.tier));
   const modules: ModuleNode[] = [];
+  const levels: LevelNode[] = [];
+  const full_cache = new Map<LevelTier, boolean>();
   for (const level of path.levels) {
+    const levelModules: ModuleNode[] = [];
     for (const m of level.modules) {
       const all = await db.lesson.findMany({
         where: { moduleId: m.id, status: { in: visibleStatuses() } },
@@ -262,24 +293,57 @@ export async function getTimeline(userId: string, pathId: string): Promise<Timel
       let assessment: AssessmentNode | null = null;
       if (asg) {
         const acc = await getAssignmentAccess(userId, asg.id);
-        const state: AssessmentNode["state"] = acc.allowed ? (acc.amending ? "in_progress" : "available")
-          : acc.reason === "already_passed" ? "passed"
-          : acc.reason === "in_progress" || acc.reason === "retry_evaluation" ? "in_progress"
-          : acc.reason === "no_attempts_left" ? "needs_work" : "locked";
+        const state = assessmentState(acc);
         assessment = {
           id: asg.id, title: asg.title, state, missing: !acc.allowed && acc.missing ? acc.missing : [],
           attemptsUsed: acc.attemptsUsed ?? 0, maxAttempts: acc.maxAttempts ?? asg.maxAttempts ?? 3,
         };
       }
       const lessonsDone = lessons.length > 0 && lessons.every((l) => l.state === "completed");
-      modules.push({ id: m.id, title: m.title, lessons, assessment, complete: lessonsDone && (!assessment || assessment.state === "passed") });
+      levelModules.push({ id: m.id, title: m.title, lessons, assessment, complete: lessonsDone && (!assessment || assessment.state === "passed") });
     }
+    modules.push(...levelModules);
+
+    const la = await assessLevel(db, userId, level.id);
+    const capDef = await db.assignment.findFirst({ where: { levelId: level.id, moduleId: null, kind: "CAPSTONE", status: { in: visibleStatuses() } } });
+    let capstone: AssessmentNode | null = null;
+    if (capDef) {
+      const acc = await getAssignmentAccess(userId, capDef.id);
+      capstone = {
+        id: capDef.id, title: capDef.title, state: assessmentState(acc), missing: !acc.allowed && acc.missing ? acc.missing : [],
+        attemptsUsed: acc.attemptsUsed ?? 0, maxAttempts: acc.maxAttempts ?? capDef.maxAttempts ?? 3,
+      };
+    }
+    levels.push({
+      id: level.id, tier: level.tier, title: level.scopeLabel ?? titleCase(level.tier), scopeNote: level.scopeNote ?? "",
+      state: la?.complete ? "complete" : "active", unlocked: true, modules: levelModules, capstone,
+      checks: la?.checks ?? [], blockedBy: la?.blockedBy ?? [],
+    });
   }
-  const nextLesson = modules.flatMap((m) => m.lessons).find((l) => l.state === "active" || l.state === "available");
-  const nextAssessment = modules.map((m) => m.assessment).find((a) => a && (a.state === "available" || a.state === "in_progress"));
-  const next = nextLesson ? { lessonId: nextLesson.id, title: nextLesson.title }
-    : nextAssessment ? { assignmentId: nextAssessment.id, title: nextAssessment.title } : null;
-  return { pathTitle: path.title, modules, next };
+
+  // A level is open only when the one before it is complete. Tiers with no authored content are shown honestly.
+  const authored = new Map(levels.map((l) => [l.tier, l]));
+  const full: LevelNode[] = TIER_ORDER.map((tier, i) => {
+    const prev = i === 0 ? null : TIER_ORDER[i - 1];
+    const prevComplete = prev === null ? true : (full_cache.get(prev) ?? false);
+    const node = authored.get(tier);
+    const result: LevelNode = node
+      ? { ...node, unlocked: prevComplete, state: node.state === "complete" ? "complete" : prevComplete ? "active" : "locked" }
+      : { id: null, tier, title: titleCase(tier), scopeNote: "No lessons or assessments have been written for this level yet.", state: "not_authored", unlocked: prevComplete, modules: [], capstone: null, checks: [], blockedBy: [] };
+    full_cache.set(tier, result.state === "complete");
+    return result;
+  });
+
+  const openLevels = full.filter((l) => l.state === "active");
+  const nextLesson = openLevels.flatMap((l) => l.modules).flatMap((m) => m.lessons).find((l) => l.state === "active" || l.state === "available");
+  const nextAssessment = openLevels.flatMap((l) => l.modules).map((m) => m.assessment).find((a) => a && (a.state === "available" || a.state === "in_progress"));
+  const cap = openLevels.map((l) => l.capstone).find((c) => c && (c.state === "available" || c.state === "in_progress" || c.state === "remediation"));
+  const blockedLevel = openLevels.find((l) => l.id && l.capstone?.state === "passed" && l.blockedBy.length > 0);
+  const next: NextStep | null = nextLesson ? { lessonId: nextLesson.id, title: nextLesson.title }
+    : nextAssessment ? { assignmentId: nextAssessment.id, title: nextAssessment.title }
+    : cap ? (cap.state === "remediation" ? { remediationFor: cap.id, title: `Remediation for ${cap.title}` } : { assignmentId: cap.id, title: cap.title })
+    : blockedLevel ? { levelId: blockedLevel.id!, title: `Finish requirements for ${blockedLevel.title}` } : null;
+  return { pathTitle: path.title, levels: full, modules, next };
 }
 
 /** Competencies whose most recent evidence is below the pass mark. Evidence-based, not time-based. */
@@ -334,14 +398,19 @@ export async function applyEvaluation(client: Prisma.TransactionClient, evaluati
       });
     }
   }
-  return { applied: true as const, passed: ev.passed, newlyCompleted };
+  // A passing capstone is the only thing that can lead to a level unlock, and the gate re-derives everything itself.
+  let level: Awaited<ReturnType<typeof completeLevelIfEligible>> | null = null;
+  if (ev.passed && assignment.kind === "CAPSTONE" && assignment.levelId) {
+    level = await completeLevelIfEligible(client, userId, assignment.levelId);
+  }
+  return { applied: true as const, passed: ev.passed, newlyCompleted, level };
 }
 
 // ───────── Assignment access
 
 export type AssignmentDenied =
-  | "not_found" | "not_published" | "not_enrolled" | "lessons_incomplete"
-  | "already_passed" | "no_attempts_left" | "in_progress" | "retry_evaluation";
+  | "not_found" | "not_published" | "not_enrolled" | "level_locked" | "lessons_incomplete" | "modules_incomplete"
+  | "already_passed" | "no_attempts_left" | "remediation_required" | "in_progress" | "retry_evaluation";
 
 export type AssignmentAccess =
   | { allowed: true; assignmentId: string; attempt: number; attemptsUsed: number; maxAttempts: number; amending: { id: string } | null }
@@ -349,40 +418,41 @@ export type AssignmentAccess =
 
 const OPEN_STATUSES = ["SUBMITTED", "EVALUATING", "FAILED_TO_EVALUATE", "NEEDS_EVIDENCE", "IN_HUMAN_REVIEW"] as const;
 
-/** Titles of lessons in a module the learner has not completed (latest visible version of each lesson). */
-async function incompleteLessons(userId: string, moduleId: string) {
-  const all = await db.lesson.findMany({
-    where: { moduleId, status: { in: visibleStatuses() } },
-    orderBy: [{ position: "asc" }, { version: "desc" }],
-  });
-  const latest = [...new Map(all.map((l) => [l.slug, l])).values()];
-  const everyVersion = await db.lesson.findMany({ where: { moduleId }, select: { id: true, slug: true } });
-  const done = await db.progress.findMany({
-    where: { userId, nodeType: "LESSON", state: "COMPLETED", nodeId: { in: everyVersion.map((l) => l.id) } },
-    select: { nodeId: true },
-  });
-  const doneSlugs = new Set(everyVersion.filter((l) => done.some((d) => d.nodeId === l.id)).map((l) => l.slug));
-  return latest.filter((l) => !doneSlugs.has(l.slug)).map((l) => l.title);
-}
-
 /**
  * May this learner start (or amend) a submission for this assignment right now? Server-side authority for
- * the assignment gate: published, enrolled, every module lesson complete, not already passed, attempts left,
- * and no half-finished submission. Attempts are consumed only by completed evaluations, so a failed
- * evaluation or a request for more evidence never costs the learner an attempt.
+ * the assignment gate: published, enrolled, prerequisites complete (a module assessment needs its module's
+ * lessons; a capstone needs every module in its level complete, assessments included), not already passed,
+ * attempts left, and no half-finished submission. Attempts are consumed only by completed evaluations, so a
+ * failed evaluation or a request for more evidence never costs the learner an attempt. A capstone that has
+ * used every attempt needs completed remediation, which grants extra attempts once per reset.
  */
 export async function getAssignmentAccess(userId: string, assignmentId: string): Promise<AssignmentAccess> {
-  const a = await db.assignment.findUnique({ where: { id: assignmentId }, include: { module: { include: { level: true } } } });
-  if (!a || !a.module) return { allowed: false, reason: "not_found" };
+  const a = await db.assignment.findUnique({
+    where: { id: assignmentId },
+    include: { module: { include: { level: true } }, level: true },
+  });
+  const level = a?.module?.level ?? a?.level;
+  if (!a || !level) return { allowed: false, reason: "not_found" };
   const visible = visibleStatuses();
-  if (!visible.includes(a.status) || !visible.includes(a.module.status)) return { allowed: false, reason: "not_published" };
-  const enrolled = await db.enrollment.findUnique({ where: { userId_pathId: { userId, pathId: a.module.level.pathId } } });
+  if (!visible.includes(a.status) || (a.module && !visible.includes(a.module.status)) || !visible.includes(level.status)) {
+    return { allowed: false, reason: "not_published" };
+  }
+  const enrolled = await db.enrollment.findUnique({ where: { userId_pathId: { userId, pathId: level.pathId } } });
   if (!enrolled) return { allowed: false, reason: "not_enrolled" };
+  if (!(await isLevelOpen(db, userId, level))) return { allowed: false, reason: "level_locked" };
 
-  const missing = await incompleteLessons(userId, a.module.id);
-  if (missing.length > 0) return { allowed: false, reason: "lessons_incomplete", missing };
+  if (a.kind === "CAPSTONE") {
+    const la = await assessLevel(db, userId, level.id);
+    const incomplete = la?.modules.filter((m) => !m.complete).map((m) => m.title) ?? [];
+    if (incomplete.length > 0) return { allowed: false, reason: "modules_incomplete", missing: incomplete };
+  } else if (a.module) {
+    const missing = await incompleteLessons(db, userId, a.module.id);
+    if (missing.length > 0) return { allowed: false, reason: "lessons_incomplete", missing };
+  }
 
-  const maxAttempts = a.maxAttempts ?? 3;
+  const base = a.maxAttempts ?? 3;
+  const resets = a.kind === "CAPSTONE" ? await db.remediation.count({ where: { userId, assignmentId: a.id, status: "COMPLETED" } }) : 0;
+  const maxAttempts = base + resets * EXTRA_ATTEMPTS_PER_RESET;
   const passed = await db.progress.findUnique({ where: { userId_nodeType_nodeId: { userId, nodeType: "ASSIGNMENT", nodeId: a.id } } });
   const subs = await db.submission.findMany({ where: { userId, assignmentId: a.id }, include: { evaluations: { select: { status: true } } } });
   const attemptsUsed = subs.filter((s) => s.evaluations.some((e) => e.status === "complete")).length;
@@ -395,7 +465,11 @@ export async function getAssignmentAccess(userId: string, assignmentId: string):
   if (open?.status === "FAILED_TO_EVALUATE") return { allowed: false, reason: "retry_evaluation", submissionId: open.id, attemptsUsed, maxAttempts };
   if (open) return { allowed: false, reason: "in_progress", submissionId: open.id, attemptsUsed, maxAttempts };
 
-  if (attemptsUsed >= maxAttempts) return { allowed: false, reason: "no_attempts_left", attemptsUsed, maxAttempts };
+  if (attemptsUsed >= maxAttempts) {
+    // Capstone only: targeted remediation earns more attempts, once per reset. Otherwise it is human review only.
+    if (a.kind === "CAPSTONE" && resets < MAX_RESETS) return { allowed: false, reason: "remediation_required", attemptsUsed, maxAttempts };
+    return { allowed: false, reason: "no_attempts_left", attemptsUsed, maxAttempts };
+  }
   const attempt = subs.reduce((n, s) => Math.max(n, s.attempt), 0) + 1;
   return { allowed: true, assignmentId: a.id, attempt, attemptsUsed, maxAttempts, amending: null };
 }

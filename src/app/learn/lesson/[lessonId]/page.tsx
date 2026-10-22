@@ -18,6 +18,7 @@ const DENIED: Record<string, string> = {
   not_published: "This lesson is not available yet.",
   not_enrolled: "Enroll in this learning path to open its lessons.",
   prerequisites: "This lesson is locked until you complete its prerequisites.",
+  level_locked: "This level opens when you complete the previous level.",
   out_of_order: "Work through the lesson in order.",
   no_check: "This lesson has no knowledge check.",
 };

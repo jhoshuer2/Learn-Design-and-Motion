@@ -18,8 +18,8 @@ let uploadDir: string;
 
 const img = (w: number, h: number) => sharp({ create: { width: w, height: h, channels: 3, background: "#aa3322" } }).png().toBuffer();
 async function files(preview = true): Promise<UploadedFile[]> {
-  const f: UploadedFile[] = [{ role: "final", name: "poster.png", data: await img(800, 1200) }];
-  if (preview) f.push({ role: "preview", name: "small.png", data: await img(267, 400) });
+  const f: UploadedFile[] = [{ slot: "final", name: "poster.png", data: await img(800, 1200) }];
+  if (preview) f.push({ slot: "preview", name: "small.png", data: await img(267, 400) });
   return f;
 }
 const rationale = (marker = "") => `${RATIONALE} ${marker}`;
@@ -71,7 +71,7 @@ describe("creating submissions", () => {
   it("rejects an invalid image without creating a submission or leaving files behind", async () => {
     const u = await ready();
     const before = (await fs.readdir(uploadDir)).length;
-    const bad: UploadedFile[] = [{ role: "final", name: "poster.png", data: Buffer.from("MZ not an image") }];
+    const bad: UploadedFile[] = [{ slot: "final", name: "poster.png", data: Buffer.from("MZ not an image") }];
     expect(await codeOf(createSubmission(u, assignmentId, { files: bad, rationale: rationale() }))).toBe("corrupt");
     expect(await db.submission.count({ where: { userId: u } })).toBe(0);
     expect((await fs.readdir(uploadDir)).length).toBe(before);

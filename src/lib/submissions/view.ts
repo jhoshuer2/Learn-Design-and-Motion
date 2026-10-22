@@ -1,8 +1,9 @@
 import type { Role } from "@prisma/client";
 import { db } from "@/lib/db";
-import { visibleStatuses, getAssignmentAccess, type AssignmentAccess } from "@/lib/progression";
+import { getAssignmentAccess, type AssignmentAccess } from "@/lib/progression";
+import { remediationLessons } from "@/lib/progression/remediation";
 import { FAKE_PROVIDER_NAME } from "@/lib/assessment/provider";
-import { canReadSubmission, type StoredFile } from "./access";
+import { canReadSubmission, slotOf, type StoredFile } from "./access";
 
 export type CriterionView = {
   key: string; title: string; weight: number; mandatory: boolean; minScore: number | null;
@@ -14,7 +15,7 @@ export type SubmissionView = {
   id: string; attempt: number; status: string; rationale: string | null; changesNote: string | null;
   isOwner: boolean;
   assignment: { id: string; title: string; maxAttempts: number };
-  files: { idx: number; name: string; role: string; width: number; height: number }[];
+  files: { idx: number; name: string; slot: string; label: string; width: number; height: number }[];
   evaluation: null | {
     id: string; status: string; provider: string; isTestEvaluator: boolean; model: string | null;
     score: number | null; passed: boolean | null; threshold: number; confidence: string | null; reviewFlag: boolean;
@@ -27,6 +28,9 @@ export type SubmissionView = {
   canAppeal: boolean;
   access: AssignmentAccess | null; // for the owner: can they retry / resubmit?
 };
+
+const labelFor = (brief: unknown, slot: string) =>
+  (brief as { deliverables?: { key: string; label: string }[] }).deliverables?.find((d) => d.key === slot)?.label ?? slot;
 
 const arr = (v: unknown): string[] => (Array.isArray(v) ? v.map(String) : []);
 
@@ -59,25 +63,14 @@ export async function getSubmissionView(viewer: { id: string; role: Role }, subm
       })
     : [];
 
-  // Remediation: weak criteria (below 70, or below a mandatory minimum) -> competency -> the lessons that teach it.
-  const weak = rv.criteria.filter((c) => {
-    const v = criteria.find((x) => x.key === c.key);
-    return !!c.competencyId && !!v && (v.score < 70 || v.belowMinimum);
-  });
-  const compIds = [...new Set(weak.map((c) => c.competencyId).filter((x): x is string => !!x))];
-  const links = compIds.length
-    ? await db.lessonCompetency.findMany({
-        where: { competencyId: { in: compIds }, lesson: { status: { in: visibleStatuses() } } },
-        include: { lesson: true, competency: true },
-      })
-    : [];
-  const remediation = [...new Map(links.map((l) => [l.lesson.slug, { lessonId: l.lesson.id, title: l.lesson.title, competency: l.competency.title }])).values()];
+  // Targeted practice: the lessons that teach what this evaluation found weak (shared with remediation).
+  const remediation = ev?.status === "complete" ? await remediationLessons(db, ev.id) : [];
 
   const isOwner = sub.userId === viewer.id;
   return {
     id: sub.id, attempt: sub.attempt, status: sub.status, rationale: sub.rationale, changesNote: sub.changesNote, isOwner,
     assignment: { id: sub.assignment.id, title: sub.assignment.title, maxAttempts: sub.assignment.maxAttempts ?? 3 },
-    files: (sub.files as unknown as StoredFile[]).map((f, idx) => ({ idx, name: f.name, role: f.role, width: f.width, height: f.height })),
+    files: (sub.files as unknown as StoredFile[]).map((f, idx) => ({ idx, name: f.name, slot: slotOf(f), label: labelFor(sub.assignment.brief, slotOf(f)), width: f.width, height: f.height })),
     evaluation: ev && {
       id: ev.id, status: ev.status, provider: ev.provider, isTestEvaluator: ev.provider === FAKE_PROVIDER_NAME, model: ev.model,
       score: ev.overallScore, passed: ev.passed, threshold: rv.threshold, confidence: ev.confidence, reviewFlag: ev.reviewFlag,

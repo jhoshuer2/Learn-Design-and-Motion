@@ -8,14 +8,15 @@ import type { StoredFile } from "./access";
 export const MAX_RATIONALE_CHARS = 4000;
 export const MIN_CHANGES_WORDS = 5;
 
-export type SubmitErrorCode = AssignmentDenied | "changes_note_required" | "no_files" | "rationale_too_long";
+export type SubmitErrorCode = AssignmentDenied | "changes_note_required" | "no_files" | "rationale_too_long" | "unknown_deliverable" | "duplicate_deliverable";
 export class SubmissionError extends Error {
   constructor(public code: SubmitErrorCode, public detail?: { missing?: string[]; submissionId?: string }) {
     super(`Cannot submit: ${code}`);
   }
 }
 
-export type UploadedFile = { role: StoredFile["role"]; name: string; data: Buffer };
+/** `slot` is a deliverable key from the assignment. The role is derived from the deliverable, never from the client. */
+export type UploadedFile = { slot: string; name: string; data: Buffer };
 
 const words = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
 
@@ -40,13 +41,23 @@ export async function createSubmission(
   if (input.files.length === 0) throw new SubmissionError("no_files");
   assertFileCount(input.files.length);
 
-  const validated = await Promise.all(input.files.map(async (f) => ({ role: f.role, v: await validateImage(f.name, f.data) })));
+  const asg = await db.assignment.findUniqueOrThrow({ where: { id: assignmentId } });
+  const defs = (asg.brief as unknown as { deliverables: { key: string; role: StoredFile["role"] }[] }).deliverables;
+  const seen = new Set<string>();
+  for (const f of input.files) {
+    if (!defs.some((d) => d.key === f.slot)) throw new SubmissionError("unknown_deliverable");
+    if (seen.has(f.slot)) throw new SubmissionError("duplicate_deliverable");
+    seen.add(f.slot);
+  }
+  const validated = await Promise.all(input.files.map(async (f) => ({
+    slot: f.slot, role: defs.find((d) => d.key === f.slot)!.role, v: await validateImage(f.name, f.data),
+  })));
   const storage = getStorage();
   const stored: StoredFile[] = [];
   try {
-    for (const { role, v } of validated) {
+    for (const { slot, role, v } of validated) {
       const key = await storage.put(v.buffer);
-      stored.push({ key, name: v.name, mime: v.mime, size: v.size, sha256: v.sha256, width: v.width, height: v.height, role });
+      stored.push({ key, slot, name: v.name, mime: v.mime, size: v.size, sha256: v.sha256, width: v.width, height: v.height, role });
     }
 
     if (access.amending) {

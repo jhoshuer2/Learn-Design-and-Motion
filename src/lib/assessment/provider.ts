@@ -6,7 +6,7 @@ export type EvaluationInput = {
     title: string; threshold: number;
     criteria: { key: string; title: string; description: string; weight: number; mandatory: boolean; minScore: number | null }[];
   };
-  images: { role: "final" | "preview" | "process"; name: string; width: number; height: number; mime: string; data: Buffer }[];
+  images: { slot: string; label: string; role: string; name: string; width: number; height: number; mime: string; data: Buffer }[];
   rationale: string;
   changesNote?: string | null;
   checks: DeterministicChecks;

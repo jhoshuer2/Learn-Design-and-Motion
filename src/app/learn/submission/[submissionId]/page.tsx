@@ -187,8 +187,8 @@ export default async function SubmissionPage({ params, searchParams }: { params:
           {v.files.map((f) => (
             <figure key={f.idx} className="rounded border border-line bg-raised p-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`/api/submissions/${v.id}/files/${f.idx}`} alt={`${f.role} image submitted by the learner: ${f.name}`} className="max-h-96 w-full object-contain" />
-              <figcaption className="mt-2 text-sm text-muted">{f.role} · {f.width}×{f.height}px</figcaption>
+              <img src={`/api/submissions/${v.id}/files/${f.idx}`} alt={`${f.label} submitted by the learner: ${f.name}`} className="max-h-96 w-full object-contain" />
+              <figcaption className="mt-2 text-sm text-muted">{f.label} · {f.width}×{f.height}px</figcaption>
             </figure>
           ))}
         </div>

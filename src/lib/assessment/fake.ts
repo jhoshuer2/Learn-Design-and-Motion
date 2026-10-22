@@ -10,6 +10,7 @@ import { FAKE_PROVIDER_NAME, type EvaluationInput, type EvaluationProvider, type
  *   [fake:mandatory]     all criteria 95 except "contrast" 40
  *   [fake:invalid]       returns malformed output
  *   [fake:evidence]      asks for more evidence
+ *   [fake:set=key:NN]    overrides one criterion's score (repeatable), applied after the above
  */
 export class FakeProvider implements EvaluationProvider {
   readonly name = FAKE_PROVIDER_NAME;
@@ -24,9 +25,10 @@ export class FakeProvider implements EvaluationProvider {
     const m = /\[fake:score=(\d{1,3})\]/.exec(r);
     const base = m ? Math.min(100, Number(m[1])) : 90;
     const mandatory = r.includes("[fake:mandatory]");
+    const overrides = new Map([...r.matchAll(/\[fake:set=([a-z0-9-]+):(\d{1,3})\]/g)].map((m) => [m[1], Math.min(100, Number(m[2]))] as const));
     const criteria = input.rubric.criteria.map((c) => ({
       criterionId: c.key,
-      score: mandatory ? (c.key === "contrast" ? 40 : 95) : base,
+      score: overrides.get(c.key) ?? (mandatory ? (c.key === "contrast" ? 40 : 95) : base),
       evidence: `Test evaluator: no image was inspected for ${c.title}.`,
       where: "Not applicable (test evaluator)",
       explanation: "This is a deterministic test result, not an assessment of the work.",

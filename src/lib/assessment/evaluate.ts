@@ -1,9 +1,9 @@
 import type { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { getStorage } from "@/lib/storage";
-import type { StoredFile } from "@/lib/submissions/access";
+import { slotOf, type StoredFile } from "@/lib/submissions/access";
 import { applyEvaluation } from "@/lib/progression";
-import { runChecks } from "./checks";
+import { runChecks, type Deliverable } from "./checks";
 import {
   ProviderNotConfiguredError, ProviderOutputError, ProviderRefusedError, getProvider,
   type EvaluationInput, type EvaluationProvider, type ProviderOutput,
@@ -49,9 +49,9 @@ export async function evaluateSubmission(submissionId: string, deps: { provider?
     db.submission.update({ where: { id: sub.id }, data: { status } });
 
   const files = sub.files as StoredFile[];
-  const checks = runChecks(files, sub.rationale ?? "");
+  const brief = sub.assignment.brief as { requirements: string[]; constraints: string[]; deliverables: Deliverable[] };
+  const checks = runChecks(files, sub.rationale ?? "", brief.deliverables);
   const rv = sub.assignment.rubricVersion;
-  const brief = sub.assignment.brief as { requirements: string[]; constraints: string[] };
 
   // 1. Nothing is sent to a model if required evidence is missing.
   if (checks.missingEvidence.length > 0) {
@@ -67,10 +67,13 @@ export async function evaluateSubmission(submissionId: string, deps: { provider?
 
   const provider = deps.provider ?? (await getProvider());
   const storage = getStorage();
-  const order = { final: 0, preview: 1, process: 2 } as const;
+  const position = (f: StoredFile) => {
+    const i = brief.deliverables.findIndex((d) => d.key === slotOf(f));
+    return i < 0 ? 99 : i;
+  };
   const images = await Promise.all(
-    [...files].sort((a, b) => order[a.role] - order[b.role]).map(async (f) => ({
-      role: f.role, name: f.name, width: f.width, height: f.height, mime: f.mime, data: await storage.get(f.key),
+    [...files].sort((a, b) => position(a) - position(b)).map(async (f) => ({
+      slot: slotOf(f), label: brief.deliverables.find((d) => d.key === slotOf(f))?.label ?? slotOf(f), role: f.role, name: f.name, width: f.width, height: f.height, mime: f.mime, data: await storage.get(f.key),
     })),
   );
   const input: EvaluationInput = {

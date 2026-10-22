@@ -29,7 +29,7 @@ const png = (w: number, h: number) => sharp({ create: { width: w, height: h, cha
 export async function storeImage(role: StoredFile["role"], w: number, h: number): Promise<StoredFile> {
   const buf = await png(w, h);
   const key = await getStorage().put(buf);
-  return { key, name: `${role}.png`, mime: "image/png", size: buf.length, sha256: "x".repeat(64), width: w, height: h, role };
+  return { key, slot: role, name: `${role}.png`, mime: "image/png", size: buf.length, sha256: "x".repeat(64), width: w, height: h, role };
 }
 
 export const RATIONALE =

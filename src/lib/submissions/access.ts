@@ -1,8 +1,15 @@
 import type { Role } from "@prisma/client";
 
+export type DeliverableRole = "final" | "preview" | "process" | "piece";
+
+export const slotOf = (f: { slot?: string; role: string }) => f.slot ?? f.role;
+
 export type StoredFile = {
   key: string; name: string; mime: string; size: number; sha256: string;
-  width: number; height: number; role: "final" | "preview" | "process";
+  width: number; height: number;
+  /** Which deliverable this file fulfils (the assignment deliverable key). Absent on pre-M4 rows: use role. */
+  slot?: string;
+  role: DeliverableRole;
 };
 
 /** Submissions and their files are private: the owner, or a reviewer/admin handling an appeal. */

@@ -1,4 +1,4 @@
-import type { StoredFile } from "@/lib/submissions/access";
+import { slotOf, type StoredFile } from "@/lib/submissions/access";
 
 /**
  * Deterministic facts, computed by code. They are given to the model as facts, and the blocking ones
@@ -6,9 +6,11 @@ import type { StoredFile } from "@/lib/submissions/access";
  */
 export const MIN_RATIONALE_WORDS = 20;
 
+export type Deliverable = { key: string; label: string; description: string; role: string; required: boolean };
+
 export type DeterministicChecks = {
-  hasFinal: boolean; hasPreview: boolean;
-  final?: { width: number; height: number }; preview?: { width: number; height: number };
+  files: { slot: string; role: string; width: number; height: number }[];
+  /** Only when the assignment has both a final and a preview deliverable. */
   previewIsSmaller?: boolean; aspectRatioMatches?: boolean;
   rationaleWords: number;
   missingEvidence: string[]; // blocking
@@ -16,23 +18,19 @@ export type DeterministicChecks = {
 
 const long = (f: { width: number; height: number }) => Math.max(f.width, f.height);
 
-export function runChecks(files: StoredFile[], rationale: string): DeterministicChecks {
-  const final = files.find((f) => f.role === "final");
-  const preview = files.find((f) => f.role === "preview");
+export function runChecks(files: StoredFile[], rationale: string, deliverables: Deliverable[]): DeterministicChecks {
+  const have = new Set(files.map(slotOf));
   const rationaleWords = rationale.trim().split(/\s+/).filter(Boolean).length;
-  const missingEvidence: string[] = [];
-  if (!final) missingEvidence.push("An image export of the final poster.");
-  if (!preview) missingEvidence.push("A small-scale preview image (about 400 px on the long side).");
+  const missingEvidence = deliverables.filter((d) => d.required && !have.has(d.key)).map((d) => `${d.label}: ${d.description}`);
   if (rationaleWords < MIN_RATIONALE_WORDS) {
     missingEvidence.push(`A written rationale of at least ${MIN_RATIONALE_WORDS} words explaining three design decisions.`);
   }
-  const both = final && preview;
+  const final = files.find((f) => f.role === "final");
+  const preview = files.find((f) => f.role === "preview");
   return {
-    hasFinal: !!final, hasPreview: !!preview,
-    final: final && { width: final.width, height: final.height },
-    preview: preview && { width: preview.width, height: preview.height },
-    previewIsSmaller: both ? long(preview) < long(final) : undefined,
-    aspectRatioMatches: both
+    files: files.map((f) => ({ slot: slotOf(f), role: f.role, width: f.width, height: f.height })),
+    previewIsSmaller: final && preview ? long(preview) < long(final) : undefined,
+    aspectRatioMatches: final && preview
       ? Math.abs(final.width / final.height - preview.width / preview.height) / (final.width / final.height) < 0.05
       : undefined,
     rationaleWords, missingEvidence,
