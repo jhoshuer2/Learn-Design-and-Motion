@@ -2,8 +2,10 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/session";
 import { getTimeline } from "@/lib/progression";
+import { nextHref } from "@/lib/progression/links";
 import { StateBadge, type NodeState } from "@/components/ui/StateBadge";
 
+const ASSESSMENT_BADGE: Record<string, NodeState> = { locked: "locked", available: "available", in_progress: "awaiting", passed: "completed", needs_work: "failed" };
 const BADGE: Record<string, NodeState> = { completed: "completed", active: "active", available: "available", locked: "locked" };
 
 export default async function MyLearning() {
@@ -20,7 +22,7 @@ export default async function MyLearning() {
         <section key={e.id} className="mt-10">
           <h2 className="font-display text-2xl">{e.path.discipline.title}: Beginner</h2>
           {t?.next ? (
-            <p className="mt-2">Next: <Link className="underline" href={`/learn/lesson/${t.next.lessonId}`}>{t.next.title}</Link></p>
+            <p className="mt-2">Next: <Link className="underline" href={nextHref(t.next)}>{t.next.title}</Link></p>
           ) : (
             <p className="mt-2 text-muted">No lesson is available to start right now.</p>
           )}
@@ -28,7 +30,7 @@ export default async function MyLearning() {
           {t?.modules.map((m) => (
             <div key={m.id} className="mt-6">
               <h3 className="font-medium">{m.title} {m.complete && <StateBadge state="completed" />}</h3>
-              {m.complete && <p className="mt-1 text-sm text-muted">Lessons complete. The module assessment arrives in a later milestone.</p>}
+              {m.complete && <p className="mt-1 text-sm text-muted">Module complete: lessons and assessment passed.</p>}
               <ol className="mt-3 divide-y divide-line border-y border-line">
                 {m.lessons.map((l) => (
                   <li key={l.id} className="flex items-center justify-between gap-4 py-3">
@@ -40,6 +42,18 @@ export default async function MyLearning() {
                     <StateBadge state={BADGE[l.state]} />
                   </li>
                 ))}
+                {m.assessment && (
+                  <li className="flex items-center justify-between gap-4 py-3">
+                    <div>
+                      {m.assessment.state === "locked" ? <span className="text-muted">Assessment: {m.assessment.title}</span>
+                        : <Link href={`/learn/assignment/${m.assessment.id}`} className="font-medium underline">Assessment: {m.assessment.title}</Link>}
+                      <p className="text-sm text-muted">
+                        {m.assessment.state === "locked" ? `Complete all lessons first.` : `${m.assessment.attemptsUsed} of ${m.assessment.maxAttempts} attempts used`}
+                      </p>
+                    </div>
+                    <StateBadge state={ASSESSMENT_BADGE[m.assessment.state]} />
+                  </li>
+                )}
               </ol>
             </div>
           ))}

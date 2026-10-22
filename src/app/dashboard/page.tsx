@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import Link from "next/link";
 import { requireUser } from "@/lib/session";
 import { getTimeline, getWeakCompetencies } from "@/lib/progression";
+import { nextHref } from "@/lib/progression/links";
 import { Button } from "@/components/ui/Button";
 import { StateBadge } from "@/components/ui/StateBadge";
 
@@ -51,7 +52,7 @@ export default async function Dashboard() {
         </div>
         <div>
           <h2 className="text-sm uppercase tracking-widest text-muted">Do next</h2>
-          {next ? <Link className="mt-2 inline-block underline" href={`/learn/lesson/${next.lessonId}`}>{next.title}</Link>
+          {next ? <Link className="mt-2 inline-block underline" href={nextHref(next)}>{next.title}</Link>
             : <p className="mt-2 text-muted">Enroll in a path to get a next step.</p>}
         </div>
         <div>
