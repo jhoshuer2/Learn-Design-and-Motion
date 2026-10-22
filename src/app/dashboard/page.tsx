@@ -31,7 +31,7 @@ async function logout() {
 export default async function Dashboard() {
   const user = await requireUser();
   const [paths, enrollments] = await Promise.all([
-    db.path.findMany({ include: { discipline: true, levels: { include: { modules: true } } } }),
+    db.path.findMany({ orderBy: [{ discipline: { title: "asc" } }, { title: "asc" }], include: { discipline: true, levels: { include: { modules: true } } } }),
     db.enrollment.findMany({ where: { userId: user.id } }),
   ]);
   const enrolled = new Set(enrollments.map((e) => e.pathId));

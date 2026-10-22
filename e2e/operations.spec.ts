@@ -24,7 +24,7 @@ async function learnerAtAssignment(browser: Browser) {
   const ctx = await browser.newContext();
   const page = await ctx.newPage();
   const email = await signUp(page, "Queue Learner");
-  await page.getByRole("button", { name: "Enroll" }).first().click();
+  await page.getByRole("listitem").filter({ hasText: "Graphic Design" }).getByRole("button", { name: "Enroll" }).click();
   await expect(page.getByText("In progress")).toBeVisible();
   const user = await db.user.findUniqueOrThrow({ where: { email } });
   const lessons = await db.lesson.findMany({ where: { module: { slug: "understanding-contrast" } }, select: { id: true } });

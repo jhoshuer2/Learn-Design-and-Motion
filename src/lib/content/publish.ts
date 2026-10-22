@@ -52,9 +52,9 @@ export async function publishContent(db: PrismaClient, content: LoadedContent) {
   const levelIds = new Map<string, string>();
   for (const lv of content.levels) {
     const d = lv.def;
-    const discipline = await db.discipline.upsert({ where: { slug: d.discipline }, update: {}, create: { slug: d.discipline, title: titleCase(d.discipline), description: "" } });
+    const discipline = await db.discipline.upsert({ where: { slug: d.discipline }, update: { title: titleCase(d.discipline) }, create: { slug: d.discipline, title: titleCase(d.discipline), description: "" } });
     const path = await db.path.upsert({
-      where: { disciplineId_slug: { disciplineId: discipline.id, slug: d.path } }, update: {},
+      where: { disciplineId_slug: { disciplineId: discipline.id, slug: d.path } }, update: { title: titleCase(d.path) },
       create: { disciplineId: discipline.id, slug: d.path, title: titleCase(d.path) },
     });
     const existing = await db.level.findUnique({ where: { pathId_tier: { pathId: path.id, tier: d.tier } } });
@@ -74,11 +74,11 @@ export async function publishContent(db: PrismaClient, content: LoadedContent) {
   for (const m of content.modules) {
     const d = m.def;
     const discipline = await db.discipline.upsert({
-      where: { slug: d.discipline }, update: {},
+      where: { slug: d.discipline }, update: { title: titleCase(d.discipline) },
       create: { slug: d.discipline, title: titleCase(d.discipline), description: "" },
     });
     const path = await db.path.upsert({
-      where: { disciplineId_slug: { disciplineId: discipline.id, slug: d.path } }, update: {},
+      where: { disciplineId_slug: { disciplineId: discipline.id, slug: d.path } }, update: { title: titleCase(d.path) },
       create: { disciplineId: discipline.id, slug: d.path, title: titleCase(d.path) },
     });
     const level = await db.level.upsert({
@@ -162,6 +162,7 @@ async function upsertAssignment(db: PrismaClient, a: AssignmentDef, where: { lev
   await db.assignment.upsert({ where: { slug: a.slug }, update: data, create: { slug: a.slug, ...data } });
 }
 
+const ACRONYMS = new Set(["ui", "ux"]);
 function titleCase(s: string) {
-  return s.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
+  return s.split("-").map((w) => (ACRONYMS.has(w) ? w.toUpperCase() : w[0].toUpperCase() + w.slice(1))).join(" ");
 }

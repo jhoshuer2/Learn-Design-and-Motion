@@ -18,7 +18,7 @@ test("sign up, land on dashboard, enroll, sign out, sign back in", async ({ page
   await expect(page).toHaveURL(/\/dashboard/);
   await expect(page.getByRole("heading", { name: /Welcome, Test Learner/ })).toBeVisible();
 
-  await page.getByRole("button", { name: "Enroll" }).first().click();
+  await page.getByRole("listitem").filter({ hasText: "Graphic Design" }).getByRole("button", { name: "Enroll" }).click();
   await expect(page.getByText("In progress")).toBeVisible();
 
   await page.getByRole("button", { name: "Sign out" }).click();

@@ -35,7 +35,7 @@ test("locked lessons cannot be opened or skipped into, and passing a check unloc
   await expect(page.getByText("Enroll in this learning path")).toBeVisible();
 
   await page.goto("/dashboard");
-  await page.getByRole("button", { name: "Enroll" }).first().click();
+  await page.getByRole("listitem").filter({ hasText: "Graphic Design" }).getByRole("button", { name: "Enroll" }).click();
   await expect(page.getByText("In progress")).toBeVisible();
 
   // Enrolled, but lesson 2 is locked by direct URL.
@@ -84,7 +84,7 @@ test("locked lessons cannot be opened or skipped into, and passing a check unloc
 test("demos render as captioned figures at the right steps, and the lesson UI has no axe violations", async ({ page }) => {
   await signUp(page);
   await page.goto("/dashboard");
-  await page.getByRole("button", { name: "Enroll" }).first().click();
+  await page.getByRole("listitem").filter({ hasText: "Graphic Design" }).getByRole("button", { name: "Enroll" }).click();
   const first = await db.lesson.findFirstOrThrow({ where: { slug: "what-contrast-does" } });
   await page.goto(`/learn/lesson/${first.id}`);
 

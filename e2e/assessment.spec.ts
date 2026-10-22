@@ -15,7 +15,7 @@ async function signUp(page: Page, name = "Poster Learner") {
   await page.getByRole("button", { name: "Sign up" }).click();
   await expect(page).toHaveURL(/\/dashboard/);
   await db.user.update({ where: { email }, data: { emailVerifiedAt: new Date() } }); // verification has its own spec
-  await page.getByRole("button", { name: "Enroll" }).first().click();
+  await page.getByRole("listitem").filter({ hasText: "Graphic Design" }).getByRole("button", { name: "Enroll" }).click();
   await expect(page.getByText("In progress")).toBeVisible();
   return email;
 }
