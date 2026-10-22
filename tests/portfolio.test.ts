@@ -6,6 +6,7 @@ import {
   GALLERY_PAGE_SIZE, PortfolioError, createProject, deleteProject, listEligibleSubmissions, listGallery, listMyProjects, updateProject,
 } from "../src/lib/portfolio";
 import { setDisplayName, validateDisplayName } from "../src/lib/portfolio/names";
+import { createAppeal } from "../src/lib/review";
 import { cleanup, evaluatedSubmission, learnerWithName, makeSubmission, makeUser, useTempStorage } from "./helpers";
 
 const code = (p: Promise<unknown>) => p.then(() => "ok", (e) => (e instanceof PortfolioError ? e.code : `other:${e}`));
@@ -64,6 +65,14 @@ describe("creating a project", () => {
     const mine = await evaluatedSubmission(u, "[fake:score=90]", 2);
     await createProject(u, mine.submissionId);
     expect(await code(createProject(u, mine.submissionId))).toBe("already_exists");
+  });
+
+  it("refuses work that is under appeal until the review is resolved", async () => {
+    const u = await learnerWithName();
+    const s = await evaluatedSubmission(u, "[fake:score=60]");
+    await createAppeal(u, s.evaluationId, "I believe the contrast and hierarchy are stronger than this score reflects.");
+    expect(await code(createProject(u, s.submissionId))).toBe("not_evaluated");
+    expect(await listEligibleSubmissions(u)).toEqual([]);
   });
 
   it("lists only eligible submissions", async () => {
