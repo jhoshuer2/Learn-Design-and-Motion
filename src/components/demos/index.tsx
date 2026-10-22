@@ -2,6 +2,7 @@ import { hexContrast } from "@/lib/contrast";
 import type { DemoName } from "@/lib/content/demos";
 import { ContrastLab } from "./ContrastLab";
 import { ReadingOrder } from "./ReadingOrder";
+import { LockupMisuse, LogoClearspace, PaletteRoles, PositionCompare } from "./BrandDemos";
 
 // Demo artwork uses fixed colours on purpose: the colours ARE the lesson, so they must not follow the theme.
 const Panel = ({ bg, children, className = "" }: { bg: string; children: React.ReactNode; className?: string }) => (
@@ -127,4 +128,8 @@ export const DEMOS: Record<DemoName, () => React.ReactElement> = {
   "brand-lockup": () => <BrandLockup />,
   "figure-ground": () => <FigureGround />,
   "contrast-lab": () => <ContrastLab />,
+  "position-compare": () => <PositionCompare />,
+  "logo-clearspace": () => <LogoClearspace />,
+  "lockup-misuse": () => <LockupMisuse />,
+  "palette-roles": () => <PaletteRoles />,
 };

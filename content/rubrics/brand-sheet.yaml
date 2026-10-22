@@ -1,0 +1,60 @@
+slug: brand-sheet
+title: Mini brand sheet
+version: 1
+threshold: 80
+criteria:
+  - key: brief-fit
+    title: Fit to the brief
+    weight: 20
+    competency: brand-positioning
+    description: |
+      Does the identity express what the brief says (warm, honest, unfussy) for the stated audience (families and office workers), rather than a generic look?
+      Strong (85-100): colour, type, mark and tone clearly express the brief and the audience, and the rationale shows how.
+      Adequate (60-84): broadly appropriate, but parts are generic or one choice works against the brief.
+      Weak (0-59): the identity ignores or contradicts the brief, or could be for any business.
+  - key: logo-and-lockup
+    title: Logo and lockup
+    weight: 20
+    mandatory: true
+    minScore: 60
+    competency: logo-usage
+    description: |
+      Is the mark simple, distinct and legible, and is the lockup (mark plus name) laid out with sensible alignment, proportion and clearspace? Judge only what is visible.
+      Strong (85-100): a simple, memorable mark; a clean lockup; the name is easy to read; spacing is deliberate.
+      Adequate (60-84): usable, but spacing, proportion or legibility of the name is uneven.
+      Weak (0-59): the mark is hard to read or too complicated, the lockup is crowded or inconsistent, or the name is unclear.
+  - key: colour-system
+    title: Colour system
+    weight: 15
+    competency: brand-system-consistency
+    description: |
+      Are three to five colours chosen with labelled roles and sensible proportions, with enough contrast between text and its background? You cannot measure exact ratios from pixels: judge what is visible and compare with any values the rationale reports.
+      Strong (85-100): a small palette with clear roles, a dominant colour, a restrained accent and readable pairings.
+      Adequate (60-84): a workable palette with unclear roles, or one pairing that is borderline.
+      Weak (0-59): too many colours, no roles, or essential text that is hard to read.
+  - key: type-system
+    title: Type system
+    weight: 15
+    competency: brand-system-consistency
+    description: |
+      Are two type roles named and shown, with clear contrast between headline and body, sensible sizes and a pairing that fits the brand? You cannot identify fonts exactly from pixels; compare with what the rationale states.
+      Strong (85-100): two roles with clear hierarchy, a fitting pairing and readable sizes.
+      Adequate (60-84): sound but with weak distinction between roles or a pairing that fits only partly.
+      Weak (0-59): the roles are unclear, the faces conflict, or text is hard to read.
+  - key: legibility-at-small-size
+    title: Legibility at small size
+    weight: 15
+    mandatory: true
+    minScore: 60
+    competency: logo-usage
+    description: |
+      Judge the small-scale preview. Do the logo, the name and the palette labels still read, and does the sheet's structure survive?
+      Strong (85-100): the logo and name remain clear and the labels are still usable.
+      Adequate (60-84): the logo survives but some labels or fine detail are lost.
+      Weak (0-59): the logo or name becomes unreadable, or the preview is missing or not a smaller version of the final.
+  - key: design-rationale
+    title: Design rationale
+    weight: 15
+    description: |
+      Does the rationale explain three real decisions, tie each to the brand's position or audience, report the values chosen, and match what is visible? Judge reasoning, not writing style.
+      Strong (85-100): three specific decisions with reasons that match the work and stated values. Adequate (60-84): decisions named but reasons thin or values missing. Weak (0-59): generic statements or claims the work does not show.

@@ -62,7 +62,7 @@ async function retakeCheck(userId: string, slug: string, right: boolean) {
   const blocks = lesson.blocks as StoredBlock[];
   const checkIndex = blocks.findIndex((b) => b.kind === "check");
   for (let i = 0; i < checkIndex; i++) await recordBlockView(userId, lesson.id, i);
-  const spec = loadContent().modules[0].lessons.find((l) => l.meta.slug === slug)!;
+  const spec = loadContent().modules.find((m) => m.def.slug === "understanding-contrast")!.lessons.find((l) => l.meta.slug === slug)!;
   const qs = await db.quizQuestion.findMany({ where: { lessonId: lesson.id } });
   const answers = Object.fromEntries(qs.map((q) => {
     const a = spec.questions.find((x) => x.prompt === q.prompt)!.answer;

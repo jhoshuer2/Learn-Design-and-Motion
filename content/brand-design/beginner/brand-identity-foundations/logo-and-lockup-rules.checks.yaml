@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: What is a lockup?
+    options: [A fixed arrangement of a logo's parts such as mark and name, A legal registration of a logo, A logo shown only in one colour, A background pattern]
+    answer: A fixed arrangement of a logo's parts such as mark and name
+    explanation: A lockup sets the relationship between mark and name once, so it can be repeated without being adjusted by eye.
+    competency: logo-usage
+  - type: MULTIPLE_CHOICE
+    prompt: Why is clearspace usually measured from something in the logo, such as the height of a letter?
+    options: [So the margin scales with the logo and stays consistent at any size, So the logo can be stretched, So the file is smaller, Because letters are always one centimetre tall]
+    answer: So the margin scales with the logo and stays consistent at any size
+    explanation: Measuring from part of the logo makes the margin proportional, so it stays correct when the logo is enlarged or reduced.
+    competency: logo-usage
+  - type: MULTIPLE_SELECT
+    prompt: Which of these are logo misuse? Select all that apply.
+    options: [Stretching the logo to fill a space, Using the light one-colour version on a dark background, Placing the logo on a busy photograph with no contrast, Adding a drop shadow the guidelines do not include]
+    answer: [Stretching the logo to fill a space, Placing the logo on a busy photograph with no contrast, Adding a drop shadow the guidelines do not include]
+    explanation: Distorting proportions, losing contrast and adding unapproved effects all break the logo's rules. Using the light version on a dark background is exactly what that version is for.
+    competency: logo-usage
+  - type: ERROR_DETECTION
+    prompt: A logo's fine detail turns into a smudge on a small website icon. What is the best fix?
+    options: [Use a simplified version such as the mark alone at small sizes, Blur the background, Make the logo's colours brighter, Stretch it wider]
+    answer: Use a simplified version such as the mark alone at small sizes
+    explanation: Below a minimum size, fine detail fails. Brands keep simpler versions for small uses instead of shrinking the full logo.
+    competency: logo-usage
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the lockup-misuse demo, which version is the correct one?
+    options: [The one with its original proportions on a clear contrasting background, The stretched one, The low-contrast recoloured one, The one on the busy pattern]
+    answer: The one with its original proportions on a clear contrasting background
+    explanation: Correct use keeps proportions, contrast and a clear background. Each of the other three breaks one of those rules.
+    competency: logo-usage
+  - type: MULTIPLE_CHOICE
+    prompt: A business needs its logo on a dark blue sign. What should the designer reach for first?
+    options: [The light one-colour or reversed version, The same dark version as on white paper, A new colour for the mark, A smaller logo]
+    answer: The light one-colour or reversed version
+    explanation: Brands keep a version for light-on-dark use so the logo keeps its contrast. Using the dark version on dark blue loses it.
+    competency: logo-usage

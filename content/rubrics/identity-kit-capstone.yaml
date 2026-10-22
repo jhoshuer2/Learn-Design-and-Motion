@@ -1,0 +1,54 @@
+slug: identity-kit-capstone
+title: Identity kit capstone
+version: 1
+threshold: 85
+criteria:
+  - key: consistency-across-applications
+    title: Consistency across applications
+    weight: 25
+    mandatory: true
+    minScore: 60
+    competency: brand-system-consistency
+    description: |
+      Do the three pieces read as one identity: the same logo, palette roles, type roles and tone, adapted to each format rather than copied or changed arbitrarily?
+      Strong (85-100): clearly one system, with each piece adapted sensibly (for example a simplified mark for the avatar) without breaking the rules.
+      Adequate (60-84): related, with some drift in colour, type or logo treatment.
+      Weak (0-59): the pieces look unrelated, or are identical crops with no adaptation, or break the identity's own rules.
+  - key: logo-usage
+    title: Logo use and clearspace
+    weight: 15
+    mandatory: true
+    minScore: 60
+    competency: logo-usage
+    description: |
+      Is the logo used correctly in every piece: not stretched or recoloured arbitrarily, with clearspace, on a background it suits, and legible in the smallest piece?
+      Strong (85-100): correct in all three, with sensible adaptations. Adequate (60-84): mostly correct with one cramped or poorly placed use. Weak (0-59): the logo is distorted, crowded, low in contrast, or unreadable in a piece.
+  - key: accessible-contrast
+    title: Accessible contrast
+    weight: 15
+    mandatory: true
+    minScore: 60
+    competency: accessibility-contrast
+    description: |
+      Does essential text meet accessibility minimums (about 4.5:1 for normal text, 3:1 for large text and meaningful graphics)? You cannot measure exact ratios from pixels. Judge what is visible, say it is an estimate, and flag anything borderline. If the rationale reports measured ratios, check that they are plausible given what you see.
+      Strong (85-100): essential text is clearly above the minimums in every piece. Adequate (60-84): probably adequate, with one borderline pair. Weak (0-59): essential text visibly fails or is likely to fail.
+  - key: brand-fit
+    title: Fit to the brand position
+    weight: 15
+    competency: brand-positioning
+    description: |
+      Do the pieces express warm, honest and unfussy for the stated audience, across all three formats?
+      Strong (85-100): the tone is clear and consistent in every piece. Adequate (60-84): mostly fits, with a piece that feels off-brand. Weak (0-59): generic, or contradicts the brief.
+  - key: format-adaptation
+    title: Adaptation to format
+    weight: 15
+    competency: brand-system-consistency
+    description: |
+      Is each piece designed for its size and use: the card readable at hand distance, the avatar at thumbnail size, the header at its wide, short shape?
+      Strong (85-100): each is clearly designed for its format. Adequate (60-84): mostly, with one piece that feels like a resized copy. Weak (0-59): pieces are crops or stretches that do not suit their format.
+  - key: design-rationale
+    title: Design rationale
+    weight: 15
+    description: |
+      Does the rationale explain three real decisions about consistency or adaptation, report the measured ratios and values, and match what is visible? Judge reasoning, not writing style.
+      Strong (85-100): three specific decisions with reasons and values that match the work. Adequate (60-84): decisions named, reasons or values thin. Weak (0-59): generic claims or claims the work does not show.

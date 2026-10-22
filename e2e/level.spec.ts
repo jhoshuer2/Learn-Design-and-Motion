@@ -6,7 +6,7 @@ import { loadContent } from "../src/lib/content/loader";
 
 const RATIONALE = "I made the event name the largest and darkest element so it reads first, used a mid tone for date and place, and one saturated button colour for the call to action so it separates from everything else.";
 const PLAN = "I will darken the date and venue text, measure each pair against the minimum, and rebuild the banner so the order survives at its small size.";
-const lessons = loadContent().modules[0].lessons;
+const lessons = loadContent().modules.find((m) => m.def.slug === "understanding-contrast")!.lessons;
 const png = (w: number, h: number) => sharp({ create: { width: w, height: h, channels: 3, background: "#aa4422" } }).png().toBuffer();
 
 async function signUp(page: Page) {

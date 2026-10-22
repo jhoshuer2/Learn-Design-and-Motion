@@ -34,7 +34,7 @@ describe("publisher", () => {
 
   it("refuses to change the mandatory minimum of a published rubric version", async () => {
     const c = loadContent();
-    c.rubrics[0].criteria.find((x) => x.key === "contrast")!.minScore = 10;
+    c.rubrics.find((x) => x.slug === "high-contrast-poster")!.criteria.find((x) => x.key === "contrast")!.minScore = 10;
     await expect(publishContent(db, c)).rejects.toThrow(/immutable/);
   });
 });

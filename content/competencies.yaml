@@ -2,3 +2,8 @@ competencies:
   - { slug: contrast-recognition, title: Recognising contrast in real work }
   - { slug: contrast-application, title: Applying contrast to establish hierarchy }
   - { slug: accessibility-contrast, title: Accessible colour contrast, critical: true }
+  - { slug: brand-positioning, title: Expressing a brand's position and audience in design }
+  - { slug: logo-usage, title: Using logos and lockups correctly }
+  - { slug: brand-system-consistency, title: Keeping a brand consistent across applications, critical: true }
+  - { slug: ui-hierarchy, title: Building clear hierarchy and layout in interfaces }
+  - { slug: ui-touch-targets-and-states, title: Sizing targets and showing states in interfaces, critical: true }

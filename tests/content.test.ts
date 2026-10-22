@@ -79,7 +79,7 @@ describe("authored content hygiene", () => {
 
 describe("assignment content", () => {
   const c = loadContent();
-  const a = c.modules[0].assignments[0];
+  const a = c.modules.find((m) => m.def.slug === "understanding-contrast")!.assignments[0];
 
   it("loads the poster assignment and resolves its rubric", () => {
     expect(a.slug).toBe("high-contrast-event-poster");

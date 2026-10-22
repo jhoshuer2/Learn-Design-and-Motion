@@ -8,7 +8,7 @@ import {
 } from "../src/lib/progression";
 
 const content = loadContent();
-const lessons = content.modules[0].lessons;
+const lessons = content.modules.find((m) => m.def.slug === "understanding-contrast")!.lessons;
 const answerFor = (slug: string) => new Map(lessons.find((l) => l.meta.slug === slug)!.questions.map((q) => [q.prompt, q.answer]));
 
 let pathId: string;

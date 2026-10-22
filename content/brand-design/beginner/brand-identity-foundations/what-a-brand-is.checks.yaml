@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: Which statement best describes a brand?
+    options: [The logo and colours a company uses, The expectations and feelings people hold about it, The slogan on its packaging, The name registered as a trademark]
+    answer: The expectations and feelings people hold about it
+    explanation: A logo and colours are parts of an identity, but the brand is what people expect and remember across all their experiences. Revisit the concept step.
+    competency: brand-positioning
+  - type: MULTIPLE_CHOICE
+    prompt: What is the main job of a written brand position when you are designing?
+    options: [To describe the logo, To give a test for whether each choice fits the audience and promise, To list the colours, To replace research]
+    answer: To give a test for whether each choice fits the audience and promise
+    explanation: A position lets you ask of every colour, typeface and image whether it serves the audience and the promise, instead of choosing by taste.
+    competency: brand-positioning
+  - type: MULTIPLE_SELECT
+    prompt: Which of these are parts of a visual identity? Select all that apply.
+    options: [Colour palette, Typeface choices, The weather on launch day, Rules for logo use, Layout and spacing habits]
+    answer: [Colour palette, Typeface choices, Rules for logo use, Layout and spacing habits]
+    explanation: A visual identity is the system of design choices that makes a brand recognisable. The weather is not a design choice.
+    competency: brand-positioning
+  - type: ERROR_DETECTION
+    prompt: A cheerful children's swimming school uses a thin, pale, minimal identity with no colour. What is the problem?
+    options: [The type is too large, The identity contradicts the brand's position and audience, The logo is too colourful, Nothing is wrong because minimal is always best]
+    answer: The identity contradicts the brand's position and audience
+    explanation: A choice is right when it fits the position and audience. A hushed, pale look does not express a cheerful brand for children.
+    competency: brand-positioning
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the position-compare demo, which treatment suits a bakery that wants to feel warm and everyday?
+    options: [The rounded type with a friendly colour, The fine type with a restrained palette]
+    answer: The rounded type with a friendly colour
+    explanation: Rounded forms, a friendly colour and generous spacing express warmth and approachability. The restrained treatment expresses a quieter, premium position.
+    competency: brand-positioning
+  - type: MULTIPLE_CHOICE
+    prompt: A designer picks a trendy typeface because they like it, though they cannot connect it to the audience or promise. How would you describe that choice?
+    options: [Decoration, Strategy, Positioning, Consistency]
+    answer: Decoration
+    explanation: When a choice cannot be traced to the position or the audience it is decoration. Good identity decisions can be explained that way.
+    competency: brand-positioning

@@ -1,0 +1,15 @@
+discipline: brand-design
+path: brand-design
+level: BEGINNER
+slug: brand-identity-foundations
+title: Brand Identity Foundations
+position: 0
+objectives:
+  - Explain what a brand is, and how a design expresses its position and audience.
+  - "Use a logo and lockup correctly: clearspace, minimum size, backgrounds and misuse."
+  - Build a small palette and type system with clear roles, and keep it consistent across applications.
+status: DRAFT
+lessons:
+  - what-a-brand-is
+  - logo-and-lockup-rules
+  - colour-and-type-systems

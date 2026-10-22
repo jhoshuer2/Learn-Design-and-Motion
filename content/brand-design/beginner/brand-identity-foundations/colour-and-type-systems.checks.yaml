@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: In a brand palette, what is the usual job of an accent colour?
+    options: [To cover large areas such as backgrounds, To mark the one thing you most want noticed and be used sparingly, To replace the neutrals, To match every other colour]
+    answer: To mark the one thing you most want noticed and be used sparingly
+    explanation: An accent works because it is rare. Used everywhere it stops being an accent. See the palette-roles comparison.
+    competency: brand-system-consistency
+  - type: MULTIPLE_SELECT
+    prompt: Which of these make a type system usable by other people? Select all that apply.
+    options: [Two named roles such as headline and body, Sizes and weights written down for each role, A different typeface for every format, A pairing that fits the brand's mood]
+    answer: [Two named roles such as headline and body, Sizes and weights written down for each role, A pairing that fits the brand's mood]
+    explanation: Named roles with written sizes let others follow the system. A new typeface per format is the opposite of a system.
+    competency: brand-system-consistency
+  - type: ERROR_DETECTION
+    prompt: A brand's palette has six strong colours used in equal amounts on every piece. What is the main problem?
+    options: [Nothing leads and the brand is hard to recognise, The colours are too dark, The type is too small, There are too many neutrals]
+    answer: Nothing leads and the brand is hard to recognise
+    explanation: Equal weight removes hierarchy. A palette needs unequal, intended proportions with a dominant colour and a restrained accent.
+    competency: brand-system-consistency
+  - type: MULTIPLE_CHOICE
+    prompt: Your brand's mid-grey text on a light grey background measures 2.4:1. Can it be used for body text in the system?
+    options: ["No: it is below the 4.5:1 minimum for normal text", "Yes: grey on grey is always acceptable", "Yes, if the text is italic", "Yes, if the text is bold"]
+    answer: "No: it is below the 4.5:1 minimum for normal text"
+    explanation: Body text needs about 4.5:1. Brand systems should list only the pairings that pass, and measure rather than guess.
+    competency: brand-system-consistency
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the palette-roles demo, which version gives a clearer hierarchy?
+    options: [The version where a neutral dominates and one accent marks the action, The version where all colours take equal shares]
+    answer: The version where a neutral dominates and one accent marks the action
+    explanation: Unequal proportions with assigned roles direct attention. Equal shares leave the eye nowhere to rest.
+    competency: brand-system-consistency
+  - type: MULTIPLE_CHOICE
+    prompt: A business card, a shop sign and a social avatar all need the identity. Which approach keeps them consistent?
+    options: [Use the same palette roles and type roles adapted to each shape and size, Use a different style for each so each is fresh, Copy the business card exactly onto the sign, Choose colours separately for each piece]
+    answer: Use the same palette roles and type roles adapted to each shape and size
+    explanation: Consistency means the same system adapted to each format, not copying and not reinventing.
+    competency: brand-system-consistency

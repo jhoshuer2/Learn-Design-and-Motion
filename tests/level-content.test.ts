@@ -23,7 +23,7 @@ const edit = (f: string, fn: (o: any) => void) => { const o = YAML.parse(fs.read
 
 describe("level and capstone content", () => {
   const c = loadContent();
-  const lv = c.levels[0];
+  const lv = c.levels.find((l) => l.def.path === "graphic-design")!;
 
   it("loads the Beginner level with its rules and capstone", () => {
     expect(lv.def).toMatchObject({ tier: "BEGINNER", capstoneThreshold: 85, requiredCompetencies: ["accessibility-contrast"] });
@@ -71,7 +71,7 @@ describe("level and capstone content", () => {
   });
 
   it("allows legacy content with no level.yaml at all, but not a module whose level is missing when others exist", () => {
-    expect(withEdit((r) => fs.rmSync(levelFile(r)))()).toMatchObject({ levels: [] });
+    expect(withEdit((r) => { for (const p of ["graphic-design", "brand-design", "ui-design"]) fs.rmSync(path.join(r, p, "beginner/level.yaml"), { force: true }); })()).toMatchObject({ levels: [] });
     expect(withEdit((r) => edit(levelFile(r), (o) => { o.tier = "INTERMEDIATE"; }))).toThrow(/no level.yaml for/);
   });
 });
@@ -95,7 +95,7 @@ describe("level and capstone publishing", () => {
     await db.level.update({ where: { id: level.id }, data: { status: "PUBLISHED" } });
     try {
       const c = loadContent();
-      c.levels[0].def.requiredCompetencies = [];
+      c.levels.find((l) => l.def.path === "graphic-design")!.def.requiredCompetencies = [];
       await expect(publishContent(db, c)).rejects.toThrow(/immutable/);
     } finally {
       await db.level.update({ where: { id: level.id }, data: { status: "DRAFT" } });

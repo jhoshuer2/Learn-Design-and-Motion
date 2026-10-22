@@ -1,0 +1,29 @@
+slug: mini-brand-sheet
+kind: MODULE_ASSESSMENT
+title: Create a mini brand sheet
+objective: "Show that you can turn a short brief into a small, consistent identity: a logo with a lockup, a palette with roles, and two type roles, with one clear usage rule."
+scenario: >
+  Fernhill Bakery is a small neighbourhood bakery that sells sourdough, pastries and coffee to local
+  families and office workers. The owners describe it as warm, honest and unfussy: "good bread, no airs".
+  They have a name and nothing else. They need a one-page brand sheet they can hand to a printer and a sign
+  maker. The sheet is fictional: nothing you make is used by a real business.
+requirements:
+  - "Show a simple logo or wordmark for Fernhill Bakery, and one lockup (mark plus name) laid out cleanly."
+  - "Show a palette of three to five colours, each labelled with its role (for example primary, neutral, accent)."
+  - "Show two type roles (for example headline and body) with the typefaces named."
+  - "Include one clearly drawn usage rule (for example clearspace or a minimum size, or one thing not to do)."
+  - "Make the identity fit the brief: warm, honest and unfussy, for families and office workers."
+  - "Explain three design decisions in your rationale, each tied to the brand's position or audience. Give the hex values or sizes you chose."
+constraints:
+  - "Original work only. Any illustration or typeface must be one you are licensed to use."
+  - "Do not copy an existing company's logo or brand guide."
+  - "Use only the information in the brief. Do not invent products, prices or a street address."
+deliverables:
+  - { key: final, label: Brand sheet, description: "PNG, JPEG or WebP export of the full one-page sheet.", role: final, required: true }
+  - { key: preview, label: Small-scale preview, description: "The same sheet exported at about 400 px on its long side, to check that the logo and labels still read.", role: preview, required: true }
+  - { key: process, label: Process image, description: "A sketch or an earlier version, if you want to show your process.", role: process, required: false }
+difficulty: 2
+estimatedMinutes: 120
+rubric: { slug: brand-sheet, version: 1 }
+maxAttempts: 3
+status: DRAFT

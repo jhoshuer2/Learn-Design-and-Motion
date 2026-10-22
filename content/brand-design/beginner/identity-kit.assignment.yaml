@@ -1,0 +1,30 @@
+slug: identity-kit-capstone
+kind: CAPSTONE
+title: Identity kit capstone
+objective: Apply one small identity consistently across three different applications, adapting it to each format without breaking its rules.
+scenario: >
+  Fernhill Bakery now has a name and a mini brand sheet. The owners need the identity to work in the three
+  places customers meet it first: a business card, a square social profile image (avatar), and a wide sign or
+  web header. All three must clearly belong to the same bakery, and each must suit its size and use. The work
+  is fictional: nothing you make is used by a real business.
+requirements:
+  - "Deliver three pieces: a business card (landscape), a square social avatar, and a wide sign or web header."
+  - "Use the same logo, palette roles and type roles in all three, adapted to each format and not copied."
+  - "Keep the logo legible and correctly used in every piece, including the smallest. Respect clearspace and minimum size."
+  - "Keep essential text readable against its background in every piece. Measure at least three pairs and report the ratios in your rationale."
+  - "Make the pieces fit the brand position from the brief: warm, honest and unfussy."
+  - "Explain three design decisions in your rationale, each about consistency or adaptation across the pieces."
+constraints:
+  - "Original work only. Any illustration or typeface must be one you are licensed to use."
+  - "Do not reuse your mini brand sheet unchanged. These are new applications of the system."
+  - "Use only the information in the brief. Do not invent products, prices, a street address or a phone number."
+deliverables:
+  - { key: business-card, label: Business card, description: "Landscape business card, exported as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: social-avatar, label: Social avatar, description: "Square social profile image, exported as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: wide-header, label: Wide sign or web header, description: "A wide, short sign or website header, exported as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: process, label: Process image, description: "A sketch or earlier version, if you want to show your process.", role: process, required: false }
+difficulty: 3
+estimatedMinutes: 180
+rubric: { slug: identity-kit-capstone, version: 1 }
+maxAttempts: 3
+status: DRAFT
