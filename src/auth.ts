@@ -28,7 +28,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Role is always read from the database, never from the client.
       if (token.uid) {
         const u = await db.user.findUnique({ where: { id: token.uid }, select: { role: true } });
-        token.role = u?.role;
+        // A deleted account must stop working at once: returning null ends the session.
+        if (!u) return null;
+        token.role = u.role;
       }
       return token;
     },

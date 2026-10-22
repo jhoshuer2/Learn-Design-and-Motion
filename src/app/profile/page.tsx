@@ -36,6 +36,7 @@ export default async function Profile({ searchParams }: { searchParams: { error?
         <Field id="displayName" label="Display name (2 to 40 characters)" defaultValue={me.displayName ?? ""} required maxLength={40} autoComplete="nickname" />
         <Button type="submit">Save display name</Button>
       </form>
+      <p className="mt-12 border-t border-line pt-6 text-sm text-muted">Want to leave? <Link className="underline" href="/profile/delete">Delete my account</Link>.</p>
     </div>
   );
 }
