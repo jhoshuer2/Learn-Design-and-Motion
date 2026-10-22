@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { auth } from "@/auth";
+import { limitViewer } from "@/lib/ratelimit";
+import { TooManyRequests } from "@/components/TooManyRequests";
 import { requireUser } from "@/lib/session";
 import { PortfolioError } from "@/lib/portfolio";
 import { blockReviewerOfReview, createReview, deleteReview, reportProject, reportReview, setReviewHidden, withdrawReview } from "@/lib/portfolio/peer";
@@ -72,6 +75,8 @@ function Report({ slug, reviewId }: { slug: string; reviewId?: string }) {
 export default async function ProjectPage({ params, searchParams }: { params: { slug: string }; searchParams: { notice?: string; error?: string } }) {
   const session = await auth();
   const viewer = session?.user?.id ? { id: session.user.id, role: session.user.role } : null;
+  const limited = await limitViewer("page", headers(), viewer?.id);
+  if (!limited.allowed) return <TooManyRequests seconds={limited.retryAfterSec} />;
   const v = await getProjectView(viewer, params.slug);
   if (!v) notFound();
   const e = v.evidence;

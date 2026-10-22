@@ -617,6 +617,15 @@ model Notification {
   @@index([userId, readAt, createdAt])
 }
 
+/// Fixed-window counters for rate limiting. `id` is "<bucket>:<hmac of client>:<window start>"; raw addresses are never stored.
+model RateBucket {
+  id        String   @id
+  count     Int
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
+
 // ───────── Audit
 
 model AuditEvent {
