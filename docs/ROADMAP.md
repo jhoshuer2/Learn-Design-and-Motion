@@ -21,8 +21,18 @@ Prerequisites, quiz scoring, lesson completion, dashboard + timeline, full Contr
 - No placement/diagnostic, rate limiting, or lesson notes/saved concepts. Level gating (Intermediate) is M4.
 - Block "viewed" means the learner pressed Continue; it is not evidence of reading time or understanding.
 
-## M3 Submissions + AI grading ☐
-Private uploads, poster assignment, rubric, provider, validation, server-side scoring, feedback, resubmission. *Accept:* 95% total with failed mandatory criterion fails; malformed model output never yields a score; no-key mode reports `not_configured`.
+## M3 Submissions + AI grading ◐ (built and tested with a stand-in evaluator; real model path NOT verified)
+Private uploads, poster assignment, rubric, provider, validation, server-side scoring, feedback, resubmission, appeals. *Accept:* 95% total with failed mandatory criterion fails; malformed model output never yields a score; no-key mode reports `not_configured`.
+**Done and tested:** published poster rubric v1 (two required criteria) and assignment; private storage and decode-based upload validation; assignment gate (lessons complete, attempts, amend-on-evidence, retry-without-attempt); scoring authority with mandatory minimums; model-output schema that ignores model-claimed totals; deterministic checks; atomic single evaluation under concurrency; one validated retry then `FAILED_TO_EVALUATE` with no score; `not_configured` path; hourly rate limit; `applyEvaluation` as sole writer of assessment progression; module completion requires the assessment; brief and results screens (every state, remediation links, axe clean); appeals and anonymised reviewer tool with uphold/override; owner-only files (404 for others, 401 anonymous). 105 unit/integration tests (several mutation-checked) and 11 Playwright tests.
+**Not verified:** the `ClaudeProvider` has **never been called**: there is no `ANTHROPIC_API_KEY` in this environment. It type-checks against the SDK, but whether the API accepts the structured-output schema, how the model scores real posters, prompt-injection resistance, and cost per submission are all unmeasured. Every e2e "result" came from the test-only evaluator.
+**Known gaps:**
+- Evaluation runs synchronously inside the submit server action (can take minutes). It needs a background job and polling before production.
+- Local-disk storage is dev-only. Images only: PDFs, video and prototype links are not inspected.
+- No server-side refusal fallback: a model refusal becomes `FAILED_TO_EVALUATE` with a review flag, but nothing lists such submissions for a person, and a learner cannot appeal without a completed evaluation. Low-confidence results are applied and flagged but only reach a reviewer if the learner appeals.
+- Appeals: failed results only, one per evaluation, human decision is final, an override cannot revoke a pass, no SLA or notifications. Reviewer role is CLI-only.
+- After the third failed attempt only an appeal can proceed (no remediation-reset flow; M4). No cool-down between retries.
+- No grading-consistency or AI-vs-expert calibration tracking. The rubric anchors and assignment are unreviewed drafts.
+- Per-user rate limit counts evaluation starts from the audit table; it is not a global cost cap.
 
 ## M4 Capstone + unlock ☐
 Capstone gating, level unlock, remediation, skill profile from evidence. *Accept:* next level unlocks only via passing capstone + mandatory checks; concurrent submits are idempotent.

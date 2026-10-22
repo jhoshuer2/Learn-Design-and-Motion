@@ -20,7 +20,7 @@ constraints:
 deliverables:
   - { key: final, label: Final poster, description: "PNG, JPEG or WebP export of the full poster.", role: final, required: true }
   - { key: preview, label: Small-scale preview, description: "The same poster exported at about 400 px on its long side, as it would look in a chat thread.", role: preview, required: true }
-  - { key: process, label: Process image, description: "Optional: a sketch or earlier version.", role: process, required: false }
+  - { key: process, label: Process image, description: "A sketch or an earlier version, if you want to show your process.", role: process, required: false }
 difficulty: 2
 estimatedMinutes: 90
 rubric: { slug: high-contrast-poster, version: 1 }

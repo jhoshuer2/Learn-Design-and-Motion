@@ -7,7 +7,7 @@ Source of truth: `prisma/schema.prisma`. Relational, explicit constraints; JSON 
 - **Curriculum:** Discipline → Path → Level(tier) → Module → Lesson; LessonPrerequisite (DAG), ContentAsset (source + licence required), ModuleUse (shared foundations reused across paths).
 - **Checks:** QuizQuestion (answer key server-only), QuizAttempt.
 - **Rubrics:** Rubric → RubricVersion (immutable once published) → RubricCriterion (weight, mandatory, minScore, competency).
-- **Assessment:** Assignment (practice / module assessment / capstone) → Submission (attempt-numbered) → Evaluation (rubricVersionId, server-computed score) → CriterionScore.
+- **Assessment:** Assignment (practice / module assessment / capstone) → Submission (attempt-numbered, `changesNote`, files as private storage keys) → Evaluation (rubricVersionId, server-computed score, `rawOutput`, `deterministicChecks`, token counts, `supersedesId` for human overrides) → CriterionScore. Appeal (one per evaluation, OPEN/UPHELD/OVERRIDDEN). BlockView records lesson blocks shown, in order.
 - **Progression:** Enrollment, Progress (unique per user+node), Competency, SkillEvidence, Certificate.
 - **Community:** PortfolioProject (visibility default PRIVATE), PeerReview (no relation to Progress by design).
 - **Ops:** AuditEvent.

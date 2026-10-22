@@ -102,7 +102,7 @@ export default async function AssignmentPage({
         <div>
           <h2 className="font-display text-2xl">How it is assessed</h2>
           <p className="mt-2 max-w-measure text-muted">This is the published rubric. You are scored on each criterion and the weighted total must reach {rv.threshold}%. Criteria marked required must also reach their own minimum, whatever your total.</p>
-          <table className="mt-3 w-full text-sm">
+          <table className="mt-3 w-full text-sm [&_th]:py-2 [&_th]:text-left">
             <thead><tr><th scope="col">Criterion</th><th scope="col">Weight</th><th scope="col">Required minimum</th></tr></thead>
             <tbody>{rv.criteria.map((c) => (
               <tr key={c.id} className="border-t border-line align-top">
