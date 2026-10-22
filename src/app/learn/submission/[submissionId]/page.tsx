@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { requireUser } from "@/lib/session";
 import { retryEvaluation } from "@/lib/submissions";
+import { ReviewError, createAppeal } from "@/lib/review";
 import { getSubmissionView, type CriterionView } from "@/lib/submissions/view";
 import { Button } from "@/components/ui/Button";
 import { StateBadge } from "@/components/ui/StateBadge";
@@ -14,6 +15,20 @@ async function retry(formData: FormData) {
   const id = String(formData.get("submissionId"));
   await retryEvaluation(user.id, id);
   redirect(`/learn/submission/${id}`);
+}
+
+async function appeal(formData: FormData) {
+  "use server";
+  const user = await requireUser();
+  const id = String(formData.get("submissionId"));
+  let target = `/learn/submission/${id}`;
+  try {
+    await createAppeal(user.id, String(formData.get("evaluationId")), String(formData.get("reason") ?? ""));
+  } catch (e) {
+    if (e instanceof ReviewError) target += `?appealError=${encodeURIComponent(e.message)}`;
+    else throw e;
+  }
+  redirect(target);
 }
 
 const FAILURE: Record<string, string> = {
@@ -52,7 +67,7 @@ const List = ({ title, items }: { title: string; items: string[] }) =>
     <div><h3 className="font-medium">{title}</h3><ul className="mt-1 list-disc space-y-1 pl-5 text-muted">{items.map((i) => <li key={i}>{i}</li>)}</ul></div>
   );
 
-export default async function SubmissionPage({ params }: { params: { submissionId: string } }) {
+export default async function SubmissionPage({ params, searchParams }: { params: { submissionId: string }; searchParams: { appealError?: string } }) {
   const user = await requireUser();
   const v = await getSubmissionView(user, params.submissionId);
   if (!v) notFound();
@@ -140,6 +155,30 @@ export default async function SubmissionPage({ params }: { params: { submissionI
             </section>
           )}
         </>
+      )}
+
+      {v.status === "IN_HUMAN_REVIEW" && (
+        <p role="status" className="mt-6 rounded border border-line bg-raised p-4">Your appeal is with a human reviewer. You will see their decision here.</p>
+      )}
+      {v.appeal && v.appeal.status !== "OPEN" && (
+        <section className="mt-8 rounded border border-line bg-raised p-5">
+          <h2 className="font-display text-2xl">Human review: {v.appeal.status === "UPHELD" ? "original result confirmed" : "scores changed"}</h2>
+          <p className="mt-2 max-w-measure text-muted">{v.appeal.resolution}</p>
+        </section>
+      )}
+      {v.isOwner && v.canAppeal && ev && (
+        <section className="mt-10 border-t border-line pt-8">
+          <h2 className="font-display text-2xl">Disagree with this result?</h2>
+          <p className="mt-2 max-w-measure text-muted">You can ask a person to review it. Say what you think was missed or misjudged. While it is under review you cannot start another attempt.</p>
+          {searchParams.appealError && <p role="alert" className="mt-3 text-danger">{searchParams.appealError}</p>}
+          <form action={appeal} className="mt-4 space-y-3">
+            <input type="hidden" name="submissionId" value={v.id} />
+            <input type="hidden" name="evaluationId" value={ev.id} />
+            <label htmlFor="reason" className="block text-sm font-medium">Your reason</label>
+            <textarea id="reason" name="reason" required minLength={20} maxLength={2000} rows={4} className="w-full rounded border border-line bg-raised p-3" />
+            <Button type="submit" variant="secondary">Ask for a human review</Button>
+          </form>
+        </section>
       )}
 
       <section className="mt-12 border-t border-line pt-8">

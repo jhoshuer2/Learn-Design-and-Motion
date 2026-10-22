@@ -12,7 +12,8 @@
     "test:e2e": "playwright test",
     "content:validate": "tsx scripts/validate-content.ts",
     "db:migrate": "prisma migrate dev",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "user:role": "tsx scripts/set-role.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -347,7 +347,7 @@ export type AssignmentAccess =
   | { allowed: true; assignmentId: string; attempt: number; attemptsUsed: number; maxAttempts: number; amending: { id: string } | null }
   | { allowed: false; reason: AssignmentDenied; missing?: string[]; submissionId?: string; attemptsUsed?: number; maxAttempts?: number };
 
-const OPEN_STATUSES = ["SUBMITTED", "EVALUATING", "FAILED_TO_EVALUATE", "NEEDS_EVIDENCE"] as const;
+const OPEN_STATUSES = ["SUBMITTED", "EVALUATING", "FAILED_TO_EVALUATE", "NEEDS_EVIDENCE", "IN_HUMAN_REVIEW"] as const;
 
 /** Titles of lessons in a module the learner has not completed (latest visible version of each lesson). */
 async function incompleteLessons(userId: string, moduleId: string) {

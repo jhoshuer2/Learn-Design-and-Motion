@@ -24,6 +24,7 @@ export type SubmissionView = {
   criteria: CriterionView[];
   remediation: { lessonId: string; title: string; competency: string }[];
   appeal: null | { status: string; reason: string; resolution: string | null };
+  canAppeal: boolean;
   access: AssignmentAccess | null; // for the owner: can they retry / resubmit?
 };
 
@@ -86,6 +87,7 @@ export async function getSubmissionView(viewer: { id: string; role: Role }, subm
     },
     criteria, remediation,
     appeal: ev?.appeal ? { status: ev.appeal.status, reason: ev.appeal.reason, resolution: ev.appeal.resolution } : null,
+    canAppeal: isOwner && ev?.status === "complete" && ev.passed === false && !ev.humanReviewed && !ev.appeal && sub.status === "EVALUATED",
     access: isOwner ? await getAssignmentAccess(sub.userId, sub.assignmentId) : null,
   };
 }

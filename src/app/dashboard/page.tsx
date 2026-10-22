@@ -44,6 +44,9 @@ export default async function Dashboard() {
         <h1 className="font-display text-4xl">Welcome, {user.name ?? user.email}</h1>
         <form action={logout}><Button variant="secondary" type="submit">Sign out</Button></form>
       </header>
+      {(user.role === "REVIEWER" || user.role === "ADMIN") && (
+        <p className="mt-4"><Link href="/review" className="underline">Review appeals</Link></p>
+      )}
       <section className="mt-8 grid gap-6 border-y border-line py-6 sm:grid-cols-3">
         <div>
           <h2 className="text-sm uppercase tracking-widest text-muted">Where am I</h2>
