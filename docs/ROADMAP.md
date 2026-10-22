@@ -73,5 +73,10 @@ Move the 60 s assessment off the request path, classify provider failures, and g
 - A worker that hangs beyond the 6-minute lease while still running could in theory finish after its job was reclaimed; the lease is longer than the provider's timeout, so this needs a stuck process rather than a slow call.
 - Human first assessments are final (no appeal), carry no per-criterion strengths/improvement text beyond the reviewer's comment, and there is no second-reviewer check.
 
+## M7 Pre-launch safety package ◐ (built and tested; policy text is draft and needs legal review)
+Close the gaps listed under M5. *Accept:* nothing is Public until a person approves what is shown; there is a way to report and take work down; people can delete their data; anonymous reads are limited.
+**Done and tested:** pre-moderation of Public with content-bound approval (edits send it back to review; reviewers cannot approve their own work; one decision wins; decisions on content the owner changed meanwhile are refused); weak text screening (contact details, links, short term list) on shared text and peer feedback; image-screener hook with a "not screened" verdict; in-app notices for approvals, rejections, holds, releases and hidden feedback (never naming a reporter); DB-backed rate limits on public pages, images and the report form; account deletion (password and typed confirmation, last-admin guard, files removed after commit, audit log de-identified, deleted sessions end); draft content policy, terms and privacy pages; public report form and takedown queue with 90-day contact retention. Mutation-checked: approval condition in the access rule, reset-on-edit, content fingerprint, gallery filter, deletion password/project/file/last-admin guards.
+**Not done / known gaps:** see `SAFETY.md` ("Not built"). Most important: no automated image screening; link-only sharing is not pre-moderated; the legal pages are drafts; no email; no account suspension or takedown appeals; no data export.
+
 ## Later
 Admin CMS, Brand + UI paths as content, recommendations, pilot QA with real beginners, other disciplines.
