@@ -74,6 +74,17 @@ enum RemediationStatus {
   COMPLETED
 }
 
+enum ReportTarget {
+  PROJECT
+  REVIEW
+}
+
+enum ReportStatus {
+  OPEN
+  ACTIONED
+  DISMISSED
+}
+
 enum Visibility {
   PRIVATE
   LINK
@@ -83,13 +94,17 @@ enum Visibility {
 // ───────── Identity
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  name         String?
-  passwordHash String?
-  role         Role     @default(LEARNER)
-  goal         String?
-  createdAt    DateTime @default(now())
+  id              String   @id @default(cuid())
+  email           String   @unique
+  name            String?
+  passwordHash    String?
+  /// Learner-chosen name shown on shared portfolio pages and peer reviews. Never the account name or email.
+  displayName     String?
+  /// Random public handle, created when the first project is made public.
+  portfolioHandle String?  @unique
+  role            Role     @default(LEARNER)
+  goal            String?
+  createdAt       DateTime @default(now())
 
   enrollments      Enrollment[]
   progress         Progress[]
@@ -101,6 +116,9 @@ model User {
   levelCompletions LevelCompletion[]
   remediations     Remediation[]
   appeals          Appeal[]
+  blocksMade       ReviewerBlock[]    @relation("BlockOwner")
+  blockedBy        ReviewerBlock[]    @relation("BlockTarget")
+  reports          Report[]
   auditEvents      AuditEvent[]
 }
 
@@ -492,6 +510,7 @@ model Remediation {
 
 // ───────── Community
 
+/// A shared view of one assessed submission. PRIVATE until the owner changes it. `slug` is an unguessable token.
 model PortfolioProject {
   id             String       @id @default(cuid())
   userId         String
@@ -500,11 +519,23 @@ model PortfolioProject {
   submission     Submission   @relation(fields: [submissionId], references: [id])
   slug           String       @unique
   title          String
+  summary        String?
   visibility     Visibility   @default(PRIVATE)
+  /// Indexes into Submission.files that the owner chose to show.
+  shownFiles     Int[]        @default([])
+  showRationale  Boolean      @default(true)
   showEvaluation Boolean      @default(false)
+  publishedAt    DateTime?
+  /// A moderator hold forces the project private and blocks re-publishing.
+  moderationHold Boolean      @default(false)
+  createdAt      DateTime     @default(now())
   reviews        PeerReview[]
+
+  @@index([visibility, publishedAt])
 }
 
+/// Structured peer feedback. Deliberately has NO relation to Progress or any assessment table:
+/// peer feedback never affects progression.
 model PeerReview {
   id           String           @id @default(cuid())
   projectId    String
@@ -514,8 +545,40 @@ model PeerReview {
   strengths    String
   improvements String
   questions    String?
+  hidden       Boolean          @default(false)
+  hiddenBy     String?
   createdAt    DateTime         @default(now())
-  // Deliberately no link to Progress: peer feedback never affects progression.
+  updatedAt    DateTime         @default(now()) @updatedAt
+
+  @@unique([projectId, reviewerId])
+}
+
+/// An owner stops a reviewer from reviewing their projects.
+model ReviewerBlock {
+  id        String   @id @default(cuid())
+  ownerId   String
+  owner     User     @relation("BlockOwner", fields: [ownerId], references: [id])
+  blockedId String
+  blocked   User     @relation("BlockTarget", fields: [blockedId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([ownerId, blockedId])
+}
+
+model Report {
+  id         String       @id @default(cuid())
+  targetType ReportTarget
+  targetId   String
+  reporterId String
+  reporter   User         @relation(fields: [reporterId], references: [id])
+  reason     String
+  status     ReportStatus @default(OPEN)
+  handledBy  String?
+  handledAt  DateTime?
+  createdAt  DateTime     @default(now())
+
+  @@unique([targetType, targetId, reporterId])
+  @@index([status, createdAt])
 }
 
 // ───────── Audit

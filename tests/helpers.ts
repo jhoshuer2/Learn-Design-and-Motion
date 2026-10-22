@@ -58,7 +58,13 @@ export async function cleanup() {
   await db.appeal.deleteMany({ where: { evaluationId: { in: eid } } });
   await db.criterionScore.deleteMany({ where: { evaluationId: { in: eid } } });
   await db.evaluation.deleteMany({ where: { id: { in: eid } } });
-  await db.portfolioProject.deleteMany({ where: { submissionId: { in: sid } } });
+  const projects = await db.portfolioProject.findMany({ where: { OR: [{ userId: { in: created } }, { submissionId: { in: sid } }] }, select: { id: true } });
+  const pid = projects.map((p) => p.id);
+  const reviews = await db.peerReview.findMany({ where: { OR: [{ projectId: { in: pid } }, { reviewerId: { in: created } }] }, select: { id: true } });
+  await db.report.deleteMany({ where: { OR: [{ reporterId: { in: created } }, { targetId: { in: [...pid, ...reviews.map((r) => r.id)] } }] } });
+  await db.peerReview.deleteMany({ where: { id: { in: reviews.map((r) => r.id) } } });
+  await db.reviewerBlock.deleteMany({ where: { OR: [{ ownerId: { in: created } }, { blockedId: { in: created } }] } });
+  await db.portfolioProject.deleteMany({ where: { id: { in: pid } } });
   await db.submission.deleteMany({ where: { id: { in: sid } } });
   await db.auditEvent.deleteMany({ where: { actorId: { in: created } } });
   await db.skillEvidence.deleteMany({ where: { userId: { in: created } } });
@@ -67,4 +73,21 @@ export async function cleanup() {
   await db.progress.deleteMany({ where: { userId: { in: created } } });
   await db.enrollment.deleteMany({ where: { userId: { in: created } } });
   await db.user.deleteMany({ where: { id: { in: created } } });
+}
+
+import { evaluateSubmission } from "../src/lib/assessment/evaluate";
+import { FakeProvider } from "../src/lib/assessment/fake";
+
+/** A submission that has been through the (test-only) evaluator, ready to become a portfolio project. */
+export async function evaluatedSubmission(userId: string, marker = "[fake:score=90]", attempt = 1) {
+  const sub = await makeSubmission(userId, { rationale: `${RATIONALE} ${marker}`, attempt });
+  const out = await evaluateSubmission(sub.id, { provider: new FakeProvider() });
+  if (out.state !== "evaluated") throw new Error(`expected evaluated, got ${out.state}`);
+  return { submissionId: sub.id, evaluationId: out.evaluationId };
+}
+
+export async function learnerWithName(name = "Test Learner", opts: { enroll?: boolean } = {}) {
+  const id = await makeUser(opts);
+  await db.user.update({ where: { id }, data: { displayName: name } });
+  return id;
 }
