@@ -14,6 +14,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <main id="main">{children}</main>
+        <footer className="mx-auto max-w-4xl px-6 py-10 text-sm text-muted">
+          <nav aria-label="Site" className="flex flex-wrap gap-x-5 gap-y-1">
+            <a className="underline" href="/policy">Content policy</a>
+            <a className="underline" href="/terms">Terms</a>
+            <a className="underline" href="/privacy">Privacy</a>
+            <a className="underline" href="/report-abuse">Report content</a>
+          </nav>
+        </footer>
       </body>
     </html>
   );

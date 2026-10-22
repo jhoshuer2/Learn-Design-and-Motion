@@ -12,6 +12,7 @@ import { db } from "../src/lib/db";
 import { getPause } from "../src/lib/jobs/flags";
 import { probeAndResume, runDueJobs } from "../src/lib/jobs/ops";
 import { purgeExpired } from "../src/lib/ratelimit";
+import { scrubOldContacts } from "../src/lib/safety/takedown";
 
 const workerId = `worker-${process.pid}-${randomUUID().slice(0, 8)}`;
 const concurrency = Number(process.env.WORKER_CONCURRENCY ?? 2);
@@ -38,6 +39,8 @@ async function main() {
         lastPurge = Date.now();
         const n = await purgeExpired();
         if (n) log(`purged ${n} expired rate-limit buckets`);
+        const c = await scrubOldContacts();
+        if (c) log(`removed contact details from ${c} handled takedown requests`);
       }
       const s = await runDueJobs({ workerId, concurrency, timeBudgetMs: 60_000, stop: () => stopping });
       if (s.ran || s.reclaimed) log("ran", s);

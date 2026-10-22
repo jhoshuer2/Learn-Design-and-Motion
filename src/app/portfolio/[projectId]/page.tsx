@@ -78,6 +78,7 @@ export default async function EditProject({ params, searchParams }: { params: { 
         <input type="hidden" name="projectId" value={p.id} />
         <fieldset>
           <legend className="font-display text-2xl">Who can see this</legend>
+          <p className="mt-1 text-sm text-muted">Only share work that is yours. Titles, introductions and rationales cannot contain contact details or links. See the <Link className="underline" href="/policy">content policy</Link>.</p>
           <div className="mt-3 space-y-3">
             {OPTIONS.map((o) => (
               <label key={o.value} className="flex gap-3 rounded border border-line bg-raised p-4">

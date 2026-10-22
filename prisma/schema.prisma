@@ -617,6 +617,25 @@ model Notification {
   @@index([userId, readAt, createdAt])
 }
 
+/// A complaint from anyone (signed in or not) that shared work should come down. Reporter contact details are optional,
+/// are stored only to reply, and are deleted with the request's resolution after RETENTION (see docs/SAFETY.md).
+model TakedownRequest {
+  id            String       @id @default(cuid())
+  /// Slug of the project the complaint is about, parsed from the link they gave (null if none could be found).
+  projectSlug   String?
+  link          String?
+  reason        String
+  reporterName  String?
+  reporterEmail String?
+  status        ReportStatus @default(OPEN)
+  handledBy     String?
+  note          String?
+  handledAt     DateTime?
+  createdAt     DateTime     @default(now())
+
+  @@index([status, createdAt])
+}
+
 /// Fixed-window counters for rate limiting. `id` is "<bucket>:<hmac of client>:<window start>"; raw addresses are never stored.
 model RateBucket {
   id        String   @id
