@@ -1,11 +1,12 @@
 import type { Prisma, Role } from "@prisma/client";
 import { db } from "@/lib/db";
+import { UNVERIFIED_MESSAGE, isVerified } from "@/lib/auth/verified";
 import { applyEvaluation } from "@/lib/progression";
 import { InvalidEvaluationError, computeResult } from "@/lib/assessment/scoring";
 
 export type ReviewErrorCode =
   | "not_found" | "forbidden" | "not_appealable" | "already_appealed" | "reason_required"
-  | "resolution_required" | "not_open" | "own_submission" | "invalid_scores" | "cannot_revoke_pass" | "comment_required" | "not_assessable";
+  | "resolution_required" | "not_open" | "own_submission" | "invalid_scores" | "cannot_revoke_pass" | "comment_required" | "not_assessable" | "unverified";
 export class ReviewError extends Error {
   constructor(public code: ReviewErrorCode, message?: string) {
     super(message ?? code);
@@ -20,6 +21,7 @@ const isReviewer = (role: Role) => role === "REVIEWER" || role === "ADMIN";
  * learner cannot race a new attempt against it.
  */
 export async function createAppeal(userId: string, evaluationId: string, reason: string) {
+  if (!(await isVerified(userId))) throw new ReviewError("unverified", UNVERIFIED_MESSAGE);
   const text = reason.trim();
   if (text.length < 20) throw new ReviewError("reason_required", "Please explain what you think was missed (at least a sentence).");
   const ev = await db.evaluation.findUnique({ where: { id: evaluationId }, include: { submission: true } });

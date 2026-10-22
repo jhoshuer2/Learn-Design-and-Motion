@@ -9,6 +9,6 @@ export default defineConfig({
     // so test files must not run concurrently.
     fileParallelism: false,
     // Tests must never reach the real API (it costs money): blank the key even though Prisma loads .env.
-    env: { ANTHROPIC_API_KEY: "", EVALUATION_PROVIDER: "" },
+    env: { ANTHROPIC_API_KEY: "", EVALUATION_PROVIDER: "", BCRYPT_ROUNDS: "4", EMAIL_TRANSPORT: "outbox", APP_URL: "http://app.test" },
   },
 });

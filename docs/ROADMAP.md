@@ -8,7 +8,7 @@ Docs in this folder + `prisma/schema.prisma`. *Accept:* docs reviewed; schema va
 ## M1 Foundation ☑ (scoped: see notes)
 Scaffold, migrations, auth, roles, seed, content schema validation, tokens/base components. *Accept:* sign up/in works; seed loads the Contrast module; CI green.
 **Done:** scaffold, migration, credentials auth (email + password, bcrypt), roles (always server-read), enrollment, content schemas + loader + idempotent publisher with immutability checks, seed, base components, e2e + unit tests.
-**Not done / known gaps:** no login rate limiting or password reset yet; no email verification; OAuth providers not added; the Contrast lessons are skeletons (M2 authors them); CI workflow is written but has not run on GitHub yet.
+**Not done / known gaps:** login throttling, password reset and email verification were added in M8; OAuth providers not added; the Contrast lessons are skeletons (M2 authors them); CI workflow is written but has not run on GitHub yet.
 
 ## M2 Learning engine ☑ (scoped: see notes)
 Prerequisites, quiz scoring, lesson completion, dashboard + timeline, full Contrast module content. *Accept:* direct URL/API access to a locked lesson is refused; lesson cannot complete without a passing check; tests cover rules.
@@ -77,6 +77,11 @@ Move the 60 s assessment off the request path, classify provider failures, and g
 Close the gaps listed under M5. *Accept:* nothing is Public until a person approves what is shown; there is a way to report and take work down; people can delete their data; anonymous reads are limited.
 **Done and tested:** pre-moderation of Public with content-bound approval (edits send it back to review; reviewers cannot approve their own work; one decision wins; decisions on content the owner changed meanwhile are refused); weak text screening (contact details, links, short term list) on shared text and peer feedback; image-screener hook with a "not screened" verdict; in-app notices for approvals, rejections, holds, releases and hidden feedback (never naming a reporter); DB-backed rate limits on public pages, images and the report form; account deletion (password and typed confirmation, last-admin guard, files removed after commit, audit log de-identified, deleted sessions end); draft content policy, terms and privacy pages; public report form and takedown queue with 90-day contact retention. Mutation-checked: approval condition in the access rule, reset-on-edit, content fingerprint, gallery filter, deletion password/project/file/last-admin guards.
 **Not done / known gaps:** see `SAFETY.md` ("Not built"). Most important: no automated image screening; link-only sharing is not pre-moderated; the legal pages are drafts; no email; no account suspension or takedown appeals; no data export.
+
+## M8 Account security ◐ (built and tested; email delivery verified only through the dev outbox)
+Close the M1 gaps ("no login rate limiting or password reset yet; no email verification"). *Accept:* guessing is throttled; reset and verification work end to end; sessions can be ended; unverified accounts cannot share.
+**Done and tested:** password policy; per-account and per-client sign-in throttling; constant-cost unknown-email sign-in; verification and reset links (hashed, single-use, expiring, newest wins, scanner-safe); identical reset responses; session versioning with change-password and sign-out-everywhere; verified-email gate on sharing, feedback, reports and appeals; mailer interface with SMTP and dev outbox; security headers. 334 unit/integration tests and 30 Playwright tests (axe clean). Mutation-checked: token single-use, expiry, session end on reset, unknown-address silence, account throttle, common-password check.
+**Not verified / gaps:** see `ACCOUNT_SECURITY.md`. Most important: the SMTP adapter has never run against a real server; no 2FA, no CSP, no breached-password check, and signup still reveals registered addresses.
 
 ## Later
 Admin CMS, Brand + UI paths as content, recommendations, pilot QA with real beginners, other disciplines.

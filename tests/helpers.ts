@@ -12,9 +12,9 @@ export async function useTempStorage() {
   process.env.UPLOAD_DIR = await fs.mkdtemp(path.join(os.tmpdir(), "cm-test-"));
 }
 
-export async function makeUser(opts: { enroll?: boolean; role?: "LEARNER" | "REVIEWER" | "ADMIN" } = {}) {
+export async function makeUser(opts: { enroll?: boolean; role?: "LEARNER" | "REVIEWER" | "ADMIN"; unverified?: boolean } = {}) {
   const u = await db.user.create({
-    data: { email: `t-${Date.now()}-${Math.random().toString(36).slice(2)}@test.local`, role: opts.role ?? "LEARNER" },
+    data: { email: `t-${Date.now()}-${Math.random().toString(36).slice(2)}@test.local`, role: opts.role ?? "LEARNER", emailVerifiedAt: opts.unverified ? null : new Date() },
   });
   created.push(u.id);
   if (opts.enroll !== false) {
@@ -69,6 +69,7 @@ export async function cleanup() {
   await db.portfolioProject.deleteMany({ where: { id: { in: pid } } });
   await db.submission.deleteMany({ where: { id: { in: sid } } });
   await db.notification.deleteMany({ where: { userId: { in: created } } });
+  await db.authToken.deleteMany({ where: { userId: { in: created } } });
   await db.auditEvent.deleteMany({ where: { actorId: { in: created } } });
   await db.skillEvidence.deleteMany({ where: { userId: { in: created } } });
   await db.quizAttempt.deleteMany({ where: { userId: { in: created } } });

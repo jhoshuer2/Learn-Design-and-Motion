@@ -58,6 +58,7 @@ export async function deleteAccount(userId: string, input: { password: string; c
     await tx.remediation.deleteMany({ where: { userId } });
     await tx.enrollment.deleteMany({ where: { userId } });
     await tx.notification.deleteMany({ where: { userId } });
+    await tx.authToken.deleteMany({ where: { userId } });
 
     // Their decisions on other people's work stay, without their identity.
     await tx.appeal.updateMany({ where: { reviewerId: userId }, data: { reviewerId: null } });

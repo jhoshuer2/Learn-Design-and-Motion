@@ -20,6 +20,7 @@ async function signUp(page: Page, name: string, enroll = true) {
   await page.getByLabel(/^Password/).fill(PASSWORD);
   await page.getByRole("button", { name: "Sign up" }).click();
   await expect(page).toHaveURL(/\/dashboard/);
+  await db.user.update({ where: { email }, data: { emailVerifiedAt: new Date() } }); // verification has its own spec
   if (enroll) {
     await page.getByRole("button", { name: "Enroll" }).first().click();
     await expect(page.getByText("In progress")).toBeVisible();

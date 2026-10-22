@@ -1,4 +1,7 @@
+import Link from "next/link";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { clientKey } from "@/lib/ratelimit";
 import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { createLearner } from "@/lib/signup";
@@ -11,7 +14,7 @@ async function signup(formData: FormData) {
     name: formData.get("name"),
     email: formData.get("email"),
     password: formData.get("password"),
-  });
+  }, clientKey(headers()));
   if (!res.ok) redirect(`/signup?error=${encodeURIComponent(res.error)}`);
   try {
     await signIn("credentials", {
@@ -34,6 +37,7 @@ export default function SignUp({ searchParams }: { searchParams: { error?: strin
       <Field id="email" label="Email" type="email" required autoComplete="email" />
       <Field id="password" label="Password (10+ characters)" type="password" required minLength={10} autoComplete="new-password" />
       <Button type="submit">Sign up</Button>
+      <p className="text-sm text-muted">We will email you a link to confirm your address. By signing up you agree to the <Link className="underline" href="/terms">terms</Link> and <Link className="underline" href="/policy">content policy</Link>.</p>
     </form>
   );
 }

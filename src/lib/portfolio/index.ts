@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { slotOf, type StoredFile } from "@/lib/submissions/access";
 import { PortfolioError } from "./errors";
 import { screenFields } from "@/lib/safety/screen";
+import { UNVERIFIED_MESSAGE, isVerified } from "@/lib/auth/verified";
 
 export { PortfolioError } from "./errors";
 
@@ -92,6 +93,7 @@ export async function updateProject(userId: string, projectId: string, input: Pr
 
   const visibility: Visibility = patch.visibility ?? p.visibility;
   const publishing = visibility !== "PRIVATE";
+  if (publishing && p.visibility === "PRIVATE" && !(await isVerified(userId))) throw new PortfolioError("unverified", UNVERIFIED_MESSAGE);
   if (publishing && p.moderationHold) throw new PortfolioError("held", "This project is on hold and cannot be shared.");
   if (publishing && !p.user.displayName) throw new PortfolioError("display_name_required", "Choose a display name before you share work.");
   if (publishing && shownFiles.length === 0) throw new PortfolioError("nothing_to_show", "Choose at least one image to show.");

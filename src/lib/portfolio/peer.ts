@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { projectAccess } from "./access";
 import { PortfolioError } from "./errors";
 import { screenFields } from "@/lib/safety/screen";
+import { UNVERIFIED_MESSAGE, isVerified } from "@/lib/auth/verified";
 
 /**
  * Peer feedback. By design this module reads and writes ONLY peer-review, block, report and audit rows:
@@ -47,6 +48,7 @@ export async function createReview(
     db.portfolioProject.findUnique({ where: { slug } }),
   ]);
   if (!reviewer) throw new PortfolioError("sign_in_required");
+  if (!(await isVerified(reviewerId))) throw new PortfolioError("unverified", UNVERIFIED_MESSAGE);
   // Missing, private and held projects are indistinguishable to the reviewer.
   if (!project || projectAccess(reviewer, project) === "none") throw new PortfolioError("not_visible");
   if (project.userId === reviewerId) throw new PortfolioError("own_project", "You cannot review your own work.");
@@ -131,6 +133,7 @@ export async function listBlocked(ownerId: string) {
 }
 
 async function createReport(reporterId: string, targetType: "PROJECT" | "REVIEW", targetId: string, reasonIn: string) {
+  if (!(await isVerified(reporterId))) throw new PortfolioError("unverified", UNVERIFIED_MESSAGE);
   const reason = cleanText(reasonIn ?? "");
   if (reason.length < REASON_MIN || reason.length > REASON_MAX) {
     throw new PortfolioError("invalid", `Tell us what is wrong in ${REASON_MIN} to ${REASON_MAX} characters.`);

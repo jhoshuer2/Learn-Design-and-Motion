@@ -109,17 +109,21 @@ enum PublicApproval {
 // ───────── Identity
 
 model User {
-  id              String   @id @default(cuid())
-  email           String   @unique
+  id              String    @id @default(cuid())
+  email           String    @unique
   name            String?
   passwordHash    String?
   /// Learner-chosen name shown on shared portfolio pages and peer reviews. Never the account name or email.
   displayName     String?
   /// Random public handle, created when the first project is made public.
-  portfolioHandle String?  @unique
-  role            Role     @default(LEARNER)
+  portfolioHandle String?   @unique
+  role            Role      @default(LEARNER)
   goal            String?
-  createdAt       DateTime @default(now())
+  /// Set when the person proves they control the address. Sharing and feedback need it.
+  emailVerifiedAt DateTime?
+  /// Bumped on password change/reset and "sign out everywhere": any session carrying an older value stops working.
+  tokenVersion    Int       @default(0)
+  createdAt       DateTime  @default(now())
 
   enrollments      Enrollment[]
   progress         Progress[]
@@ -129,6 +133,7 @@ model User {
   portfolio        PortfolioProject[]
   peerReviews      PeerReview[]
   notifications    Notification[]
+  authTokens       AuthToken[]
   levelCompletions LevelCompletion[]
   remediations     Remediation[]
   appeals          Appeal[]
@@ -643,6 +648,36 @@ model RateBucket {
   expiresAt DateTime
 
   @@index([expiresAt])
+}
+
+enum AuthTokenKind {
+  VERIFY_EMAIL
+  RESET_PASSWORD
+}
+
+/// One-time emailed secrets. Only a SHA-256 of the token is stored, so a database leak does not yield usable links.
+model AuthToken {
+  id        String        @id @default(cuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id])
+  kind      AuthTokenKind
+  tokenHash String        @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime      @default(now())
+
+  @@index([userId, kind, createdAt])
+}
+
+/// DEV AND TEST ONLY mail sink (EMAIL_TRANSPORT=outbox). Never used when EMAIL_TRANSPORT=smtp.
+model EmailOutbox {
+  id        String   @id @default(cuid())
+  to        String
+  subject   String
+  text      String
+  createdAt DateTime @default(now())
+
+  @@index([to, createdAt])
 }
 
 // ───────── Audit
