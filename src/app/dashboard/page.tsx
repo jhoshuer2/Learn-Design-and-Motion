@@ -2,6 +2,7 @@ import { revalidatePath } from "next/cache";
 import { signOut } from "@/auth";
 import { db } from "@/lib/db";
 import Link from "next/link";
+import { unreadCount } from "@/lib/notify";
 import { requireUser } from "@/lib/session";
 import { getTimeline, getWeakCompetencies } from "@/lib/progression";
 import { nextHref } from "@/lib/progression/links";
@@ -37,6 +38,7 @@ export default async function Dashboard() {
   const timelines = await Promise.all(enrollments.map((e) => getTimeline(user.id, e.pathId)));
   const next = timelines.find((t) => t?.next)?.next ?? null;
   const weak = await getWeakCompetencies(user.id);
+  const unread = await unreadCount(user.id);
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
@@ -48,10 +50,11 @@ export default async function Dashboard() {
         <Link href="/portfolio" className="underline">My portfolio</Link>
         <Link href="/community" className="underline">Community</Link>
         <Link href="/profile" className="underline">Profile</Link>
+        <Link href="/notifications" className="underline">Notices{unread > 0 ? ` (${unread} unread)` : ""}</Link>
         {(user.role === "REVIEWER" || user.role === "ADMIN") && (
           <>
             <Link href="/review" className="underline">Review appeals</Link>
-            <Link href="/review/moderation" className="underline">Review reports</Link>
+            <Link href="/review/moderation" className="underline">Approvals and reports</Link>
             <Link href="/admin/assessments" className="underline">Assessment queue</Link>
           </>
         )}

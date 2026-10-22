@@ -185,3 +185,58 @@ describe("pre-moderation of Public", () => {
     delete process.env.CONTENT_BLOCKLIST;
   });
 });
+
+describe("owner notifications", () => {
+  const notices = (uid: string) => db.notification.findMany({ where: { userId: uid }, orderBy: { createdAt: "asc" } });
+
+  it("tells the owner about approval and rejection, with the reviewer's reason", async () => {
+    const a = await pending("Notice A"); const b = await pending("Notice B");
+    const m = await mod();
+    await decideApproval(m, a.id, "approve", "", await fp(a.id));
+    await decideApproval(m, b.id, "reject", "Please choose a different image.", await fp(b.id));
+    expect((await notices(a.u))[0]).toMatchObject({ kind: "approved", readAt: null });
+    const nb = (await notices(b.u))[0];
+    expect(nb.kind).toBe("not_approved");
+    expect(nb.text).toContain("Please choose a different image.");
+  });
+
+  it("tells the owner about a hold and a release, and the reviewer whose feedback was hidden, without naming any reporter", async () => {
+    const { resolveReport, releaseHold } = await import("../src/lib/portfolio/moderation");
+    const { reportProject, reportReview } = await import("../src/lib/portfolio/peer");
+    const owner = await learnerWithName("Held Owner");
+    const s = await evaluatedSubmission(owner);
+    const p = await createProject(owner, s.submissionId);
+    await updateProject(owner, p.id, { visibility: "LINK" });
+    const reporter = await learnerWithName("Secret Reporter", { enroll: false });
+    await reportProject(reporter, p.slug, "This is not appropriate for the site.");
+    const m = await mod();
+    const rep = await db.report.findFirstOrThrow({ where: { targetId: p.id } });
+    await resolveReport(m, rep.id, "hold_project", "Contains something we cannot host.");
+    const held = (await notices(owner)).find((n) => n.kind === "project_held")!;
+    expect(held.text).toContain("Contains something we cannot host.");
+    expect(held.text).not.toContain("Secret Reporter");
+    await releaseHold(m, p.id);
+    expect((await notices(owner)).some((n) => n.kind === "hold_released")).toBe(true);
+
+    const q = await learnerWithName("Feedback Author", { enroll: false });
+    await updateProject(owner, p.id, { visibility: "LINK" });
+    const ok = "The hierarchy is clear and the title reads first at a glance.";
+    await createReview(q, p.slug, { strengths: ok, improvements: ok });
+    const review = await db.peerReview.findFirstOrThrow({ where: { reviewerId: q } });
+    await reportReview(reporter, review.id, "This feedback is rude and unhelpful.");
+    const rep2 = await db.report.findFirstOrThrow({ where: { targetId: review.id } });
+    await resolveReport(m, rep2.id, "hide_review", "Not constructive.");
+    expect((await notices(q)).find((n) => n.kind === "review_hidden")?.text).toContain("Not constructive.");
+    expect((await notices(reporter)).length).toBe(0);
+  });
+
+  it("a notice list is private to its owner and can be marked read", async () => {
+    const { listMine, markAllRead, unreadCount } = await import("../src/lib/notify");
+    const a = await pending("Reader");
+    await decideApproval(await mod(), a.id, "approve", "", await fp(a.id));
+    expect(await unreadCount(a.u)).toBe(1);
+    expect((await listMine(await makeUser({ enroll: false }))).length).toBe(0);
+    await markAllRead(a.u);
+    expect(await unreadCount(a.u)).toBe(0);
+  });
+});

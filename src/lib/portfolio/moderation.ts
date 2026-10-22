@@ -3,6 +3,7 @@ import type { Role } from "@prisma/client";
 import { db } from "@/lib/db";
 import { PortfolioError } from "./errors";
 import { getStorage } from "@/lib/storage";
+import { notify } from "@/lib/notify";
 import { screenFields } from "@/lib/safety/screen";
 import { getImageScreener } from "@/lib/safety/images";
 import type { StoredFile } from "@/lib/submissions/access";
@@ -68,11 +69,13 @@ export async function resolveReport(mod: Mod, reportId: string, action: ModActio
     const claim = await tx.report.updateMany({ where: { id: reportId, status: "OPEN" }, data: { status: action === "dismiss" ? "DISMISSED" : "ACTIONED", handledBy: mod.id, handledAt: new Date() } });
     if (claim.count === 0) throw new PortfolioError("invalid", "This report has already been handled.");
     if (action === "hide_review") {
-      await tx.peerReview.update({ where: { id: r.targetId }, data: { hidden: true, hiddenBy: mod.id } });
+      const hidden = await tx.peerReview.update({ where: { id: r.targetId }, data: { hidden: true, hiddenBy: mod.id } });
+      await notify(tx, hidden.reviewerId, "review_hidden", `A moderator hid your feedback on "${detail.project.title}". Reason: ${n}`, hidden.id);
       await tx.report.updateMany({ where: { targetType: "REVIEW", targetId: r.targetId, status: "OPEN" }, data: { status: "ACTIONED", handledBy: mod.id, handledAt: new Date() } });
     }
     if (action === "hold_project") {
-      await tx.portfolioProject.update({ where: { id: detail.project.id }, data: { moderationHold: true, visibility: "PRIVATE" } });
+      const held = await tx.portfolioProject.update({ where: { id: detail.project.id }, data: { moderationHold: true, visibility: "PRIVATE", publicApproval: "NONE" } });
+      await notify(tx, held.userId, "project_held", `Your project "${held.title}" was put on hold by a moderator and is now private. Reason: ${n}`, held.id);
       await tx.report.updateMany({ where: { targetType: "PROJECT", targetId: detail.project.id, status: "OPEN" }, data: { status: "ACTIONED", handledBy: mod.id, handledAt: new Date() } });
     }
     await tx.auditEvent.create({ data: { actorId: mod.id, action: "moderation.resolved", subject: `report:${reportId}`, detail: { action, note: n, projectId: detail.project.id } } });
@@ -86,8 +89,11 @@ export async function releaseHold(mod: Mod, projectId: string) {
   const p = await db.portfolioProject.findUnique({ where: { id: projectId } });
   if (!p) throw new PortfolioError("not_found");
   if (p.userId === mod.id) throw new PortfolioError("own_project");
-  await db.portfolioProject.update({ where: { id: projectId }, data: { moderationHold: false } });
-  await db.auditEvent.create({ data: { actorId: mod.id, action: "moderation.hold_released", subject: `project:${projectId}`, detail: {} } });
+  await db.$transaction([
+    db.portfolioProject.update({ where: { id: projectId }, data: { moderationHold: false } }),
+    db.auditEvent.create({ data: { actorId: mod.id, action: "moderation.hold_released", subject: `project:${projectId}`, detail: {} } }),
+    db.notification.create({ data: { userId: p.userId, kind: "hold_released", text: `The hold on "${p.title}" was lifted. It stays private until you choose to share it again.`, subjectId: p.id } }),
+  ]);
 }
 
 // ───────── Pre-moderation of Public sharing
@@ -147,6 +153,8 @@ export async function decideApproval(mod: Mod, projectId: string, decision: "app
     });
     if (claim.count === 0) throw new PortfolioError("invalid", "This project is no longer waiting for approval.");
     await tx.auditEvent.create({ data: { actorId: mod.id, action: decision === "approve" ? "moderation.approved" : "moderation.rejected", subject: `project:${projectId}`, detail: { note: n } } });
+    await notify(tx, p.userId, decision === "approve" ? "approved" : "not_approved",
+      decision === "approve" ? `"${p.title}" was approved and is now public.` : `"${p.title}" was not approved for public sharing. ${n} You can change it and ask again, or share it by link.`, p.id);
     return { decision };
   });
 }

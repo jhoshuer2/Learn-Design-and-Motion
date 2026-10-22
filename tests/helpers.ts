@@ -68,6 +68,7 @@ export async function cleanup() {
   await db.reviewerBlock.deleteMany({ where: { OR: [{ ownerId: { in: created } }, { blockedId: { in: created } }] } });
   await db.portfolioProject.deleteMany({ where: { id: { in: pid } } });
   await db.submission.deleteMany({ where: { id: { in: sid } } });
+  await db.notification.deleteMany({ where: { userId: { in: created } } });
   await db.auditEvent.deleteMany({ where: { actorId: { in: created } } });
   await db.skillEvidence.deleteMany({ where: { userId: { in: created } } });
   await db.quizAttempt.deleteMany({ where: { userId: { in: created } } });
