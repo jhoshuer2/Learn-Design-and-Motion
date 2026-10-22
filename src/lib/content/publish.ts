@@ -1,5 +1,6 @@
 import { Prisma, type PrismaClient } from "@prisma/client";
 import type { LoadedContent } from "./loader";
+import type { AssignmentDef } from "./schemas";
 
 const toJson = (v: unknown) => v as Prisma.InputJsonValue;
 const sameJson = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
@@ -45,6 +46,29 @@ export async function publishContent(db: PrismaClient, content: LoadedContent) {
         },
       },
     });
+  }
+
+  // Levels first, so modules and capstones attach to a level that already carries its rules.
+  const levelIds = new Map<string, string>();
+  for (const lv of content.levels) {
+    const d = lv.def;
+    const discipline = await db.discipline.upsert({ where: { slug: d.discipline }, update: {}, create: { slug: d.discipline, title: titleCase(d.discipline), description: "" } });
+    const path = await db.path.upsert({
+      where: { disciplineId_slug: { disciplineId: discipline.id, slug: d.path } }, update: {},
+      create: { disciplineId: discipline.id, slug: d.path, title: titleCase(d.path) },
+    });
+    const existing = await db.level.findUnique({ where: { pathId_tier: { pathId: path.id, tier: d.tier } } });
+    const data = {
+      objectives: d.objectives, capstoneThreshold: d.capstoneThreshold, scopeLabel: d.scopeLabel, scopeNote: d.scopeNote,
+      requiredCompetencies: d.requiredCompetencies, status: d.status,
+    };
+    if (existing?.status === "PUBLISHED" &&
+        (existing.capstoneThreshold !== d.capstoneThreshold || !sameJson([...existing.requiredCompetencies].sort(), [...d.requiredCompetencies].sort()))) {
+      throw new Error(`Level ${d.path}/${d.tier} is published; its threshold and required competencies are immutable.`);
+    }
+    const level = await db.level.upsert({ where: { pathId_tier: { pathId: path.id, tier: d.tier } }, update: data, create: { pathId: path.id, tier: d.tier, ...data } });
+    levelIds.set(`${d.discipline}/${d.path}/${d.tier}`, level.id);
+    for (const a of lv.capstones) await upsertAssignment(db, a, { levelId: level.id, moduleId: null });
   }
 
   for (const m of content.modules) {
@@ -111,21 +135,7 @@ export async function publishContent(db: PrismaClient, content: LoadedContent) {
         await db.lessonCompetency.create({ data: { lessonId: lesson.id, competencyId: comp.get(c)! } });
       }
     }
-    for (const a of m.assignments) {
-      const rv = await db.rubricVersion.findFirstOrThrow({ where: { version: a.rubric.version, rubric: { slug: a.rubric.slug } } });
-      const brief = { requirements: a.requirements, constraints: a.constraints, deliverables: a.deliverables };
-      const existing = await db.assignment.findUnique({ where: { slug: a.slug } });
-      if (existing && existing.status === "PUBLISHED" &&
-          (existing.rubricVersionId !== rv.id || !sameJson(existing.brief, brief) || existing.scenario !== a.scenario)) {
-        throw new Error(`Assignment ${a.slug} is published and immutable; create a new assignment or bump its rubric through a new slug.`);
-      }
-      const data = {
-        kind: a.kind, levelId: level.id, moduleId: mod.id, title: a.title, objective: a.objective, scenario: a.scenario,
-        brief: toJson(brief), difficulty: a.difficulty, estimatedMinutes: a.estimatedMinutes,
-        rubricVersionId: rv.id, maxAttempts: a.maxAttempts, status: a.status,
-      };
-      await db.assignment.upsert({ where: { slug: a.slug }, update: data, create: { slug: a.slug, ...data } });
-    }
+    for (const a of m.assignments) await upsertAssignment(db, a, { levelId: level.id, moduleId: mod.id });
     for (const l of m.lessons) {
       const lessonId = lessonIds.get(l.meta.slug)!;
       await db.lessonPrerequisite.deleteMany({ where: { lessonId } });
@@ -134,6 +144,22 @@ export async function publishContent(db: PrismaClient, content: LoadedContent) {
       }
     }
   }
+}
+
+async function upsertAssignment(db: PrismaClient, a: AssignmentDef, where: { levelId: string; moduleId: string | null }) {
+  const rv = await db.rubricVersion.findFirstOrThrow({ where: { version: a.rubric.version, rubric: { slug: a.rubric.slug } } });
+  const brief = { requirements: a.requirements, constraints: a.constraints, deliverables: a.deliverables };
+  const existing = await db.assignment.findUnique({ where: { slug: a.slug } });
+  if (existing && existing.status === "PUBLISHED" &&
+      (existing.rubricVersionId !== rv.id || !sameJson(existing.brief, brief) || existing.scenario !== a.scenario)) {
+    throw new Error(`Assignment ${a.slug} is published and immutable; create a new assignment or bump its rubric through a new slug.`);
+  }
+  const data = {
+    kind: a.kind, levelId: where.levelId, moduleId: where.moduleId, title: a.title, objective: a.objective, scenario: a.scenario,
+    brief: toJson(brief), difficulty: a.difficulty, estimatedMinutes: a.estimatedMinutes,
+    rubricVersionId: rv.id, maxAttempts: a.maxAttempts, status: a.status,
+  };
+  await db.assignment.upsert({ where: { slug: a.slug }, update: data, create: { slug: a.slug, ...data } });
 }
 
 function titleCase(s: string) {

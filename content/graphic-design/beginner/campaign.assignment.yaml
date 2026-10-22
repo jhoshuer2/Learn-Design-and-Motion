@@ -1,0 +1,30 @@
+slug: contrast-campaign-capstone
+kind: CAPSTONE
+title: Contrast campaign capstone
+objective: Design a coordinated three-piece campaign that uses contrast to build hierarchy and stays legible, accessible and consistent across formats.
+scenario: >
+  Open Studio 2026 is a creative conference on Saturday 14 March at Harbour Hall, Pier 4. Registration is at
+  openstudio.example. The organisers need one coordinated campaign: a printed A3 poster, a square social post,
+  and a small web banner. All three must carry the event name, date, place and one call to action, and they
+  must clearly belong together.
+requirements:
+  - "Deliver three pieces: a poster (portrait), a social square, and a small banner (wide and short)."
+  - "Each piece has a clear reading order: event name, then date and place, then the call to action."
+  - "Essential text meets accessibility contrast minimums in every piece, including the banner. Measure at least three pairs and report the ratios in your rationale."
+  - "The pieces are visibly one campaign (shared type, colour logic and contrast approach) but adapted to each format, not copied."
+  - "Use no more than two typefaces across the campaign."
+  - "Explain three design decisions in your rationale, each tied to contrast."
+constraints:
+  - "Original work only. Any photograph or illustration must be one you are licensed to use."
+  - "Do not reuse your module assessment poster unchanged. This campaign must be a new design."
+  - "Include only the four pieces of event information. Do not invent extra details."
+deliverables:
+  - { key: poster, label: Poster, description: "Portrait poster, exported as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: social-square, label: Social square, description: "Square social post, exported as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: banner, label: Web banner, description: "Wide, short banner at roughly 728 by 90 or similar, exported as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: process, label: Process image, description: "A sketch or earlier version, if you want to show your process.", role: process, required: false }
+difficulty: 3
+estimatedMinutes: 180
+rubric: { slug: contrast-campaign-capstone, version: 1 }
+maxAttempts: 3
+status: DRAFT

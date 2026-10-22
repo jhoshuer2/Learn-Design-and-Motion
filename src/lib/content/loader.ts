@@ -4,8 +4,8 @@ import matter from "gray-matter";
 import YAML from "yaml";
 import { ZodError } from "zod";
 import {
-  BLOCK_KINDS, assignmentSchema, checksSchema, competenciesSchema, lessonFrontmatter, moduleSchema, rubricSchema,
-  type AssignmentDef, type LessonFrontmatter, type ModuleDef, type Question, type RubricDef,
+  BLOCK_KINDS, assignmentSchema, checksSchema, competenciesSchema, levelSchema, lessonFrontmatter, moduleSchema, rubricSchema,
+  type AssignmentDef, type LessonFrontmatter, type LevelDef, type ModuleDef, type Question, type RubricDef,
 } from "./schemas";
 import { DEMO_NAMES, DEMO_TOKEN } from "./demos";
 import { MACHINE_SCORED } from "../progression/scoring";
@@ -13,9 +13,11 @@ import { MACHINE_SCORED } from "../progression/scoring";
 export type Block = { kind: (typeof BLOCK_KINDS)[number]; title: string; body: string };
 export type LoadedLesson = { meta: LessonFrontmatter; blocks: Block[]; questions: Question[] };
 export type LoadedModule = { def: ModuleDef; lessons: LoadedLesson[]; assignments: AssignmentDef[] };
+export type LoadedLevel = { def: LevelDef; capstones: AssignmentDef[] };
 export type LoadedContent = {
   competencies: { slug: string; title: string; critical: boolean }[];
   modules: LoadedModule[];
+  levels: LoadedLevel[];
   rubrics: RubricDef[];
 };
 
@@ -114,6 +116,7 @@ export function loadContent(root = path.join(process.cwd(), "content")): LoadedC
     const assignments = fs.readdirSync(dir).filter((f) => f.endsWith(".assignment.yaml")).map((f) => {
       const af = path.join(dir, f);
       const a = parseFile(af, () => assignmentSchema.parse(readYaml(af)));
+      if (a.kind === "CAPSTONE") throw new Error(`${af}: capstones belong next to level.yaml, not inside a module`);
       const rubric = rubrics.find((r) => r.slug === a.rubric.slug && r.version === a.rubric.version);
       if (!rubric) throw new Error(`${af}: rubric ${a.rubric.slug}@${a.rubric.version} does not exist`);
       for (const c of rubric.criteria) if (c.competency && !known.has(c.competency)) throw new Error(`${af}: rubric criterion "${c.key}" has unknown competency "${c.competency}"`);
@@ -122,7 +125,43 @@ export function loadContent(root = path.join(process.cwd(), "content")): LoadedC
     return { def, lessons, assignments };
   });
 
-  return { competencies: comp, modules, rubrics };
+  const levels: LoadedLevel[] = walk(root, "level.yaml").map((file) => {
+    const dir = path.dirname(file);
+    const def = parseFile(file, () => levelSchema.parse(readYaml(file)));
+    for (const c of def.requiredCompetencies) {
+      const found = comp.find((x) => x.slug === c);
+      if (!found) throw new Error(`${file}: required competency "${c}" does not exist`);
+      if (!found.critical) throw new Error(`${file}: required competency "${c}" must be marked critical in competencies.yaml`);
+    }
+    const capstones = fs.readdirSync(dir).filter((f) => f.endsWith(".assignment.yaml")).map((f) => {
+      const af = path.join(dir, f);
+      const a = parseFile(af, () => assignmentSchema.parse(readYaml(af)));
+      if (a.kind !== "CAPSTONE") throw new Error(`${af}: assignments next to level.yaml must be CAPSTONE`);
+      const rubric = rubrics.find((r) => r.slug === a.rubric.slug && r.version === a.rubric.version);
+      if (!rubric) throw new Error(`${af}: rubric ${a.rubric.slug}@${a.rubric.version} does not exist`);
+      if (rubric.threshold !== def.capstoneThreshold) {
+        throw new Error(`${af}: rubric threshold ${rubric.threshold} must equal the level capstoneThreshold ${def.capstoneThreshold}`);
+      }
+      for (const c of def.requiredCompetencies) {
+        if (!rubric.criteria.some((cr) => cr.competency === c)) {
+          throw new Error(`${af}: rubric has no criterion for required competency "${c}", so the capstone could not produce evidence for it`);
+        }
+        if (!rubric.criteria.some((cr) => cr.competency === c && cr.mandatory)) {
+          throw new Error(`${af}: the criterion for required competency "${c}" must be mandatory`);
+        }
+      }
+      for (const cr of rubric.criteria) if (cr.competency && !known.has(cr.competency)) throw new Error(`${af}: rubric criterion "${cr.key}" has unknown competency "${cr.competency}"`);
+      return a;
+    });
+    return { def, capstones };
+  });
+  for (const m of modules) {
+    if (!levels.some((l) => l.def.discipline === m.def.discipline && l.def.path === m.def.path && l.def.tier === m.def.level) && levels.length > 0) {
+      throw new Error(`Module ${m.def.slug}: no level.yaml for ${m.def.discipline}/${m.def.path}/${m.def.level}`);
+    }
+  }
+
+  return { competencies: comp, modules, levels, rubrics };
 }
 
 function assertAcyclic(lessons: LoadedLesson[], file: string) {

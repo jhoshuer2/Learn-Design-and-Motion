@@ -114,7 +114,7 @@ export const assignmentSchema = z.object({
   constraints: z.array(z.string().min(1)).default([]),
   deliverables: z.array(z.object({
     key: slug, label: z.string().min(1), description: z.string().min(1),
-    role: z.enum(["final", "preview", "process"]), required: z.boolean(),
+    role: z.enum(["final", "preview", "process", "piece"]), required: z.boolean(),
   })).min(1),
   difficulty: z.number().int().min(1).max(5),
   estimatedMinutes: z.number().int().positive(),
@@ -125,6 +125,21 @@ export const assignmentSchema = z.object({
   if (!a.deliverables.some((d) => d.required)) ctx.addIssue({ code: "custom", message: "at least one deliverable must be required" });
 });
 
+export const levelSchema = z.object({
+  discipline: slug,
+  path: slug,
+  tier: z.enum(["BEGINNER", "INTERMEDIATE", "ADVANCED", "PROFESSIONAL"]),
+  scopeLabel: z.string().min(3),
+  /** Plain statement of what the level currently covers and what it does not. Shown to learners. */
+  scopeNote: z.string().min(20),
+  objectives: z.array(z.string().min(1)).min(1),
+  capstoneThreshold: z.number().int().min(0).max(100).default(85),
+  /** Critical competency slugs that must be met (latest evidence >= 80) for the level to unlock. */
+  requiredCompetencies: z.array(slug).default([]),
+  status: status.default("DRAFT"),
+});
+
+export type LevelDef = z.infer<typeof levelSchema>;
 export type AssignmentDef = z.infer<typeof assignmentSchema>;
 export type LessonFrontmatter = z.infer<typeof lessonFrontmatter>;
 export type ModuleDef = z.infer<typeof moduleSchema>;
