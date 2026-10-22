@@ -30,6 +30,15 @@ const getClient = () => (client ??= new Anthropic({ timeout: 120_000, maxRetries
 export class ClaudeProvider implements EvaluationProvider {
   readonly name = "claude";
 
+  /** One output token: enough to learn whether the account can make calls again. */
+  async probe(): Promise<void> {
+    try {
+      await getClient().messages.create({ model: process.env.EVALUATION_MODEL || "claude-opus-5-5", max_tokens: 1, messages: [{ role: "user", content: "ping" }] });
+    } catch (e) {
+      throw classifyError(e);
+    }
+  }
+
   async evaluate(input: EvaluationInput): Promise<ProviderOutput> {
     const model = process.env.EVALUATION_MODEL || "claude-opus-5-5";
 

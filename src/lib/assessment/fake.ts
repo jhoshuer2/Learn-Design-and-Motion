@@ -25,10 +25,15 @@ function fakeError(kind: string): Error {
  *   [fake:set=key:NN]    overrides one criterion's score (repeatable), applied after the above
  *   [fake:slow=MS]       waits MS milliseconds before answering (simulates a real, slow call)
  *   [fake:error=KIND]    throws a provider error of KIND: billing | auth | rate_limit | overloaded | timeout | refusal | bad_request
+ *   [fake:billing=N]     throws a "billing" error for the first N calls with this rationale, then succeeds (an account that gets topped up)
  *   [fake:flaky=N]       throws an "overloaded" error for the first N calls with this rationale, then succeeds
  */
 export class FakeProvider implements EvaluationProvider {
   readonly name = FAKE_PROVIDER_NAME;
+
+  async probe(): Promise<void> {
+    if (process.env.FAKE_PROBE_FAIL) throw fakeError(process.env.FAKE_PROBE_FAIL);
+  }
 
   async evaluate(input: EvaluationInput): Promise<ProviderOutput> {
     const r = input.rationale;
@@ -36,6 +41,12 @@ export class FakeProvider implements EvaluationProvider {
     if (slow) await new Promise((res) => setTimeout(res, Number(slow[1])));
     const err = /\[fake:error=([a-z_]+)\]/.exec(r);
     if (err) throw fakeError(err[1]);
+    const billing = /\[fake:billing=(\d{1,2})\]/.exec(r);
+    if (billing) {
+      const n = (FLAKY_CALLS.get(`billing:${r}`) ?? 0) + 1;
+      FLAKY_CALLS.set(`billing:${r}`, n);
+      if (n <= Number(billing[1])) throw fakeError("billing");
+    }
     const flaky = /\[fake:flaky=(\d{1,2})\]/.exec(r);
     if (flaky) {
       const key = r;

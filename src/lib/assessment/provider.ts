@@ -20,6 +20,8 @@ export type ProviderOutput = { raw: unknown; model?: string; inputTokens?: numbe
 export interface EvaluationProvider {
   readonly name: string;
   evaluate(input: EvaluationInput): Promise<ProviderOutput>;
+  /** A near-free call that proves the account works again (used to resume a billing/auth pause). Throws classified errors. */
+  probe?(): Promise<void>;
 }
 
 /** No grader is available. The caller must NOT produce a score. */

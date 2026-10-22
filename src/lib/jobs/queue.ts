@@ -60,30 +60,33 @@ export async function heartbeat(jobId: string, workerId: string): Promise<boolea
 
 const final = { activeKey: null, lockedAt: null, lockedBy: null, finishedAt: new Date() } as const;
 
-export const complete = (jobId: string) =>
-  db.evaluationJob.updateMany({ where: { id: jobId, status: "RUNNING" }, data: { status: "DONE", ...final, finishedAt: new Date() } });
+/** `by`: when given, only the worker that holds the lease may change the job (a stale worker cannot touch a re-claimed one). */
+const mine = (jobId: string, by?: string) => ({ id: jobId, status: "RUNNING" as const, ...(by ? { lockedBy: by } : {}) });
 
-export const failFinal = (jobId: string, kind: string, message: string) =>
-  db.evaluationJob.updateMany({ where: { id: jobId, status: "RUNNING" }, data: { status: "FAILED_FINAL", lastErrorKind: kind, lastErrorMessage: message.slice(0, 500), ...final, finishedAt: new Date() } });
+export const complete = (jobId: string, by?: string) =>
+  db.evaluationJob.updateMany({ where: mine(jobId, by), data: { status: "DONE", ...final, finishedAt: new Date() } });
+
+export const failFinal = (jobId: string, kind: string, message: string, by?: string) =>
+  db.evaluationJob.updateMany({ where: mine(jobId, by), data: { status: "FAILED_FINAL", lastErrorKind: kind, lastErrorMessage: message.slice(0, 500), ...final, finishedAt: new Date() } });
 
 /** Put a running job back without consuming an attempt (paused queue, rate-limit hold-off, recovered crash). */
-export const deferWithoutAttempt = (jobId: string, runAfter: Date = new Date()) =>
-  db.evaluationJob.updateMany({ where: { id: jobId, status: "RUNNING" }, data: { status: "QUEUED", runAfter, lockedAt: null, lockedBy: null } });
+export const deferWithoutAttempt = (jobId: string, runAfter: Date = new Date(), by?: string) =>
+  db.evaluationJob.updateMany({ where: mine(jobId, by), data: { status: "QUEUED", runAfter, lockedAt: null, lockedBy: null } });
 
 /**
  * A real provider failure: count it, back off, and give up (FAILED_FINAL, for a person to deal with) once the
  * attempts are used.
  */
-export async function retryOrFail(jobId: string, kind: string, message: string, now = new Date()): Promise<{ outcome: "retry" | "final"; runAfter?: Date; attempts: number }> {
+export async function retryOrFail(jobId: string, kind: string, message: string, now = new Date(), by?: string): Promise<{ outcome: "retry" | "final"; runAfter?: Date; attempts: number }> {
   const job = await db.evaluationJob.findUnique({ where: { id: jobId } });
   if (!job) throw new JobError("not_found");
   const attempts = job.attempts + 1;
   if (attempts >= job.maxAttempts) {
-    await db.evaluationJob.updateMany({ where: { id: jobId, status: "RUNNING" }, data: { status: "FAILED_FINAL", attempts, lastErrorKind: kind, lastErrorMessage: message.slice(0, 500), ...final, finishedAt: new Date() } });
+    await db.evaluationJob.updateMany({ where: mine(jobId, by), data: { status: "FAILED_FINAL", attempts, lastErrorKind: kind, lastErrorMessage: message.slice(0, 500), ...final, finishedAt: new Date() } });
     return { outcome: "final", attempts };
   }
   const runAfter = new Date(now.getTime() + (BACKOFF_MS[attempts - 1] ?? BACKOFF_MS[BACKOFF_MS.length - 1]));
-  await db.evaluationJob.updateMany({ where: { id: jobId, status: "RUNNING" }, data: { status: "QUEUED", attempts, runAfter, lastErrorKind: kind, lastErrorMessage: message.slice(0, 500), lockedAt: null, lockedBy: null } });
+  await db.evaluationJob.updateMany({ where: mine(jobId, by), data: { status: "QUEUED", attempts, runAfter, lastErrorKind: kind, lastErrorMessage: message.slice(0, 500), lockedAt: null, lockedBy: null } });
   return { outcome: "retry", runAfter, attempts };
 }
 

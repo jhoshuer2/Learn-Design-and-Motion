@@ -13,7 +13,8 @@
     "content:validate": "tsx scripts/validate-content.ts",
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
-    "user:role": "tsx scripts/set-role.ts"
+    "user:role": "tsx scripts/set-role.ts",
+    "worker": "tsx scripts/worker.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
