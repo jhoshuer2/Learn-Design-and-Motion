@@ -66,6 +66,11 @@ async function setSharing(page: Page, id: string, visibility: "Private" | "Anyon
   const box = page.getByLabel("Show my assessment result on this project");
   if (opts.evidence) await box.check(); else if (opts.evidence === false) await box.uncheck();
   await page.getByRole("button", { name: "Save" }).click();
+  // Public needs a reviewer's approval; that flow has its own spec (safety.spec.ts). Here, approve as a shortcut.
+  if (visibility === "Public") {
+    await page.waitForURL(/[?&](saved|error)=/);
+    if (page.url().includes("saved=1")) await db.portfolioProject.updateMany({ where: { id, visibility: "PUBLIC" }, data: { publicApproval: "APPROVED" } });
+  }
 }
 
 async function sharedProject(browser: Browser, visibility: "Anyone with the link" | "Public" = "Public") {
@@ -203,7 +208,7 @@ test("feedback and moderation: a hostile review is inert text, the owner can hid
   await db.user.update({ where: { email: modCtx.email }, data: { role: "REVIEWER" } });
   await modCtx.page.goto("/review/moderation");
   await expect(modCtx.page.getByRole("heading", { name: "Reports to review" })).toBeVisible();
-  await modCtx.page.getByRole("link", { name: /Create a high-contrast event poster.*Pixel Pat/ }).click();
+  await modCtx.page.getByRole("link", { name: /^Project .*Create a high-contrast event poster.*Pixel Pat/ }).last().click(); // oldest first: ours is last (earlier runs may leave open reports)
   await expect(modCtx.page.locator("figure img").first()).toBeVisible();
   await axe(modCtx.page, "moderation detail");
   await modCtx.page.getByLabel(/^Decision note/).fill("Confirmed against the guidelines.");

@@ -93,3 +93,8 @@ export async function learnerWithName(name = "Test Learner", opts: { enroll?: bo
   await db.user.update({ where: { id }, data: { displayName: name } });
   return id;
 }
+
+/** Test shortcut for "a reviewer approved this" so visibility tests need not repeat the approval flow (that has its own tests). */
+export async function approvePublic(projectId: string) {
+  await db.portfolioProject.updateMany({ where: { id: projectId, visibility: "PUBLIC" }, data: { publicApproval: "APPROVED", approvalNote: null } });
+}

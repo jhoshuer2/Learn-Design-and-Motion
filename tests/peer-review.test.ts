@@ -10,7 +10,7 @@ import {
 } from "../src/lib/portfolio/peer";
 import { getHandlePage, getProjectView } from "../src/lib/portfolio/view";
 import { listOpenReports, releaseHold, resolveReport } from "../src/lib/portfolio/moderation";
-import { cleanup, evaluatedSubmission, learnerWithName, makeUser, useTempStorage } from "./helpers";
+import { cleanup, evaluatedSubmission, learnerWithName, makeUser, useTempStorage, approvePublic } from "./helpers";
 
 const code = (p: Promise<unknown>) => p.then(() => "ok", (e) => (e instanceof PortfolioError ? e.code : `other:${e}`));
 const S = "The event name reads first because it is the largest, darkest element on the page.";
@@ -25,6 +25,7 @@ async function project(visibility: "PRIVATE" | "LINK" | "PUBLIC" = "PUBLIC", nam
   const s = await evaluatedSubmission(u);
   const p = await createProject(u, s.submissionId);
   if (visibility !== "PRIVATE") await updateProject(u, p.id, { visibility });
+  await approvePublic(p.id);
   return { u, p: await db.portfolioProject.findUniqueOrThrow({ where: { id: p.id } }) };
 }
 const reviewer = (n = "Rev") => learnerWithName(n, { enroll: false });

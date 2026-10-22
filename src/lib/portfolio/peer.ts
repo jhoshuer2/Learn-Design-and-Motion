@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { projectAccess } from "./access";
 import { PortfolioError } from "./errors";
+import { screenFields } from "@/lib/safety/screen";
 
 /**
  * Peer feedback. By design this module reads and writes ONLY peer-review, block, report and audit rows:
@@ -36,6 +37,9 @@ export async function createReview(
     if (text.length < REVIEW_MIN) throw new PortfolioError("invalid", `${label} needs at least ${REVIEW_MIN} characters. Be specific.`);
     if (text.length > REVIEW_MAX) throw new PortfolioError("invalid", `${label} can be at most ${REVIEW_MAX} characters.`);
   }
+  const screened = screenFields([{ label: "Strengths", text: strengths }, { label: "Suggestions", text: improvements }, { label: "Your question", text: question }]);
+  if (screened.refuse) throw new PortfolioError("invalid", screened.refuse);
+  if (screened.flags.length > 0) throw new PortfolioError("invalid", "Some of that text cannot be posted. Please rephrase it.");
   if (question.length > QUESTION_MAX) throw new PortfolioError("invalid", `Your question can be at most ${QUESTION_MAX} characters.`);
 
   const [reviewer, project] = await Promise.all([

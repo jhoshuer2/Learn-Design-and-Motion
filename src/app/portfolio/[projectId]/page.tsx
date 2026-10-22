@@ -46,7 +46,7 @@ async function unblock(formData: FormData) {
 const OPTIONS = [
   { value: "PRIVATE", title: "Private", body: "Only you can see it." },
   { value: "LINK", title: "Anyone with the link", body: "It is not listed anywhere, but anyone who has the link can open it and pass it on. Treat the link like a key." },
-  { value: "PUBLIC", title: "Public", body: "Anyone on the web can see it. It is also listed in the community gallery and on your public portfolio page. We ask search engines not to index it, but people can still copy what they see." },
+  { value: "PUBLIC", title: "Public", body: "Anyone on the web can see it, and it is listed in the community gallery and on your public portfolio page. A reviewer checks it first: until they approve it, nobody but you can see it. If you change what it shows, it is checked again. We ask search engines not to index it, but people can still copy what they see." },
 ] as const;
 
 export default async function EditProject({ params, searchParams }: { params: { projectId: string }; searchParams: { error?: string; saved?: string } }) {
@@ -64,6 +64,13 @@ export default async function EditProject({ params, searchParams }: { params: { 
       <nav className="text-sm"><Link href="/portfolio" className="underline">My portfolio</Link></nav>
       <h1 className="mt-4 font-display text-4xl">{p.submission.assignment.title}</h1>
       {p.moderationHold && <p role="alert" className="mt-4 rounded border border-danger p-3 text-danger">This project is on hold after a report, so it cannot be shared. It stays private to you.</p>}
+      {p.visibility === "PUBLIC" && !p.moderationHold && (
+        <p data-testid="approval" className={`mt-4 rounded border p-3 ${p.publicApproval === "REJECTED" ? "border-danger text-danger" : "border-line"}`}>
+          {p.publicApproval === "APPROVED" ? "Approved: this project is public."
+            : p.publicApproval === "REJECTED" ? `Not approved for public sharing${p.approvalNote ? `: ${p.approvalNote}` : "."} Change it and save to ask again, or share it by link instead.`
+            : "Waiting for a reviewer. Until it is approved only you can see it."}
+        </p>
+      )}
       {searchParams.error && <p role="alert" className="mt-4 text-danger">{searchParams.error}</p>}
       {searchParams.saved && <p role="status" className="mt-4 text-success">Saved.</p>}
 

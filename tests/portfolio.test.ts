@@ -7,7 +7,7 @@ import {
 } from "../src/lib/portfolio";
 import { setDisplayName, validateDisplayName } from "../src/lib/portfolio/names";
 import { createAppeal } from "../src/lib/review";
-import { cleanup, evaluatedSubmission, learnerWithName, makeSubmission, makeUser, useTempStorage } from "./helpers";
+import { cleanup, evaluatedSubmission, learnerWithName, makeSubmission, makeUser, useTempStorage, approvePublic } from "./helpers";
 
 const code = (p: Promise<unknown>) => p.then(() => "ok", (e) => (e instanceof PortfolioError ? e.code : `other:${e}`));
 
@@ -163,6 +163,7 @@ describe("gallery", () => {
     const mk = async (name: string, visibility: "PRIVATE" | "LINK" | "PUBLIC", hold = false) => {
       const { u, p } = await project(name);
       if (visibility !== "PRIVATE") await updateProject(u, p.id, { visibility });
+      await approvePublic(p.id);
       if (hold) await db.portfolioProject.update({ where: { id: p.id }, data: { moderationHold: true } });
       return p;
     };

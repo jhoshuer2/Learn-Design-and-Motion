@@ -10,7 +10,7 @@ import { getSharedImage, serveableImage } from "../src/lib/portfolio/images";
 import { getHandlePage, getProjectView } from "../src/lib/portfolio/view";
 import { getStorage } from "../src/lib/storage";
 import { createAppeal } from "../src/lib/review";
-import { cleanup, evaluatedSubmission, learnerWithName, makeUser, useTempStorage } from "./helpers";
+import { cleanup, evaluatedSubmission, learnerWithName, makeUser, useTempStorage, approvePublic } from "./helpers";
 
 const anon = null;
 const as = (id: string, role: "LEARNER" | "REVIEWER" | "ADMIN" = "LEARNER") => ({ id, role });
@@ -20,6 +20,7 @@ async function shared(visibility: "PRIVATE" | "LINK" | "PUBLIC", opts: { name?: 
   const s = await evaluatedSubmission(u, opts.marker ?? "[fake:score=90]");
   const p = await createProject(u, s.submissionId);
   await updateProject(u, p.id, { visibility, showEvaluation: opts.evaluation ?? false });
+  await approvePublic(p.id);
   return { u, s, p: await db.portfolioProject.findUniqueOrThrow({ where: { id: p.id } }) };
 }
 
@@ -32,11 +33,16 @@ afterAll(async () => { await cleanup(); await db.$disconnect(); });
 
 describe("who can see a project", () => {
   it("pure access rule", () => {
-    const base = { userId: "o", visibility: "PRIVATE" as const, moderationHold: false };
+    const base = { userId: "o", visibility: "PRIVATE" as const, moderationHold: false, publicApproval: "APPROVED" as const };
     expect(projectAccess(null, base)).toBe("none");
     expect(projectAccess(as("o"), base)).toBe("owner");
     expect(projectAccess(as("x"), { ...base, visibility: "LINK" })).toBe("public");
     expect(projectAccess(null, { ...base, visibility: "PUBLIC" })).toBe("public");
+    for (const publicApproval of ["NONE", "PENDING", "REJECTED"] as const) {
+      expect(projectAccess(null, { ...base, visibility: "PUBLIC", publicApproval })).toBe("none");
+      expect(projectAccess(as("o"), { ...base, visibility: "PUBLIC", publicApproval })).toBe("owner");
+    }
+    expect(projectAccess(null, { ...base, visibility: "LINK", publicApproval: "NONE" })).toBe("public"); // link sharing is not pre-moderated
     expect(projectAccess(null, { ...base, visibility: "PUBLIC", moderationHold: true })).toBe("none");
     expect(projectAccess(as("o"), { ...base, visibility: "PUBLIC", moderationHold: true })).toBe("owner");
     expect(projectAccess(as("m", "REVIEWER"), base)).toBe("none"); // moderators use their own screen
@@ -106,6 +112,7 @@ describe("the public read model is an allow-list", () => {
     await db.submission.update({ where: { id: s.submissionId }, data: { changesNote: "PRIVATE-CHANGE-NOTE" } });
     const p = await createProject(u, s.submissionId);
     await updateProject(u, p.id, { visibility: "PUBLIC", showEvaluation: true });
+    await approvePublic(p.id);
     await createAppeal(u, s.evaluationId, "PRIVATE-APPEAL-REASON that is long enough to be accepted here.");
 
     const sub = await db.submission.findUniqueOrThrow({ where: { id: s.submissionId } });
@@ -121,6 +128,7 @@ describe("the public read model is an allow-list", () => {
     const { u, p } = await shared("PUBLIC");
     expect((await getProjectView(anon, p.slug))!.rationale).toMatch(/largest and darkest/);
     await updateProject(u, p.id, { showRationale: false, shownFiles: [1] });
+    await approvePublic(p.id); // changing what is shown sends it back for review; approve again to read it
     const v = (await getProjectView(anon, p.slug))!;
     expect(v.rationale).toBeNull();
     expect(v.images.map((i) => i.idx)).toEqual([1]);

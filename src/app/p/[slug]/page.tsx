@@ -84,7 +84,7 @@ export default async function ProjectPage({ params, searchParams }: { params: { 
 
       {v.isOwner && (
         <p role="note" className="mt-4 rounded border border-line bg-raised p-3 text-sm">
-          This is how others see your project. It is currently <strong>{v.held ? "on hold" : v.visibility === "PRIVATE" ? "private, so only you can see it" : v.visibility === "LINK" ? "shared by link" : "public"}</strong>.{" "}
+          This is how others see your project. It is currently <strong>{v.held ? "on hold" : v.visibility === "PRIVATE" ? "private, so only you can see it" : v.visibility === "LINK" ? "shared by link" : v.approval?.status === "APPROVED" ? "public" : "waiting for review, so only you can see it"}</strong>.{" "}
           <Link className="underline" href="/portfolio">Change sharing</Link>
         </p>
       )}

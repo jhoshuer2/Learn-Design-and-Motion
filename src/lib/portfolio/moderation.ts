@@ -1,6 +1,10 @@
+import { createHash } from "node:crypto";
 import type { Role } from "@prisma/client";
 import { db } from "@/lib/db";
 import { PortfolioError } from "./errors";
+import { getStorage } from "@/lib/storage";
+import { screenFields } from "@/lib/safety/screen";
+import { getImageScreener } from "@/lib/safety/images";
 import type { StoredFile } from "@/lib/submissions/access";
 
 /**
@@ -84,4 +88,65 @@ export async function releaseHold(mod: Mod, projectId: string) {
   if (p.userId === mod.id) throw new PortfolioError("own_project");
   await db.portfolioProject.update({ where: { id: projectId }, data: { moderationHold: false } });
   await db.auditEvent.create({ data: { actorId: mod.id, action: "moderation.hold_released", subject: `project:${projectId}`, detail: {} } });
+}
+
+// ───────── Pre-moderation of Public sharing
+
+type ApprovalSubject = {
+  title: string; summary: string | null; shownFiles: number[]; showRationale: boolean; showEvaluation: boolean;
+  submission: { rationale: string | null };
+};
+/** What a visitor would see, as one hash. A decision applies to exactly this and to nothing the owner changed afterwards. */
+export const contentFingerprint = (p: ApprovalSubject) =>
+  createHash("sha256").update(JSON.stringify([p.title, p.summary ?? null, p.shownFiles, p.showRationale, p.showEvaluation, p.showRationale ? p.submission.rationale ?? "" : null])).digest("hex");
+
+export async function listPendingApprovals(mod: Mod) {
+  need(mod);
+  const rows = await db.portfolioProject.findMany({
+    where: { visibility: "PUBLIC", publicApproval: "PENDING", moderationHold: false }, orderBy: { publishedAt: "asc" },
+    include: { user: { select: { displayName: true } } },
+  });
+  return rows.map((p) => ({ id: p.id, title: p.title, owner: p.user.displayName ?? "Learner", since: p.publishedAt ?? p.createdAt, mine: p.userId === mod.id }));
+}
+
+export async function getApprovalDetail(mod: Mod, projectId: string) {
+  need(mod);
+  const p = await db.portfolioProject.findUnique({ where: { id: projectId }, include: { submission: true, user: { select: { displayName: true } } } });
+  if (!p) throw new PortfolioError("not_found");
+  if (p.userId === mod.id) throw new PortfolioError("own_project", "You cannot moderate your own work.");
+  const files = p.submission.files as unknown as StoredFile[];
+  const shown = p.shownFiles.filter((i) => i < files.length);
+  const storage = getStorage();
+  const verdict = await getImageScreener().screen(await Promise.all(shown.map(async (i) => ({ data: await storage.get(files[i].key), mime: files[i].mime }))));
+  const screened = screenFields([{ label: "Title", text: p.title }, { label: "Summary", text: p.summary }, ...(p.showRationale ? [{ label: "Rationale", text: p.submission.rationale }] : [])]);
+  return {
+    id: p.id, title: p.title, summary: p.summary, owner: p.user.displayName ?? "Learner", status: p.publicApproval, visibility: p.visibility, held: p.moderationHold,
+    submissionId: p.submissionId, rationale: p.showRationale ? p.submission.rationale : null, showsEvaluation: p.showEvaluation,
+    images: shown.map((i) => ({ idx: i, label: files[i].slot ?? files[i].role })),
+    textFlags: screened.flags, textRefusal: screened.refuse, imageScreening: verdict,
+    fingerprint: contentFingerprint(p),
+  };
+}
+
+/**
+ * Approve or reject what a project would show publicly. Atomic (one moderator wins) and bound to the content the
+ * moderator actually looked at: if the owner changed anything meanwhile, the decision is refused.
+ */
+export async function decideApproval(mod: Mod, projectId: string, decision: "approve" | "reject", note: string, seenFingerprint: string) {
+  need(mod);
+  const n = note.trim();
+  if (decision === "reject" && n.length < 5) throw new PortfolioError("invalid", "Tell the owner why, in a few words.");
+  const p = await db.portfolioProject.findUnique({ where: { id: projectId }, include: { submission: true } });
+  if (!p) throw new PortfolioError("not_found");
+  if (p.userId === mod.id) throw new PortfolioError("own_project", "You cannot moderate your own work.");
+  if (contentFingerprint(p) !== seenFingerprint) throw new PortfolioError("invalid", "The owner changed this project while you were looking. Review it again.");
+  return db.$transaction(async (tx) => {
+    const claim = await tx.portfolioProject.updateMany({
+      where: { id: projectId, visibility: "PUBLIC", publicApproval: "PENDING", moderationHold: false },
+      data: { publicApproval: decision === "approve" ? "APPROVED" : "REJECTED", approvalNote: n || null, approvedBy: mod.id, approvedAt: new Date() },
+    });
+    if (claim.count === 0) throw new PortfolioError("invalid", "This project is no longer waiting for approval.");
+    await tx.auditEvent.create({ data: { actorId: mod.id, action: decision === "approve" ? "moderation.approved" : "moderation.rejected", subject: `project:${projectId}`, detail: { note: n } } });
+    return { decision };
+  });
 }

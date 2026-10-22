@@ -4,6 +4,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { slotOf, type StoredFile } from "@/lib/submissions/access";
 import { PortfolioError } from "./errors";
+import { screenFields } from "@/lib/safety/screen";
 
 export { PortfolioError } from "./errors";
 
@@ -95,6 +96,25 @@ export async function updateProject(userId: string, projectId: string, input: Pr
   if (publishing && !p.user.displayName) throw new PortfolioError("display_name_required", "Choose a display name before you share work.");
   if (publishing && shownFiles.length === 0) throw new PortfolioError("nothing_to_show", "Choose at least one image to show.");
 
+  // Text others will read must not carry contact details or links. Blocklist hits are refused for link sharing and shown to the
+  // reviewer for Public (which a person approves anyway).
+  const title = patch.title ?? p.title;
+  const summary = patch.summary === undefined ? p.summary : patch.summary;
+  const showRationale = patch.showRationale ?? p.showRationale;
+  const showEvaluation = patch.showEvaluation ?? p.showEvaluation;
+  if (publishing) {
+    const screened = screenFields([{ label: "The title", text: title }, { label: "The summary", text: summary }, ...(showRationale ? [{ label: "The rationale", text: p.submission.rationale }] : [])]);
+    if (screened.refuse) throw new PortfolioError("invalid", screened.refuse);
+    if (visibility === "LINK" && screened.flags.length > 0) throw new PortfolioError("invalid", "Some of the text cannot be shared. Change it, or ask for a reviewer to look at a Public share instead.");
+  }
+
+  // Approval follows the content: anything a visitor would see that changed since a reviewer looked sends it back to pending.
+  const contentChanged = title !== p.title || (summary ?? null) !== (p.summary ?? null) || showRationale !== p.showRationale
+    || showEvaluation !== p.showEvaluation || shownFiles.join(",") !== p.shownFiles.join(",");
+  let approval = p.publicApproval;
+  if (visibility !== "PUBLIC") approval = "NONE";
+  else if (p.visibility !== "PUBLIC" || approval === "NONE" || (contentChanged && approval !== "PENDING")) approval = "PENDING";
+
   let handle = p.user.portfolioHandle;
   if (visibility === "PUBLIC" && !handle) {
     for (let i = 0; i < 5 && !handle; i++) {
@@ -113,9 +133,13 @@ export async function updateProject(userId: string, projectId: string, input: Pr
     data: {
       title: patch.title, summary: patch.summary === undefined ? undefined : patch.summary || null,
       visibility, shownFiles, showRationale: patch.showRationale, showEvaluation: patch.showEvaluation,
+      publicApproval: approval, ...(approval === "PENDING" && p.publicApproval !== "PENDING" ? { approvalNote: null, approvedBy: null, approvedAt: null } : {}),
       publishedAt: publishing ? p.publishedAt ?? new Date() : p.publishedAt,
     },
   });
+  if (approval !== p.publicApproval) {
+    await db.auditEvent.create({ data: { actorId: userId, action: "project.approval_reset", subject: `project:${projectId}`, detail: { from: p.publicApproval, to: approval } } });
+  }
   if (visibility !== p.visibility) {
     await db.auditEvent.create({ data: { actorId: userId, action: "project.visibility", subject: `project:${projectId}`, detail: { from: p.visibility, to: visibility } } });
   }
@@ -138,7 +162,7 @@ export async function deleteProject(userId: string, projectId: string) {
 export async function listGallery(viewerId: string | null, page = 0) {
   if (!viewerId) throw new PortfolioError("sign_in_required");
   const rows = await db.portfolioProject.findMany({
-    where: { visibility: "PUBLIC", moderationHold: false },
+    where: { visibility: "PUBLIC", publicApproval: "APPROVED", moderationHold: false },
     orderBy: [{ publishedAt: "desc" }, { id: "desc" }],
     skip: Math.max(0, page) * GALLERY_PAGE_SIZE, take: GALLERY_PAGE_SIZE,
     include: { user: { select: { displayName: true } }, submission: { include: { assignment: { select: { title: true } } } } },

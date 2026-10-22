@@ -1,4 +1,4 @@
-import type { Visibility } from "@prisma/client";
+import type { PublicApproval, Visibility } from "@prisma/client";
 import { db } from "@/lib/db";
 import { slotOf, type StoredFile } from "@/lib/submissions/access";
 import { projectAccess, type Viewer } from "./access";
@@ -10,7 +10,7 @@ import { assessorLabel, isTestEvaluator, isVerified } from "./evidence";
  * file name, change note, appeal, raw model output or reviewer note.
  */
 export type ProjectView = {
-  slug: string; title: string; summary: string | null; visibility: Visibility;
+  slug: string; title: string; summary: string | null; visibility: Visibility; approval: { status: PublicApproval; note: string | null } | null;
   isOwner: boolean; held: boolean; publishedAt: Date | null;
   owner: { displayName: string; handle: string | null };
   assignment: { title: string; kind: string };
@@ -109,8 +109,8 @@ export async function getProjectView(viewer: Viewer, slug: string): Promise<Proj
     !viewer ? "sign_in" : isOwner || blocked ? "cannot_review" : !me?.displayName ? "display_name" : already ? "already_reviewed" : null;
 
   return {
-    slug: p.slug, title: p.title, summary: p.summary, visibility: p.visibility, isOwner, held: isOwner ? p.moderationHold : false, publishedAt: p.publishedAt,
-    owner: { displayName: p.user.displayName ?? "Learner", handle: p.visibility === "PUBLIC" ? p.user.portfolioHandle : null },
+    slug: p.slug, title: p.title, summary: p.summary, visibility: p.visibility, approval: isOwner ? { status: p.publicApproval, note: p.approvalNote } : null, isOwner, held: isOwner ? p.moderationHold : false, publishedAt: p.publishedAt,
+    owner: { displayName: p.user.displayName ?? "Learner", handle: p.visibility === "PUBLIC" && p.publicApproval === "APPROVED" ? p.user.portfolioHandle : null },
     assignment: { title: sub.assignment.title, kind: sub.assignment.kind },
     images, rationale: p.showRationale ? sub.rationale : null, evidence, skills,
     reviews: reviewsVisible.map((r) => ({
@@ -129,7 +129,7 @@ export async function getHandlePage(handle: string): Promise<HandlePage | null> 
   const u = await db.user.findUnique({ where: { portfolioHandle: handle }, select: { id: true, displayName: true } });
   if (!u) return null;
   const rows = await db.portfolioProject.findMany({
-    where: { userId: u.id, visibility: "PUBLIC", moderationHold: false }, orderBy: [{ publishedAt: "desc" }, { id: "desc" }],
+    where: { userId: u.id, visibility: "PUBLIC", publicApproval: "APPROVED", moderationHold: false }, orderBy: [{ publishedAt: "desc" }, { id: "desc" }],
     include: { submission: { include: { assignment: { select: { title: true } } } } },
   });
   if (rows.length === 0) return null;

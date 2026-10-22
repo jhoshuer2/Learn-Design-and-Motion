@@ -98,6 +98,14 @@ enum Visibility {
   PUBLIC
 }
 
+/// Public sharing is pre-moderated: PUBLIC content is invisible to others until a reviewer APPROVES what is shown.
+enum PublicApproval {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 // ───────── Identity
 
 model User {
@@ -520,26 +528,31 @@ model Remediation {
 
 /// A shared view of one assessed submission. PRIVATE until the owner changes it. `slug` is an unguessable token.
 model PortfolioProject {
-  id             String       @id @default(cuid())
+  id             String         @id @default(cuid())
   userId         String
-  user           User         @relation(fields: [userId], references: [id])
-  submissionId   String       @unique
-  submission     Submission   @relation(fields: [submissionId], references: [id])
-  slug           String       @unique
+  user           User           @relation(fields: [userId], references: [id])
+  submissionId   String         @unique
+  submission     Submission     @relation(fields: [submissionId], references: [id])
+  slug           String         @unique
   title          String
   summary        String?
-  visibility     Visibility   @default(PRIVATE)
+  visibility     Visibility     @default(PRIVATE)
   /// Indexes into Submission.files that the owner chose to show.
-  shownFiles     Int[]        @default([])
-  showRationale  Boolean      @default(true)
-  showEvaluation Boolean      @default(false)
+  shownFiles     Int[]          @default([])
+  showRationale  Boolean        @default(true)
+  showEvaluation Boolean        @default(false)
   publishedAt    DateTime?
   /// A moderator hold forces the project private and blocks re-publishing.
-  moderationHold Boolean      @default(false)
-  createdAt      DateTime     @default(now())
+  moderationHold Boolean        @default(false)
+  /// Only meaningful while visibility is PUBLIC. Reset to PENDING whenever the shown content changes.
+  publicApproval PublicApproval @default(NONE)
+  approvalNote   String?
+  approvedBy     String?
+  approvedAt     DateTime?
+  createdAt      DateTime       @default(now())
   reviews        PeerReview[]
 
-  @@index([visibility, publishedAt])
+  @@index([visibility, publicApproval, publishedAt])
 }
 
 /// Structured peer feedback. Deliberately has NO relation to Progress or any assessment table:
