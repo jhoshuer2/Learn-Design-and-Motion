@@ -1,4 +1,5 @@
 import type { DeterministicChecks } from "./checks";
+import { ProviderError } from "./errors";
 
 export type EvaluationInput = {
   assignment: { title: string; objective: string; scenario: string; requirements: string[]; constraints: string[] };
@@ -24,9 +25,13 @@ export interface EvaluationProvider {
 /** No grader is available. The caller must NOT produce a score. */
 export class ProviderNotConfiguredError extends Error {}
 /** The model declined to assess this submission. Goes to human review; never a score. */
-export class ProviderRefusedError extends Error {}
+export class ProviderRefusedError extends ProviderError {
+  constructor(message: string) { super("refusal", message); }
+}
 /** Output was cut off or was not JSON. Treated like invalid output. */
-export class ProviderOutputError extends Error {}
+export class ProviderOutputError extends ProviderError {
+  constructor(message: string) { super("output_invalid", message); }
+}
 
 export class NotConfiguredProvider implements EvaluationProvider {
   readonly name = "not-configured";

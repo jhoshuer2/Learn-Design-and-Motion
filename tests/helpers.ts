@@ -53,6 +53,8 @@ export async function makeSubmission(
 export async function cleanup() {
   const subs = await db.submission.findMany({ where: { userId: { in: created } }, select: { id: true } });
   const sid = subs.map((s) => s.id);
+  await db.evaluationJob.deleteMany({ where: { submissionId: { in: sid } } });
+  await db.systemFlag.deleteMany({});
   const evs = await db.evaluation.findMany({ where: { submissionId: { in: sid } }, select: { id: true } });
   const eid = evs.map((e) => e.id);
   await db.appeal.deleteMany({ where: { evaluationId: { in: eid } } });

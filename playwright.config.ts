@@ -8,7 +8,7 @@ export default defineConfig({
   },
   webServer: {
     command: "npx next start -p 3100",
-    env: { AUTH_TRUST_HOST: "true", CONTENT_PREVIEW: "true", EVALUATION_PROVIDER: "fake", ALLOW_FAKE_EVALUATOR: "true", UPLOAD_DIR: ".data/e2e-uploads" },
+    env: { AUTH_TRUST_HOST: "true", CONTENT_PREVIEW: "true", EVALUATION_PROVIDER: "fake", ANTHROPIC_API_KEY: "", ALLOW_FAKE_EVALUATOR: "true", UPLOAD_DIR: ".data/e2e-uploads" },
     url: "http://localhost:3100",
     reuseExistingServer: true,
   },

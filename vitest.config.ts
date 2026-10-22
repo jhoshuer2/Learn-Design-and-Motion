@@ -8,5 +8,7 @@ export default defineConfig({
     // Integration tests share one Postgres database and the content publisher rewrites rows,
     // so test files must not run concurrently.
     fileParallelism: false,
+    // Tests must never reach the real API (it costs money): blank the key even though Prisma loads .env.
+    env: { ANTHROPIC_API_KEY: "", EVALUATION_PROVIDER: "" },
   },
 });

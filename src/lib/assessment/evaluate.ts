@@ -4,6 +4,7 @@ import { getStorage } from "@/lib/storage";
 import { slotOf, type StoredFile } from "@/lib/submissions/access";
 import { applyEvaluation } from "@/lib/progression";
 import { runChecks, type Deliverable } from "./checks";
+import { classifyError, type ProviderErrorKind } from "./errors";
 import {
   ProviderNotConfiguredError, ProviderOutputError, ProviderRefusedError, getProvider,
   type EvaluationInput, type EvaluationProvider, type ProviderOutput,
@@ -14,7 +15,9 @@ import { modelOutput, type ModelOutput } from "./schema";
 export type EvaluateOutcome =
   | { state: "evaluated"; evaluationId: string; score: number; passed: boolean }
   | { state: "needs_evidence"; evaluationId: string }
-  | { state: "failed"; reason: "provider_refused" | "provider_error" | "invalid_output" }
+  | { state: "failed"; reason: "provider_refused" | "provider_error" | "invalid_output"; kind?: ProviderErrorKind }
+  /** Nothing was recorded and nothing was scored: the claim was released so the job can try again later. */
+  | { state: "deferred"; kind: ProviderErrorKind }
   | { state: "not_configured" }
   | { state: "rate_limited" }
   | { state: "busy" };
@@ -27,7 +30,15 @@ const maxPerHour = () => Number(process.env.EVAL_MAX_PER_HOUR ?? 10);
  * get `busy`. The model supplies criterion scores and feedback only; the server computes the result from
  * the published rubric version and is the only thing that can move progression (via applyEvaluation).
  */
-export async function evaluateSubmission(submissionId: string, deps: { provider?: EvaluationProvider } = {}): Promise<EvaluateOutcome> {
+export async function evaluateSubmission(
+  submissionId: string,
+  /**
+   * `finalAttempt` (default true, which is what a synchronous caller wants): a retryable provider failure is
+   * recorded as a failed evaluation. The job runner passes false until its last attempt, so transient failures
+   * are deferred instead and leave no trace. Failures that pause the queue (billing, auth) are always deferred.
+   */
+  deps: { provider?: EvaluationProvider; finalAttempt?: boolean } = {},
+): Promise<EvaluateOutcome> {
   const sub = await db.submission.findUnique({
     where: { id: submissionId },
     include: { assignment: { include: { rubricVersion: { include: { criteria: { orderBy: { key: "asc" } } } } } } },
@@ -35,8 +46,12 @@ export async function evaluateSubmission(submissionId: string, deps: { provider?
   if (!sub) return { state: "failed", reason: "provider_error" };
 
   const since = new Date(Date.now() - 60 * 60 * 1000);
-  const recent = await db.auditEvent.count({ where: { actorId: sub.userId, action: "evaluation.started", createdAt: { gte: since } } });
-  if (recent >= maxPerHour()) return { state: "rate_limited" };
+  // Deferred starts (nothing reached the model) do not count against the learner's hourly allowance.
+  const [started, deferred] = await Promise.all([
+    db.auditEvent.count({ where: { actorId: sub.userId, action: "evaluation.started", createdAt: { gte: since } } }),
+    db.auditEvent.count({ where: { actorId: sub.userId, action: "evaluation.deferred", createdAt: { gte: since } } }),
+  ]);
+  if (started - deferred >= maxPerHour()) return { state: "rate_limited" };
 
   const claim = await db.submission.updateMany({
     where: { id: submissionId, status: { in: ["SUBMITTED", "FAILED_TO_EVALUATE"] } },
@@ -90,6 +105,7 @@ export async function evaluateSubmission(submissionId: string, deps: { provider?
   let last: ProviderOutput | undefined;
   let parsed: ModelOutput | undefined;
   let failure: "provider_refused" | "provider_error" | "invalid_output" = "invalid_output";
+  let failureKind: ProviderErrorKind | undefined;
 
   for (let attempt = 0; attempt < 2 && !parsed; attempt++) {
     let out: ProviderOutput;
@@ -102,7 +118,17 @@ export async function evaluateSubmission(submissionId: string, deps: { provider?
       }
       if (e instanceof ProviderRefusedError) { failure = "provider_refused"; break; }
       if (e instanceof ProviderOutputError) { hint = e.message; failure = "invalid_output"; continue; }
-      failure = "provider_error";
+      const pe = classifyError(e);
+      failureKind = pe.kind;
+      // Billing and auth problems pause the queue; transient ones wait for the job's next attempt. Either way the
+      // work is untouched: release the claim, record nothing, score nothing.
+      if (pe.policy.pauses || (pe.policy.retryable && deps.finalAttempt === false)) {
+        await setStatus("SUBMITTED");
+        await db.auditEvent.create({ data: { actorId: sub.userId, action: "evaluation.deferred", subject: `submission:${sub.id}`, detail: { kind: pe.kind } } });
+        return { state: "deferred", kind: pe.kind };
+      }
+      failure = pe.policy.needsHuman && pe.kind !== "output_invalid" ? "provider_refused" : "provider_error";
+      hint = pe.message;
       break;
     }
     last = out;
@@ -128,10 +154,10 @@ export async function evaluateSubmission(submissionId: string, deps: { provider?
   // 3. No usable output: record the evidence, never a score.
   if (!parsed) {
     await db.evaluation.create({
-      data: { ...base, status: "failed", feedback: { reason: failure, hint: hint ?? null }, rawOutput: json(last?.raw), reviewFlag: failure === "provider_refused" },
+      data: { ...base, status: "failed", feedback: { reason: failure, kind: failureKind ?? null, hint: hint ?? null }, rawOutput: json(last?.raw), reviewFlag: failure === "provider_refused" },
     });
     await setStatus("FAILED_TO_EVALUATE");
-    return { state: "failed", reason: failure };
+    return { state: "failed", reason: failure, kind: failureKind };
   }
 
   if (parsed.status === "needs_evidence") {

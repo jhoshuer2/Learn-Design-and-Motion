@@ -74,6 +74,13 @@ enum RemediationStatus {
   COMPLETED
 }
 
+enum JobStatus {
+  QUEUED
+  RUNNING
+  DONE
+  FAILED_FINAL
+}
+
 enum ReportTarget {
   PROJECT
   REVIEW
@@ -348,6 +355,7 @@ model Submission {
   createdAt    DateTime          @default(now())
   evaluations  Evaluation[]
   portfolio    PortfolioProject?
+  jobs         EvaluationJob[]
 
   @@unique([userId, assignmentId, attempt])
 }
@@ -593,4 +601,35 @@ model AuditEvent {
   createdAt DateTime @default(now())
 
   @@index([subject])
+}
+
+/// Background work: assess one submission. The queue lives in Postgres and is claimed with FOR UPDATE SKIP LOCKED.
+model EvaluationJob {
+  id               String     @id @default(cuid())
+  submissionId     String
+  submission       Submission @relation(fields: [submissionId], references: [id])
+  status           JobStatus  @default(QUEUED)
+  /// Equals submissionId while the job is active (QUEUED or RUNNING) and NULL once final. The unique constraint
+  /// therefore allows one active job per submission (Postgres permits many NULLs), with no hand-written index.
+  activeKey        String?    @unique
+  attempts         Int        @default(0)
+  maxAttempts      Int        @default(3)
+  runAfter         DateTime   @default(now())
+  lockedAt         DateTime?
+  lockedBy         String?
+  lastErrorKind    String?
+  lastErrorMessage String?
+  createdAt        DateTime   @default(now())
+  finishedAt       DateTime?
+
+  @@index([status, runAfter])
+  @@index([submissionId])
+}
+
+/// Small operational switches, for example `assessment.paused`.
+model SystemFlag {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+  updatedBy String?
 }

@@ -5,6 +5,7 @@ import {
   type EvaluationInput, type EvaluationProvider, type ProviderOutput,
 } from "./provider";
 import { MODEL_OUTPUT_JSON_SCHEMA } from "./schema";
+import { classifyError } from "./errors";
 
 /** Cost cap: images are downscaled so the long edge is at most this many pixels before upload. */
 const MAX_EDGE = 1568;
@@ -49,14 +50,19 @@ export class ClaudeProvider implements EvaluationProvider {
       content.push({ type: "text", text: `Your previous output was rejected: ${input.retryHint}\nReturn a corrected, complete result.` });
     }
 
-    const response = await getClient().messages.create({
-      model,
-      max_tokens: MAX_OUTPUT_TOKENS,
-      system: SYSTEM,
-      thinking: { type: "adaptive" },
-      output_config: { effort: "high", format: { type: "json_schema", schema: MODEL_OUTPUT_JSON_SCHEMA as unknown as Record<string, unknown> } },
-      messages: [{ role: "user", content }],
-    });
+    let response: Anthropic.Message;
+    try {
+      response = await getClient().messages.create({
+        model,
+        max_tokens: MAX_OUTPUT_TOKENS,
+        system: SYSTEM,
+        thinking: { type: "adaptive" },
+        output_config: { effort: "high", format: { type: "json_schema", schema: MODEL_OUTPUT_JSON_SCHEMA as unknown as Record<string, unknown> } },
+        messages: [{ role: "user", content }],
+      });
+    } catch (e) {
+      throw classifyError(e); // billing, auth, rate limit, overload, timeout... each handled differently upstream
+    }
 
     // Refusals are surfaced, not retried or replaced: the submission goes to human review.
     if (response.stop_reason === "refusal") throw new ProviderRefusedError("The model declined to assess this submission.");

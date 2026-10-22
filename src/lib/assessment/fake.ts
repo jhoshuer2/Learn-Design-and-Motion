@@ -1,4 +1,16 @@
-import { FAKE_PROVIDER_NAME, type EvaluationInput, type EvaluationProvider, type ProviderOutput } from "./provider";
+import { ProviderError, type ProviderErrorKind } from "./errors";
+import { FAKE_PROVIDER_NAME, ProviderRefusedError, type EvaluationInput, type EvaluationProvider, type ProviderOutput } from "./provider";
+
+const FLAKY_CALLS = new Map<string, number>();
+const MESSAGES: Record<string, string> = {
+  billing: "Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+  auth: "invalid x-api-key", rate_limit: "rate limit exceeded", overloaded: "Overloaded", timeout: "Request timed out.", bad_request: "invalid request",
+};
+function fakeError(kind: string): Error {
+  if (kind === "refusal") return new ProviderRefusedError("The model declined to assess this submission.");
+  if (!(kind in MESSAGES)) throw new Error(`unknown fake error kind ${kind}`);
+  return new ProviderError(kind as ProviderErrorKind, MESSAGES[kind]);
+}
 
 /**
  * TEST-ONLY deterministic evaluator. It does NOT look at the images. It exists so the pipeline, scoring,
@@ -11,12 +23,26 @@ import { FAKE_PROVIDER_NAME, type EvaluationInput, type EvaluationProvider, type
  *   [fake:invalid]       returns malformed output
  *   [fake:evidence]      asks for more evidence
  *   [fake:set=key:NN]    overrides one criterion's score (repeatable), applied after the above
+ *   [fake:slow=MS]       waits MS milliseconds before answering (simulates a real, slow call)
+ *   [fake:error=KIND]    throws a provider error of KIND: billing | auth | rate_limit | overloaded | timeout | refusal | bad_request
+ *   [fake:flaky=N]       throws an "overloaded" error for the first N calls with this rationale, then succeeds
  */
 export class FakeProvider implements EvaluationProvider {
   readonly name = FAKE_PROVIDER_NAME;
 
   async evaluate(input: EvaluationInput): Promise<ProviderOutput> {
     const r = input.rationale;
+    const slow = /\[fake:slow=(\d{1,6})\]/.exec(r);
+    if (slow) await new Promise((res) => setTimeout(res, Number(slow[1])));
+    const err = /\[fake:error=([a-z_]+)\]/.exec(r);
+    if (err) throw fakeError(err[1]);
+    const flaky = /\[fake:flaky=(\d{1,2})\]/.exec(r);
+    if (flaky) {
+      const key = r;
+      const n = (FLAKY_CALLS.get(key) ?? 0) + 1;
+      FLAKY_CALLS.set(key, n);
+      if (n <= Number(flaky[1])) throw fakeError("overloaded");
+    }
     if (r.includes("[fake:invalid]") && !input.retryHint) return { raw: { nonsense: true } };
     if (r.includes("[fake:invalid]")) return { raw: "still not an evaluation" };
     if (r.includes("[fake:evidence]")) {
