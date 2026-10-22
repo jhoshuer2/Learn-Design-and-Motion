@@ -60,8 +60,9 @@ export default async function Dashboard() {
         </div>
         <div>
           <h2 className="text-sm uppercase tracking-widest text-muted">Improve</h2>
-          {weak.length === 0 ? <p className="mt-2 text-muted">No weak areas found yet. This is based on check results only.</p>
+          {weak.length === 0 ? <p className="mt-2 text-muted">No weak areas found yet. This is based on assessed evidence only.</p>
             : <ul className="mt-2 text-sm">{weak.map((w) => <li key={w.title}>{w.title} ({w.score}%)</li>)}</ul>}
+          <Link href="/profile/skills" className="mt-2 inline-block text-sm underline">All my skills</Link>
         </div>
       </section>
       <h2 className="mt-12 font-display text-2xl">Learning paths</h2>

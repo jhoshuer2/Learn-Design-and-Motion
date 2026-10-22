@@ -119,7 +119,12 @@ export default async function LessonPage({
                 ))}
               </div>
             )}
-            {!passedCheck && (
+            {view.completed && !attempt && (
+              <p className="mb-4 rounded border border-line bg-raised p-3 text-sm text-muted">
+                You have already passed this check. You can retake it to refresh your result, for example when remediation or a level requirement asks for it. Your latest result is the one that counts.
+              </p>
+            )}
+            {!attempt?.passed && (
               <form action={submit} className="space-y-6">
                 <input type="hidden" name="lessonId" value={view.id} />
                 <input type="hidden" name="index" value={step} />

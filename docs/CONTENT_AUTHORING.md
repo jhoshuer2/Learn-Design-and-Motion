@@ -19,3 +19,8 @@ No isolated definitions. A concept (e.g. contrast) is shown across contexts and 
 
 ## Pipeline
 Author → schema validation (CI) → editorial review checklist (accuracy, clarity, outcomes, difficulty, examples, a11y, licensing, assessment alignment, practical relevance) → publish script creates versioned DB rows. AI-drafted content stays `draft` until a human reviewer approves.
+
+
+## Levels and capstones (M4)
+`content/<discipline>/<level>/level.yaml` defines a level: `scopeLabel`, `scopeNote` (what it does and does not cover, shown to learners), `objectives`, `capstoneThreshold`, `requiredCompetencies`. Capstone assignments (`kind: CAPSTONE`) sit next to `level.yaml`; module assignments sit inside their module. The loader rejects: a required competency that is unknown or not `critical`; a capstone rubric whose threshold differs from the level's; a rubric with no criterion for a required competency, or whose criterion for it is not mandatory (the capstone could not otherwise produce evidence for it); a capstone inside a module; a non-capstone next to `level.yaml`. A published level's threshold and required competencies are immutable.
+Assignment deliverables have a `key` (the upload slot), a `label`, and a `role` of `final`, `preview`, `process` or `piece`. The server derives each file's role from the assignment; clients never choose it.

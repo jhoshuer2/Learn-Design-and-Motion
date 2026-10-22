@@ -184,3 +184,34 @@ export async function recheckLevelsAfterEvidence(userId: string) {
 function titleCase(s: string) {
   return s.charAt(0) + s.slice(1).toLowerCase();
 }
+
+export type LevelView = LevelAssessment & {
+  title: string;
+  record: null | { title: string; issuedAt: Date; evidence: LevelEvidence };
+  next: { tier: LevelTier; authored: boolean } | null;
+};
+
+export type LevelEvidence = {
+  works: { assignment: string; title: string; kind: string; score: number | null; threshold: number; rubric: { slug: string; version: number }; assessedBy: string; humanReviewed: boolean; testEvaluator: boolean; evaluatedAt: string }[];
+  requiredCompetencies: { slug: string; title: string; latestScore: number | null; needed: number }[];
+  scope: { label: string; note: string };
+  limits: string;
+  testEvaluatorUsed: boolean;
+};
+
+/** Owner-only read model for the level page. Null when the learner is not enrolled in the level's path. */
+export async function getLevelView(userId: string, levelId: string): Promise<LevelView | null> {
+  const level = await db.level.findUnique({ where: { id: levelId }, include: { path: { include: { discipline: true } } } });
+  if (!level || !visibleStatuses().includes(level.status)) return null;
+  if (!(await db.enrollment.findUnique({ where: { userId_pathId: { userId, pathId: level.pathId } } }))) return null;
+  const a = await assessLevel(db, userId, levelId);
+  if (!a) return null;
+  const rec = await db.levelCompletion.findUnique({ where: { userId_pathId_tier: { userId, pathId: level.pathId, tier: level.tier } } });
+  const nextTier = TIERS[TIERS.indexOf(level.tier) + 1];
+  const nextLevel = nextTier ? await db.level.findUnique({ where: { pathId_tier: { pathId: level.pathId, tier: nextTier } } }) : null;
+  return {
+    ...a, title: `${level.path.discipline.title}, ${titleCase(level.tier)}: ${a.scopeLabel}`,
+    record: rec ? { title: rec.title, issuedAt: rec.issuedAt, evidence: rec.evidence as unknown as LevelEvidence } : null,
+    next: nextTier ? { tier: nextTier, authored: !!nextLevel && visibleStatuses().includes(nextLevel.status) } : null,
+  };
+}

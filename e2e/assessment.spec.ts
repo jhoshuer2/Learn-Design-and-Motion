@@ -121,7 +121,7 @@ test("a missing preview asks for evidence, uses no attempt, and can be completed
   await openAssignment(page);
   await submit(page, { marker: "", preview: false });
   await expect(page.getByRole("heading", { name: "We need more from you" })).toBeVisible();
-  await expect(page.getByText(/small-scale preview image/)).toBeVisible();
+  await expect(page.getByRole("listitem").filter({ hasText: "Small-scale preview:" })).toBeVisible();
 
   await page.getByRole("link", { name: "Add the missing items" }).click();
   await expect(page.getByText(/does not use another attempt/)).toBeVisible();

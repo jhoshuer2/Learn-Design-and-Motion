@@ -134,10 +134,12 @@ export default async function AssignmentPage({
         )}
         {!access.allowed ? (
           <div className="mt-4 rounded border border-line bg-raised p-4">
-            <StateBadge state={access.reason === "already_passed" ? "completed" : access.reason === "in_progress" || access.reason === "retry_evaluation" ? "awaiting" : "locked"} />
+            <StateBadge state={access.reason === "already_passed" ? "completed" : access.reason === "in_progress" || access.reason === "retry_evaluation" ? "awaiting" : access.reason === "remediation_required" ? "failed" : "locked"} />
             <p className="mt-3">{DENIED[access.reason]}</p>
             {access.missing && <p className="mt-2 text-sm text-muted">Still to complete: {access.missing.join(", ")}.</p>}
             {access.submissionId && <p className="mt-3"><Link className="underline" href={`/learn/submission/${access.submissionId}`}>Open your submission</Link></p>}
+            {access.reason === "remediation_required" && <p className="mt-3"><Link className="underline" href={`/learn/remediation/${a.id}`}>Go to remediation</Link></p>}
+            {access.reason === "already_passed" && a.kind === "CAPSTONE" && a.levelId && <p className="mt-3"><Link className="underline" href={`/learn/level/${a.levelId}`}>See your level status</Link></p>}
           </div>
         ) : (
           <form action={submitWork} encType="multipart/form-data" className="mt-4 space-y-5">

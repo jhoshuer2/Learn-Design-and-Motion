@@ -34,8 +34,20 @@ Private uploads, poster assignment, rubric, provider, validation, server-side sc
 - No grading-consistency or AI-vs-expert calibration tracking. The rubric anchors and assignment are unreviewed drafts.
 - Per-user rate limit counts evaluation starts from the audit table; it is not a global cost cap.
 
-## M4 Capstone + unlock ☐
+## M4 Capstone + unlock ◐ (built and tested with the test-only evaluator; real model path still NOT verified)
 Capstone gating, level unlock, remediation, skill profile from evidence. *Accept:* next level unlocks only via passing capstone + mandatory checks; concurrent submits are idempotent.
+**Done and tested:** a three-piece "Contrast campaign" capstone and rubric (85% pass; contrast, accessible contrast and consistency are required criteria); level definitions with scope statement and required competencies, validated by the loader; capstone access needs every module and module assessment; one `assessLevel` derivation used by the gate and every screen; unlock only in `completeLevelIfEligible`, idempotent under concurrency (6 simultaneous attempts -> one record); required skill must be >= 80 on latest evidence, so a 91-96% capstone does not unlock past a weak required competency, and it unlocks automatically once the skill is demonstrated by retaking the check; level lock enforced in lesson and assignment gates; completion record as an evidence snapshot that names test evaluators and states what it does not show; remediation (one reset, new passing checks required, action plan, two extra attempts granted once); skill profile from evidence only; timeline with all four tiers (later tiers shown as "not written yet"); human override unlocks through the same gate. 138 unit/integration tests (five rules mutation-checked) and 14 Playwright tests (axe clean on the new pages; screenshots reviewed at desktop and 390 px).
+**Bugs found while building:** the lesson page hid the knowledge-check form once a lesson was complete, which would have made remediation and "retake to demonstrate the skill" impossible; fixed. Two level-heading display flaws fixed after reviewing screenshots.
+**Not verified:** the real `ClaudeProvider` has still never been called (no `ANTHROPIC_API_KEY`). Every capstone result in tests and in the browser came from the test-only evaluator, and the completion record says so.
+**Known gaps:**
+- One module and one capstone are authored; Intermediate/Advanced/Professional have no content. The record is labelled "Contrast foundations", not "Beginner".
+- Thresholds and the reset policy (80, 85, one reset, two extra attempts) are product defaults with no data behind them.
+- Remediation re-uses the existing knowledge checks (same questions, retakeable immediately, no cool-down), so it can be passed by repetition; it does not grade any new practice work.
+- A learner can pass a lesson check, so "latest evidence" can be refreshed by retaking until it passes; no cool-down or question rotation.
+- The record is a database snapshot only: no PDF, share link or verification URL (M5 covers sharing). No expiry or revocation.
+- A completion cannot be revoked if later evidence falls below 80.
+- No placement/diagnostic, so `enrollment.startTier` is always Beginner.
+- A capstone that is passed but blocked by a required skill cannot be resubmitted; the only route is retaking the check. If that skill is only measurable through the capstone (not the check), this would trap the learner. It is true for the current content only because the lesson check covers the required skill.
 
 ## M5 Portfolio + peer review ☐
 Visibility controls, shareable page, structured peer review. *Accept:* private by default; peer feedback has no effect on progression.
