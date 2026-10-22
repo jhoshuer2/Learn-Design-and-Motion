@@ -5,7 +5,7 @@ import { loadContent } from "../src/lib/content/loader";
 import { publishContent } from "../src/lib/content/publish";
 import { PortfolioError, createProject, updateProject } from "../src/lib/portfolio";
 import {
-  MAX_REVIEWS_PER_HOUR, blockReviewer, cleanText, createReview, deleteReview, listBlocked, reportProject, reportReview,
+  MAX_REVIEWS_PER_HOUR, blockReviewer, blockReviewerOfReview, cleanText, createReview, deleteReview, listBlocked, reportProject, reportReview,
   setReviewHidden, unblockReviewer, withdrawReview,
 } from "../src/lib/portfolio/peer";
 import { getHandlePage, getProjectView } from "../src/lib/portfolio/view";
@@ -148,6 +148,19 @@ describe("owner controls", () => {
     await unblockReviewer(a.u, r);
     expect(await code(createReview(r, a.p.slug, { strengths: S, improvements: I }))).toBe("ok");
     expect(await code(blockReviewer(a.u, a.u))).toBe("invalid");
+  });
+
+  it("blocks the author of a review without the owner ever handling the reviewer's id", async () => {
+    const { u, p } = await project();
+    const r = await reviewer("Author X");
+    const rev = await createReview(r, p.slug, { strengths: S, improvements: I });
+    const stranger = await learnerWithName("Stranger Z");
+    expect(await code(blockReviewerOfReview(stranger, rev.id))).toBe("not_found");
+    await blockReviewerOfReview(u, rev.id);
+    expect(await code(createReview(r, p.slug, { strengths: S, improvements: I }))).toBe("blocked");
+    expect((await listBlocked(u)).map((x) => x.name)).toEqual(["Author X"]);
+    const view = JSON.stringify(await getProjectView(as(u), p.slug));
+    expect(view).not.toContain(r); // the reviewer's id is not in what the owner's page receives
   });
 
   it("deleting a review removes it and its reports", async () => {

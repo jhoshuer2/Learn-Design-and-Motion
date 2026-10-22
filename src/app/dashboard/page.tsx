@@ -44,9 +44,17 @@ export default async function Dashboard() {
         <h1 className="font-display text-4xl">Welcome, {user.name ?? user.email}</h1>
         <form action={logout}><Button variant="secondary" type="submit">Sign out</Button></form>
       </header>
-      {(user.role === "REVIEWER" || user.role === "ADMIN") && (
-        <p className="mt-4"><Link href="/review" className="underline">Review appeals</Link></p>
-      )}
+      <nav aria-label="Sharing" className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+        <Link href="/portfolio" className="underline">My portfolio</Link>
+        <Link href="/community" className="underline">Community</Link>
+        <Link href="/profile" className="underline">Profile</Link>
+        {(user.role === "REVIEWER" || user.role === "ADMIN") && (
+          <>
+            <Link href="/review" className="underline">Review appeals</Link>
+            <Link href="/review/moderation" className="underline">Review reports</Link>
+          </>
+        )}
+      </nav>
       <section className="mt-8 grid gap-6 border-y border-line py-6 sm:grid-cols-3">
         <div>
           <h2 className="text-sm uppercase tracking-widest text-muted">Where am I</h2>

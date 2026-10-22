@@ -49,8 +49,17 @@ Capstone gating, level unlock, remediation, skill profile from evidence. *Accept
 - No placement/diagnostic, so `enrollment.startTier` is always Beginner.
 - A capstone that is passed but blocked by a required skill cannot be resubmitted; the only route is retaking the check. If that skill is only measurable through the capstone (not the check), this would trap the learner. It is true for the current content only because the lesson check covers the required skill.
 
-## M5 Portfolio + peer review ☐
+## M5 Portfolio + peer review ◐ (built and tested with the test-only evaluator; real model path still NOT verified)
 Visibility controls, shareable page, structured peer review. *Accept:* private by default; peer feedback has no effect on progression.
+**Done and tested:** projects can be made only from the owner's assessed work and start Private; Private / link-only / Public with one access rule used by pages **and** image requests and re-checked every request (un-sharing and moderator holds revoke an already-open image URL at once); allow-list public read model (no email, account name, ids, storage keys, file names, change notes, appeals or raw output; a test plants and searches for each); display names separate from the account and refused if they look like contact details; random public handle only for Public; EXIF/GPS stripped from served images with orientation applied; evidence opt-in, labelled by assessor, "Verified" only for a passed claude/human result and never for the test evaluator; structured plain-text peer feedback (self-review, private/held and blocked all refused, one per person atomically, length caps, hourly limits); owner hide/restore/delete/block; reports and a moderator queue (hold forces Private and cannot be re-shared, hide review, dismiss, one moderator wins, no moderating own work, audited); peer and moderation code verified to touch no progression or assessment rows or imports; `noindex` meta, `robots.txt` and `X-Robots-Tag`. 197 unit/integration tests (11 privacy and safety rules mutation-checked) and 17 Playwright tests (axe clean on the edit, public, gallery and moderation pages; screenshots reviewed at desktop and 390 px).
+**Not verified:** the real `ClaudeProvider` has still never been called (no `ANTHROPIC_API_KEY`), so every assessment shown on a portfolio in tests came from the test-only evaluator and is labelled so.
+**Known gaps (important before any launch):**
+- **No automated screening of uploaded images or text.** Public hosting of user content relies on manual moderation and reports. This is the biggest open risk.
+- No takedown/legal process, content policy or terms, no account or data deletion, no email notifications, no rate limiting on anonymous reads.
+- No custom handles, gallery search/filters, revision history or earlier attempts on a project, or completion records on portfolios.
+- Work under appeal cannot be added until the appeal resolves.
+- Local-disk image storage is dev-only; shared images are re-encoded on every request with no caching.
+- Verified marks depend on the provider recorded at assessment time; there is no audit tool yet for re-checking old results.
 
 ## Later
 Admin CMS, Brand + UI paths as content, recommendations, pilot QA with real beginners, other disciplines.

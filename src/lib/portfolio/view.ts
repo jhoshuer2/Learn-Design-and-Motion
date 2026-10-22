@@ -23,14 +23,52 @@ export type ProjectView = {
     strengths: string[]; weaknesses: string[];
   };
   skills: string[];
-  reviews: { id: string; reviewer: string; strengths: string; improvements: string; question: string | null; createdAt: Date; hidden: boolean }[];
+  reviews: { id: string; reviewer: string; strengths: string; improvements: string; question: string | null; createdAt: Date; hidden: boolean; mine: boolean }[];
   reviewRubric: { title: string }[];
   viewer: { signedIn: boolean; canReview: boolean; reviewBlockedReason: null | "sign_in" | "display_name" | "already_reviewed" | "cannot_review" };
 };
 
 const arr = (v: unknown): string[] => (Array.isArray(v) ? v.map(String) : []);
-const labelFor = (brief: unknown, slot: string) =>
+export const labelFor = (brief: unknown, slot: string) =>
   (brief as { deliverables?: { key: string; label: string }[] }).deliverables?.find((d) => d.key === slot)?.label ?? "Image";
+
+
+type RubricForEvidence = {
+  threshold: number; version: number; rubric: { slug: string };
+  criteria: { id: string; title: string; weight: number; mandatory: boolean; competency: { title: string } | null }[];
+};
+type EvaluationForEvidence = {
+  overallScore: number | null; passed: boolean | null; provider: string; model: string | null; humanReviewed: boolean;
+  createdAt: Date; feedback: unknown; scores: { criterionId: string; score: number }[];
+};
+
+/** Builds the allow-listed evidence block. Shared by the public page and the owner's preview. */
+function buildEvidence(rv: RubricForEvidence, ev: EvaluationForEvidence) {
+  const fb = (ev.feedback ?? {}) as Record<string, unknown>;
+  const scoreOf = (criterionId: string) => ev.scores.find((s) => s.criterionId === criterionId)?.score ?? 0;
+  const evidence: NonNullable<ProjectView["evidence"]> = {
+    score: ev.overallScore, passed: ev.passed, threshold: rv.threshold, verified: isVerified(ev), testEvaluator: isTestEvaluator(ev.provider),
+    assessedBy: assessorLabel(ev.provider, ev.model), humanReviewed: ev.humanReviewed, rubric: { slug: rv.rubric.slug, version: rv.version }, date: ev.createdAt,
+    criteria: rv.criteria.map((c) => ({ title: c.title, score: scoreOf(c.id), weight: c.weight, mandatory: c.mandatory })),
+    strengths: arr(fb.strengths), weaknesses: arr(fb.weaknesses),
+  };
+  // Skills are shown only alongside the evidence they rest on: criteria scored 80 or more.
+  const skills = [...new Set(rv.criteria.filter((c) => c.competency && scoreOf(c.id) >= 80).map((c) => c.competency!.title))];
+  return { evidence, skills };
+}
+
+/** Owner only: what the evidence section would show if switched on, whatever the current setting. */
+export async function getEvidencePreview(userId: string, projectId: string) {
+  const p = await db.portfolioProject.findFirst({
+    where: { id: projectId, userId },
+    include: { submission: { include: {
+      assignment: { include: { rubricVersion: { include: { rubric: true, criteria: { include: { competency: true } } } } } },
+      evaluations: { where: { status: "complete" }, orderBy: [{ createdAt: "desc" }, { id: "desc" }], take: 1, include: { scores: true } },
+    } } },
+  });
+  const ev = p?.submission.evaluations[0];
+  return p && ev ? buildEvidence(p.submission.assignment.rubricVersion, ev) : null;
+}
 
 /** Null for missing, private and held projects alike: the three cases must be indistinguishable. */
 export async function getProjectView(viewer: Viewer, slug: string): Promise<ProjectView | null> {
@@ -59,21 +97,9 @@ export async function getProjectView(viewer: Viewer, slug: string): Promise<Proj
   }));
 
   const ev = sub.evaluations[0];
-  let evidence: ProjectView["evidence"] = null;
-  let skills: string[] = [];
-  if (p.showEvaluation && ev) {
-    const rv = sub.assignment.rubricVersion;
-    const fb = (ev.feedback ?? {}) as Record<string, unknown>;
-    const scoreOf = (criterionId: string) => ev.scores.find((s) => s.criterionId === criterionId)?.score ?? 0;
-    evidence = {
-      score: ev.overallScore, passed: ev.passed, threshold: rv.threshold, verified: isVerified(ev), testEvaluator: isTestEvaluator(ev.provider),
-      assessedBy: assessorLabel(ev.provider, ev.model), humanReviewed: ev.humanReviewed, rubric: { slug: rv.rubric.slug, version: rv.version }, date: ev.createdAt,
-      criteria: rv.criteria.map((c) => ({ title: c.title, score: scoreOf(c.id), weight: c.weight, mandatory: c.mandatory })),
-      strengths: arr(fb.strengths), weaknesses: arr(fb.weaknesses),
-    };
-    // Skills shown only alongside the evidence they rest on: criteria scored 80 or more.
-    skills = [...new Set(rv.criteria.filter((c) => c.competency && scoreOf(c.id) >= 80).map((c) => c.competency!.title))];
-  }
+  const built = p.showEvaluation && ev ? buildEvidence(sub.assignment.rubricVersion, ev) : null;
+  const evidence = built?.evidence ?? null;
+  const skills = built?.skills ?? [];
 
   const reviewsVisible = p.reviews.filter((r) => isOwner || !r.hidden);
   const blocked = viewer ? !!(await db.reviewerBlock.findUnique({ where: { ownerId_blockedId: { ownerId: p.userId, blockedId: viewer.id } } })) : false;
@@ -89,7 +115,7 @@ export async function getProjectView(viewer: Viewer, slug: string): Promise<Proj
     images, rationale: p.showRationale ? sub.rationale : null, evidence, skills,
     reviews: reviewsVisible.map((r) => ({
       id: r.id, reviewer: r.reviewer.displayName ?? "Learner", strengths: r.strengths, improvements: r.improvements,
-      question: r.questions, createdAt: r.createdAt, hidden: r.hidden,
+      question: r.questions, createdAt: r.createdAt, hidden: r.hidden, mine: !!viewer && r.reviewerId === viewer.id,
     })),
     reviewRubric: sub.assignment.rubricVersion.criteria.map((c) => ({ title: c.title })),
     viewer: { signedIn: !!viewer, canReview: reason === null, reviewBlockedReason: reason },

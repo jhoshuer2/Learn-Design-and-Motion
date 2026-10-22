@@ -110,6 +110,12 @@ export async function blockReviewer(ownerId: string, blockedId: string) {
   ]);
 }
 
+/** Owner: block the author of a review on one of their projects, without ever exposing the reviewer's user id. */
+export async function blockReviewerOfReview(ownerId: string, reviewId: string) {
+  const r = await ownedReview(ownerId, reviewId);
+  await blockReviewer(ownerId, r.reviewerId);
+}
+
 export async function unblockReviewer(ownerId: string, blockedId: string) {
   await db.reviewerBlock.deleteMany({ where: { ownerId, blockedId } });
   await db.auditEvent.create({ data: { actorId: ownerId, action: "reviewer.unblocked", subject: `user:${blockedId}`, detail: {} } });

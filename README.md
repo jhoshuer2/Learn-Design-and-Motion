@@ -25,3 +25,6 @@ npm run dev
 - `EVALUATION_PROVIDER=fake` + `ALLOW_FAKE_EVALUATOR=true` enables a **test-only** deterministic evaluator (used by the e2e suite). Its results are labelled TEST EVALUATOR.
 - Grant review rights out-of-band: `npm run user:role -- someone@example.com REVIEWER`.
 - Uploads use local-disk storage (`UPLOAD_DIR`). Dev only.
+
+## Sharing (M5)
+Learners share assessed work from `/portfolio` (private by default), choose a display name in `/profile`, and others can leave structured feedback. See `docs/PRIVACY_AND_SHARING.md` for exactly what is exposed and what is not built. Moderators (REVIEWER/ADMIN, granted with `npm run user:role`) handle reports at `/review/moderation`.
