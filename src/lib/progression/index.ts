@@ -268,3 +268,48 @@ export async function getWeakCompetencies(userId: string, passMark = 80) {
   for (const r of rows) if (!latest.has(r.competencyId)) latest.set(r.competencyId, r);
   return [...latest.values()].filter((r) => r.score < passMark).map((r) => ({ title: r.competency.title, score: r.score }));
 }
+
+// ───────── Assessment progression
+
+/**
+ * The ONLY writer of assessment progression. Reads the persisted, server-computed evaluation (never model
+ * claims), so it is safe to call more than once: the Progress row is unique per (user, assignment) and the
+ * audit event is written only by the caller that created it.
+ */
+export async function applyEvaluation(client: Prisma.TransactionClient, evaluationId: string) {
+  const ev = await client.evaluation.findUnique({
+    where: { id: evaluationId },
+    include: {
+      scores: { include: { criterion: true } },
+      submission: { include: { assignment: { include: { level: true } } } },
+    },
+  });
+  if (!ev || ev.status !== "complete" || ev.passed === null) return { applied: false as const };
+
+  const { userId, assignment } = ev.submission;
+
+  // Skill evidence from every criterion tied to a competency (weak results are evidence too). Once per evaluation.
+  const already = await client.skillEvidence.count({ where: { userId, source: "EVALUATION", sourceId: ev.id } });
+  if (already === 0) {
+    const rows = ev.scores.filter((s) => s.criterion.competencyId).map((s) => ({
+      userId, competencyId: s.criterion.competencyId!, source: "EVALUATION", sourceId: ev.id, score: s.score,
+      tier: assignment.level?.tier ?? "BEGINNER",
+    }));
+    if (rows.length > 0) await client.skillEvidence.createMany({ data: rows });
+  }
+
+  let newlyCompleted = false;
+  if (ev.passed) {
+    const { count } = await client.progress.createMany({
+      data: [{ userId, nodeType: "ASSIGNMENT", nodeId: assignment.id, state: "COMPLETED", completedAt: new Date() }],
+      skipDuplicates: true,
+    });
+    newlyCompleted = count === 1;
+    if (newlyCompleted) {
+      await client.auditEvent.create({
+        data: { actorId: userId, action: "assignment.pass", subject: `assignment:${assignment.id}`, detail: { evaluationId: ev.id, score: ev.overallScore } },
+      });
+    }
+  }
+  return { applied: true as const, passed: ev.passed, newlyCompleted };
+}
