@@ -1,0 +1,1474 @@
+[
+  {
+    "sample": "strong",
+    "run": 1,
+    "assignment": "high-contrast-event-poster",
+    "expect": "high overall (>=80), contrast & legibility >=75",
+    "ms": 58909,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4779,
+    "outputTokens": 5387,
+    "costUsd": 0.1269,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 81,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "composition-and-spacing": 79,
+      "contrast": 88,
+      "design-rationale": 74,
+      "information-hierarchy": 80,
+      "legibility-at-small-size": 80,
+      "typography": 84
+    },
+    "strengths": [
+      "Very clear dominant event name: reversed cream-on-black capitals in a strong block that reads instantly at both sizes.",
+      "Selective, disciplined use of contrast: one dark block, one saturated colour and a calm cream ground, so emphasis is never diluted.",
+      "Consistent left alignment and a tidy pairing of date and place make the core information easy to scan.",
+      "Stays within two typefaces, with a sensible serif/sans pairing and clear weight changes.",
+      "The rationale gives three specific, contrast-based decisions that honestly match what is visible."
+    ],
+    "weaknesses": [
+      "The URL, which is the part of the call to action people actually need, is the smallest and lightest text and is strained in the small preview.",
+      "'Register now' carries the emphasis but is not actionable on print or in a chat image.",
+      "The large empty band and uneven top/bottom margins make the lower half feel less resolved.",
+      "The date line and the CTA label share similar size and weight, so the second and third levels partly compete.",
+      "The rationale does not address the audience or the two viewing contexts (A3 print and chat thumbnail), and does not explain how the URL is handled."
+    ],
+    "missingRequirements": [
+      "The year '2026' from the event name 'Open Studio 2026' does not appear on the poster. Check whether it should be included as part of the event name.",
+      "The rationale's link between decisions and audience or viewing context is missing; the rubric asks for decisions tied to contrast and the audience."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 79,
+        "evidence": "Every element shares one left edge at about 48px, and the black title block keeps a matching margin on the right. Date and place form a tight pair. The 'Register now' button and the URL form a second group. A very large empty band (roughly 330px) separates the two groups. The bottom margin below the URL (about 130px) is noticeably larger than the top margin (about 60px). The text inside the title block and inside the button starts at slightly different indents (about 80px vs 84px).",
+        "where": "Whole poster; especially the gap between 'Harbour Hall, Pier 4' and the blue button, and the bottom margin below 'openstudio.example'.",
+        "explanation": "Alignment and grouping are clear and orderly, which is a real strength. The empty band does separate the information from the action. However, its size is not echoed anywhere else, so the lower half reads as somewhat unresolved rather than clearly intentional. The uneven top and bottom margins add to that. These issues place the work at the top of Adequate rather than Strong.",
+        "principle": "Proximity and white space: space between groups should be clearly larger than space within groups, and set deliberately in proportion to the layout so empty space looks planned.",
+        "improvement": "Set a spacing scale (for example 24, 48 and 96px) and use only those values between elements. Consider reducing the central gap or moving the CTA group up so the bottom margin matches the top. Match the inner padding of the button to the inner padding of the title block so both texts sit on one inner alignment line.",
+        "verify": "Overlay a grid or guides in your design tool and confirm that every gap matches a value on your scale. Check that the top and bottom margins are equal or deliberately different. Squint at the poster: the two groups should look intentionally placed, not like content that ran out early."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 88,
+        "evidence": "Cream lettering sits on a near-black block. Near-black and dark-grey sans text sits on the cream ground. White bold text sits on a saturated blue button. The URL is set in dark grey on cream. Judging from the pixels only, all of these pairs appear to be well above WCAG AA. The dark-grey place line and URL are the lightest text, but they still look strongly contrasting. These are visual estimates; I could not measure exact colour values. Contrast is used selectively: one dark block, one saturated colour and a calm cream field.",
+        "where": "Title block, date/place lines, blue CTA button, URL line.",
+        "explanation": "Essential text looks clearly readable, and contrast is concentrated where it matters rather than spread everywhere. This meets the Strong band. The only caution is that the lightest pairs, the grey place line and the small URL, should be confirmed with a measurement.",
+        "principle": "Value contrast and selective emphasis: strong figure–ground separation for essential text, with the highest contrast reserved for the most important elements.",
+        "improvement": "Sample the exact hex values of the cream background, the grey text and the blue button. Run them through a contrast checker. If the grey URL is close to 4.5:1, darken it slightly.",
+        "verify": "Use a WCAG contrast checker such as the WebAIM Contrast Checker or your design tool's accessibility plugin. Confirm at least 4.5:1 for the URL and place line, and at least 3:1 for the large title and button text."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 74,
+        "evidence": "The rationale names three decisions. (1) The event name sits in the largest, darkest block so it is read first. (2) Date and venue use a mid-dark tone that is secondary but still high contrast. (3) The CTA is the only saturated blue on the page. All three are tied to contrast and match what is visible. The rationale does not mention the audience or the two viewing contexts (A3 print and small group-chat image). It does not explain how the URL, the actual action, is handled. The claim that the saturated blue makes the eye land on it 'last' is not explained: a lone saturated colour usually attracts attention early, so position must be doing that work.",
+        "where": "Learner rationale, all three sentences.",
+        "explanation": "The decisions are specific and honest about the work, which is good reasoning. The reasons are thin on the audience and the small-size requirement. One claim, about the reading order of the blue, would benefit from explanation. This places the rationale in Adequate.",
+        "principle": "Design reasoning should link each decision to a principle (contrast), an audience need and a context of use.",
+        "improvement": "For each decision, add a 'for whom / where' clause. For example: 'Because many people will first see this as a thumbnail in a group chat, the name uses a reversed black block that stays readable at about 260px wide.' Explain why the blue is read last despite being saturated, for example its placement at the bottom and its smaller size. Also say how the URL is made findable.",
+        "verify": "Reread each sentence and check that it answers three questions: what did I do, how does it use contrast, and who or which viewing context does it help? Then check each claim against your poster and its preview."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 80,
+        "evidence": "'OPEN STUDIO' is by far the most dominant element: largest size, reversed out of a black block. The date follows in bold sans. The place follows in regular, lighter sans. The blue 'Register now' button forms the final level. However, 'Register now' cannot be acted on from a printed poster or a chat image. The information that completes the action, 'openstudio.example', is the smallest and lightest text on the page. The saturated blue button also has a visual weight close to the date line, so these two levels partly compete. The year (2026) from the event name 'Open Studio 2026' does not appear.",
+        "where": "Title block (level 1), date and place lines (level 2), blue button and URL (level 3).",
+        "explanation": "A two-second glance clearly gives the event name, date and place, so the main message leads. The third level is weaker. The emphasis goes to a generic label rather than the URL that tells people where to register. This places the work at the top of Adequate.",
+        "principle": "Hierarchy through contrast of size, weight and value: each level should differ clearly from the next, and the most actionable detail of the CTA should carry the emphasis.",
+        "improvement": "Put the URL inside the button or give it the emphasis, for example 'Register at openstudio.example' in white on blue. Alternatively, enlarge and embolden the URL so it is not the weakest element. Consider adding '2026' to the event name, for example as a smaller line within the title block, since it is part of the name in the brief.",
+        "verify": "Show the poster to someone for two seconds, then hide it. Ask them what the event is, when and where it is, and how to register. If they can repeat the URL, the third level works."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 80,
+        "evidence": "In the 267×400px preview, 'OPEN STUDIO', 'Saturday 14 March' and 'Harbour Hall, Pier 4' are all clearly readable. The three-level hierarchy survives. 'Register now' remains readable on the blue. 'openstudio.example' becomes very small (roughly 10px tall text) and is the most strained item. The preview is a true scaled-down version of the final, with a matching aspect ratio.",
+        "where": "Small-scale preview, especially the URL line at the bottom.",
+        "explanation": "The name, date and place survive and the hierarchy holds. However, the URL, which is part of the essential call to action, is strained at this size. Chat apps may display the image even smaller than 267px. This matches the Adequate band: the hierarchy survives but one essential item is strained.",
+        "principle": "Scale-dependent legibility: the smallest essential text sets the limit for how small the whole design can be shown.",
+        "improvement": "Increase the URL size substantially, ideally close to the size of the place line, or move it into the button. Re-export the preview after the change.",
+        "verify": "View the preview at 100% on a phone, or send it to yourself in a chat app and look at the thumbnail without tapping. Check that you can read the URL without zooming. Also try a 200px-wide version as a stress test."
+      },
+      {
+        "criterionId": "typography",
+        "score": 84,
+        "evidence": "There are two typefaces: a bold serif in capitals for the event name, and a sans-serif for everything else. I cannot identify the exact fonts from the image. The sans is used in bold for the date and the button, and in regular for the place and URL. Line height in the two-line title looks comfortable, and line lengths are short. The date and 'Register now' use a very similar size and weight, so they are separated mainly by colour. The URL is noticeably smaller than any other text.",
+        "where": "Title (serif), date/place/button/URL (sans).",
+        "explanation": "This is a clear, restrained type system that stays within the two-typeface limit, with purposeful size and weight steps. The minor inconsistencies are the near-identical treatment of the date and CTA label, and the very small URL. These keep it at the top of Adequate rather than Strong.",
+        "principle": "Typographic hierarchy: define a small set of distinct size/weight steps and assign each information level its own step.",
+        "improvement": "Define a type scale, for example title, date, place/CTA and small, and make each level a visible step. Give the CTA a size or weight that differs from the date, and bring the URL up to at least the place-line size.",
+        "verify": "List every text element with its size and weight. Each information level should map to one style, and no two levels should share the same style unless intended. Then check the result in the small preview."
+      }
+    ]
+  },
+  {
+    "sample": "strong",
+    "run": 2,
+    "assignment": "high-contrast-event-poster",
+    "expect": "high overall (>=80), contrast & legibility >=75",
+    "ms": 50614,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4779,
+    "outputTokens": 4471,
+    "costUsd": 0.1085,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 83,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "composition-and-spacing": 78,
+      "contrast": 88,
+      "design-rationale": 76,
+      "information-hierarchy": 82,
+      "legibility-at-small-size": 86,
+      "typography": 82
+    },
+    "strengths": [
+      "Very strong value contrast throughout: cream on near-black for the title, and dark text on a light cream ground.",
+      "Contrast is staged rather than uniform. One dark mass, one accent colour and quieter supporting text create clear levels.",
+      "Two well-paired typefaces (bold serif title, sans-serif information) with size and weight doing the hierarchy work.",
+      "Consistent left alignment and tidy grouping of date with place, and button with URL.",
+      "The small preview keeps all essential information and the hierarchy readable.",
+      "The rationale gives three specific, contrast-based decisions that match the visible work."
+    ],
+    "weaknesses": [
+      "The URL, the actual registration destination, is the smallest and least prominent text, and the most strained item in the preview.",
+      "The saturated blue button is visually heavy and may compete with the date and place at a glance.",
+      "Spacing feels partly leftover: a very large mid-page gap, a bottom margin larger than the top, and a button width that aligns to nothing.",
+      "The rationale does not mention the audience or the small group-chat context, and the claim that the blue is seen 'last' is not explained.",
+      "The title leaves unbalanced empty space inside its black block."
+    ],
+    "missingRequirements": [
+      "The brief gives the event name as 'Open Studio 2026'; the year '2026' does not appear on the poster.",
+      "The rationale does not tie its decisions to the audience, as the design-rationale criterion asks."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 78,
+        "evidence": "Every element shares one left edge (about 48px in the 800px final). The title block keeps equal side margins. Date and place form a tight group, as do the button and URL. A large empty band (roughly 330px) separates the date/place group from the CTA group. The top margin is about 60px, the bottom margin about 130px, and the 420px button width does not line up with any other element.",
+        "where": "Whole layout; especially the gap between 'Harbour Hall, Pier 4' and 'Register now', and the bottom margin under 'openstudio.example'.",
+        "explanation": "Alignment and grouping are clean and consistent, which makes the poster feel calm and orderly. The large gap does separate the action from the information. However, its size and the uneven top and bottom margins look leftover rather than planned. The button width also feels arbitrary.",
+        "principle": "Proximity and alignment: space should be proportioned so that the gaps themselves read as intentional structure.",
+        "improvement": "Set a spacing unit (for example 24px) and build every gap as a multiple of it. Consider making the bottom margin match the top or side margin. Either align the button's right edge to a meaningful line, such as the end of 'STUDIO' or the column centre, or size it to its text plus consistent padding.",
+        "verify": "Overlay a simple grid or measure each gap in your design tool. Check that the margins match and that every gap is a multiple of your unit."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 88,
+        "evidence": "These are visual estimates from the images; I could not measure colour values. Cream title text on the near-black block looks very high contrast, likely well above 7:1. The near-black bold date and the dark grey venue on cream both look comfortably above 4.5:1. White 'Register now' on saturated blue appears well above 4.5:1. The dark grey URL on cream also looks strong. Contrast is used selectively: one dark mass, one saturated colour, and quieter dark-grey supporting text.",
+        "where": "Title block, date/place lines, blue CTA button, URL line.",
+        "explanation": "Every essential pair appears to pass WCAG AA with room to spare. Contrast is also staged rather than uniform, which is exactly what lets the important items separate.",
+        "principle": "Value contrast for legibility, and selective emphasis (one dominant dark, one accent colour).",
+        "improvement": "Keep the current approach. Measure the two lightest-looking pairs to confirm them: the dark grey venue and URL text on cream, and white on the blue. Record the ratios in your rationale.",
+        "verify": "Sample the hex values in your design file and run them through a WCAG contrast checker. Each pair should be at least 4.5:1 for normal-size text."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 76,
+        "evidence": "The rationale (65 words) names three decisions, each tied to contrast: the largest, darkest block for the name, a mid-dark tone for date and venue, and the only saturated blue for the CTA. All three match what is visible. However, the claim that the blue makes 'the eye land on it last' is not explained. A lone saturated colour usually attracts attention rather than delaying it. The audience is not mentioned (conference visitors, people scrolling group chats), nor is the small-preview use.",
+        "where": "Learner rationale, third decision; no audience or small-size reasoning anywhere in the text.",
+        "explanation": "The decisions are specific and honest about the work, which is a real strength. The reasoning behind the third point is thin, and the rubric asks for a link to the audience.",
+        "principle": "A rationale should connect each choice to its effect on a specific viewer in a specific context.",
+        "improvement": "For the CTA, explain why it reads third even though it is colourful, for example its position and smaller text. Add one sentence on how the high-value contrast keeps the name, date and place readable in a group-chat thumbnail.",
+        "verify": "Reread each decision and check that it answers three questions: what I did, what contrast it uses, and who it helps in which situation."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 82,
+        "evidence": "'OPEN STUDIO' in a large dark block clearly leads. 'Saturday 14 March' (bold, near-black) and 'Harbour Hall, Pier 4' (regular, dark grey) read second. The blue 'Register now' button reads third. The saturated blue block is visually heavy and may pull the eye before the date in a quick glance. The URL, which is where people actually register, is the smallest and quietest text on the page. The brief names the event 'Open Studio 2026', but the year does not appear.",
+        "where": "Title block; date/place group; CTA button versus the URL line beneath it.",
+        "explanation": "A two-second glance tells you what, when, where and that you should register, so the main order works. However, the destination of the action is weakest exactly where it matters. The strong blue block slightly competes with the date and place.",
+        "principle": "Hierarchy through size, value and weight. The most actionable detail of a call to action should not be buried.",
+        "improvement": "Merge the URL into the CTA, for example 'Register at openstudio.example' inside or directly on the button, or give the URL more weight. If the blue competes too much, slightly reduce the button's height or width. Add '2026' to the name, perhaps smaller beneath the title.",
+        "verify": "Show the preview to someone for two seconds, then ask what, when, where and how to register. They should recall the web address as well as the date."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 86,
+        "evidence": "In the 267x400 preview, 'OPEN STUDIO', 'Saturday 14 March' and 'Harbour Hall, Pier 4' are all clearly readable. The title-block / date-place / button structure survives intact. 'Register now' stays legible. The URL is very small (roughly 10–11px tall text) and is the most strained item, though still readable.",
+        "where": "Preview image, especially the 'openstudio.example' line at the bottom.",
+        "explanation": "The hierarchy and all essential information survive the reduction, which meets this required criterion well. Only the URL is near its limit, and group-chat thumbnails can display even smaller than this preview.",
+        "principle": "Design for the smallest viewing context: essential text needs enough size and weight to survive scaling.",
+        "improvement": "Increase the URL size or weight, or move it into the button. That way the action stays readable even below this preview size.",
+        "verify": "Export a further-reduced version (for example 180px wide) and view it on a phone in a chat app. Check that the name, date, place and web address can all still be read."
+      },
+      {
+        "criterionId": "typography",
+        "score": 82,
+        "evidence": "Two typefaces appear: a bold serif in capitals for the title, and a sans-serif for everything else. I can't confirm the exact fonts from the image. Size and weight build the levels: a very large serif title, a bold sans date, a regular sans venue, a bold sans button label and a small regular URL. Line lengths are short and the title's line height is tight but comfortable. The title leaves a wide empty area to the right of 'OPEN' inside the black block. The URL, the most functional text, is the smallest size used.",
+        "where": "Title block; date/place lines; URL line.",
+        "explanation": "The type system is clear and purposeful, and the serif/sans pairing does not conflict. The main inconsistency is that type size does not match importance for the URL. The title could also fill its container more deliberately.",
+        "principle": "A type scale where each step signals importance; matching typographic weight to function.",
+        "improvement": "Define a small type scale (for example title / date / body / caption) and give the URL at least body size. Consider tightening the black block to the title width, or enlarging the title to fill it.",
+        "verify": "List every text style used with its size and weight. Check that the order of sizes matches the order of importance you intend."
+      }
+    ]
+  },
+  {
+    "sample": "strong",
+    "run": 3,
+    "assignment": "high-contrast-event-poster",
+    "expect": "high overall (>=80), contrast & legibility >=75",
+    "ms": 51437,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4779,
+    "outputTokens": 4622,
+    "costUsd": 0.1116,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 81,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "composition-and-spacing": 78,
+      "contrast": 88,
+      "design-rationale": 72,
+      "information-hierarchy": 80,
+      "legibility-at-small-size": 80,
+      "typography": 85
+    },
+    "strengths": [
+      "Very strong, deliberate value contrast: the cream-on-black title block makes the event name unmistakable at any size.",
+      "Disciplined left alignment, with the title and button text sharing the same inner indent.",
+      "Clean two-typeface system: a serif title against a sans for the information, with a clear bold/regular step between date and place.",
+      "Restrained use of colour: the single saturated blue clearly marks the action area.",
+      "The hierarchy of name, then date and place, survives well in the small preview.",
+      "The rationale gives three specific, contrast-based decisions that mostly match the visible work."
+    ],
+    "weaknesses": [
+      "'openstudio.example', the actual registration destination, is the smallest and least emphasised text and is strained in the preview.",
+      "The large empty band between the place and the call to action, plus uneven top and bottom margins, can read as unbalanced rather than intentional.",
+      "The rationale does not connect decisions to the audience or the group-chat viewing context.",
+      "The rationale calls the date 'mid-dark', but it appears near-black and bold.",
+      "Contrast ratios are not stated. They look strong by eye, but they should be measured."
+    ],
+    "missingRequirements": [
+      "The event name in the brief is 'Open Studio 2026'; the poster shows only 'OPEN STUDIO', without the year."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 78,
+        "evidence": "Every element shares one left edge at about 48px, and the black title block has matching left and right margins. The title text and the 'Register now' label share the same inner indent. Date and place form a tight group. A large empty band of roughly 330px separates that group from the call-to-action group (button plus URL). The top margin (about 60px) is smaller than the space left below the URL (about 130px), and the button's width (about 420px) does not line up with any other edge.",
+        "where": "Whole layout. Large gap between 'Harbour Hall, Pier 4' and the blue button. Top margin versus bottom margin. Right edge of the button.",
+        "explanation": "Grouping by proximity is clear and the alignment is disciplined, which is why the poster reads calmly. The empty band separates the action from the event details. Because it is the largest space on the page, though, it can look like leftover space rather than a deliberate pause. The uneven top and bottom margins make the layout feel slightly top-heavy.",
+        "principle": "Proximity and grouping; consistent margins; alignment to a shared grid.",
+        "improvement": "Decide what the empty band is for. Either keep it and balance the bottom margin to match the top and side margins, or reduce it and move the call-to-action group up so the space feels proportioned. Consider making the button width relate to another edge, for example half the title-block width or the width of the date line.",
+        "verify": "Overlay a simple grid or margin guides and check that the outer margins match. Squint at the poster: you should see three clear groups with gaps that look intended rather than accidental."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 88,
+        "evidence": "Cream text on a near-black block for the title. Near-black bold date and dark grey place on a cream ground. White text on a saturated blue button. Dark grey URL on cream. Judged by eye, all of these look clearly above WCAG AA. This is an estimate: I cannot measure colour values from the image. Strong contrast is used selectively. The black block and the blue button are the only heavy masses, and the rest stays quiet.",
+        "where": "Title block, date and place lines, blue button, URL line.",
+        "explanation": "Essential text appears to stand clearly off its background, and contrast is concentrated where attention is wanted rather than spread everywhere. The weakest pairs are probably the grey place line and the grey URL, which are lighter than the date. They still look comfortably readable.",
+        "principle": "Value contrast for figure and ground; selective emphasis; WCAG AA (4.5:1 normal text, 3:1 large text).",
+        "improvement": "Sample the actual colour values for each text and background pair, especially the grey place line, the grey URL and the white-on-blue label, and record the ratios in your rationale.",
+        "verify": "Run each pair through a contrast checker. Aim for at least 4.5:1 for the smaller text (place, URL, button label) and note the results."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 72,
+        "evidence": "The rationale names three decisions, each tied to contrast: (1) the title in the largest, darkest block; (2) date and venue in a mid-dark tone, secondary but high contrast on cream; (3) the call to action as the only saturated blue. All three are visible in the work. It does not mention the audience or the small group-chat preview. It does not explain the URL's treatment. The date is described as 'mid-dark', but it looks near-black and bold; only the venue line looks noticeably lighter.",
+        "where": "Learner rationale, all three points.",
+        "explanation": "The reasoning is specific and mostly matches the poster, which is good. The rubric also asks you to tie decisions to the audience. A key context here is the tiny chat preview, and the rationale never mentions it. The claim that the blue makes the eye land on it 'last' needs more explanation. Saturated colour usually attracts attention, so placement and size are probably what keep it third.",
+        "principle": "Design reasoning should connect decision, contrast and audience, and accurately describe the work.",
+        "improvement": "For each decision, add who it serves and why. For example, explain how the solid black block keeps the name readable when the image is thumbnail-sized in a chat. Correct the date description, or explain the deliberate bold-versus-regular step between date and venue. Explain why the blue reads third despite being saturated, and why the URL is set where it is.",
+        "verify": "Reread each point and confirm you can find exactly what it describes in the poster. Check that each point names the audience or viewing situation it serves."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 80,
+        "evidence": "The cream-on-black 'OPEN STUDIO' block clearly dominates. The date (bold) and place (regular) follow at a clearly smaller size. The blue 'Register now' button comes third. In a two-second glance the what, when and where come through clearly. However, the actual registration address, 'openstudio.example', is the smallest and lowest-emphasis text on the poster. On a printed A3 poster, 'Register now' cannot be clicked, so the URL is what people need to act. The event name also appears as 'OPEN STUDIO' without '2026'.",
+        "where": "Title block (level 1), date and place (level 2), blue button and URL line (level 3).",
+        "explanation": "The first two levels are excellent and clearly separated by size, value and weight. At the third level, emphasis sits on the generic label while the specific instruction is the weakest element. A viewer knows to register but may not notice where.",
+        "principle": "Visual hierarchy through size, weight and value; emphasis should follow importance of content.",
+        "improvement": "Bring the URL into the call to action. For example, put 'Register at openstudio.example' inside the blue button, or set the URL larger and bolder directly beneath it. Consider adding '2026' to the title area as a smaller line so the full event name is present without competing with 'OPEN STUDIO'.",
+        "verify": "Show the poster to someone for two seconds, then ask them to tell you the event, the date, the place, and where to register. They should be able to repeat the web address."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 80,
+        "evidence": "In the 267x400 preview, 'OPEN STUDIO', 'Saturday 14 March' and 'Harbour Hall, Pier 4' are all readable, and the three-level hierarchy survives. The place line is small but clear. 'openstudio.example' becomes very small, roughly 8 to 9px tall in the preview, and is strained compared with everything else.",
+        "where": "Small-scale preview: lower area, especially the URL line and, to a lesser extent, the place line.",
+        "explanation": "Name, date and place survive well, which meets the core of this criterion. The call-to-action destination is the most likely item to blur. Chat apps often show images even smaller than this preview, so it is the weak point for the group-chat audience.",
+        "principle": "Minimum readable text size at the viewing scale; robust hierarchy under reduction.",
+        "improvement": "Increase the URL size and weight, or move it into the blue button, so it survives reduction. Check that the place line stays readable even smaller than this preview.",
+        "verify": "Export the poster at an even smaller size, for example around 150px wide, or view the preview on a phone in a real chat thread. Confirm you can still read the date, place and URL without zooming."
+      },
+      {
+        "criterionId": "typography",
+        "score": 85,
+        "evidence": "Two typefaces: a bold serif in capitals for the title, and a sans serif for everything else. The sans uses a clear bold-versus-regular step between date and place, bold for the button label and regular for the URL. Lines are short and well spaced. The title's two lines sit comfortably inside the block with generous padding, though 'OPEN' leaves the right half of the block empty.",
+        "where": "Title block; date and place lines; button label; URL.",
+        "explanation": "This is a clear, purposeful type system. Serif against sans separates the name from the information, and weight steps separate levels within the sans. The faces do not conflict. The main minor issue is that the URL, an essential detail, gets the least typographic emphasis.",
+        "principle": "Typographic contrast through face, size and weight; a limited, consistent type system.",
+        "improvement": "Give the URL a stronger typographic role, for example bold, or a larger size matching the place line. Optionally set '2026' in the sans as a supporting line within or beneath the title block.",
+        "verify": "List each text element with its face, size and weight. Check that each step in importance has a visible typographic difference and that no essential item is in the weakest style."
+      }
+    ]
+  },
+  {
+    "sample": "low-contrast",
+    "run": 1,
+    "assignment": "high-contrast-event-poster",
+    "expect": "contrast & legibility FAIL (<60), rationale low (claims do not match), overall fail",
+    "ms": 40181,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4733,
+    "outputTokens": 3720,
+    "costUsd": 0.0933,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 36,
+    "passed": false,
+    "failedMandatory": [
+      "contrast",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "composition-and-spacing": 66,
+      "contrast": 12,
+      "design-rationale": 18,
+      "information-hierarchy": 38,
+      "legibility-at-small-size": 22,
+      "typography": 62
+    },
+    "strengths": [
+      "All required event details appear apart from '2026': name, date, location, call to action and URL. No extra details are invented.",
+      "Clear size scale from the title down to the URL, with a restrained two-typeface pairing.",
+      "Related information is grouped sensibly (date with venue; button with URL).",
+      "The preview is a correctly scaled version of the final, which makes the small-size check possible."
+    ],
+    "weaknesses": [
+      "Essential text appears to have very low contrast against the cream background. By eye it is well below WCAG AA, though this is an estimate that needs measuring.",
+      "Contrast is uniformly low, so nothing separates the essential information or the call to action.",
+      "Venue, button label and URL become nearly unreadable in the small preview.",
+      "The title's left edge does not align with the other elements, and the vertical spacing is uneven.",
+      "The rationale's claims of high contrast do not match the work, and it does not explain three specific decisions."
+    ],
+    "missingRequirements": [
+      "Apply contrast to separate the essential information: not met, because contrast is uniformly low.",
+      "Keep essential text readable at the small preview size: not met for the venue and URL.",
+      "Explain three key design decisions, each tied to contrast: not met.",
+      "The event name should be 'Open Studio 2026': '2026' is missing."
+    ],
+    "criticalFailures": [
+      "Essential text (date, venue, call to action and URL) appears to have very low contrast and is barely readable, especially in the preview. This defeats the poster's purpose as a high-contrast event poster for print and group-chat sharing."
+    ],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 66,
+        "evidence": "The layout is left-aligned with generous empty space. The date and venue sit together as one group, and the 'Register now' button and URL form a second group near the bottom. However, the 'OPEN STUDIO' title starts noticeably further right (about x≈80px) than the date, venue, button and URL (about x≈48px). There is also a very large empty band between the venue line and the button, which makes the lower half feel disconnected rather than intentionally spaced.",
+        "where": "Left edge of the title versus the left edge of all other elements; the empty area between 'Harbour Hall, Pier 4' and the button (roughly y 570–900 in the final).",
+        "explanation": "Grouping by proximity works, which helps the reader. The misaligned left edge and the uneven vertical rhythm make the layout look less deliberate, and the large gap weakens the link between the event details and the action.",
+        "principle": "Alignment and proximity: a shared left edge creates order, and consistent spacing intervals show how groups relate.",
+        "improvement": "Align the title's left edge with the other text, allowing for optical overshoot of the serif capitals. Set a spacing scale, for example one unit within a group and three units between groups, and use it to place the details and the CTA block. Use empty space on purpose, perhaps to give the title more room.",
+        "verify": "Draw a vertical guide on the shared left margin and check that every element touches it. Measure the gaps between groups and confirm they follow your chosen scale."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 12,
+        "evidence": "Every text element is a pale beige or grey on a light cream background. By eye, the title, date, venue, button label and URL all look very close in value to the background. My estimate is roughly 1.2:1 to 1.6:1. That would be far below WCAG AA for normal text (4.5:1) and for large text (3:1). The button fill is only slightly darker than the background, and its label is also low contrast. These are visual estimates from pixels, not measurements. No element stands out from the others.",
+        "where": "All text across the whole poster, especially 'Harbour Hall, Pier 4', 'Register now' and 'openstudio.example'.",
+        "explanation": "The brief asks for a high-contrast poster. Here, low contrast is applied uniformly, so essential text is hard to read and nothing separates important information from the rest. The rationale says 'I used high contrast throughout', but the images do not show this.",
+        "principle": "Value contrast between figure and ground. WCAG AA contrast thresholds. Selective contrast: the strongest contrast should go to the most important content.",
+        "improvement": "Keep the cream background if you like it, but set essential text in a very dark value such as near-black or a deep colour. Use your strongest contrast for the title. Give the call to action a strongly contrasting button, for example a dark fill with light text. Supporting text such as the URL can step down slightly but must still pass 4.5:1.",
+        "verify": "Sample the text and background colours in your design tool. Check each pair in a contrast checker such as the WebAIM Contrast Checker. Confirm that every essential pair reaches at least 4.5:1, or 3:1 for large text."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 18,
+        "evidence": "The rationale is 36 words long. It makes general claims ('high contrast throughout', 'title is the strongest element', 'button stands out strongly'). It does not name three specific decisions with reasons tied to contrast and the audience. Its claims about high contrast and a strongly standing-out button do not match the submitted images.",
+        "where": "Learner rationale text.",
+        "explanation": "The rubric rewards specific decisions whose reasons match what is visible. General statements, and claims the work does not show, cannot show your reasoning.",
+        "principle": "Design reasoning: name each decision, why you made it (audience and purpose) and how contrast delivers it.",
+        "improvement": "Write three short paragraphs, each covering one decision. For example: 'I set the title in X at Y size in near-black on cream because…'. Mention the A3 print use and the group-chat preview audience. Include the measured contrast ratios.",
+        "verify": "For each claim in your rationale, point to the exact place on the poster that shows it. Check that any numbers you quote match your contrast checker results."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 38,
+        "evidence": "Size does create an order: the large bold serif title comes first, then the date (larger than the venue), then the button and URL. Because every element shares almost the same low value, contrast does not reinforce this order. The date, venue, button label and URL all read with very similar weak emphasis. The call to action has a box, but the box barely separates from the background, so it does not draw the eye. The event name also lacks '2026'.",
+        "where": "The relationship between the title, the date and venue block, and the CTA block.",
+        "explanation": "In a two-second glance, a viewer might catch 'OPEN STUDIO' but would struggle to pick out when, where and what to do. The brief asks you to use contrast to make the reading order obvious.",
+        "principle": "Visual hierarchy through combined contrasts: size, value, weight and colour working together.",
+        "improvement": "Keep the size steps but add value and weight steps. Make the title the darkest and largest element. Set the date and place in a dark value at a clear medium size, possibly bolding the date. Make the CTA visually distinct with a strong button. Add '2026' to the event name.",
+        "verify": "Show the poster to someone for two seconds, then ask what the event is, when and where it is, and what to do. Also blur the poster in your editor and check that the order of emphasis is still clear."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 22,
+        "evidence": "The preview is a true scaled version (267×400). At that size the title is faintly readable. 'Saturday 14 March' is weak, 'Harbour Hall, Pier 4' is very faint, and 'Register now' and 'openstudio.example' are close to unreadable. The low value contrast gets worse at small size, and the hierarchy largely disappears.",
+        "where": "Preview image, especially the venue line, button label and URL.",
+        "explanation": "The poster will be shared as a small image in group chats, so essential details must survive scaling. Here, the place and the action are effectively lost.",
+        "principle": "Legibility at reduced scale: small text needs higher contrast and enough size and weight to stay readable.",
+        "improvement": "Raise text contrast first; this will make the biggest difference. Then consider making the date, venue and URL slightly larger or heavier, so they stay readable when the poster shrinks to about a third of its size.",
+        "verify": "Export the preview again and view it at 100% on a phone screen. Check that you can read the title, date, venue and URL without zooming."
+      },
+      {
+        "criterionId": "typography",
+        "score": 62,
+        "evidence": "There appear to be two typefaces: a bold serif in caps for the title and a sans-serif for the rest. This is within the two-typeface limit, and the pairing does not clash. Size steps exist (title > date > venue > button label > URL), and line lengths are short and comfortable. Weight contrast is barely used below the title: all sans-serif text looks the same regular weight. The very pale colour makes the type system hard to read.",
+        "where": "Title (serif) and all secondary text (sans-serif).",
+        "explanation": "A sound pairing and clear size scale form a good foundation. Without weight or value differences, though, the secondary levels blur together.",
+        "principle": "Typographic hierarchy: purposeful contrasts of size, weight and case build a clear type system.",
+        "improvement": "Add weight contrast, such as a semibold date, a regular venue and a bold button label. Keep a consistent size ratio between levels. Check the title's letter-spacing and line spacing so the two lines sit as a tight unit.",
+        "verify": "List your type styles (face, size, weight, colour). Check that each level differs from the next in at least two properties."
+      }
+    ]
+  },
+  {
+    "sample": "low-contrast",
+    "run": 2,
+    "assignment": "high-contrast-event-poster",
+    "expect": "contrast & legibility FAIL (<60), rationale low (claims do not match), overall fail",
+    "ms": 40765,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4733,
+    "outputTokens": 3824,
+    "costUsd": 0.0954,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 33,
+    "passed": false,
+    "failedMandatory": [
+      "contrast",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "composition-and-spacing": 56,
+      "contrast": 10,
+      "design-rationale": 18,
+      "information-hierarchy": 38,
+      "legibility-at-small-size": 18,
+      "typography": 55
+    },
+    "strengths": [
+      "All required details apart from the year are present: event name, date, venue and a registration call to action with the URL, and no invented details.",
+      "Two typefaces only, with a reasonable serif and sans-serif pairing.",
+      "Related items are grouped by proximity (date with venue, button with URL).",
+      "The size steps suggest the correct reading order, and the preview is a correctly scaled version of the final."
+    ],
+    "weaknesses": [
+      "Essential text appears to have very low value contrast against the background, estimated well below WCAG AA (measure to confirm).",
+      "The button barely separates from the background, so the call to action does not stand out.",
+      "The hierarchy depends on size alone; value and weight do not reinforce it.",
+      "The venue, button label and URL are strained or unreadable in the small preview.",
+      "The title is not aligned to the same left edge as the other text.",
+      "The rationale contradicts the visible work and does not explain three specific decisions."
+    ],
+    "missingRequirements": [
+      "Contrast is not applied to separate the essential information; everything is equally faint.",
+      "Essential text is not readable at the small preview size (venue, URL and button label).",
+      "The rationale does not explain three key design decisions tied to contrast.",
+      "The event name appears as 'OPEN STUDIO' without '2026'."
+    ],
+    "criticalFailures": [
+      "Essential text appears to have extremely low contrast against the cream background (visually estimated well below 3:1). For a brief that requires a high-contrast poster legible as a small chat image, this makes the venue and registration information effectively unreadable for many viewers."
+    ],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 56,
+        "evidence": "Information sits in three groups: the title at the top, the date and venue in the middle, and the button with the URL at the bottom. The date and venue sit close together, and the button and URL sit close together, so proximity grouping works. However, the 'OPEN STUDIO' title starts noticeably further right (about x≈80px) than the date, venue, button and URL (about x≈48px), so there is no single left edge. There is also a large empty band between the venue and the button, roughly a quarter of the poster height. It reads more as leftover space than as a deliberate pause.",
+        "where": "Final poster: left edge of the title compared with the left edge of all other elements; the empty zone between 'Harbour Hall, Pier 4' and the 'Register now' button.",
+        "explanation": "A shared alignment edge helps the eye move down the poster in one line. A small offset like this looks accidental rather than intentional. Empty space works best when it frames the important content rather than separating groups by an arbitrary amount.",
+        "principle": "Alignment, proximity and intentional negative space.",
+        "improvement": "Put every text block on one left margin, or offset the title by a clearly deliberate amount. Then decide on a spacing scale, for example one unit within a group and three units between groups, and apply it to the title, the date and venue block, and the call-to-action block.",
+        "verify": "Draw a vertical guide on your left margin and check that every text block touches it. Measure the gaps between groups and confirm they follow your chosen scale."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 10,
+        "evidence": "All text is a pale grey-beige on a light cream background. The title, date, venue, button label and URL are all very close in value to the background. From the image I estimate the title at roughly 1.3:1 and the body text and URL at roughly 1.3–1.6:1. These are estimates from pixels, not measurements. They appear far below WCAG AA (4.5:1 for normal text, 3:1 for large text). The button fill is barely distinguishable from the background, and its label is barely distinguishable from the fill. Because every element is equally faint, contrast does not separate the essential information from anything else.",
+        "where": "Final poster and preview: every text element and the 'Register now' button.",
+        "explanation": "The brief asks for a high-contrast poster that stays readable in print and as a small chat image. At these value differences, viewers with low vision, people on a dim phone screen, or anyone viewing a compressed preview will struggle to read any of it.",
+        "principle": "Value contrast between figure and ground, and WCAG AA contrast minimums.",
+        "improvement": "Make the essential text much darker, for example near-black or a deep colour on the cream, or reverse it with light text on a dark background. Then use contrast selectively: the strongest value difference on the title, strong contrast on the date and venue, and a solid, saturated button with a high-contrast label. Avoid making everything equally strong.",
+        "verify": "Use eyedropper values from your design file in a WCAG contrast checker. Confirm the title and button label reach at least 3:1 if large, and that the date, venue and URL reach at least 4.5:1. A greyscale or squint test should show the title and button clearly standing out."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 18,
+        "evidence": "The rationale is 36 words long. It makes general claims: 'high contrast throughout', 'the title is the strongest element', the date and venue are 'clearly separated', and the button 'stands out strongly'. It does not describe three specific decisions with reasons, and it does not mention the audience or the small chat preview. The main claims do not match what is visible: the work shows very low contrast, and the button blends into the background.",
+        "where": "Learner rationale compared with the final poster.",
+        "explanation": "A rationale should show your reasoning so a reviewer can check it against the work. When claims contradict the visible result, that suggests the design was not checked against its intent.",
+        "principle": "Reflective design reasoning: decision, reason and evidence.",
+        "improvement": "Write three short paragraphs. Each should name one specific contrast decision, for example 'I set the title in near-black at about 120px bold on cream so it has the strongest value and size contrast'. Give the reason, linked to the audience or the chat preview, and how you checked it, such as a measured ratio or a preview test.",
+        "verify": "For each paragraph, point to the exact spot on the poster where the decision is visible. Include any contrast ratio you measured. If you cannot point to it, revise either the design or the claim."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 38,
+        "evidence": "Size and position suggest the intended order: a large serif title at the top, a medium date with a slightly smaller venue below, then the button and a small URL. However, value contrast is almost identical across all levels, so nothing really pops. In a two-second glance the poster reads as a faint, mostly empty cream rectangle. The year '2026' from the event name 'Open Studio 2026' does not appear. The call to action is split between 'Register now' and a separate, very faint URL.",
+        "where": "Final poster: title, date and venue block, button and URL.",
+        "explanation": "The criterion asks whether contrast makes the reading order obvious. Here, size alone carries the order. Because all elements are faint, the order is technically present but not felt at a glance.",
+        "principle": "Visual hierarchy through contrast of size, value and weight.",
+        "improvement": "Give each level a distinct contrast step. Make the title darkest and largest. Make the date and venue clearly strong but smaller. Make the call to action a solid, high-contrast button that includes or sits directly beside a readable URL. Add '2026' to the event name.",
+        "verify": "Show the poster to someone for two seconds, then ask what the event is, when and where it is, and what they should do. Check that they answer all three in that order."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 18,
+        "evidence": "The preview is a correctly scaled version of the final (267×400). At this size the title can just be made out, and the date is faint but readable. The venue line is strained. The 'Register now' label and especially the URL are very hard to read. The hierarchy mostly disappears because every element fades into the background.",
+        "where": "Small-scale preview: the venue line, button label and URL.",
+        "explanation": "The poster will be shared as a small image in group chats, where it will also be compressed. If the venue and registration link cannot be read, the poster fails its main sharing job.",
+        "principle": "Legibility at reduced scale, where minimum size and contrast become critical.",
+        "improvement": "Raise the value contrast first, as this is the biggest fix. Then increase the size of the venue and URL so they remain readable at about 400px tall. Consider making the URL part of the button so it inherits its size and contrast.",
+        "verify": "Export the poster at 267×400 and view it on a phone at arm's length, or send it to yourself in a chat app. Confirm you can read the name, date, venue and URL without zooming."
+      },
+      {
+        "criterionId": "typography",
+        "score": 55,
+        "evidence": "Two typefaces are used, which stays within the limit: a bold serif in capitals for the title, and a sans-serif for everything else. There are clear size steps between the title, the date, the venue and the URL. The title's line spacing looks comfortable, and the line lengths are short. However, the type system relies only on size, with no weight contrast within the sans-serif. The very light colour applied to all type undermines the hierarchy that the sizes set up. The URL is very small compared with its importance as the call to action.",
+        "where": "Final poster: title in serif, all other text in sans-serif.",
+        "explanation": "Size, weight and colour work together in a type system. Using only one of them, and setting every level to the same pale tone, makes the system weaker than it needs to be.",
+        "principle": "Typographic hierarchy through size, weight and value contrast.",
+        "improvement": "Keep the two faces, which pair sensibly. Add a weight step, for example setting the date in medium or bold and the venue in regular. Give the type real tonal contrast. Increase the URL size so the call to action reads as important rather than as a footnote.",
+        "verify": "List your type styles (face, size, weight, colour) and check that each information level differs from the next in at least two of these properties."
+      }
+    ]
+  },
+  {
+    "sample": "low-contrast",
+    "run": 3,
+    "assignment": "high-contrast-event-poster",
+    "expect": "contrast & legibility FAIL (<60), rationale low (claims do not match), overall fail",
+    "ms": 44358,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4733,
+    "outputTokens": 4142,
+    "costUsd": 0.1018,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 35,
+    "passed": false,
+    "failedMandatory": [
+      "contrast",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "composition-and-spacing": 60,
+      "contrast": 12,
+      "design-rationale": 15,
+      "information-hierarchy": 38,
+      "legibility-at-small-size": 22,
+      "typography": 60
+    },
+    "strengths": [
+      "All required information is present: event name, date, location, and the call to action with the URL. No extra details have been invented.",
+      "The size order matches the intended hierarchy: title, then date, then venue, then call to action.",
+      "The two-typeface pairing (bold serif title, sans body) stays within the limit and works well together.",
+      "Related items are grouped sensibly by proximity, and the preview is a correctly scaled version of the final."
+    ],
+    "weaknesses": [
+      "Value contrast is very low across the whole poster. By estimate, all text sits well below WCAG AA, which is the opposite of the 'high-contrast' brief.",
+      "The call-to-action button barely separates from the background.",
+      "In the small preview, the venue and URL become nearly unreadable.",
+      "The title is set from a different left edge than the other text, and the vertical spacing is uneven.",
+      "The rationale is short and generic, and its claims of 'high contrast throughout' and a strongly standing-out button do not match the visible work."
+    ],
+    "missingRequirements": [
+      "Essential text is not readable at the small preview size.",
+      "Contrast is not applied to separate the essential information from everything else.",
+      "The rationale does not explain three key design decisions, each tied to contrast.",
+      "The event name is shown as 'OPEN STUDIO' rather than the full name 'Open Studio 2026'."
+    ],
+    "criticalFailures": [
+      "Text contrast is so low throughout that essential information (especially the venue and the registration URL) is hard to read at full size and nearly unreadable in the small preview. This makes the poster unusable for its stated purpose as a high-contrast poster shared in group chats."
+    ],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 60,
+        "evidence": "The layout forms three readable groups: the title at the top, the date and venue paired below it, and the button with the URL beneath it near the bottom. The date, venue, button and URL share a left edge at about 48px. The 'OPEN STUDIO' title starts noticeably further right, at about 80px, so it does not sit on the same edge. The gap between the venue line and the button is very large, about 330px, compared with the tight spacing inside each group.",
+        "where": "Left edge of the title versus all other elements; the empty band between 'Harbour Hall, Pier 4' and the 'Register now' button.",
+        "explanation": "The grouping by proximity works, but the indented title breaks the alignment line. The very large middle gap makes the bottom block feel disconnected rather than deliberately placed. Together these make the layout read as mostly orderly rather than fully controlled.",
+        "principle": "Alignment and proximity: a shared edge ties elements together, and consistent spacing steps signal intentional structure.",
+        "improvement": "Align the title's left edge with the other text, either by moving it to 48px or by moving everything to 80px. Choose a spacing scale (for example 24 / 48 / 96px) and use it for every gap. Then decide whether the middle space is a deliberate pause or should be reduced to bring the call to action closer.",
+        "verify": "Draw a vertical guide at your chosen left margin and check that every text block touches it. Measure each gap and confirm it matches one of your scale values."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 12,
+        "evidence": "Every element is a pale beige or warm grey on a slightly lighter beige background. By eye, the title, date, venue, button label and URL all have very low contrast. I estimate roughly 1.2:1 to 1.6:1, which is far below WCAG AA (4.5:1 for normal text, 3:1 for large text). These are estimates from pixels, not measurements. The button fill is barely distinguishable from the background. Contrast is uniformly low, so nothing is separated by value.",
+        "where": "Whole poster: title, date, venue, button, button label and URL.",
+        "explanation": "The assignment is specifically a high-contrast poster. At this contrast level the essential information is hard to read even at full size. It will be harder still in print under poor lighting or on a phone screen in daylight. This criterion is required with a minimum of 60, and the current work falls well short.",
+        "principle": "Value contrast between figure and ground, and WCAG AA contrast ratios for text.",
+        "improvement": "Keep the beige background if you like it, but set essential text in a very dark value, such as near-black or a deep warm brown. Use one strong accent, for example a dark or saturated button with light text, for the call to action. Contrast can still be selective: give secondary text such as the URL a slightly lighter value than the date, as long as it still passes.",
+        "verify": "Sample each text colour and its background with a contrast checker (for example the WebAIM Contrast Checker). Aim for at least 4.5:1 on normal-size text and 3:1 on large text, and record the ratios in your rationale. Also print the poster in greyscale and check that every line reads instantly."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 15,
+        "evidence": "The rationale is 36 words. It says high contrast was used 'throughout', that the title is the strongest element, that the date and venue are separated, and that the button 'stands out strongly from the background'. It does not describe three specific decisions with reasons, does not mention the audience, and does not name colours, sizes or typefaces.",
+        "where": "Learner rationale.",
+        "explanation": "Several claims do not match what is visible. Contrast is very low throughout, and the button blends into the background. The brief asks for three key decisions, each tied to contrast. The current text gives general statements rather than reasoning I can check against the work.",
+        "principle": "Design rationale should name a specific decision, the reason for it, and link it to the audience and to what is visible in the work.",
+        "improvement": "Write three short paragraphs, each about one decision. For example: (1) the colour value chosen for the title and its measured contrast ratio; (2) how size and weight separate the date and venue from the title; (3) how the call-to-action button is made to stand out, and why that matters for someone viewing it in a group chat. Mention the audience, such as people seeing a small image on a phone.",
+        "verify": "Reread each claim with the poster beside you and ask 'can a viewer see this?'. Include the measured contrast ratios so each claim is backed by evidence."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 38,
+        "evidence": "Size follows the intended order. The title is the largest element and set in a bold serif, the date is larger than the venue, and the call to action is a button with the URL beneath it. However, all elements share almost the same faint value, so on a quick glance the page reads as a pale, washed-out field. The date and venue are especially faint, and the URL is the hardest element to read.",
+        "where": "Title versus date/venue versus button/URL across the whole poster.",
+        "explanation": "The rubric asks whether contrast makes the reading order obvious within two seconds. Size alone gives a weak order here. Because value contrast is uniform and low, the levels do not separate clearly, and the 'when, where and what to do' information is hard to pick out at a glance.",
+        "principle": "Visual hierarchy through combined contrast of size, value and weight.",
+        "improvement": "Keep your size order and add value steps to it. Make the title the darkest, heaviest element. Set the date and venue in a strong dark value at a medium size. Make the call to action stand out through a contrasting button fill. Consider making the URL slightly larger, because it is the actual action.",
+        "verify": "Show the poster to someone for two seconds, then ask what the event is, when and where it is, and how to register. Squinting at the poster, or blurring it, should still reveal three distinct levels."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 22,
+        "evidence": "The preview is a true scaled-down version of the final (267x400px, same aspect ratio). In it, 'OPEN STUDIO' can just about be made out. 'Saturday 14 March' is faint, 'Harbour Hall, Pier 4' is very faint and strained, and 'openstudio.example' is close to invisible. The button is barely distinguishable from the background.",
+        "where": "Preview image: date, venue, button and URL lines.",
+        "explanation": "The poster will be shared as a small image in group chats, where it is likely to be viewed at a size similar to this preview. Two essential items, the venue and the registration URL, are hard to read, and the date is strained. This criterion is required with a minimum of 60, and the current preview does not meet it.",
+        "principle": "Legibility at reduced scale depends on value contrast and adequate type size, because fine, low-contrast detail disappears first.",
+        "improvement": "Fix the contrast first, as it is the main issue. Then check the type sizes at preview scale. The venue and URL may need to be larger or set in a heavier weight so they survive the reduction.",
+        "verify": "Export the revised poster at 267x400px and view it on a phone at arm's length. Every essential line, including the URL, should be readable without zooming."
+      },
+      {
+        "criterionId": "typography",
+        "score": 60,
+        "evidence": "Two typefaces are used: a bold serif in capitals for the title, and a regular sans-serif for everything else. This is within the two-typeface limit, and the pairing does not conflict. Size steps are present (title, date, venue, button label, URL). Line lengths are short and comfortable. Weight contrast is limited to the title, and the venue, button label and URL are all in a similar regular weight. The title is also set from a different left edge than the sans text. The event name appears as 'OPEN STUDIO' without '2026'.",
+        "where": "Title (serif), date/venue/button/URL (sans).",
+        "explanation": "The underlying type system is sound, with sensible faces and a clear size order. However, it relies only on size for most levels, and the lighter elements lose impact. Leaving out '2026' means the full event name from the brief is not shown.",
+        "principle": "A type system uses deliberate contrasts of size, weight and case to signal levels of importance.",
+        "improvement": "Add '2026' to the title lockup. Consider a bolder weight for the date, so it reads as the second level, and keep the venue in regular weight. Make the button label a medium or bold weight so the action reads clearly. Align the serif title with the sans text edge.",
+        "verify": "List each text level with its face, size and weight in your rationale, and check that each level differs from the next in at least one clear property."
+      }
+    ]
+  },
+  {
+    "sample": "flat-hierarchy",
+    "run": 1,
+    "assignment": "high-contrast-event-poster",
+    "expect": "hierarchy low (<60), contrast fine (>=70)",
+    "ms": 51333,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4733,
+    "outputTokens": 4692,
+    "costUsd": 0.1128,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 34,
+    "passed": false,
+    "failedMandatory": [
+      "contrast",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "composition-and-spacing": 38,
+      "contrast": 45,
+      "design-rationale": 30,
+      "information-hierarchy": 15,
+      "legibility-at-small-size": 55,
+      "typography": 30
+    },
+    "strengths": [
+      "The text is cleanly set and appears to have strong dark-on-light contrast against the background (estimated; please measure).",
+      "Left alignment and the left margin are consistent throughout.",
+      "A single typeface keeps the poster within the two-typeface limit and avoids font conflict.",
+      "The required date, place and call to action are present and spelled correctly.",
+      "The preview is a true smaller version of the final, and its text is readable.",
+      "The rationale honestly describes what was done."
+    ],
+    "weaknesses": [
+      "All lines share identical size, weight and colour, so there is no visual hierarchy.",
+      "Contrast is applied uniformly, so it does not separate essential information from secondary text.",
+      "Equal spacing everywhere means there is no grouping of related information.",
+      "The text sits in the top ~45% of the poster, leaving a large unused area that unbalances the layout.",
+      "Extra lines after the call to action dilute it.",
+      "The rationale argues for 'nothing is favoured', which contradicts the brief's goal, and it does not address the audience."
+    ],
+    "missingRequirements": [
+      "A clear reading hierarchy (event name, then date and place, then call to action) is not established.",
+      "Contrast is not used to separate the essential information from everything else.",
+      "The event name is incomplete: the brief specifies 'Open Studio 2026', but the poster shows 'Open Studio'.",
+      "An extra detail was added: 'Talks and workshops' does not appear in the brief, which says not to invent extra details. 'Creative conference' comes from the scenario description but is not one of the four required items, so consider removing it or clearly de-emphasising it.",
+      "The rationale does not explain three design decisions each tied to contrast; only one is."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 38,
+        "evidence": "All six lines are left-aligned on a consistent margin (about 48px at 800px width, estimated) and spaced at equal intervals. Because every gap is the same, nothing is grouped: date and place sit no closer to each other than to the call to action or the extra lines. The text fills only the top ~45% of the poster, and the lower ~55% is empty.",
+        "where": "Whole poster; the text block runs from about y=100 to y=550, with empty space from about y=560 to y=1200 in the final.",
+        "explanation": "Your alignment is tidy, which is a good base. Equal spacing between unrelated items tells the viewer they are all equally related, so the eye cannot find groups. The large empty area at the bottom does not frame or isolate anything, so the poster feels top-heavy and unfinished rather than purposefully spacious.",
+        "principle": "Proximity and grouping (Gestalt): related items sit close together, and unrelated items are separated by larger gaps. White space should be active, framing the key message.",
+        "improvement": "Create three groups: (1) the event name, (2) date and place set close together, (3) the call to action. Use a small gap inside a group and a gap two to three times larger between groups. Distribute the groups over the full height, for example name in the upper third and the call to action anchored near the bottom margin, so the empty space frames the content.",
+        "verify": "Squint at the poster or blur it heavily. You should see three distinct blocks rather than a single even stripe of lines. Measure the gaps: the gaps between groups should be clearly larger than the gaps within a group."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 45,
+        "evidence": "Text appears to be dark grey (near-black) on a white background. By eye, this pair very likely exceeds WCAG AA 4.5:1, but this is an estimate from pixels, not a measurement. However, every line uses the same colour, value, size and weight, so contrast is applied uniformly and nothing separates the essential information from the rest.",
+        "where": "All six text lines in both the final and the preview.",
+        "explanation": "Text-to-background contrast is fine. However, the rubric and the brief ask you to use contrast selectively, to separate what matters most. When everything has identical contrast, the event name has no more pull than 'Talks and workshops'. That matches the rubric's weak anchor: contrast so uniform that nothing separates.",
+        "principle": "Contrast as emphasis: differences in value, colour, size or weight signal importance. Contrast applied everywhere equals contrast applied nowhere.",
+        "improvement": "Keep the strong dark-on-light base. Then introduce deliberate differences, for example the event name in the darkest, heaviest setting and much larger; date and place in full dark at a medium size; secondary text, if any, in a lighter grey that still passes 4.5:1. You could also use one accent colour or a solid block behind the call to action so it stands apart.",
+        "verify": "Measure each text/background pair with a contrast checker (e.g. WebAIM) using the exact colour values from your file. Confirm all essential text is at least 4.5:1, or 3:1 if large. Then do a two-second glance test with someone: they should notice the event name first."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 30,
+        "evidence": "The 37-word rationale names three choices: dark text on white for readability, every line the same size 'so nothing is favoured', and even spacing throughout. All three accurately describe the work. Only the first is tied to contrast. None mentions the audience (A3 print viewers and group-chat viewers), and the second choice directly contradicts the brief's goal of a clear hierarchy.",
+        "where": "Learner rationale text.",
+        "explanation": "It is good that your rationale honestly matches what you made. But the assignment asks for three decisions, each explained through contrast. 'Nothing is favoured' is the opposite of what a hierarchy needs, so the reasoning shows a misunderstanding of the objective rather than a justified choice.",
+        "principle": "Design rationale should connect each decision to the goal (hierarchy and legibility), the principle used (contrast), and the audience or context (A3 print and small chat preview).",
+        "improvement": "After revising, write three short paragraphs. Each should state what you did (e.g. 'event name set at 3x body size in bold'), why it relates to contrast (e.g. 'size and weight contrast make it the first thing seen'), and who it serves (e.g. 'people scrolling a group chat see the name even in a thumbnail').",
+        "verify": "Check each paragraph for three parts: the decision, the contrast principle, and the audience or context. Then confirm each claim is visible in your poster."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 15,
+        "evidence": "All six lines share the same size, weight and colour. The reading order relies only on top-to-bottom position. The call to action has no more emphasis than 'Creative conference' or 'Talks and workshops', which come after it. The event name appears as 'Open Studio' without '2026'.",
+        "where": "All text lines in the final poster.",
+        "explanation": "In a two-second glance, a viewer sees a list of equal lines and has to read every one to find what matters. The rubric's weak anchor describes exactly this: several elements with similar emphasis. Position alone is not enough, especially when extra lines follow the call to action and dilute it.",
+        "principle": "Visual hierarchy: each level of information should differ clearly from the next in size, value or weight, so importance is visible before anything is read.",
+        "improvement": "Set up three clear levels. Level 1: 'Open Studio 2026', large and bold, several times body size. Level 2: 'Saturday 14 March' and 'Harbour Hall, Pier 4', medium size, grouped together. Level 3: 'Register at openstudio.example', distinct through weight, colour or a contrasting block, and positioned where the eye ends, e.g. near the bottom. Remove or heavily de-emphasise anything that is not one of the four required items.",
+        "verify": "Show the poster to someone for two seconds, then hide it. Ask them what the event is, when and where it is, and what to do. If they answer all three, the hierarchy works."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 55,
+        "evidence": "In the 267x400 preview, all lines, including the event name, date and place, are readable by eye, so the text itself survives reduction. However, there is no hierarchy to survive. The text block also occupies only a small strip of the thumbnail, so each line is smaller than the poster space would allow.",
+        "where": "Preview image, top half.",
+        "explanation": "Readable text is a real positive. But the criterion asks whether the hierarchy survives at small size, and a hierarchy has to exist first. In a busy group chat, a thumbnail of equal-weight small lines is easy to scroll past. A large event name would carry the message even if smaller lines blur. The score sits below the adequate band because that band requires the hierarchy to survive.",
+        "principle": "Scalable hierarchy: the most important elements should be large and high-contrast enough to read at thumbnail size, while lesser details can fall away without losing the message.",
+        "improvement": "Make the event name large enough to fill much of the poster width, and set date and place clearly bigger than they are now. Use the empty lower half rather than leaving text in a narrow band. Then export the preview again from the revised final.",
+        "verify": "View the preview at actual size on a phone, or shrink it further (e.g. to about 150px wide, as some chats do). Check that the event name, date and place are still readable and still appear in the right order of importance."
+      },
+      {
+        "criterionId": "typography",
+        "score": 30,
+        "evidence": "A single sans-serif typeface is used, which looks like an Arial/Helvetica-style face (identified by eye; I cannot confirm the font file). Every line has one size and one regular weight. Line lengths are short and line spacing is comfortable, and the two-typeface limit is respected.",
+        "where": "All text in the final poster.",
+        "explanation": "Using one clean face is a sensible, restrained start, and the text sets cleanly. But type is not being used to build hierarchy: there are no size, weight or spacing contrasts. The result reads as a plain text list rather than a type system.",
+        "principle": "Typographic hierarchy: a deliberate scale of sizes and weights, often in clear jumps such as 1x, 1.5x and 3x or more, with consistent spacing, tells readers what matters.",
+        "improvement": "Keep the one typeface and add a scale: a bold or black weight at a large size for the name, a medium weight at mid size for date and place, and a distinct treatment for the call to action. Consider tighter letter-spacing on the large title and consistent line height within each group.",
+        "verify": "List your type styles (size, weight, colour) and check there are two to four clearly different styles, each used for one purpose. Confirm that no two levels are so close in size that they look accidental."
+      }
+    ]
+  },
+  {
+    "sample": "flat-hierarchy",
+    "run": 2,
+    "assignment": "high-contrast-event-poster",
+    "expect": "hierarchy low (<60), contrast fine (>=70)",
+    "ms": 48887,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4733,
+    "outputTokens": 4579,
+    "costUsd": 0.1105,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 32,
+    "passed": false,
+    "failedMandatory": [
+      "contrast",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "composition-and-spacing": 40,
+      "contrast": 40,
+      "design-rationale": 20,
+      "information-hierarchy": 15,
+      "legibility-at-small-size": 50,
+      "typography": 30
+    },
+    "strengths": [
+      "All text is dark on a light background and, by eye, looks comfortably readable. Please confirm with a contrast checker.",
+      "Consistent left alignment gives the text a clean, orderly edge.",
+      "Only one typeface is used, so there are no conflicting type choices.",
+      "The four required pieces of information appear in the order the brief asks for.",
+      "The preview is a correctly scaled version of the final at the same aspect ratio, and its text is still readable.",
+      "The rationale is honest and accurately describes what you did."
+    ],
+    "weaknesses": [
+      "There is no visual hierarchy: every line has the same size, weight and colour, so the event name does not lead.",
+      "Contrast is applied uniformly rather than selectively, so the essential information is not separated from the rest.",
+      "The call to action does not stand out as an action.",
+      "Equal spacing between all lines means there is no grouping of related information, such as date and place.",
+      "Text occupies only the top half, leaving a large unplanned empty area and making the text smaller than it could be.",
+      "The rationale is short, mostly not tied to contrast, does not mention the audience, and describes avoiding hierarchy, which goes against the objective."
+    ],
+    "missingRequirements": [
+      "A clear reading hierarchy (event name, then date and place, then call to action) is not established.",
+      "Contrast is not used to separate essential information from everything else.",
+      "The event name appears as 'Open Studio' without '2026', so it does not fully match the brief's event name 'Open Studio 2026'.",
+      "Extra details were added that the brief does not supply: 'Talks and workshops' is invented, and 'Creative conference' is an additional line. The constraint says not to invent extra details.",
+      "The rationale does not explain three key design decisions each tied to contrast."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 40,
+        "evidence": "All six lines share one left edge (about 48px in from the left at final size) and are spaced at what looks like an identical interval. Event name, date, place, call to action, 'Creative conference' and 'Talks and workshops' are all spaced the same, so nothing is grouped. The text fills only the top half of the poster. The bottom half, roughly 600px, is empty and does not appear to have a purpose.",
+        "where": "Whole poster: the text block from the top margin to about y=550, and the empty area below it.",
+        "explanation": "The alignment is consistent, which is a real strength. But equal spacing between every line means related items (date and place) are no closer to each other than unrelated ones. The large empty area also reads as unfinished rather than as deliberate breathing room. On A3 the information would sit cramped in one corner region.",
+        "principle": "Proximity and grouping: related items sit closer together, unrelated groups get more space between them. White space should be placed on purpose to frame and balance the content.",
+        "improvement": "Keep the strong left alignment. Make three groups: (1) the event name, large; (2) date and place, set tightly together; (3) the call to action, separated by more space. Spread these groups down the full height of the poster, for example the name near the top, date and place in the middle, and the call to action anchored near the bottom margin. Remove the two extra lines (see the missing requirements).",
+        "verify": "Squint at the poster or blur it in your editor. You should see three distinct blocks rather than a single even stripe of text, and the empty space should feel balanced from top to bottom."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 40,
+        "evidence": "Every line is dark grey or near-black text on a white background. By eye this pairing looks very likely to pass WCAG AA, but this is an estimate from pixels. I could not measure the exact colour values. However, every line uses the same colour, size and weight, so contrast is applied uniformly. Nothing separates the essential information from the rest.",
+        "where": "All text lines against the white background.",
+        "explanation": "Text-to-background contrast is good, so the words are readable. But the brief asks you to use contrast selectively, to separate essential information from everything else. The rubric's weak anchor explicitly covers contrast that is 'so uniform that nothing separates', and that is what happens here. The event name has the same visual weight as 'Talks and workshops'.",
+        "principle": "Selective contrast: emphasis only works when some elements are different from others. Value, size, weight and colour contrast create figure-ground relationships and a focal point.",
+        "improvement": "Keep the dark-on-light pairing for readability, then add contrast between elements. For example: make the event name much larger and bold; set the date and place in a medium weight; set the call to action in a contrasting colour or on a solid colour band. You could also try a strong dark background with light text for the name area to create a clear focal point.",
+        "verify": "Measure each text/background pair with a contrast checker (aim for at least 4.5:1 for small text and 3:1 for large text). Then convert the poster to greyscale and check that the event name is the first thing your eye lands on."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 20,
+        "evidence": "The rationale is 37 words long and makes three statements: dark text on white for readability; every line the same size 'so nothing is favoured'; even spacing throughout. These statements match what is visible. However, only the first is tied to contrast. The second states a choice that works against the brief's goal of building a hierarchy. Audience and the small-preview use case are not mentioned.",
+        "where": "Learner rationale text.",
+        "explanation": "The rationale is honest and matches the work, which is good. But the assignment asks for three decisions, each explained through contrast and connected to the audience: people seeing an A3 print and people seeing a tiny image in a group chat. 'So nothing is favoured' shows the hierarchy was intentionally avoided, which is the opposite of the objective.",
+        "principle": "Design reasoning connects each decision to a goal: who it is for, what problem it solves and which principle it applies.",
+        "improvement": "After revising, write three short paragraphs. Each should name one decision, for example: 'I set the event name at roughly four times the body size in bold so it is the first thing seen in a chat thumbnail.' Then explain how it uses contrast (size, weight, value or colour) and why that helps the audience. Refer to the preview when you explain legibility.",
+        "verify": "For each paragraph, point to the exact place on the poster it describes. If someone else reading your rationale can find each decision on the poster, it matches."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 15,
+        "evidence": "All six lines appear to be the same size, weight and colour. The only hierarchy cue is reading order from top to bottom. The event name 'Open Studio' is no more prominent than 'Talks and workshops'. The call to action looks the same as the rest of the text.",
+        "where": "The whole text block, especially the first line ('Open Studio') and the fourth line ('Register at openstudio.example').",
+        "explanation": "In a two-second glance, a viewer sees a list rather than a poster. They have to read every line to find out what the event is. With this criterion carrying the highest weight, this is the most important area to rework. The brief requires the event name first, then date and place, then the call to action, and each level needs to look clearly different from the next.",
+        "principle": "Visual hierarchy through scale, weight and value contrast. Each level of importance should be distinguishable from the level below it.",
+        "improvement": "Create three clear levels. Level 1 is the event name, very large and heavy (consider including '2026' as part of the name). Level 2 is the date and place, clearly smaller but still prominent, grouped together. Level 3 is the call to action, distinct in colour or placement so it reads as the 'do this' step. Remove the non-essential lines so they do not compete.",
+        "verify": "Show the poster to someone for two seconds, then hide it. Ask what the event is, when and where it is, and what to do. If they can answer all three in that order, the hierarchy works."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 50,
+        "evidence": "The preview is a true scaled-down version of the final, at 267x400px. In it, all lines, including the event name, date and place, can still be read. However, there is no hierarchy to survive: every line is equally small. Because the text occupies only the top half and is set at a modest size, it is smaller in the preview than it needs to be.",
+        "where": "Preview image, text block in the upper half.",
+        "explanation": "Readable text is a good start. But in a group chat the poster may appear even smaller than this preview, and people will scroll past quickly. With no large focal element, nothing stands out at thumbnail size. The rubric asks for both the essential information and the hierarchy to survive.",
+        "principle": "Scale and legibility: designs for small screens need fewer elements at larger sizes and strong size contrast so the key message survives reduction.",
+        "improvement": "Enlarge the essential text to use the full poster area, especially the event name. Cut the extra lines to free up space. Then export a new preview at the same small size.",
+        "verify": "View the preview at actual size on a phone, or shrink it to about 150px wide. Check that you can still read the event name, date and place, and can see which is most important."
+      },
+      {
+        "criterionId": "typography",
+        "score": 30,
+        "evidence": "Only one sans-serif typeface is used, which meets the 'no more than two typefaces' requirement. Every line appears to be set in the same size and regular weight. Line lengths are short and comfortable, and line spacing is generous and even. I am judging from the image only. I cannot confirm which font was used.",
+        "where": "All text lines.",
+        "explanation": "The face is clean and readable, and nothing conflicts. But the rubric asks size, weight and spacing to build the hierarchy, and here there is a single style for everything. Typography is your main tool on a text-only poster, and it is not yet being used to show what matters most.",
+        "principle": "Type scale and weight contrast: a small, consistent set of sizes and weights, used purposefully, forms a type system that guides reading.",
+        "improvement": "Keep the single typeface if you like it, and build a simple scale. For example: event name at a very large size in bold or black weight; date and place at about one third of that size in medium or semibold; call to action at a similar size to the date but in a contrasting colour or style. You can tighten the letter-spacing slightly on the large headline.",
+        "verify": "List your type styles: you should have about three, each with a clear job. Then check that each style is used consistently for its role everywhere on the poster."
+      }
+    ]
+  },
+  {
+    "sample": "flat-hierarchy",
+    "run": 3,
+    "assignment": "high-contrast-event-poster",
+    "expect": "hierarchy low (<60), contrast fine (>=70)",
+    "ms": 55668,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4733,
+    "outputTokens": 5005,
+    "costUsd": 0.119,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 38,
+    "passed": false,
+    "failedMandatory": [
+      "contrast",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "composition-and-spacing": 45,
+      "contrast": 45,
+      "design-rationale": 30,
+      "information-hierarchy": 20,
+      "legibility-at-small-size": 52,
+      "typography": 40
+    },
+    "strengths": [
+      "All text has strong dark-on-white value contrast and is likely to pass WCAG AA. This is an estimate and should be measured.",
+      "The four core pieces of information appear in the correct reading order: name, date, place, call to action.",
+      "Consistent left alignment and even line spacing give a tidy, orderly base.",
+      "Only one typeface is used, well within the two-face limit, and it is clean and readable.",
+      "The preview is a correctly scaled version of the final, and the essential text is still readable in it.",
+      "The rationale is honest and accurately describes what the poster shows."
+    ],
+    "weaknesses": [
+      "Every line has the same size, weight and colour, so there is no visible hierarchy and nothing separates the essential information.",
+      "Contrast is uniform rather than selective, which the contrast criterion treats as weak.",
+      "Equal spacing everywhere prevents grouping: date and place are not paired, and the call to action is not set apart.",
+      "The bottom half of the poster is empty, making the layout unbalanced and keeping the type smaller than necessary for the thumbnail.",
+      "The call to action sits mid-list, followed by two extra lines that draw attention away from it.",
+      "The rationale argues for avoiding emphasis ('nothing is favoured'), does not tie its decisions to contrast or the audience, and does not consider the print and chat contexts."
+    ],
+    "missingRequirements": [
+      "Event name is incomplete: the brief specifies 'Open Studio 2026', but the poster shows 'Open Studio' without the year.",
+      "Extra details are included: 'Talks and workshops' is not in the brief, and 'Creative conference' is not one of the four required pieces. The constraint says not to invent extra details.",
+      "No clear reading hierarchy from event name to date and place to call to action, which the brief requires.",
+      "Contrast is not applied to separate essential information from everything else.",
+      "The rationale does not explain three design decisions each tied to contrast."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 45,
+        "evidence": "All six lines share one left edge (about 48px from the left in the final) and are separated by identical gaps (about 80px baseline to baseline). The text block fills only the top half of the poster (ending around y=545 of 1200). The lower half is empty. No line is grouped with or separated from any other: the date and place sit no closer together than the call to action and the extra lines do.",
+        "where": "Whole poster, final.png; especially the band between the date/place lines and the call to action, and the empty lower half.",
+        "explanation": "The left alignment is consistent and tidy, which is a good habit. However, equal spacing everywhere means proximity tells the viewer nothing. Date and place do not read as one 'when and where' unit, and the call to action does not stand apart. The large unused lower area looks unfinished rather than deliberate, so the poster feels top-heavy.",
+        "principle": "Proximity and grouping (related items closer, unrelated items further apart); intentional use of negative space; visual balance.",
+        "improvement": "Make three groups: (1) the event name, (2) the date and place set tightly together, and (3) the call to action. Use a small gap inside a group (for example one line-height) and a much larger gap between groups (for example three to four times that). Spread the groups across the full height, for example the name in the upper third and the call to action anchored near the bottom margin. Keep equal margins on all four sides.",
+        "verify": "Squint at the poster or blur a screenshot. You should see three distinct blocks rather than a single striped list. Then check that the top, bottom and side margins match, using your design tool's measurements."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 45,
+        "evidence": "All text appears to be dark grey (near black) on a plain white background. By eye the text-to-background value contrast looks very high and is likely to pass WCAG AA. This is an estimate; I cannot measure the exact colours from the image. However, every line has the same colour, value, size and weight, so contrast is applied uniformly and nothing is separated from anything else.",
+        "where": "Every text line in final.png and preview.png.",
+        "explanation": "Readable text is only half of this criterion. The assignment asks you to use contrast selectively, so the essential information stands out from everything else. When every element has identical contrast, the eye has no entry point. That matches the rubric's weak band: 'contrast is so uniform that nothing separates.' The dark-on-white choice is a solid base to build on.",
+        "principle": "Selective contrast and emphasis: contrast only creates meaning when some elements have more of it than others (figure versus ground, primary versus secondary).",
+        "improvement": "Keep the strongest value contrast (darkest, heaviest, largest) for the event name. Give the date and place strong but slightly lesser emphasis. Use a distinct treatment for the call to action, such as a solid dark band with white text or a single accent colour. If you keep any secondary text, reduce its emphasis (smaller or lighter), while keeping it at 4.5:1 or higher. Consider a large area of dark or colour as a figure–ground device so the poster reads from a distance.",
+        "verify": "Use a contrast checker (for example WebAIM's) with the exact hex values from your file. Confirm essential text is at least 4.5:1 (or 3:1 for large text). Then convert the poster to greyscale: you should see at least three clearly different levels of emphasis."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 30,
+        "evidence": "The rationale is 37 words and names three choices: dark text on white 'so it is readable', every line the same size 'so nothing is favoured', and even spacing. These claims do match what is visible. Only the first is about contrast. The second and third describe deliberately avoiding contrast, which works against the brief's goal of a reading hierarchy. There is no mention of the audience, the A3 print, or the group-chat preview.",
+        "where": "Learner rationale text.",
+        "explanation": "Your rationale is honest and accurately describes the poster, which is a good start. The rubric asks for three decisions, each tied to contrast and the audience. 'Nothing is favoured' is the opposite of what a hierarchy needs: a poster must favour the event name, then the date and place, then the action. Because the reasoning does not connect choices to the viewer's needs, it sits in the weak band.",
+        "principle": "Design rationale: decision → reason → link to the audience and context, with evidence visible in the work.",
+        "improvement": "After revising, write three short paragraphs, each following this pattern: 'I did X (a specific contrast choice, with values) because the viewer needs Y (audience or context), and you can see it in Z (location on the poster).' For example, cover the size and weight jump for the event name, the treatment of the date and place, and how the call to action is separated. Mention how each choice survives the small group-chat preview.",
+        "verify": "Ask someone to read only your rationale and then look at the poster. They should be able to point to each decision you describe. Check that each paragraph includes the word contrast or a contrast property (size, value, weight, colour) and names who it helps."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 20,
+        "evidence": "All six lines are set at the same size, weight and colour. The order runs top to bottom: name, date, place, call to action, then two further lines ('Creative conference', 'Talks and workshops'). The event name appears as 'Open Studio' without '2026'. Because no line is more prominent, a two-second glance gives a flat list rather than 'what, when and where, then what to do'.",
+        "where": "Whole text block in final.png, lines 1–6.",
+        "explanation": "The written order is correct for the first four lines, which shows you understood the sequence. Hierarchy, though, comes from visible difference, not just order. Here the event name has the same weight as secondary descriptors. The call to action sits in the middle of the list, so the extra lines below it pull attention away. This is the most heavily weighted criterion, and it is where the biggest gains are available.",
+        "principle": "Visual hierarchy through scale, weight and value contrast; primacy of the main message.",
+        "improvement": "Make 'Open Studio 2026' much larger and heavier than everything else; a 3–4× size jump is common on posters. Set the date and place as a clearly second level (medium size, bold or semibold). Make the call to action a distinct third level with its own treatment, and place it last so it ends the reading path. Remove the two extra lines, or if you keep any supporting line from the brief, make it visibly the least prominent.",
+        "verify": "Show the poster to someone for two seconds, then hide it. Ask them what the event is, when and where it is, and what they should do. If they answer all three in that order, the hierarchy works. A greyscale or blur test should also show one dominant element."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 52,
+        "evidence": "The preview (267×400) is a true scaled-down version of the final. In it, 'Open Studio', 'Saturday 14 March' and 'Harbour Hall, Pier 4' can all still be read. The text is small but clear against the white background. However, there is no hierarchy to survive: in the preview the poster still reads as six equal lines. Because the text block keeps the same proportions and fills only the upper half, the type is smaller than it needs to be.",
+        "where": "preview.png, all lines; the empty lower two-thirds of the preview.",
+        "explanation": "The essential text is readable, which is a real positive. The rubric also asks whether the hierarchy survives at small size, and the adequate band requires that it does. In a group chat, people scroll past thumbnails quickly. Without a dominant event name, the poster is unlikely to stop the scroll or be recognised at a glance. That places this just below the adequate band.",
+        "principle": "Scalability and glanceability: at thumbnail size, only the largest, highest-contrast elements register, so the hierarchy must be built into those.",
+        "improvement": "Once the event name is much larger and bolder, it will carry the thumbnail on its own. Use the empty space to make the essential text larger overall. Avoid thin or light weights for the date and place, so they hold up when scaled down.",
+        "verify": "Export the revised poster at about 267px wide, and also around 150px wide (a typical chat thumbnail). View both on a phone at arm's length. You should be able to read the event name immediately and the date and place with little effort, and the three levels should still look different."
+      },
+      {
+        "criterionId": "typography",
+        "score": 40,
+        "evidence": "A single sans-serif typeface is used, comfortably within the two-typeface limit. It appears to be a regular weight at one size for every line, with generous and consistent line spacing. Line lengths are short and easy to read. There is no variation in size, weight, case or letter-spacing.",
+        "where": "All text in final.png.",
+        "explanation": "The face is clean and readable, and nothing conflicts, which is a good foundation. However, the rubric asks for size, weight and spacing to build hierarchy. With one size and one weight, the type system has no purposeful contrasts, so typography is not doing its main job here. The choices don't harm reading line by line, but they don't help the viewer find what matters.",
+        "principle": "Typographic hierarchy: a deliberate scale (for example three sizes) and weight contrast (for example bold versus regular) to signal importance.",
+        "improvement": "Define a simple type scale with three or four levels, for example name ≈ 120–160px bold, date/place ≈ 44–56px semibold, CTA ≈ 36–44px bold, supporting text ≈ 24–28px regular (at 800px width). You can stay with one family and use its weights, or pair it with one contrasting display face for the name. Tighten line spacing slightly within the large name, and consider adjusting letter-spacing on any uppercase text.",
+        "verify": "List your text styles. You should have a small, named set (for example H1/H2/CTA/body) with clear size and weight steps between them. Compare the poster at full size and preview size to check each step is still noticeable."
+      }
+    ]
+  },
+  {
+    "sample": "missing-info",
+    "run": 1,
+    "assignment": "high-contrast-event-poster",
+    "expect": "missing requirements flagged; not full marks",
+    "ms": 45293,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4779,
+    "outputTokens": 4335,
+    "costUsd": 0.1058,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 37,
+    "passed": false,
+    "failedMandatory": [
+      "contrast",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "composition-and-spacing": 45,
+      "contrast": 40,
+      "design-rationale": 35,
+      "information-hierarchy": 25,
+      "legibility-at-small-size": 30,
+      "typography": 55
+    },
+    "strengths": [
+      "The event name is dominant: large bold serif type in a high-contrast cream-on-near-black block reads instantly, even in the preview.",
+      "Contrast is used selectively: one dark block, one saturated blue accent and a calm cream ground, so the accent clearly stands apart.",
+      "Typeface use stays within the two-family limit, and the serif/sans pairing does not conflict.",
+      "The left alignment is consistent between the title block and the CTA block.",
+      "The rationale shows a sound plan of three contrast tiers (darkest, mid-dark, saturated accent)."
+    ],
+    "weaknesses": [
+      "The date and place, the entire middle level of the required hierarchy, are absent from both images.",
+      "The CTA reads 'Come along' instead of directing people to register at openstudio.example.",
+      "The year '2026' is missing from the event name.",
+      "A large empty area between the title and CTA reads as missing content rather than intentional white space.",
+      "The rationale's second decision describes date and venue text that does not appear in the submitted work."
+    ],
+    "missingRequirements": [
+      "Date: 'Saturday 14 March' is not shown.",
+      "Location: 'Harbour Hall, Pier 4' is not shown.",
+      "Call to action: 'register at openstudio.example' is not shown; 'Come along' gives no registration instruction or URL.",
+      "Event name is incomplete: 'Open Studio 2026' appears as 'OPEN STUDIO' without the year.",
+      "The hierarchy of event name, then date and place, then call to action cannot be established without the middle level."
+    ],
+    "criticalFailures": [
+      "Three of the four required pieces of event information (date, location and registration URL) are missing, so the poster cannot tell its audience when or where the event is or how to register. If this was an export problem (for example a hidden layer or text that did not render), please re-export and resubmit."
+    ],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 45,
+        "evidence": "Both blocks share a consistent left edge of about 48px, and the title block's right margin appears to match its left. Between the title block (ending at about y=390) and the CTA block (starting at about y=900) there is roughly 510px of empty cream space with no content. A further ~200px of empty space sits below the CTA. Only two groups exist.",
+        "where": "Final poster: the gap between the black title block and the blue CTA block, and the area below the CTA. The preview shows the same layout.",
+        "explanation": "The alignment is tidy, but the empty middle does not read as deliberate breathing room. It reads as the spot where the date and place should be. Without that middle group, the two blocks float apart and the layout feels unbalanced and unfinished.",
+        "principle": "Proximity and grouping: related information sits together, levels are separated by consistent intervals, and white space frames content instead of replacing it.",
+        "improvement": "Add the date and place as a group directly below the title block, aligned to the same 48px left edge. Then set one spacing unit (for example 48px) between title and date/place, and a larger one between date/place and the CTA. Reduce the leftover empty space so the composition feels balanced from top to bottom.",
+        "verify": "Overlay a simple grid or draw guides at your margin and spacing units. Check that every block starts on the same left line and that the gaps between groups follow a clear, repeatable pattern."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 40,
+        "evidence": "The text that is present has strong contrast. Cream lettering on a near-black block and white text on a saturated blue block both look very likely to exceed WCAG AA. That is an estimate from pixels only; I cannot measure exact values. Contrast is also used selectively: one dark block, one saturated block, a calm cream ground. However, the essential date (Saturday 14 March), place (Harbour Hall, Pier 4) and registration address (openstudio.example) do not appear anywhere, so their contrast cannot pass.",
+        "where": "Final poster and preview: the title block and CTA block. The date, venue and URL are absent across the whole poster.",
+        "explanation": "This criterion asks whether all essential text clearly passes. The two elements you included are handled well, but three of the four essential pieces of information are missing. Because this criterion is required, its minimum cannot be met until that text is on the poster.",
+        "principle": "Value contrast between text and background, applied selectively so that essential information stands out from everything else (WCAG AA: 4.5:1 for normal text, 3:1 for large text).",
+        "improvement": "Add the date and place in the mid-dark tone your rationale describes. A dark grey or near-black on cream should pass comfortably. Put the full call to action, 'Register at openstudio.example', inside or beside the blue block in white.",
+        "verify": "Use a colour picker to sample each text colour and its background. Run each pair through a WCAG contrast checker and confirm 4.5:1 or better for smaller text and 3:1 or better for large text."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 35,
+        "evidence": "The rationale names three decisions, each tied to contrast. Decision 1 (largest, darkest block for the event name) matches the poster. Decision 3 (CTA is the only saturated blue) is accurate visually. Decision 2 describes 'the date and venue... in a mid-dark tone below it', but no date or venue text is visible in either image. Also, the CTA reads 'Come along' rather than the registration instruction.",
+        "where": "Learner rationale, second decision, compared with the final poster and preview.",
+        "explanation": "Your reasoning structure is good: three distinct contrast levels (darkest block, mid-dark text, saturated accent) is a solid way to build hierarchy. The rubric asks that each reason match what is visible, though, and one of the three describes content that is not in the submitted work.",
+        "principle": "A design rationale should describe the work as delivered, so that each claim can be checked against the artefact.",
+        "improvement": "Make the poster match your plan: add the date and venue in mid-dark tone below the title. Then revise the rationale to mention specifics, such as the actual tone used and why it sits between the title and CTA in emphasis. Note how the cream ground supports all three levels. You could also add a line about the small chat-preview audience.",
+        "verify": "Read each sentence of your rationale while looking at the exported image. Confirm you can point to the exact element it describes."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 25,
+        "evidence": "'OPEN STUDIO' clearly leads: it is the largest type, set in the highest-contrast block. The blue 'Come along' block is clearly second. There is no date-and-place level at all. The year '2026' from the event name is also missing. 'Come along' does not tell the viewer how to register or where.",
+        "where": "Final poster and preview, top-to-bottom reading order.",
+        "explanation": "A two-second glance tells a viewer the event's name but not when it is, where it is, or what exactly to do. The middle level of the required hierarchy (date and place) is missing, so the intended order cannot be followed.",
+        "principle": "Visual hierarchy: each level of information is distinguished from the next by size, value or weight, in order of importance.",
+        "improvement": "Build three levels: (1) 'OPEN STUDIO 2026' in the dark block; (2) 'Saturday 14 March' and 'Harbour Hall, Pier 4' in medium-large type in a mid-dark tone directly below; (3) 'Register at openstudio.example' in the blue block. Make sure level 2 is visibly smaller or lighter than level 1 but more prominent than any supporting text.",
+        "verify": "Show the poster to someone for two seconds, then hide it. Ask them what the event is, when and where it is, and what to do. If they can answer all three, your hierarchy works."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 30,
+        "evidence": "The preview is a true scaled-down version (267x400, matching aspect ratio). In it, 'OPEN STUDIO' and 'Come along' remain crisp and easy to read, and the two-level ordering survives. However, the date and place, which this criterion specifically asks about, are not present, so they cannot be read at small size.",
+        "where": "Small-scale preview image.",
+        "explanation": "The bold serif title and the CTA hold up well at chat-thumbnail size, which is encouraging. But the information people most need from a shared image (when and where) is absent, so the preview cannot do its job.",
+        "principle": "Legibility at reduced scale: essential text must keep sufficient size, weight and contrast to survive downsampling.",
+        "improvement": "When you add the date and place, set them large and bold enough to stay readable at about 267px wide. As a rough guide, avoid letting them fall below about 40-48px in the 800px-wide final. Keep the URL short and in bold white on blue.",
+        "verify": "Export the updated poster at 267x400 and view it at 100% on a phone, ideally inside a real chat app. Confirm you can read the event name, date, place and URL without zooming."
+      },
+      {
+        "criterionId": "typography",
+        "score": 55,
+        "evidence": "Two typefaces are used, within the limit: a bold uppercase serif for the title and a bold sans-serif for the CTA. They pair without conflict, and the title has strong size contrast with comfortable line spacing across its two lines. The type system has only two levels, though, with no intermediate size or weight for date and place. The CTA text is fairly small relative to its block and left-aligned with a lot of unused space to its right.",
+        "where": "Final poster: title lettering and the CTA text in the blue block.",
+        "explanation": "Your typeface choices are sound and the title is confident. A full type system needs a clear middle step, and right now that step is missing. It also needs the CTA to carry the real registration instruction.",
+        "principle": "Typographic scale: a small set of consistent sizes and weights, each mapped to one level of the hierarchy.",
+        "improvement": "Define a three-step scale, for example title around 110px, date/place around 44px, CTA around 32px. Use the sans-serif for date, place and CTA to keep it to two families. Check that the CTA text fills its block in proportion, or resize the block to fit the text.",
+        "verify": "List each text element with its typeface, size and weight. Confirm there are no more than two families and that each hierarchy level has one distinct, consistent style."
+      }
+    ]
+  },
+  {
+    "sample": "missing-info",
+    "run": 2,
+    "assignment": "high-contrast-event-poster",
+    "expect": "missing requirements flagged; not full marks",
+    "ms": 45419,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4779,
+    "outputTokens": 4229,
+    "costUsd": 0.1037,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 39,
+    "passed": false,
+    "failedMandatory": [
+      "contrast",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "composition-and-spacing": 45,
+      "contrast": 50,
+      "design-rationale": 40,
+      "information-hierarchy": 20,
+      "legibility-at-small-size": 30,
+      "typography": 55
+    },
+    "strengths": [
+      "The event name has very strong, deliberate value contrast (cream on near-black) and clearly leads the page.",
+      "Saturated blue is reserved for the CTA only, which is a smart, selective use of colour contrast.",
+      "There is a consistent left edge and outer margin across both blocks.",
+      "The typeface count stays within two, and the serif and sans pairing does not clash.",
+      "The preview is a true scaled version, and the title and CTA remain readable in it.",
+      "The rationale is structured around three contrast-based decisions, a good habit."
+    ],
+    "weaknesses": [
+      "The date (Saturday 14 March) and location (Harbour Hall, Pier 4) are missing from the poster.",
+      "The call to action reads 'Come along' instead of directing people to register at openstudio.example.",
+      "The event name omits '2026'.",
+      "The rationale describes date and venue text in a mid-dark tone that does not appear in the submitted images.",
+      "The large empty middle zone reads as missing content rather than intentional white space."
+    ],
+    "missingRequirements": [
+      "Date: Saturday 14 March",
+      "Location: Harbour Hall, Pier 4",
+      "Call to action: register at openstudio.example (URL missing; 'Come along' is not the specified action)",
+      "Full event name 'Open Studio 2026' (year missing)",
+      "A visible second level of hierarchy (date and place) between the event name and the CTA"
+    ],
+    "criticalFailures": [
+      "The poster omits the date, the location and the registration URL. It cannot tell viewers when or where the event is, or how to register, so it does not serve its stated purpose. If a different version was intended, please resubmit the correct file."
+    ],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 45,
+        "evidence": "There are two blocks: a near-black title panel at the top and a blue call-to-action bar lower down. Both share a consistent left edge with the outer margin. The large cream area between them (roughly y=390 to y=900 in the final) is empty. The CTA bar stops at about the middle of the page width, and the lower quarter of the page is also empty.",
+        "where": "Final poster: the gap between the title panel and the 'Come along' bar, and the bottom of the page below the bar.",
+        "explanation": "The left alignment and outer margin are tidy, which is a real strength. However, the empty middle is not purposeful white space. It is the place where the date and venue should sit, so the layout reads as unfinished rather than balanced. With only two groups, there is little grouping to judge.",
+        "principle": "Proximity and grouping, and intentional negative space. Empty space should frame content, not stand in for missing content.",
+        "improvement": "Place a date-and-venue group in the middle zone. Align it to the same left edge as the title and CTA, and keep its space above and below consistent. Then decide deliberately how much space separates each group, for example equal gaps or a stepped rhythm.",
+        "verify": "Draw guides at the left margin and measure the vertical gaps between groups. They should follow a deliberate rule. Squint at the poster: you should see three distinct, evenly considered groups."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 50,
+        "evidence": "The text that is present has strong value contrast. Cream lettering on a near-black panel looks very high, likely well above 7:1. White text on saturated blue also looks high, roughly 7:1 or more. These are visual estimates only, because I cannot measure exact colour values from pixels. Contrast is used selectively, with dark for the title and saturated colour only for the CTA. However, the date and the location do not appear anywhere, so I cannot confirm that all essential text passes.",
+        "where": "Final poster: the title panel and the CTA bar. The date and place are absent.",
+        "explanation": "The pairs you chose are good and selective. Contrast exists to make essential information stand out, though, and half of the essential information is not on the poster. The rubric asks that all essential text clearly passes, and that cannot be shown here.",
+        "principle": "Value contrast for figure and ground, and WCAG AA (4.5:1 for normal text, 3:1 for large text).",
+        "improvement": "Add the date and venue in the mid-dark tone your rationale describes, set on the cream ground. Add the registration URL to the CTA. Keep the blue reserved for the CTA as you planned.",
+        "verify": "Sample the hex values from your design file. Check each text and background pair in a contrast checker, for example the WebAIM Contrast Checker. Aim for at least 4.5:1 for the date, venue and URL."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 40,
+        "evidence": "The rationale names three decisions, each tied to contrast: (1) the event name sits in the largest, darkest block; (2) the date and venue sit in a mid-dark tone below it; (3) the CTA is the only saturated blue. Decisions 1 and 3 match the poster. Decision 2 describes date and venue text that does not appear in either image.",
+        "where": "Learner rationale, second decision, compared with the final and the preview.",
+        "explanation": "Your reasoning structure is good: you link each decision to value or colour contrast and to reading order. However, one of the three decisions describes something the submitted work does not show. The rubric treats that as a weak rationale. It is possible a different version was uploaded by mistake.",
+        "principle": "A rationale must match the visible work. Claims should be verifiable in the artefact.",
+        "improvement": "Either add the date and venue exactly as described, or rewrite the second point to match the poster. Consider also mentioning the audience, for example people scanning a small image in a group chat, for each decision.",
+        "verify": "Read each rationale sentence and point to the exact element on the poster it describes. Every sentence should have a visible match."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 20,
+        "evidence": "The event name clearly reads first: largest, boldest and inside the darkest block. The second level, date and place, is missing entirely. The third level reads 'Come along' rather than the required call to action, 'register at openstudio.example'. The event name also omits '2026'.",
+        "where": "Final poster: title panel, empty middle zone and CTA bar.",
+        "explanation": "In a two-second glance a viewer learns the event name but cannot tell when or where it is, or how to register. The rubric's core test is what, when, where and what to do. Only 'what' is answered, so the hierarchy cannot do its job.",
+        "principle": "Visual hierarchy: each level of information should be present and differ clearly from the next in size, value or weight.",
+        "improvement": "Set the full name 'Open Studio 2026'. Add 'Saturday 14 March' and 'Harbour Hall, Pier 4' as a clearly secondary level: smaller than the title, larger or heavier than the CTA detail. Change the CTA to 'Register at openstudio.example'.",
+        "verify": "Show the poster to someone for two seconds, then ask what the event is, when, where, and what to do. They should answer all four correctly."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 30,
+        "evidence": "The preview is a correctly scaled version of the final (the platform confirms it is smaller and the aspect ratio matches). In it, 'OPEN STUDIO' is crisp and readable and 'Come along' is still legible. The date and place cannot be read in the preview because they are not on the poster at all.",
+        "where": "Small-scale preview (267x400).",
+        "explanation": "Your title and CTA survive the reduction well, which shows good instincts about size and contrast. The rubric, however, specifically asks whether the event name, date and place can be read small. Two of those three are missing, so the test cannot be passed.",
+        "principle": "Legibility at reduced scale: essential text needs enough size, weight and contrast to survive thumbnail viewing.",
+        "improvement": "Once you add the date and venue, make sure they are large and heavy enough to read at about 267px wide. Bold or semibold weights and generous size usually work better than thin, small text. Make the URL at least readable, even if it is the smallest level.",
+        "verify": "Export the revised poster at 267x400 and view it at 100% on a phone, as it would appear in a group chat. Check that the name, date, place and URL are all readable without zooming."
+      },
+      {
+        "criterionId": "typography",
+        "score": 55,
+        "evidence": "Two typefaces are used, within the limit: a bold serif in capitals for the title and a bold sans-serif for the CTA. The title has tight, controlled leading and a strong size contrast with the CTA. Because only two text elements exist, there is no middle typographic level to show a complete type system.",
+        "where": "Final poster: the 'OPEN STUDIO' title and the 'Come along' CTA.",
+        "explanation": "The serif-and-sans pairing does not conflict, and the size contrast is purposeful. A type system is shown through how several levels relate, though, and the missing secondary level leaves the system incomplete. The title also ends well short of the panel's right edge, which leaves the panel feeling slightly unbalanced.",
+        "principle": "A typographic scale, where size, weight and case create distinct, consistent levels, and type is fitted to its container.",
+        "improvement": "Define three levels: title (bold serif caps), date and venue (for example semibold sans at a mid size), and CTA with URL (bold sans, smaller). Consider enlarging or tracking the title so it relates more deliberately to the panel width.",
+        "verify": "List each text level with its font, size, weight and colour. Each level should differ noticeably from its neighbours, and no more than two families should appear."
+      }
+    ]
+  },
+  {
+    "sample": "missing-info",
+    "run": 3,
+    "assignment": "high-contrast-event-poster",
+    "expect": "missing requirements flagged; not full marks",
+    "ms": 44618,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4779,
+    "outputTokens": 4096,
+    "costUsd": 0.101,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 41,
+    "passed": false,
+    "failedMandatory": [
+      "contrast",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "composition-and-spacing": 45,
+      "contrast": 55,
+      "design-rationale": 40,
+      "information-hierarchy": 25,
+      "legibility-at-small-size": 30,
+      "typography": 55
+    },
+    "strengths": [
+      "The event name is set with very strong value contrast (cream on near-black) and clearly leads the reading order.",
+      "Colour is used selectively: one saturated blue accent marks the call to action, which matches your stated intent.",
+      "Consistent left alignment and margins give a solid structural base.",
+      "The typeface pairing (bold serif plus bold sans) stays within the two-typeface limit and does not conflict.",
+      "The preview is a true scaled version of the final, and the title and button remain readable at small size."
+    ],
+    "weaknesses": [
+      "The date (Saturday 14 March) and location (Harbour Hall, Pier 4) are missing from both images.",
+      "The call to action reads 'Come along' instead of directing people to register at openstudio.example.",
+      "The year '2026' from the event name is missing.",
+      "The rationale describes a date-and-venue tier that does not appear in the submitted work.",
+      "A large empty middle band makes the layout feel unfinished rather than intentionally spacious.",
+      "The rationale does not connect decisions to the audience or to the print and chat contexts."
+    ],
+    "missingRequirements": [
+      "Date: 'Saturday 14 March' is not on the poster.",
+      "Location: 'Harbour Hall, Pier 4' is not on the poster.",
+      "Call to action: 'register at openstudio.example' is not on the poster; 'Come along' is shown instead.",
+      "Full event name: '2026' is missing from 'Open Studio 2026'.",
+      "Reading hierarchy with a date-and-place tier between the name and the call to action is not established."
+    ],
+    "criticalFailures": [
+      "The poster omits the date, the location and the registration URL. Viewers cannot learn when or where the event is, or how to register, so the poster cannot do its stated job of promoting attendance."
+    ],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 45,
+        "evidence": "Both elements share a consistent left edge at about 48px from the poster edge, and the black title block uses equal side margins. Between the title block (ending at about y=390) and the blue button (starting at about y=900) there is a large empty band of roughly 500px, plus about 200px of empty space below the button. With only two elements there are no information groups to judge, and the empty middle reads as a gap where content is missing rather than as deliberate breathing room.",
+        "where": "Whole poster, especially the empty band between the title block and the 'Come along' button, and the bottom fifth.",
+        "explanation": "Consistent alignment is a good foundation. But the layout's balance depends on content that is not there: the date and place, which should form the middle group. As it stands the composition feels top-heavy and unfinished rather than intentionally spacious.",
+        "principle": "Proximity and grouping: related items sit together and unrelated items are separated by space. White space should frame content, not stand in for it.",
+        "improvement": "Add a date-and-place group (Saturday 14 March / Harbour Hall, Pier 4) in the middle zone, aligned to the same 48px left edge. Keep a consistent spacing step, for example the same gap between title and date group as between date group and call to action. Then decide deliberately how much space sits below the call to action.",
+        "verify": "Squint at the poster or blur it. You should see three distinct groups stacked on one left edge, with gaps that look intentional and roughly proportional. Then measure the gaps in your design tool to confirm they follow a consistent rule."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 55,
+        "evidence": "The title is cream text on a near-black block, which looks very high contrast; I estimate it is well above 4.5:1. The 'Come along' label is white on a saturated blue, which also looks comfortably high; I estimate it passes AA for large bold text. Contrast is used selectively: the dark block, the single blue accent and the cream ground are clearly separated. However, the date and place text is absent, so I cannot judge the contrast of half the essential information. These ratios are visual estimates from pixels, not measurements.",
+        "where": "Title block (cream on black); call-to-action button (white on blue); the missing date/place text.",
+        "explanation": "The contrast you did apply is strong and well controlled. The criterion asks whether all essential text passes, though, and the date and place cannot pass because they are not on the poster. That keeps the score conservative.",
+        "principle": "Value contrast for legibility (WCAG AA: 4.5:1 for normal text, 3:1 for large text), and selective contrast to separate essential from secondary information.",
+        "improvement": "Add the date and place in the mid-dark tone your rationale describes, set on the cream ground. Check that this tone still clears at least 4.5:1 if the text is small, or 3:1 if it is large and bold.",
+        "verify": "Use a contrast checker on the actual colour values for each pair: cream/black, white/blue, and your new date-tone/cream. Record the ratios in your rationale."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 40,
+        "evidence": "The rationale names three decisions: the largest, darkest block for the event name; a mid-dark tone for the date and venue; and the only saturated blue for the call to action. Decisions one and three match the poster. Decision two describes date and venue text that does not appear anywhere in the submitted images. The rationale does not mention the audience (A3 print viewers and group-chat viewers).",
+        "where": "Learner rationale, second sentence ('the date and venue sit in a mid-dark tone below it'), compared with the final poster.",
+        "explanation": "Your reasoning about contrast-driven reading order is sound. Still, a rationale must describe the work as submitted. When one of three decisions refers to something that is not visible, the rubric treats it as a claim the work does not show.",
+        "principle": "Design rationale should be specific, accurate to the artefact, and connected to the audience and context of use.",
+        "improvement": "After adding the date and place, revise the rationale so each decision matches the final file. Add a sentence on how each choice serves both the A3 print and the small chat thumbnail, for example why the title block survives at thumbnail size. Include measured contrast ratios to support your claims.",
+        "verify": "Read each rationale sentence while looking at the poster and point to the exact element it describes. If you cannot point to it, revise either the sentence or the design."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 25,
+        "evidence": "The event name 'OPEN STUDIO' clearly leads; it is the largest and darkest element. There is no date-and-place level at all, the year '2026' from the event name is missing, and the call to action reads 'Come along' rather than 'register at openstudio.example'. After a two-second glance a viewer can say what the event is called, but not when it is, where it is, or how to register.",
+        "where": "Whole poster: missing middle tier (date and place) and an incomplete call to action in the blue button.",
+        "explanation": "The rubric's two-second test requires what, when, where and what to do. Only 'what' (and only partly, without 2026) is communicated, so the reading order has just two levels and the essential middle level is absent.",
+        "principle": "Visual hierarchy: each tier of information differs clearly from the next in size, value or weight, and follows the order of importance.",
+        "improvement": "Build three tiers: (1) 'OPEN STUDIO 2026' in the black block; (2) 'Saturday 14 March' and 'Harbour Hall, Pier 4' in a clearly smaller, mid-weight, dark tone; (3) 'Register at openstudio.example' in the blue button. Make tier 2 noticeably smaller than tier 1 but larger or heavier than any supporting text.",
+        "verify": "Show the poster to someone for two seconds, then ask them to tell you the event, date, place and how to sign up. If they cannot answer all four, increase the contrast between tiers."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 30,
+        "evidence": "The preview (267x400) is a true smaller version of the final, as the platform confirms. In it, 'OPEN STUDIO' and 'Come along' remain clearly readable and the two-level structure survives. However, the date and place, which this criterion specifically asks about, are not present, so they cannot be read at small size.",
+        "where": "Preview image: title block and blue button are legible; date and place do not exist.",
+        "explanation": "Strong value contrast and large type are why the title survives at thumbnail size. That is a good sign for your approach. But the criterion asks whether the name, date and place can still be read, and two of those three are missing.",
+        "principle": "Scale testing: essential information must survive reduction, so secondary tiers need enough size and weight to remain readable when shrunk.",
+        "improvement": "Once you add the date and place, export a new preview at the same 267x400 size and check that they remain readable. At that scale, small text in a mid-dark tone often needs a bolder weight or a larger size than you would choose for A3 alone.",
+        "verify": "View the new preview at 100% on a phone screen, or at the actual size it would appear in a chat. Confirm you can read the date, place and URL without zooming."
+      },
+      {
+        "criterionId": "typography",
+        "score": 55,
+        "evidence": "Two typefaces are used, within the brief's limit: a bold serif in capitals for the title and a bold sans-serif for the button label. The title is set large with tight, even line spacing, and the serif and sans do not clash. With only two text elements, though, there is no visible type system for secondary information. The title also omits '2026'.",
+        "where": "Title 'OPEN STUDIO' (bold serif capitals) and button label 'Come along' (bold sans).",
+        "explanation": "The pairing is a sensible start, and the serif-versus-sans contrast helps separate the name from the action. A type system is judged by how it handles several levels, however, and only two levels exist here, so its purpose for date and place cannot be shown.",
+        "principle": "Typographic hierarchy: use a limited set of sizes and weights within at most two families, with consistent roles for each.",
+        "improvement": "Define a simple scale. For example: title in bold serif capitals; date and place in the sans at a medium size and weight; call to action in bold sans. Add '2026' to the title lockup, either as part of the name or as a clear secondary line within the black block.",
+        "verify": "List each text element with its typeface, size and weight. Each tier should have one distinct style, and no two tiers should look the same."
+      }
+    ]
+  },
+  {
+    "sample": "tiny-preview",
+    "run": 1,
+    "assignment": "high-contrast-event-poster",
+    "expect": "legibility at small size low (<60)",
+    "ms": 48455,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4641,
+    "outputTokens": 4479,
+    "costUsd": 0.1081,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "medium",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 81,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "composition-and-spacing": 80,
+      "contrast": 88,
+      "design-rationale": 75,
+      "information-hierarchy": 84,
+      "legibility-at-small-size": 68,
+      "typography": 82
+    },
+    "strengths": [
+      "Very strong, selective value contrast: the near-black title block makes the event name dominant immediately.",
+      "Using saturated blue in only one place gives the call to action a clear, isolated emphasis.",
+      "Consistent left alignment and matching side margins give the layout a calm, orderly structure.",
+      "Exactly two typefaces, paired purposefully: a serif for identity and a sans serif for information.",
+      "The rationale gives three specific decisions that each match what is visible on the poster."
+    ],
+    "weaknesses": [
+      "The URL, which is the real action on a printed poster, is the smallest and least prominent text.",
+      "The venue line is lighter in weight and tone, and becomes strained in the small preview.",
+      "The gap between the venue and the CTA is much larger than the other spacing, which leaves the lower half feeling slightly unresolved.",
+      "The rationale does not link its decisions to the audience or to the print and group-chat contexts."
+    ],
+    "missingRequirements": [
+      "The brief gives the event name as 'Open Studio 2026', but the poster shows only 'OPEN STUDIO'. Consider including the year."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "composition-and-spacing",
+        "score": 80,
+        "evidence": "All elements share one left edge (about 48px in from the left), and the black title block ends about 48px from the right, giving matching side margins. The information falls into three clear groups: the title block, the date and venue pair, and the button with the URL beneath it. A large empty band (roughly 330px) separates the venue line from the button. The bottom margin below the URL is about 130px. The button's right edge (about x=468) does not line up with any other element.",
+        "where": "Whole poster: left alignment line; gap between 'Harbour Hall, Pier 4' and 'Register now'; right edge of the blue button.",
+        "explanation": "Grouping by proximity works well: date and venue clearly belong together, as do the button and URL. The large middle gap separates the action from the event details, which is useful. However, it is noticeably larger than every other space, so the lower half can read as an unused area rather than deliberate breathing room. The button width looks arbitrary next to the full-width title block.",
+        "principle": "Proximity and grouping; a consistent spacing scale; alignment to a shared grid.",
+        "improvement": "Pick a small spacing scale (for example 24/48/96px) and use it for every gap. Consider reducing the middle gap to one step of that scale, or anchoring the CTA group to the bottom margin so the bottom space matches the top margin. Size the button to a meaningful width, such as half the content width or the width of the date line.",
+        "verify": "Draw guides at your margins and measure each vertical gap. Every gap should be a value from your scale, and the top and bottom margins should match or differ on purpose."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 88,
+        "evidence": "The cream title text sits on a near-black block, so value contrast appears very high. The date (near-black, bold) and venue (dark grey) sit on a cream ground and appear high contrast. 'Register now' is white on a saturated blue, which looks strong. The URL is dark grey on cream. Saturated colour appears in one place only, the blue button. These are visual estimates from pixels. I cannot measure exact ratios, but every pair looks comfortably above WCAG AA.",
+        "where": "Title block, date and venue lines, blue button, URL line.",
+        "explanation": "Contrast is both strong and selective. The darkest mass marks the name, the single colour marks the action, and the supporting text stays quieter. That is exactly how contrast should build emphasis rather than being applied everywhere. The lightest pairs are the grey venue line and the grey URL. They still look readable, but they are the ones to check.",
+        "principle": "Value contrast for legibility (WCAG AA 4.5:1 for normal text, 3:1 for large text); selective emphasis through colour isolation.",
+        "improvement": "Keep the approach as it is. Confirm the exact hex values of the venue and URL greys and the button blue, and darken them slightly if any measurement comes close to the threshold.",
+        "verify": "Run each text and background pair through a contrast checker (for example WebAIM). Aim for at least 4.5:1 on the venue line, the URL and the button text, and record the ratios in your rationale."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 75,
+        "evidence": "The rationale names three decisions: the name in the largest, darkest block; date and venue in a mid-dark secondary tone; and the CTA as the only saturated blue. Each one is tied to contrast and matches what the poster shows. None of them mentions the audience or the two uses (A3 print and a small group-chat image). The rationale does not explain why the URL is small and grey rather than part of the blue emphasis.",
+        "where": "Learner rationale, all three sentences.",
+        "explanation": "The reasoning is specific and honest about the work, which is the hardest part. The rubric also asks for links to the audience. Saying why these choices help someone scrolling a chat thumbnail, or passing a printed poster, would make the reasoning complete.",
+        "principle": "Design decisions justified by purpose and audience, not only by visual effect.",
+        "improvement": "Add one clause to each decision about the viewer. For example: 'the dark block survives as a recognisable shape even in a tiny chat preview.' Also add a sentence about how you handled the URL for print, where nothing can be clicked.",
+        "verify": "Re-read each decision and check that it answers three questions: what you did, how it uses contrast, and who it helps and in which context (print or chat)."
+      },
+      {
+        "criterionId": "information-hierarchy",
+        "score": 84,
+        "evidence": "The reading order is clear. The large serif name in the black block comes first. The bold date and regular venue come next. The blue 'Register now' button follows, with the URL last in small regular grey text. Each level differs from the next in size, weight or colour. However, the URL (openstudio.example) is the actual instruction a print viewer needs, and it is the least prominent text on the page. The poster also shows 'OPEN STUDIO' without '2026', although the brief gives the event name as 'Open Studio 2026'.",
+        "where": "Title block; date and venue lines; button and URL group at the bottom.",
+        "explanation": "In a two-second glance, a viewer gets what, when and where, and sees that there is an action. On a printed A3 poster, 'Register now' cannot be clicked, so the URL carries the real action. Making it the faintest element weakens the third level of the hierarchy.",
+        "principle": "Visual hierarchy through scale, weight and value; emphasising the content the viewer must act on.",
+        "improvement": "Bring the URL into the emphasised CTA. Options include putting 'openstudio.example' inside the blue button ('Register at openstudio.example'), or setting the URL larger and bolder directly under the button. Consider adding '2026' to the title lockup, for example as a smaller line inside the black block, so the full event name appears.",
+        "verify": "Show the poster to someone for two seconds, then ask what the event is, when and where it is, and where to register. They should be able to say the web address."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 68,
+        "evidence": "In the 60x90px preview, 'OPEN STUDIO' and the black block stay clear, and the blue button stands out as a shape. 'Saturday 14 March' is just readable. 'Harbour Hall, Pier 4' is very small and faint, because it is the lightest weight and a grey tone. The URL is not readable. The three-level hierarchy (dark block, text pair, blue button) does survive.",
+        "where": "Preview image: date and venue lines, and the URL line.",
+        "explanation": "The overall structure holds up well at small size, which is the main goal. The venue is an essential item, though, and it is the first to break down. Its regular weight and lighter grey lose detail fastest when shrunk. This fits the 'adequate' band: the hierarchy survives but one essential item is strained.",
+        "principle": "Small-size legibility depends on stroke weight, x-height and value contrast, not just point size.",
+        "improvement": "Set the venue in a medium or bold weight and the same near-black as the date, possibly a little larger. Keep the size difference from the date, or let size alone make it secondary. Increase the URL's size and weight, or move it into the button as suggested above.",
+        "verify": "Export the poster again at the same small size (and at a typical chat-thumbnail size), view it at 100% zoom on a phone, and check that the name, date and venue can all be read without zooming."
+      },
+      {
+        "criterionId": "typography",
+        "score": 82,
+        "evidence": "Two typefaces are used: a bold serif in capitals for the event name and a sans serif for everything else. They pair without conflict. Within the sans serif, weight separates the date (bold) from the venue (regular), and the button text is bold. The title has tight but comfortable leading across its two lines. The URL is set noticeably smaller than every other line.",
+        "where": "Title, date, venue, button label and URL.",
+        "explanation": "This is a sound, intentional system. The serif carries personality and the top rank, while the sans serif handles information. The main inconsistency is that the weight and size steps are not tuned for the small preview: the regular weight and small URL work at A3 but fall apart at small size.",
+        "principle": "A type system with deliberate contrasts of family, size and weight; limiting the number of faces.",
+        "improvement": "Define three or four type styles with set sizes (for example title, key info, CTA, supporting) and keep the steps between them clear. Make sure the smallest style is still bold enough for small previews. You might also widen the title's letter-spacing slightly for capitals at display size.",
+        "verify": "List your type styles with size, weight and colour. Check that every line on the poster uses one of them and that each step differs visibly at both A3 and preview size."
+      }
+    ]
+  }
+]
