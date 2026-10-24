@@ -1,0 +1,255 @@
+[
+  {
+    "sample": "campaign-consistent",
+    "run": 1,
+    "assignment": "contrast-campaign-capstone",
+    "expect": "consistency-across-pieces >= 70; accessible-contrast >= 70; legibility-across-formats >= 65",
+    "ms": 57355,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5756,
+    "outputTokens": 5037,
+    "costUsd": 0.1238,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 74,
+    "passed": false,
+    "failedMandatory": [],
+    "scores": {
+      "accessible-contrast": 86,
+      "campaign-hierarchy": 64,
+      "consistency-across-pieces": 76,
+      "contrast": 80,
+      "design-rationale": 60,
+      "legibility-across-formats": 80,
+      "typography": 64
+    },
+    "strengths": [
+      "A clear, recognisable campaign system: near-black name block, cream serif, sans serif details and a single blue reserved for the call to action.",
+      "Very high contrast on all essential text, with plausible measured ratios reported in the rationale.",
+      "The banner is a genuine adaptation: an inverted dark ground, the name at left and the CTA button isolated at right.",
+      "The poster's hierarchy is immediate: name, then bold date, then lighter place, then blue CTA and URL.",
+      "Typeface count stays within the two-face limit, and the pairing is used consistently."
+    ],
+    "weaknesses": [
+      "The social square's event name is clipped to 'OPEN STUD' at the edge of its block.",
+      "The square largely repeats the poster layout rather than being redesigned for the square format.",
+      "The poster has a large unstructured gap between the event details and the CTA, which weakens grouping.",
+      "The banner's date/place line is small and the most strained essential text.",
+      "The rationale does not address the audience, uses print points for a screen banner, and claims the reading order works in the square despite the truncated name."
+    ],
+    "missingRequirements": [
+      "The social square does not show the full event name, so it does not carry all four required pieces of information correctly.",
+      "The square adds 'Creative conference', which goes beyond the four permitted pieces of event information (name, date, place, call to action).",
+      "The rationale's three decisions are only loosely tied to contrast and not tied to the audience; the grey place/URL pair was not among the measured ratios."
+    ],
+    "criticalFailures": [
+      "Social square: the event name is cut off and reads 'OPEN STUD', so the piece cannot be published as is because it does not correctly state what the event is."
+    ],
+    "criteria": [
+      {
+        "criterionId": "accessible-contrast",
+        "score": 86,
+        "evidence": "Every piece uses very high-value pairs: cream serif on a near-black block, near-black bold date on cream, dark-grey place and web address on cream, and white bold 'Register now' on saturated blue. In the 728x90 banner, cream text sits on near-black and white on blue. Your reported ratios (17:1 cream on black, 15:1 dark ink on cream, 8.5:1 white on blue) look plausible for what is visible, though I cannot measure them from pixels. These are estimates. The lightest pairs are the dark-grey place line and web address on cream; they still look comfortably above 4.5:1.",
+        "where": "All three pieces; lightest pairs are 'Harbour Hall, Pier 4' and 'openstudio.example' on the poster and square, and the small date/place line in the banner.",
+        "explanation": "Essential text appears well above the minimums everywhere, including the banner. The only gap is that the lighter grey used for the place and URL was not one of the three measured pairs.",
+        "principle": "WCAG text contrast: 4.5:1 for normal text and 3:1 for large text.",
+        "improvement": "Add the grey-on-cream pair (place and URL) and the banner's small cream-on-black line to your measurements, because these are the lightest essential text in the campaign.",
+        "verify": "Sample the exact hex values from your source files in a contrast checker such as WebAIM or the Stark plugin, and record all five pairs in your rationale."
+      },
+      {
+        "criterionId": "campaign-hierarchy",
+        "score": 64,
+        "evidence": "Poster: a huge serif name in a black block, then a bold date, a regular place line, a blue CTA and the URL. The order is immediate and correct. Banner: name at left, a smaller date/place line below it, and the CTA button isolated at right, which is a sensible wide-format order. Social square: the name is cut off at the right edge of the black block and reads 'OPEN STUD'. A 'Creative conference' subline then sits between the name and the date.",
+        "where": "Social square, headline row inside the black block.",
+        "explanation": "The first job of each piece is to say what the event is. In the square, the most prominent element shows an incomplete name, so the top of the hierarchy fails even though the order below it is clear. Two pieces are strong, and one competes with itself.",
+        "principle": "Hierarchy and figure–ground: the dominant element must carry the complete primary message.",
+        "improvement": "Reset the square's headline so 'OPEN STUDIO' fits inside the block. Stack it on two lines as on the poster, or reduce the size, and keep generous inner padding.",
+        "verify": "View the exported square at 100% and in a phone-sized preview. Confirm the full name is visible with clear margin on every side, and that a squint test still shows name, then date/place, then button."
+      },
+      {
+        "criterionId": "consistency-across-pieces",
+        "score": 76,
+        "evidence": "All three pieces clearly share one system: a near-black block with a cream serif name, a sans serif for details, and one saturated blue for the CTA on a cream ground. The banner adapts well by turning the whole ground dark and moving the CTA to the right. The square, however, closely repeats the poster layout at a smaller size, and its headline was not re-set for the narrower width, which is what causes the overflow. The square also adds a 'Creative conference' subline that appears nowhere else.",
+        "where": "Social square compared with the poster; banner shows good adaptation.",
+        "explanation": "The family resemblance is strong and deliberate. The square shows some drift: it reads more as a scaled poster than as an adapted design, and it carries content the other pieces do not.",
+        "principle": "Systematic consistency with format-specific adaptation.",
+        "improvement": "Treat the square as its own layout. Consider a stacked two-line name filling the block, and tighter vertical rhythm suited to a feed. Keep the content identical across pieces.",
+        "verify": "Place all three side by side. Check that each shares the type, colour and CTA treatment, and that each piece's layout exists because of its format, not because it was scaled."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 80,
+        "evidence": "Contrast is selective. The darkest-value block is reserved for the name. The date is bolder and darker than the place line, which separates two levels of detail. The single blue is used only for the CTA, so it stands out without competing with the name. The banner inverts to a dark ground and keeps the blue button as the one chromatic accent. On the poster, a large empty cream area between the place and the CTA weakens the grouping a little. In the square, the clipped name breaks the figure–ground edge of the block.",
+        "where": "All pieces; empty middle area of the poster; headline edge in the square.",
+        "explanation": "Value and colour clearly separate groups, and not everything shouts. The poster's large gap and the square's overflow make the use uneven.",
+        "principle": "Selective value and hue contrast, and grouping by proximity.",
+        "improvement": "On the poster, either tighten the gap so the CTA relates to the event details, or use the space intentionally, for example by anchoring the CTA to a clear bottom margin system. Fix the square's headline so the dark block reads as a clean shape.",
+        "verify": "Convert each piece to greyscale and squint. You should see three clear value groups (name block, details, CTA) with consistent spacing relationships."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 60,
+        "evidence": "The rationale names a shared system, a reading order and measured ratios, with three plausible ratio figures and a note that the banner uses a dark ground to keep the name large. It does not mention the audience. Decision one describes the system rather than explaining why contrast choices were made. It also states the reading order holds 'in the poster, the square and the banner', but the square's name is visibly truncated. The '30 points' figure for a 90px-tall web banner mixes print and screen units.",
+        "where": "Learner rationale, all three points.",
+        "explanation": "The decisions are named and the ratios are useful evidence, but the reasons are thin. One claim does not match the square as delivered.",
+        "principle": "Design rationale should connect each decision to its purpose, its audience and visible outcomes.",
+        "improvement": "For each decision, state what you chose, why it serves conference-goers seeing it in that format, and how contrast achieves it. For example: 'blue reserved for the CTA so it is the only chromatic element and is found instantly in a busy social feed.' Use px for screen pieces.",
+        "verify": "Reread each sentence and point to the exact place in an image that proves it. Revise any claim you cannot point to."
+      },
+      {
+        "criterionId": "legibility-across-formats",
+        "score": 80,
+        "evidence": "The smallest piece is the 728x90 banner, shown at native size. The serif name is large and clear. 'Register now' in white on blue is clearly readable. The date and place line ('Sat 14 March, Harbour Hall, Pier 4') is noticeably small, roughly 15px by eye. It is readable at native size but is the most strained item, and the abbreviation 'Sat' is a sensible saving. The order of name, then details, then CTA survives.",
+        "where": "Banner, the second line under 'OPEN STUDIO'.",
+        "explanation": "All essential text survives in the smallest piece. The details line is the one item close to the limit, especially on high-density screens or if the banner is scaled down.",
+        "principle": "Minimum legible size for screen text, and hierarchy that survives reduction.",
+        "improvement": "Give the details line a little more size or weight. You could reduce the gap between the name and the button, or slightly reduce the name, to make room.",
+        "verify": "View the banner at 100% on a laptop and a phone. Try reading the details line from arm's length; if you hesitate, increase it by 1–2px and retest."
+      },
+      {
+        "criterionId": "typography",
+        "score": 64,
+        "evidence": "Two typefaces are used consistently: a bold serif for the name and a sans serif for details and the CTA, within the brief's limit. I cannot confirm the exact faces (Georgia and Arial) from the images. Size and weight create clear levels: a huge name, a bold date, a regular place and a bold CTA. Line lengths are short and comfortable. However, the square's headline overflows its container and is cut to 'OPEN STUD', which is a type-setting error that directly harms reading.",
+        "where": "Social square headline; the system is otherwise consistent across pieces.",
+        "explanation": "The type system is purposeful and pairs well, but setting the name so that it does not fit its block is a significant inconsistency in execution.",
+        "principle": "Fit type to its measure and container, and keep the hierarchy consistent through size and weight.",
+        "improvement": "Re-set the square's name to fit, ideally stacked as on the poster. Check every text frame for overflow before exporting.",
+        "verify": "Turn on frame edges or guides in your design tool and confirm no text touches or crosses a container edge. Then check the exported PNGs at 100%."
+      }
+    ]
+  },
+  {
+    "sample": "campaign-inconsistent",
+    "run": 1,
+    "assignment": "contrast-campaign-capstone",
+    "expect": "does not pass; consistency-across-pieces < 60; accessible-contrast or legibility-across-formats < 60",
+    "ms": 53063,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5656,
+    "outputTokens": 4747,
+    "costUsd": 0.1176,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 22,
+    "passed": false,
+    "failedMandatory": [
+      "accessible-contrast",
+      "consistency-across-pieces",
+      "contrast"
+    ],
+    "scores": {
+      "accessible-contrast": 18,
+      "campaign-hierarchy": 35,
+      "consistency-across-pieces": 15,
+      "contrast": 30,
+      "design-rationale": 12,
+      "legibility-across-formats": 8,
+      "typography": 30
+    },
+    "strengths": [
+      "The poster is well-built. The reversed name block, bold date, lighter place and blue call-to-action button create a clear reading order with strong, likely accessible contrast.",
+      "The poster uses space well to separate the three information groups.",
+      "All three pieces include the event name, date, place and web address.",
+      "The square's bold hue contrast shows confidence with colour that could be redirected toward the information."
+    ],
+    "weaknesses": [
+      "The banner's text is very low contrast and small, so essential information is effectively unreadable.",
+      "The social square's date/place line and call to action are faint on the pink ground, and the headline loses contrast over the green circle.",
+      "The three pieces use different palettes and typefaces and do not read as one campaign.",
+      "The banner has no hierarchy: everything sits at the same size and colour.",
+      "The rationale is very short, reports no measured ratios, and some claims do not match the visible work."
+    ],
+    "missingRequirements": [
+      "No measured contrast ratios are reported (at least three pairs required).",
+      "Essential text does not meet contrast minimums in the social square and the banner.",
+      "More than two typefaces are used across the campaign (serif, sans, monospace, and likely an italic sans).",
+      "The pieces are not visibly one campaign (shared type, colour logic and contrast approach).",
+      "There is no clear reading order of name, then date and place, then call to action in the banner.",
+      "The rationale does not explain three design decisions tied to contrast.",
+      "The banner adds 'Creative conference', which goes beyond the four permitted pieces of event information.",
+      "The banner's call to action ('Register at the link') does not stand out as a distinct action."
+    ],
+    "criticalFailures": [
+      "Banner: all essential text (event name, date, place and call to action) is so low in contrast against the green background that it is effectively unreadable, so the banner cannot do its job.",
+      "Social square: the date, place and registration call to action are very faint on the pink background, so key information is likely to be missed."
+    ],
+    "criteria": [
+      {
+        "criterionId": "accessible-contrast",
+        "score": 18,
+        "evidence": "Poster: cream serif on a near-black block, near-black text on cream, and white text on a saturated blue button all look comfortably above the minimums (estimate). Social square: the pale yellow 'Open Studio' is readable on pink but weakens where 'Studio' crosses the light green circle. The light pink date/place line on the pink ground looks well below 4.5:1, and 'register: openstudio.example' is fainter still (estimate). Banner: slightly lighter green text on a mid green ground is very low contrast, roughly in the 1.5:1 range by eye (estimate), with 'Register at the link' barely visible. The rationale reports no measured ratios ('Contrast was judged by eye').",
+        "where": "Social square date/place line and register line; social square headline over the green circle; whole banner",
+        "explanation": "Essential text (date, place and call to action) in two of the three pieces is likely to fail, and the banner's text is close to invisible. People with low vision, or anyone viewing on a dim or glare-affected screen, would miss the event details.",
+        "principle": "WCAG text contrast: 4.5:1 for normal text, 3:1 for large text.",
+        "improvement": "Use the poster's contrast approach across all pieces. On the square, set the details in a much darker or much lighter colour than the pink, and keep the headline off the green circle or darken the circle. On the banner, use near-white or near-black text on the green, or switch to the poster's cream and ink palette.",
+        "verify": "Sample each text and background colour pair with a contrast checker (for example the WebAIM Contrast Checker) and report at least three ratios in your rationale, including the banner and the square's call to action. Aim for 4.5:1 or higher for small text."
+      },
+      {
+        "criterionId": "campaign-hierarchy",
+        "score": 35,
+        "evidence": "Poster: a clear order. The large reversed serif name comes first, then the bold date and lighter place, then the blue 'Register now' button and the URL. Social square: the name dominates, but the date/place line is faint and the call to action at the bottom is almost lost. Banner: name, an extra descriptor, date, place and URL all sit on one line at the same small size and colour, with no step in emphasis. A second, even fainter line holds the call to action.",
+        "where": "Poster (works); social square lower half; entire banner",
+        "explanation": "Only the poster leads the eye through name, then when and where, then the action. On the banner nothing stands out, so the event name does not read first and the action does not read last.",
+        "principle": "Visual hierarchy through contrast of size, weight and value.",
+        "improvement": "Give the banner three distinct levels. Put the name large and bold on the left, the date and place smaller in the middle, and a high-contrast button-style call to action on the right, like a compressed version of the poster. On the square, strengthen the details and make the call to action a clear, high-contrast element.",
+        "verify": "Squint at each piece or blur it. You should still see three separate groups in the right order. Ask someone what they notice first, second and third."
+      },
+      {
+        "criterionId": "consistency-across-pieces",
+        "score": 15,
+        "evidence": "The poster uses cream, near-black and blue with a bold serif plus a sans. The square uses hot pink, pale yellow and light green with an italic sans and a monospace. The banner uses only greens with a small serif. Only the wording is shared. The rationale confirms this was deliberate: 'I wanted each piece to feel fresh for its channel'.",
+        "where": "All three pieces compared side by side",
+        "explanation": "The brief requires the pieces to be visibly one campaign. A viewer who sees the banner after the poster would not recognise it as the same event, which weakens recognition and recall.",
+        "principle": "A unified visual system: shared palette, type and contrast logic, adapted to each format.",
+        "improvement": "Choose one system and adapt it. The poster is the strongest base: keep the dark name block, the cream ground, the blue call to action and the same two faces. Then rearrange the layout for the square (stacked, more compact) and the banner (horizontal row).",
+        "verify": "Put all three pieces side by side with the text hidden. If they still look like one family through colour, shapes and type, the system is working."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 30,
+        "evidence": "The poster uses value contrast deliberately. The dark block holds the name, the blue button separates the action, and generous space splits the groups. The square has strong hue contrast between pink and green, but the green circle sits behind 'Studio' and lowers its contrast, and the details are close in value to the ground. The banner is almost uniform in value, so text and ground merge.",
+        "where": "Social square circle and headline overlap; social square details; whole banner",
+        "explanation": "Contrast works in one piece and is weak or misdirected in two. On the square, the bold hue contrast goes to a decorative circle rather than the information.",
+        "principle": "Figure-ground separation and selective emphasis: value contrast does more for readability than hue contrast.",
+        "improvement": "Put the strongest value contrast on the essential text, not on decoration. Make sure each piece has a clear darkest-on-lightest (or lightest-on-darkest) relationship for the name and the call to action.",
+        "verify": "Convert each piece to greyscale. Text that disappears or turns mid-grey on mid-grey needs more value contrast."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 12,
+        "evidence": "The rationale is 49 words. It names one intention (freshness per channel) and describes colours and faces. It gives no measured ratios and does not explain three decisions tied to contrast. Some claims do not match the work. The square's face looks like an italic sans rather than a script, and the banner's colours are not bold but low-contrast greens. The poster is not mentioned.",
+        "where": "Learner rationale",
+        "explanation": "The brief asks for three contrast-based decisions and at least three measured ratios. Without them, the reasoning cannot be checked, and the 'judged by eye' approach led to the failures in the square and the banner.",
+        "principle": "Design reasoning: decisions should be specific, linked to the audience and supported by evidence.",
+        "improvement": "Write three short paragraphs, each covering one decision, why you made it for the audience, and how contrast supports it. One example: 'reversed name block so the event name is seen first from across a room'. Add a small table of at least three measured contrast ratios.",
+        "verify": "Reread the rationale next to the images. Every claim should be visibly true, and each decision should mention contrast and include a number where relevant."
+      },
+      {
+        "criterionId": "legibility-across-formats",
+        "score": 8,
+        "evidence": "The smallest piece is the 728x90 banner. Its text is small (estimated around 12px for the main line and smaller for the second line) and very low contrast on green. Even at full size, the event name, date, place and URL are hard to make out, and 'Register at the link' is barely visible. Nothing is large or bold enough to survive.",
+        "where": "Banner",
+        "explanation": "Web banners are glanced at for a second or two. With this size and contrast, the event name, date, place and call to action would not be read at all.",
+        "principle": "Legibility at small scale: fewer words, larger type, strong contrast.",
+        "improvement": "Cut the banner to the essentials: name, '14 March · Harbour Hall, Pier 4' and a 'Register' button. Make the name at least about 28–32px and bold, keep the details around 16px or more, and use high-contrast colours.",
+        "verify": "View the banner at 100% on a phone and a laptop from normal distance. You should be able to read every item in under two seconds."
+      },
+      {
+        "criterionId": "typography",
+        "score": 30,
+        "evidence": "The poster's type is purposeful. A heavy serif for the name, a bold sans for the date and a regular sans for the place and URL create clear steps. Across the campaign, though, I can see a bold serif and a sans (poster), an italic sans and a monospace (square), and a small serif (banner). That is at least three, likely four, distinct faces, which exceeds the two-typeface limit. The banner's single small line has no size or weight hierarchy.",
+        "where": "Social square details (monospace); banner (small serif); campaign as a whole",
+        "explanation": "Too many faces break the campaign's identity and break a stated requirement. Light monospace at small sizes also reduces readability.",
+        "principle": "A limited type system: one display face and one text face, used consistently with clear size and weight steps.",
+        "improvement": "Use the poster's two faces in every piece. Set the name in the serif and everything else in the sans, and use the same weight steps throughout (bold name, bold date, regular place, bold call to action).",
+        "verify": "List every typeface used in each file. The list should contain no more than two names, and the same roles should use the same face in every piece."
+      }
+    ]
+  }
+]

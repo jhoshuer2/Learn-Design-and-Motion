@@ -16,7 +16,7 @@ const poster = () => `
   <text x="48" y="1060" font-family="Arial" font-size="30" fill="#3a362c">openstudio.example</text>`;
 const squareOk = () => `
   <rect width="100%" height="100%" fill="#f6f1e6"/><rect x="36" y="36" width="528" height="200" fill="#15130e"/>
-  <text x="64" y="132" font-family="Georgia, serif" font-size="76" font-weight="bold" fill="#f6f1e6">OPEN STUDIO</text>
+  <text x="64" y="132" font-family="Georgia, serif" font-size="58" font-weight="bold" fill="#f6f1e6">OPEN STUDIO</text>
   <text x="64" y="200" font-family="Arial" font-size="34" fill="#f6f1e6">Creative conference</text>
   <text x="36" y="320" font-family="Arial" font-size="40" font-weight="bold" fill="#15130e">Saturday 14 March</text>
   <text x="36" y="372" font-family="Arial" font-size="32" fill="#3a362c">Harbour Hall, Pier 4</text>

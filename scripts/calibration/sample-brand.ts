@@ -11,7 +11,7 @@ const strongSheet = (a: { tiny?: boolean }) => {
   const labelSize = a.tiny ? 9 : 20;
   const swatch = (x: number, hex: string, name: string, role: string) => a.tiny
     ? `<rect x="${x}" y="360" width="60" height="60" fill="${hex}"/>`
-    : `<rect x="${x}" y="340" width="190" height="120" rx="6" fill="${hex}" stroke="#cfc2a8"/><text x="${x}" y="490" font-family="Arial" font-size="${labelSize}" font-weight="bold" fill="#2b1d12">${name}</text><text x="${x}" y="516" font-family="Arial" font-size="${labelSize}" fill="#4a3b2b">${hex}  ${role}</text>`;
+    : `<rect x="${x}" y="340" width="190" height="120" rx="6" fill="${hex}" stroke="#cfc2a8"/><text x="${x}" y="488" font-family="Arial" font-size="${labelSize}" font-weight="bold" fill="#2b1d12">${name}  ${hex}</text><text x="${x}" y="514" font-family="Arial" font-size="${labelSize - 2}" fill="#4a3b2b">${role}</text>`;
   return `
   <rect width="100%" height="100%" fill="#fbf4e8"/>
   <text x="60" y="${a.tiny ? 52 : 60}" font-family="Arial" font-size="${labelSize}" fill="${a.tiny ? "#cdbfa5" : "#7a6a55"}" letter-spacing="3">LOGO AND LOCKUP</text>
@@ -19,13 +19,14 @@ const strongSheet = (a: { tiny?: boolean }) => {
   <text x="${60 + logoSize + 18}" y="${(a.tiny ? 70 : 90) + logoSize * 0.78}" font-family="Georgia, serif" font-size="${wordSize}" font-weight="bold" fill="${wordFill}">Fernhill</text>
   <text x="${60 + logoSize + 20}" y="${(a.tiny ? 70 : 90) + logoSize * 0.78 + (a.tiny ? 12 : 30)}" font-family="Arial" font-size="${a.tiny ? 8 : 18}" fill="${a.tiny ? "#d9ccb3" : "#6b5a46"}" letter-spacing="8">BAKERY</text>
   <text x="60" y="${a.tiny ? 330 : 300}" font-family="Arial" font-size="${labelSize}" fill="${a.tiny ? "#cdbfa5" : "#7a6a55"}" letter-spacing="3">${a.tiny ? "COLOURS" : "PALETTE AND ROLES"}</text>
-  ${swatch(60, "#8a5a2b", "Crust", "primary")}${swatch(270, "#fbf4e8", "Cream", "background")}${swatch(480, "#2b1d12", "Ink", "text")}${swatch(690, "#c8561e", "Ember", "accent, used sparingly")}${swatch(900, "#5d7a5a", "Sage", "support")}
+  ${swatch(60, "#8a5a2b", "Crust", "primary")}${swatch(270, "#fbf4e8", "Cream", "background")}${swatch(480, "#2b1d12", "Ink", "text")}${swatch(690, "#c8561e", "Ember", "accent, sparingly")}${swatch(900, "#5d7a5a", "Sage", "support")}
   <text x="60" y="${a.tiny ? 520 : 580}" font-family="Arial" font-size="${labelSize}" fill="${a.tiny ? "#cdbfa5" : "#7a6a55"}" letter-spacing="3">TYPE</text>
   <text x="60" y="${a.tiny ? 560 : 640}" font-family="Georgia, serif" font-size="${a.tiny ? 14 : 44}" font-weight="bold" fill="${a.tiny ? "#d3c4a6" : "#2b1d12"}">Headline: Georgia Bold</text>
   <text x="60" y="${a.tiny ? 585 : 690}" font-family="Arial" font-size="${a.tiny ? 9 : 20}" fill="${a.tiny ? "#d3c4a6" : "#3a2d20"}">Body: Arial Regular. Good bread, no airs. Sourdough, pastries and coffee.</text>
   ${a.tiny ? "" : `<rect x="760" y="580" width="380" height="170" fill="none" stroke="#c8561e" stroke-width="2" stroke-dasharray="8 6"/>
   ${leaf(830, 620, 40, "#c8561e")}<text x="880" y="650" font-family="Georgia, serif" font-size="32" font-weight="bold" fill="#2b1d12">Fernhill</text>
-  <text x="780" y="720" font-family="Arial" font-size="16" fill="#3a2d20">Rule: keep clear space equal to the height of the F. Minimum width 32 mm.</text>`}`;
+  <text x="780" y="700" font-family="Arial" font-size="16" fill="#3a2d20">Rule: keep clear space equal to</text>
+  <text x="780" y="722" font-family="Arial" font-size="16" fill="#3a2d20">the height of the F. Minimum width 32 mm.</text>`}`;
 };
 
 const GOOD = "First, the warm Ember accent (#c8561e) and the rounded, friendly leaf mark express the brief's warm and unfussy tone for families, while the near-black Ink (#2b1d12) on Cream gives 15:1 contrast for office workers reading a menu. Second, the palette has clear roles: Crust is the primary, Cream and Ink are neutrals, Ember is the accent used sparingly and Sage supports. Third, two type roles, Georgia Bold at 44 points for headlines and Arial at 20 points for body, are named and shown so a printer can follow them. I set the clear-space rule from the height of the F and a 32 mm minimum width.";

@@ -1,0 +1,454 @@
+[
+  {
+    "sample": "ui-strong",
+    "run": 1,
+    "assignment": "mobile-screen",
+    "expect": "passes (>= 80); targets-and-states >= 70; readable-text-and-contrast >= 70",
+    "ms": 53256,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4450,
+    "outputTokens": 5143,
+    "costUsd": 0.1207,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 87,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "design-rationale": 87,
+      "hierarchy-and-layout": 89,
+      "legibility-at-small-size": 85,
+      "readable-text-and-contrast": 82,
+      "spacing-and-grouping": 88,
+      "targets-and-states": 90
+    },
+    "strengths": [
+      "The reading order is clear: a large bold route, a quieter date, three departures, and one filled primary button.",
+      "The sold-out state uses a dashed border, a tint, muted text and explicit words, so it does not rely on colour alone.",
+      "Targets are generous: rows of about 64 pt and a button of about 56 pt, with 16 pt gaps.",
+      "Spacing and alignment are consistent, on an 8-point rhythm with a shared left edge.",
+      "The rationale gives specific measurements and two plausible contrast ratios that match the visible work.",
+      "The design sticks to the brief's information without inventing extra features."
+    ],
+    "weaknesses": [
+      "The 'Choose a departure' label looks slightly under 16 pt.",
+      "The grey 'Sold out' text on beige, and the thin grey border on the unselected row, may be borderline for contrast (an estimate only; please measure).",
+      "Some state cues, the dashed border and the small check mark, fade in the small preview.",
+      "The rationale reports only two contrast ratios and leaves out the secondary text colours."
+    ],
+    "missingRequirements": [],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 87,
+        "evidence": "The rationale names three decisions, each with a reason: (1) type hierarchy, with the route at 28 pt bold and the date at 18 pt; (2) target sizes and spacing, with rows and the button at least 56 pt tall, 16 pt between rows and an 8-point scale; (3) states that do not rely on colour, using a heavier blue outline plus a check mark for selected and a dashed border plus the words 'Sold out, not available' for disabled. It reports body text of 16 to 20 pt and two contrast ratios: dark ink on white at 17:1 and white on the blue button at 8.5:1. Each claim matches what I can see. One small gap: the 'Choose a departure' label looks a little smaller than 16 pt (about 15 pt by my estimate), and the rationale does not mention it.",
+        "where": "Learner rationale, checked against the heading, date, departure rows and Continue button in final.png",
+        "explanation": "When the stated measurements match the visible work, a reviewer can trust the reasoning. Here they mostly do. The rows measure about 64 pt tall by my estimate, which fits 'at least 56 pt'. Both contrast figures are plausible for near-black on white and white on a deep blue. Covering every text style, including small labels, would make the rationale complete.",
+        "principle": "Design rationale: decisions should be specific, justified and verifiable against the artefact.",
+        "improvement": "Add the size and contrast of the secondary text: the 'Choose a departure' label, the grey date, and the grey 'Sold out' text on its beige fill. Also give the exact heights you used (for example 64 pt rows and a 56 pt button) instead of 'at least 56'.",
+        "verify": "List every text style in your file with its size, colour and measured ratio, using a contrast checker. Then confirm that each line of the rationale points to something visible in the screen."
+      },
+      {
+        "criterionId": "hierarchy-and-layout",
+        "score": 89,
+        "evidence": "The route 'Harbour Quay to Northpoint' is the largest, boldest text, at the top left. The date sits below it in smaller grey type. A small label introduces three full-width departure rows. The single filled blue 'Continue' button is pinned at the bottom and is the only solid block of colour. The reading order matches the brief: route and date, then departures, then the action. There is a large empty area between the last row and the button. This is a common bottom-anchored pattern, but it does separate the action from the choice it confirms.",
+        "where": "Whole screen: heading at the top, departure rows in the upper middle, Continue button at the bottom",
+        "explanation": "Within two seconds a viewer can tell this is a departure picker and that Continue is the next step. Size, weight and value step down clearly from heading to date to label. The filled button out-weighs the outlined rows, so the main action is unambiguous.",
+        "principle": "Visual hierarchy through scale, weight and value contrast. A single primary call to action.",
+        "improvement": "The hierarchy is already strong. If you want the action to feel more connected to the choice, consider a short summary line above the button. Keep it to information already in the brief, for example the selected time. Alternatively, keep the bottom anchoring and accept the gap as intentional thumb-zone placement, and say so in your rationale.",
+        "verify": "Run a squint or blur test on the final. The heading, the three rows and the blue button should still read as distinct levels in that order. You can also ask someone unfamiliar with the brief what the screen is for and what to tap next."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 85,
+        "evidence": "Judged from the 185 by 400 px preview only. The two-line route heading is clearly legible. The three departure rows read as three separate boxes. The selected row's thicker blue outline stands out, and the beige fill of the sold-out row sets it apart, though its dashed border is faint at this size. The times and seat counts are small but still distinguishable. The blue Continue button and its label survive clearly. The date and the 'Choose a departure' label are very small, roughly 7 to 8 px tall, and are strained. The selected row's check mark is tiny.",
+        "where": "preview.png: heading, rows and button; the date and label lines are the weakest",
+        "explanation": "At about half scale, the structure (route, departures, main action) still reads, and the action remains obvious. The secondary text and the finer state cues, the dashes and the check mark, are where detail starts to drop out.",
+        "principle": "Robust hierarchy: the structure should survive reduction, carried by shape, size and value rather than fine detail.",
+        "improvement": "Make state cues work at small size. For example, slightly thicken the dashed border or widen its dash spacing, and enlarge the check mark a little. Consider making the date slightly darker or larger so it does not fade at reduced scale.",
+        "verify": "Export the screen again at about 185 by 400 and view it at 100% without zooming. Check that you can still see which row is selected and which is sold out from the preview alone."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 82,
+        "evidence": "These are visual estimates only; I cannot measure exact ratios from pixels. The departure times, seat counts and button label look about 18 to 20 pt, consistent with the rationale's 16 to 20 pt body text. The heading is near-black on white, so 17:1 is plausible. The white 'Continue' on deep blue looks strong, and 8.5:1 is plausible. The date and the 'Choose a departure' label are mid-to-dark grey on white and probably pass 4.5:1, but the label looks slightly under 16 pt (about 15 pt). Two pairs look borderline: the grey 'Sold out, not available' text on its beige fill, which may sit near 4.5:1, and the thin grey border of the unselected 09:10 row, which may sit near the 3:1 needed for meaningful graphics.",
+        "where": "Departure rows (especially the sold-out row and the unselected row border), the date, the 'Choose a departure' label, and the Continue button",
+        "explanation": "Riders on a ferry quay may be reading in bright sunlight, so secondary text and row boundaries need margin above the minimums. Disabled controls are technically exempt from contrast rules, but 'Sold out' is information the rider needs to read. The core text is clearly comfortable; only a couple of secondary pairs are uncertain.",
+        "principle": "WCAG text contrast: 4.5:1 for normal text and 3:1 for large text and UI component boundaries. Minimum body size for readability.",
+        "improvement": "Measure the sold-out text against the beige fill, and the unselected row border against white. If either is near the threshold, darken it slightly. Set the 'Choose a departure' label to 16 pt, or treat it as a label and confirm its contrast.",
+        "verify": "Use a contrast checker on the exact colour values in your design file for each pair. Record the results in your rationale, aiming for at least 4.5:1 for text and 3:1 for borders."
+      },
+      {
+        "criterionId": "spacing-and-grouping",
+        "score": 88,
+        "evidence": "These are pixel estimates at 1x. The left edges align at about 24 pt for the heading, date, label, rows and button. The rows appear about 64 pt tall with about 16 pt gaps. The label sits about 8 pt above the first row, and there is a larger gap of roughly 48 pt between the date and the label. Inside the rows, the times and seat counts line up as two columns. These values all fit an 8-point scale, as the rationale states. The groups are clear: route plus date, label plus rows, and the button on its own.",
+        "where": "Left margin, the gaps between header, label and rows, and the internal row columns",
+        "explanation": "Consistent 8-point steps and shared edges give a calm rhythm. Tighter gaps inside groups and larger gaps between them make clear what belongs together, so the label reads as belonging to the list.",
+        "principle": "Proximity and alignment (Gestalt), and a consistent spacing scale.",
+        "improvement": "This is already well done. You could document the exact spacing tokens you used (for example 8, 16, 24 and 48) in the rationale. You could also check that the gap from heading to date is a scale value.",
+        "verify": "Turn on an 8-point grid overlay in your design tool and confirm that every edge and gap snaps to it. List any value that does not."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 90,
+        "evidence": "These are pixel estimates at 1x. Each departure row is a full-width target about 342 pt wide and about 64 pt tall, with about 16 pt between rows. The Continue button is about 342 by 56 pt. All of these exceed 44 by 44 pt and match the rationale's 'at least 56 pt'. The three states are distinct without relying on colour: selected has a thicker outline plus a check mark; unselected has a thin plain outline; sold out has a dashed border, a tinted fill, muted text and the explicit words 'Sold out, not available'.",
+        "where": "The three departure rows and the Continue button",
+        "explanation": "Large, well-spaced targets reduce mis-taps. Using shape, line style, an icon and words for each state means riders with colour-vision differences can still tell which time is chosen and which cannot be booked.",
+        "principle": "Minimum touch target size and spacing. Redundant state encoding: do not use colour alone.",
+        "improvement": "You could make the check mark slightly larger so the selected state survives at small sizes. You could also mention in the rationale what happens to the button if nothing is selected, though this is optional and not required by the brief.",
+        "verify": "Overlay a 44 by 44 pt box on each target in your file. Then view the screen in greyscale and confirm all three row states remain distinguishable."
+      }
+    ]
+  },
+  {
+    "sample": "ui-strong",
+    "run": 2,
+    "assignment": "mobile-screen",
+    "expect": "passes (>= 80); targets-and-states >= 70; readable-text-and-contrast >= 70",
+    "ms": 50970,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4450,
+    "outputTokens": 4881,
+    "costUsd": 0.1154,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 86,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "design-rationale": 87,
+      "hierarchy-and-layout": 89,
+      "legibility-at-small-size": 88,
+      "readable-text-and-contrast": 78,
+      "spacing-and-grouping": 85,
+      "targets-and-states": 90
+    },
+    "strengths": [
+      "A very clear hierarchy: a large bold route, a quieter date, a labelled list of departures, and one dominant full-width Continue button.",
+      "States are encoded redundantly: a check mark and thicker border for selected, and a dashed border, tinted fill and explicit 'Sold out, not available' wording for the sold-out row.",
+      "The rows and button are generously sized (about 56–64 pt tall) with even 16 pt gaps, well above 44 pt.",
+      "The rationale is specific, gives measurements, and matches the visible work.",
+      "Margins and the two-column alignment inside the rows are consistent, and the structure survives in the small preview.",
+      "The design stays within the brief: there are no invented fares, features or contact details."
+    ],
+    "weaknesses": [
+      "The sold-out text on its beige fill looks borderline for 4.5:1 (an estimate), and it carries essential information.",
+      "The 'Choose a departure' label looks slightly under 16 pt and is a mid grey.",
+      "The rationale reports contrast only for the easiest pairs (dark on white, white on blue), not for the greys that are most likely to be borderline.",
+      "The thin grey border of the unselected row may be near the 3:1 guideline for meaningful graphics."
+    ],
+    "missingRequirements": [],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 87,
+        "evidence": "The rationale gives three distinct decisions, each with a reason and measurements. (1) Hierarchy: route at 28 pt bold, date at 18 pt, then departures, then a single blue Continue button. (2) Sizing and spacing: rows and button at least 56 pt tall, 16 pt between rows, and an 8-point scale. (3) States not relying on colour: a heavier blue outline plus a check mark for the selected row, and a dashed border plus the words 'Sold out, not available' for the sold-out row. It also gives body text of 16 to 20 pt and two contrast ratios: 17:1 for dark ink on white and 8.5:1 for white on blue. These claims match what is visible. In the 390-px final, the rows look about 64 pt tall and the button about 56 pt, which fits 'at least 56'. The row gaps look about 16 pt. The text sizes look consistent with the stated values. Both ratios are plausible for near-black on white and white on a deep blue. I cannot measure them exactly.",
+        "where": "Learner rationale, checked against the final screen (title block, departure rows, Continue button)",
+        "explanation": "The reasoning is specific and can be checked against the screen, which is what this criterion asks for. The only gap is that the lower-contrast pairs are not measured: the grey date, the grey 'Choose a departure' label, the sold-out text on its beige fill and the grey border of the unselected row. These are the pairs most likely to be borderline.",
+        "principle": "Design rationale should justify decisions with measurable evidence, especially for the riskiest cases rather than the easiest ones.",
+        "improvement": "Add measured contrast ratios for the secondary text (date, section label), the sold-out text on its beige background, and the unselected row border against white. Say why you chose those greys.",
+        "verify": "Run each colour pair through a contrast checker using the exact hex values from your design file, and list the results in the rationale next to the 17:1 and 8.5:1 figures."
+      },
+      {
+        "criterionId": "hierarchy-and-layout",
+        "score": 89,
+        "evidence": "The route 'Harbour Quay to Northpoint' is the largest, boldest text. It sits at the top left and wraps over two lines. The date 'Saturday 14 March' sits directly below in smaller grey text. A small label, 'Choose a departure', introduces three full-width bordered rows, each with the time in bold and the seats in regular weight. The only filled, high-contrast element is the full-width blue Continue button pinned near the bottom. The reading order is route and date, then departures, then the action, and it is obvious at a glance. The large empty area between the rows and the button separates the choice from the commitment. It also leaves the button as the clear end point.",
+        "where": "Whole screen: title block (top), departure list (upper middle), Continue button (bottom)",
+        "explanation": "Each level differs clearly in size, weight or value, so a viewer can tell within seconds that this screen is for picking a ferry time and then continuing. The selected row's blue outline links visually to the blue button, which reinforces the flow.",
+        "principle": "Visual hierarchy through scale, weight and value contrast, with a single dominant call to action.",
+        "improvement": "This works well. As a minor refinement, check that the empty space between the list and the button does not look unfinished on taller phones. A consistent, intentional gap or a sticky footer pattern keeps the relationship clear.",
+        "verify": "Show the screen to someone for two seconds, then ask what it is for and what they would tap next. Also preview it at 390×844 and at a taller size to confirm the button still reads as part of the same task."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 88,
+        "evidence": "Judged only from the 185×400 preview. The route headline is still clearly readable in bold. The three departure rows keep their distinct outlines: a thick blue border with a check, a thin grey border, and a dashed border with a beige fill. The times and seat counts can still be made out at this size. The blue Continue button is the most prominent shape and its label is legible. The date and the 'Choose a departure' label are the faintest elements. They are visible but noticeably weaker because of their small size and grey colour.",
+        "where": "Small-scale preview image (185×400 px, long edge 400 px)",
+        "explanation": "The structure survives the reduction: headline, a list of three different-looking options, and one strong action. Only the lightest secondary text is strained. That is acceptable because it is not the main action or the primary level.",
+        "principle": "Robust hierarchy holds up under reduction because it relies on shape, weight and value rather than fine detail.",
+        "improvement": "If you want the date to survive better, consider a slightly darker grey or medium weight. The date is part of the first information level the brief asks for.",
+        "verify": "View the preview at 100% on a phone held at arm's length, or squint at it, and check that the route, the date, the three rows and the button are all still identifiable."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 78,
+        "evidence": "The essential text looks comfortably sized. The times and seat counts appear to be about 18–20 pt, the date about 18 pt, and the button label about 20 pt bold, which matches the stated 16–20 pt range. The dark ink on white for the route, times and seats looks very high contrast, consistent with the stated 17:1. The white Continue label on deep blue also looks strong, consistent with the stated 8.5:1. These are visual estimates only. Two things are borderline. First, 'Choose a departure' looks smaller than the other text, perhaps about 15 pt, and it is a mid grey. Second, 'Sold out, not available' and '11:30' are mid grey on a beige fill. They are readable, but I estimate this pair is closer to the 4.5:1 minimum than the others. The thin grey border of the unselected 09:10 row may also sit near the 3:1 guideline for meaningful graphics. None of these pairs is measured in the rationale.",
+        "where": "'Choose a departure' label; date line; sold-out row text and fill; unselected row border",
+        "explanation": "The core content clearly passes. However, the sold-out wording carries essential information ('not available'), so it should still meet 4.5:1 even though it is styled as disabled. The section label may also fall just below the 16 pt body size the brief requires.",
+        "principle": "WCAG contrast minimums: 4.5:1 for normal text, 3:1 for large text and meaningful UI boundaries. Readable body size is about 16 pt or more.",
+        "improvement": "Darken the sold-out text slightly, or lighten the beige fill, so the pair clearly exceeds 4.5:1 while still looking muted. The dashed border and wording already signal 'disabled', so the grey does not need to be faint. Set the section label to at least 16 pt, and check the unselected border against 3:1.",
+        "verify": "Measure each pair in a contrast checker using the exact hex values: sold-out text on beige, label grey on white, date grey on white, and border grey on white. Confirm that the label size in your design file is 16 pt or more."
+      },
+      {
+        "criterionId": "spacing-and-grouping",
+        "score": 85,
+        "evidence": "The left and right edges align consistently at about 24 pt for the title, date, label, rows and button. The three rows look evenly spaced, about 16 pt apart, and appear to be about 64 pt tall. The internal padding looks consistent across rows. The times share a left edge and the seat text shares a second column, which aligns well. The route and date are grouped closely. The section label sits close to the list it introduces, so proximity correctly ties it to the rows. These values are consistent with the stated 8-point scale, but I am estimating from pixels. The gap between the label and the first row looks slightly tighter than the other gaps, possibly not a multiple of 8.",
+        "where": "Margins, title-to-date gap, label-to-first-row gap, row gaps, row internal columns",
+        "explanation": "The consistent margins, the even row rhythm and the two-column alignment inside the rows make the screen feel orderly. The groups (header, choice list, action) are easy to see.",
+        "principle": "A consistent spacing scale and the proximity principle: related items sit closer together than unrelated ones.",
+        "improvement": "Check that the gap between the label and the first row is a value on your scale, such as 8 or 16. Also confirm that the gap from the date to the label is a deliberate scale value that clearly separates the header group from the choice group.",
+        "verify": "Turn on spacing measurements or redlines in your design tool and confirm that every vertical gap and padding value is a multiple of 8, or of 4 if you allow half-steps."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 90,
+        "evidence": "Each departure row spans the full content width and looks about 64 pt tall. The Continue button is full width and about 56 pt tall. The rows are separated by about 16 pt. These figures are estimates, but all are well above 44×44 and consistent with the rationale's 'at least 56 pt' and '16 pt between rows'. Three states are shown and each is distinct without colour alone. Selected (07:40) has a thicker outline and a check mark. Unselected (09:10) has a thin grey outline. Sold out (11:30) has a dashed outline, a tinted fill, muted text and the explicit words 'Sold out, not available'. The button is visually enabled, which is consistent with a departure already being selected.",
+        "where": "Departure rows and Continue button",
+        "explanation": "The generous targets and spacing reduce mis-taps. The state differences use shape (thickness, dashes), an icon and text, so riders with colour-vision differences can still tell them apart.",
+        "principle": "Minimum touch target size (44×44 pt) with spacing between neighbours, and redundant encoding of state beyond colour.",
+        "improvement": "This criterion is well met. To strengthen the documentation, you could show or describe the button's state when nothing is selected, and state the measured row height (it looks closer to 64 than 56).",
+        "verify": "Measure the row and button frames in your design file. Then view the screen in greyscale and confirm you can still tell selected, unselected and sold out apart."
+      }
+    ]
+  },
+  {
+    "sample": "ui-weak-targets",
+    "run": 1,
+    "assignment": "mobile-screen",
+    "expect": "does not pass; targets-and-states < 60; readable-text-and-contrast < 60",
+    "ms": 47811,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4345,
+    "outputTokens": 4533,
+    "costUsd": 0.108,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 18,
+    "passed": false,
+    "failedMandatory": [
+      "readable-text-and-contrast",
+      "targets-and-states"
+    ],
+    "scores": {
+      "design-rationale": 10,
+      "hierarchy-and-layout": 25,
+      "legibility-at-small-size": 15,
+      "readable-text-and-contrast": 15,
+      "spacing-and-grouping": 30,
+      "targets-and-states": 12
+    },
+    "strengths": [
+      "The rationale is honest and matches what is visible, which is a good habit.",
+      "All required content from the brief is present (route, date, three departure times, seat counts for the available ones, a Continue action), with no invented features.",
+      "Left edges are consistently aligned at about 24 px, giving a tidy column.",
+      "The basic top-to-bottom order (route and date, departures, action) follows the brief."
+    ],
+    "weaknesses": [
+      "Departure text and the button label look small (about 11 px, estimated) and low in contrast.",
+      "Departure rows (about 24 px tall) and the Continue button (about 28 px tall) look well below 44 pt.",
+      "The sold-out departure has no 'Sold out' label and is shown only by lighter text.",
+      "There is no selected state for departures.",
+      "The main action is the least prominent element instead of the most prominent.",
+      "A large empty gap separates the departures from the action, and the 4 px gaps between rows are crowded.",
+      "The preview loses the departures and the main action entirely.",
+      "The rationale contains no measurements or design reasoning."
+    ],
+    "missingRequirements": [
+      "Interactive elements of at least 44×44 pt with space between them.",
+      "Body text of at least 16 pt.",
+      "Essential text at or above contrast minimums (not demonstrated, and visibly doubtful).",
+      "A sold-out state that does not rely on colour alone (no 'Sold out' text).",
+      "A consistent spacing scale such as multiples of 8 pt.",
+      "A rationale with three explained decisions, target sizes, font sizes and at least two measured contrast ratios."
+    ],
+    "criticalFailures": [
+      "The departure rows and the Continue button appear far smaller than 44 pt tall (estimated 24 px and 28 px), making the core task of choosing and continuing hard to complete reliably.",
+      "The sold-out departure is shown only by lighter colour, with no 'Sold out' text, so riders cannot reliably tell it is unavailable.",
+      "Essential text (seat counts, the button label, the sold-out time) appears to be well below accessibility contrast minimums. This is an estimate and should be measured."
+    ],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 10,
+        "evidence": "The rationale (62 words) describes the screen honestly: small grey text, tightly packed rows, a small soft button, and a sold-out time that is 'just lighter'. It states 'I did not measure any sizes or contrast.' It names no target sizes, no font sizes and no contrast ratios. The decisions it names (small text, small button, a lighter sold-out row) go against the brief's requirements rather than explaining how the brief was met.",
+        "where": "Learner rationale, whole text",
+        "explanation": "The rationale matches what is visible, which is good. But it gives no measurements and offers no reasoning that links the choices to the rider's task or to accessibility. The brief asks for three decisions with target sizes, font sizes and at least two measured contrast ratios. None of these are present.",
+        "principle": "Design rationale should connect each decision to the user's goal and to measurable standards (WCAG contrast, minimum target size, minimum body size).",
+        "improvement": "Pick three decisions, for example the button size and placement, how the sold-out state is shown, and the text sizes and colours. For each, say what you chose, why it helps a rider pick a departure, and the measured value: for example 'Continue button 342×52 pt', 'body 17 pt', 'row text #222 on #FFF, 15.9:1'. Measure contrast with a contrast checker rather than estimating it.",
+        "verify": "Reread the rationale against the brief's checklist: three decisions, target sizes, font sizes and two or more contrast ratios. Confirm each number by checking it in your design tool and a contrast checker."
+      },
+      {
+        "criterionId": "hierarchy-and-layout",
+        "score": 25,
+        "evidence": "The route and date appear at the top left in dark grey text of about 15 px (estimated), with no clear size or weight difference from other text beyond being darker. The departure rows are thin outlined bars with small light-grey text. The Continue button is small (roughly 120×28 px, estimated), pale blue with white text, and sits at the bottom left. A very large empty area, roughly 530 px tall, separates the rows from the button.",
+        "where": "Final screen: header at y≈90–130, rows at y≈150–230, button at y≈760–788",
+        "explanation": "The reading order runs top to bottom, but the levels hardly differ. The route is not much more prominent than the rows, and the one main action is the faintest element on the screen. A viewer would struggle to say within two seconds what to do next. The empty gap also visually disconnects the action from the choices it confirms.",
+        "principle": "Visual hierarchy: importance should be shown by clear differences in size, weight and value. The primary action should be the most prominent interactive element.",
+        "improvement": "Make the route a clear heading (for example 22–24 pt semibold) with the date beneath it at body size. Make the departure rows larger cards with the time at about 20 pt bold and the seats at 16 pt. Make Continue a full-width, high-contrast filled button (for example 52 pt tall), pinned near the bottom with a comfortable margin. Optionally, add a short label such as 'Choose a departure' above the list.",
+        "verify": "Squint test or blur the screenshot: the route, then the rows, then the button should stand out in that order. Ask someone unfamiliar with the screen what it is for and what to tap next, and time their answer."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 15,
+        "evidence": "The preview is 185×400 px (long edge 400). In it, the two header lines are about 7–8 px tall and only just discernible. The row text (times and seats) is around 5 px and very faint, so it does not read as information. The 11:30 row is almost invisible. The Continue button is a pale blue blob with near-illegible white text.",
+        "where": "Preview image, rows at y≈70–110 and button at y≈360–372",
+        "explanation": "At this size, only the header block and the outlines of two rows survive as shapes. The departures cannot be read, and the main action is the weakest element rather than the strongest. The hierarchy that should guide the rider is lost.",
+        "principle": "Robust hierarchy holds up at reduced size because it relies on strong contrasts of size, weight and value, not on fine detail.",
+        "improvement": "Increase the size and weight differences between levels and use darker text. Give the main action a solid, high-contrast fill so it remains a clear shape even when scaled down.",
+        "verify": "Export the redesigned screen at about 185×400 px and look at it without zooming. Check that the route, three distinct rows and the button are each identifiable."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 15,
+        "evidence": "Row text (times and 'seats left') appears to be about 11 px, light grey on white. By estimate this is well below 16 pt and probably below 4.5:1 contrast. The sold-out '11:30' is very pale grey, likely around 1.5:1 (estimate). The Continue label is white on pale blue, which also looks well below 4.5:1 (estimate). The header text is about 15 px, mid-dark grey, and looks closer to adequate, though possibly below 16 pt. The rationale reports no measured ratios.",
+        "where": "Final screen: departure rows, sold-out row, Continue button, header",
+        "explanation": "Seat counts and the button label are essential to the task. At this size and contrast, many riders, especially those with low vision or using the app outdoors on a ferry pier, would not be able to read them. These values are pixel estimates only and should be measured.",
+        "principle": "WCAG 2.x contrast minimums: 4.5:1 for normal text and 3:1 for large text and meaningful graphics. Body text should be at least about 16 pt for comfortable mobile reading.",
+        "improvement": "Set body text to 16–17 pt and times to about 20 pt. Use a near-black text colour (for example #1A1A1A) on white. Give the button a dark fill with white text, or dark text on a light fill, that clears 4.5:1. Keep the sold-out text readable (at least 4.5:1) and show the state with a label rather than fading the text.",
+        "verify": "Check each text and background pair with a contrast checker (for example the WebAIM contrast checker or a Figma plugin) and record the ratios in your rationale. Confirm the font sizes in your design tool's inspector."
+      },
+      {
+        "criterionId": "spacing-and-grouping",
+        "score": 30,
+        "evidence": "Left edges align consistently at about 24 px for the header, rows and button. The rows have equal small gaps of about 4 px (estimate), and the header-to-rows gap is about 20 px. Between the rows and the button there is an unexplained empty space of roughly 530 px. Spacing values do not appear to follow an 8-point scale.",
+        "where": "Final screen: vertical spacing throughout, especially between the last row and Continue",
+        "explanation": "Consistent left alignment is a genuine strength. However, the 4 px row gaps make the rows feel crowded and too close for separate tap targets. The huge void separates the action from the choices it relates to. There is no evidence of a single spacing scale.",
+        "principle": "A spacing scale (for example 8, 16, 24, 32) creates rhythm. Proximity should show grouping: related items close together, separate groups clearly apart.",
+        "improvement": "Adopt an 8-point scale, for example: 24 pt side margins, 8 pt between header lines, 32 pt from header to list, 12–16 pt between departure cards, 16 pt padding inside cards. Pin the button near the bottom with a consistent margin (for example 24–32 pt plus the safe area), or place it after the list with 32 pt above.",
+        "verify": "Overlay an 8-point grid or inspect each gap in your design tool, and list the spacing values used. Every value should come from your scale."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 12,
+        "evidence": "Each departure row looks about 24 px tall (estimate) with only about 4 px between rows. The Continue button looks about 28 px tall (estimate). Both are well below 44 pt. The sold-out 11:30 row is shown only by lighter grey text and border, with no 'Sold out' label. No selected state is shown, so selected and unselected cannot be told apart. The rationale reports no target sizes.",
+        "where": "Final screen: departure rows at y≈150–230 and Continue button at y≈760–788",
+        "explanation": "Small, tightly packed targets make mis-taps likely, especially on a moving ferry or with one hand. The brief requires the sold-out state to be clear without relying on colour alone. A faded row relies only on lightness, and the missing 'Sold out' text leaves riders guessing whether 11:30 has seats. Without a visible selected state, riders cannot confirm their choice before continuing.",
+        "principle": "Minimum touch target of 44×44 pt with spacing between targets (Apple HIG, WCAG 2.5.5 and 2.5.8). States should be communicated redundantly through text, icons or shape as well as colour.",
+        "improvement": "Make each departure card at least 56–64 pt tall and full width, with 12–16 pt between cards. Make Continue at least 48–52 pt tall and full width. Mark 11:30 with the words 'Sold out' and a non-interactive style (no chevron or radio, readable text). Show the selected card with a radio or check icon plus a thicker or filled border. Consider disabling Continue until a departure is selected and showing that state clearly.",
+        "verify": "Inspect every interactive element's frame in your design tool and confirm it is at least 44×44 pt. Check that gaps between targets are at least 8 pt. View the screen in greyscale and check that the sold-out and selected states are still clear."
+      }
+    ]
+  },
+  {
+    "sample": "ui-weak-targets",
+    "run": 2,
+    "assignment": "mobile-screen",
+    "expect": "does not pass; targets-and-states < 60; readable-text-and-contrast < 60",
+    "ms": 46822,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4345,
+    "outputTokens": 4562,
+    "costUsd": 0.1086,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 19,
+    "passed": false,
+    "failedMandatory": [
+      "readable-text-and-contrast",
+      "targets-and-states"
+    ],
+    "scores": {
+      "design-rationale": 12,
+      "hierarchy-and-layout": 28,
+      "legibility-at-small-size": 22,
+      "readable-text-and-contrast": 10,
+      "spacing-and-grouping": 35,
+      "targets-and-states": 10
+    },
+    "strengths": [
+      "All required content from the brief is present: the route, the date, three departure times and seat counts for the two available departures. No extra features, fares or contact details were invented.",
+      "Left edges are consistently aligned at about 24 px, and the time and seat-count columns line up across rows.",
+      "The departure rows are stacked evenly and read as one related group.",
+      "The rationale is honest about what was and was not done, and it matches what is visible."
+    ],
+    "weaknesses": [
+      "Body text appears to be about 11 px, well below the 16 pt minimum.",
+      "Several essential text pairs appear to fall below 4.5:1 (estimated): the seat counts, the Continue label and the sold-out time.",
+      "Departure rows (about 22 px) and the Continue button (about 28 px tall) appear well under 44 pt, with only about 6 px between rows.",
+      "The sold-out departure is shown only by fading, with no 'Sold out' label, and is nearly invisible.",
+      "No selected state is shown, so a rider cannot see which departure they picked.",
+      "The main action is the least prominent element, and a large empty gap separates it from the list.",
+      "The header has little more emphasis than the rows, so hierarchy levels compete.",
+      "The rationale contains no measurements, no contrast ratios and no reasons tied to the brief."
+    ],
+    "missingRequirements": [
+      "A sold-out state that does not rely on colour alone (for example a 'Sold out' text label).",
+      "Interactive elements of at least 44×44 pt with space between neighbouring targets.",
+      "Body text of at least 16 pt.",
+      "Essential text at or above accessibility contrast minimums.",
+      "A clearly prominent main action.",
+      "A visible, consistently applied spacing scale.",
+      "A rationale explaining three design decisions with target sizes, font sizes and at least two measured contrast ratios."
+    ],
+    "criticalFailures": [
+      "Touch targets appear to be about half the required 44 pt height and are crowded, so the screen is hard to operate reliably for its purpose of picking a departure (estimate from pixels).",
+      "Essential text, including the Continue label and the sold-out departure, appears to fall well below contrast minimums, and the sold-out state has no non-colour cue (estimate from pixels)."
+    ],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 12,
+        "evidence": "The rationale (62 words) says the text is 'small and grey', the rows are 'close together', the button is 'small and soft', and the sold-out time is 'just lighter'. It states: 'I did not measure any sizes or contrast.' It gives no target sizes, no font sizes and no contrast ratios.",
+        "where": "Learner rationale, whole text",
+        "explanation": "The rationale honestly describes what is visible, which is good. However, it explains choices only as a visual mood ('light and compact'). It does not link them to the brief's goals of hierarchy, accessibility and usable targets. Several of the choices it describes work directly against the requirements. The brief asks for three decisions with measurements and at least two measured contrast ratios, and none are given.",
+        "principle": "Design rationale should connect each decision to a user need or a requirement and back it up with measurable evidence.",
+        "improvement": "Pick three decisions, for example the button size and position, how the sold-out row is shown, and the text sizes. For each one, write what you chose, why it helps a rider pick a departure, and the measurement. For example: 'Departure rows are 56 pt tall with 8 pt gaps', 'Body text 17 pt', 'Time text #1A1A1A on #FFFFFF, 17.4:1'. Measure contrast with a contrast checker using the exact hex values from your design file.",
+        "verify": "Check that your rationale contains three named decisions, each with a reason, and that it lists target sizes, font sizes and at least two contrast ratios. Then check each number against your design file."
+      },
+      {
+        "criterionId": "hierarchy-and-layout",
+        "score": 28,
+        "evidence": "The route 'Harbour Quay to Northpoint' and 'Saturday 14 March' sit at the top left. They are grey, about 14–15 px, and regular weight, so they are only slightly larger than the row text. The three departure rows are thin outlined boxes about 22 px tall. The 'Continue' button is a small, pale blue box about 120×28 px at the bottom left, about 530 px below the last row. There is a large empty area between them.",
+        "where": "Whole screen: header at y≈90–130, rows at y≈150–230, button at y≈760–788",
+        "explanation": "The reading order is technically top to bottom. Still, every level has similar, low emphasis: grey regular text, pale outlines and a faint button. The route does not stand out as a title. The main action is the least prominent element on the screen. It is pale, small and far from the content it relates to. A rider would have to search for what to do next.",
+        "principle": "Visual hierarchy: importance should be shown by clear differences in size, weight and value. The primary action should be the most prominent interactive element.",
+        "improvement": "Make the route a clear heading, for example 24 pt semibold in near-black, with the date below it in 17 pt. Give the departure rows more presence with larger time text. Make 'Continue' a full-width button (for example 342×52 pt) with a strong solid fill and high-contrast label. Anchor it at the bottom with consistent spacing, or place it closer to the list.",
+        "verify": "Show the screen to someone for two seconds, then hide it. Ask what the screen is for and what to do next. Also do a blur or squint test: the route and the Continue button should be the first two things you notice."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 22,
+        "evidence": "In the 185×400 preview, the route and date lines are just about readable as the largest text. The departure row text (times and seats left) is tiny and very faint. The third row (11:30) is almost invisible. The Continue button is a pale blob with a barely visible label.",
+        "where": "Preview image: header at y≈45–60, rows at y≈70–108, button at y≈360–373",
+        "explanation": "The preview's long edge is 400 px, so it is not extremely small. Even so, only the header survives. The departures show up as thin outlines rather than readable information, the sold-out row disappears, and the main action does not read as a button. The hierarchy is largely lost at small size.",
+        "principle": "Robust hierarchy should survive reduction. If the structure disappears when shrunk, the contrast and size differences are too weak.",
+        "improvement": "Increase the size and weight differences between levels. Darken text and row borders, and give the main button a strong solid fill. Then export a new preview and check it again.",
+        "verify": "View your new preview at 185×400 without zooming. You should be able to point to the route, the three departures (including a visibly labelled sold-out one) and the Continue button."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 10,
+        "evidence": "Row text ('07:40', '12 seats left') appears to be about 11 px, well under the required 16 pt. It is light grey on white, and my estimate is roughly 2.5–3.5:1. The '11:30' text is very pale, estimated well under 2:1. The 'Continue' label is white on pale blue, estimated around 2:1. The header text is mid-grey at about 14–15 px, probably near 4.5:1 but borderline. All of these are estimates from pixels, not measurements.",
+        "where": "Departure rows (y≈150–230), Continue button (y≈760–788), header (y≈90–130)",
+        "explanation": "Body text is visibly smaller than 16 pt. Several pieces of essential text appear to fall below the 4.5:1 minimum: the seat counts, the main button label and the sold-out time. Riders with low vision, or anyone using their phone outdoors in bright light, would struggle to read the departures or find the action. The rationale reports no ratios, so there is nothing to cross-check.",
+        "principle": "Accessible text: body text of at least 16 pt, and contrast of at least 4.5:1 for normal text and 3:1 for large text and meaningful graphics (WCAG).",
+        "improvement": "Set body text to at least 16–17 pt. Use near-black text (for example #1A1A1A) for times and seat counts. Give the button a dark fill with a white label, or a strong colour that you have checked reaches at least 4.5:1. Keep the sold-out row readable: show 'Sold out' as text at sufficient contrast and signal disabled in other ways instead of by fading.",
+        "verify": "Run each text and background pair through a contrast checker using the exact hex values. Record the ratios in your rationale. Confirm that every essential text pair is 4.5:1 or higher, and that font sizes are 16 pt or more in your design tool's inspector."
+      },
+      {
+        "criterionId": "spacing-and-grouping",
+        "score": 35,
+        "evidence": "The left edges align at about 24 px for the header, rows and button. The rows are evenly spaced, about 22 px tall with about 6 px gaps. Inside each row, the time and seat count are aligned in columns. However, there is a gap of about 530 px between the list and the button, and the gaps do not obviously follow an 8 pt scale. The rationale names no spacing scale.",
+        "where": "Margins (x≈24), row stack (y≈150–230), empty area (y≈230–760)",
+        "explanation": "The consistent left edge and even row stack are real strengths: the departures read as one group. But the 6 px gaps are tight, and no spacing scale is visible or stated. The huge empty area separates the action from the choice it confirms, which weakens the relationship between them.",
+        "principle": "Proximity and rhythm: a consistent spacing scale (such as multiples of 8) creates rhythm, and related items should sit closer together than unrelated ones.",
+        "improvement": "Choose an 8 pt scale and apply it everywhere. For example: 24 pt side margins, 8 pt between the route and date, 32 pt between the header and the list, 56 pt rows with 8 pt gaps, and the button pinned 24–32 pt above the bottom safe area. State this scale in your rationale.",
+        "verify": "Use your design tool's measurement or redline view to check that every gap is a multiple of 8. List the values in your rationale."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 10,
+        "evidence": "Departure rows appear to be about 22 px tall, which is roughly half of the 44 pt minimum. They are separated by only about 6 px. The Continue button appears to be about 120×28 px, also under 44 pt tall. The sold-out 11:30 row has no 'Sold out' label and is shown only by being paler. No selected state is shown for any departure. The rationale reports no sizes (estimates from pixels, assuming 1 px = 1 pt at 390 width).",
+        "where": "Departure rows (y≈150–230), Continue button (y≈760–788)",
+        "explanation": "Every interactive element appears to be below the 44 pt minimum, and the rows are crowded, so mis-taps between 07:40 and 09:10 are likely. The disabled state relies only on lightness (a value and colour change), with no text or icon. It is so faint that the departure is nearly invisible, and riders are not told why it is unavailable. Without a selected state, a rider cannot confirm which departure they picked before pressing Continue.",
+        "principle": "Touch target size (44×44 pt minimum, with spacing), and state communication that does not rely on colour alone.",
+        "improvement": "Make each departure row at least 56 pt tall with 8 pt gaps, and make the button full width and about 52 pt tall. For sold out, add the text 'Sold out' in place of the seat count, keep it readable, and add a non-colour cue such as a 'not available' icon or no chevron or radio control. Add a selected state using more than colour, for example a filled radio or check icon plus a thicker border, and show one row selected in your mockup.",
+        "verify": "Inspect each target's frame in your design tool to confirm it is 44 pt or more in both directions. Convert the screen to greyscale and check that you can still tell the sold-out, selected and unselected rows apart."
+      }
+    ]
+  }
+]
