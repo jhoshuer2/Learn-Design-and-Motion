@@ -12,6 +12,8 @@ export type DeterministicChecks = {
   files: { slot: string; role: string; width: number; height: number }[];
   /** Only when the assignment has both a final and a preview deliverable. */
   previewIsSmaller?: boolean; aspectRatioMatches?: boolean;
+  /** Pixel length of the preview's long edge, so the assessor judges legibility against real size. */
+  previewLongEdge?: number;
   rationaleWords: number;
   missingEvidence: string[]; // blocking
 };
@@ -30,6 +32,7 @@ export function runChecks(files: StoredFile[], rationale: string, deliverables: 
   return {
     files: files.map((f) => ({ slot: slotOf(f), role: f.role, width: f.width, height: f.height })),
     previewIsSmaller: final && preview ? long(preview) < long(final) : undefined,
+    previewLongEdge: preview ? long(preview) : undefined,
     aspectRatioMatches: final && preview
       ? Math.abs(final.width / final.height - preview.width / preview.height) / (final.width / final.height) < 0.05
       : undefined,

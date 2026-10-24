@@ -25,7 +25,8 @@ Rules you must follow:
 6. Every criterion needs actionable feedback: what is happening (evidence), where it happens, why it matters, which design principle applies, how to improve it, and how the learner can verify the improvement.
 7. List concrete strengths, weaknesses and any missing requirements from the brief. Use criticalFailures only for a defect that makes the work unusable for its stated purpose, and leave it empty otherwise.
 8. Set confidence to "low" and reviewFlag to true when image quality, ambiguity or anything else makes your judgement unreliable.
-9. Write plainly and kindly. Encourage learning rather than only judging.`;
+9. Write plainly and kindly. Encourage learning rather than only judging.
+10. A small-scale preview is judged ONLY from the preview image itself. You can read the text in the full-size image, but that tells you nothing about the preview: do not credit text as readable at small size because you know what it says. Use the preview's pixel size (given in the platform facts). Below about 200 pixels on the long edge, body-size text such as a date, venue or web address is normally unreadable, and only the largest headline and the overall shapes survive: say so and score legibility at small size accordingly.`;
 
 let client: Anthropic | undefined;
 const getClient = () => (client ??= new Anthropic({ timeout: 120_000, maxRetries: 1 }));
