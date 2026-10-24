@@ -4,6 +4,7 @@ export const DEMO_NAMES = [
   "motion-clarity", "brand-lockup", "figure-ground", "contrast-lab",
   // Brand Design
   "position-compare", "logo-clearspace", "lockup-misuse", "palette-roles",
+  "image-treatment", "layout-template", "voice-compare",
   // Graphic Design: typography and layout
   "type-pairing", "line-length-leading", "grid-alignment",
   // UI Design

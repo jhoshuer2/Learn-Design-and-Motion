@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: What is the main job of a layout template?
+    options: [To fix where things go so that only the content changes, To make every post identical in content, To remove the need for a logo, To make pages busier]
+    answer: To fix where things go so that only the content changes
+    explanation: A template decides the structure once. Content changes while the zones stay put, which keeps the set recognisable.
+    competency: brand-layout-system
+  - type: MULTIPLE_CHOICE
+    prompt: Where should the logo sit in a template?
+    options: [In the same place and at the same size every time, Wherever there is space, Randomly for variety, Only on the first post]
+    answer: In the same place and at the same size every time
+    explanation: A fixed logo zone is one of the quickest ways to make pieces recognisable as a family.
+    competency: brand-layout-system
+  - type: MULTIPLE_SELECT
+    prompt: Which of these should usually be fixed in a template? Select all that apply.
+    options: [Zone positions, Margins, Logo size, The exact wording of every headline]
+    answer: [Zone positions, Margins, Logo size]
+    explanation: Positions and margins and logo size give the structure. The words are the flexible content.
+    competency: brand-layout-system
+  - type: ERROR_DETECTION
+    prompt: A template works with a three-word headline, but a ten-word headline runs over the image. What is the problem?
+    options: [The template did not allow for realistic content such as a longer headline, The image is too large, The logo is too small, Nothing is wrong]
+    answer: The template did not allow for realistic content such as a longer headline
+    explanation: A template should be tested with the shortest and longest realistic content so that the zones hold.
+    competency: brand-layout-system
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the layout-template demo, which row looks like a family of posts?
+    options: [The row with image on top and headline under it and logo bottom left each time, The row where the logo and image move on every post, Neither because the words differ]
+    answer: The row with image on top and headline under it and logo bottom left each time
+    explanation: The words are identical in both rows. The fixed structure makes the second row recognisable.
+    competency: brand-layout-system
+  - type: MULTIPLE_CHOICE
+    prompt: Why allow one or two variants in a template, such as text-only?
+    options: [So the template still works when a post has no image, So the brand can change its logo, So the zones can move at random, So the template can be ignored]
+    answer: So the template still works when a post has no image
+    explanation: A few planned variants keep the structure intact when content differs, instead of forcing people to improvise.
+    competency: brand-layout-system

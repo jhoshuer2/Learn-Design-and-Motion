@@ -24,6 +24,8 @@ type Spec = {
   /** criterion key in the capstone rubric, and its competency, for each required competency */
   required: { competency: string; criterion: string; lesson: string }[];
   mandatoryCriterion: string;
+  /** Assessments of the other modules in the level: every one must be passed before the capstone opens. */
+  extraAssessments: { slug: string; files: [string, number, number][] }[];
 };
 const SPECS: Spec[] = [
   {
@@ -32,6 +34,7 @@ const SPECS: Spec[] = [
     capstoneFiles: [["business-card", 1050, 600], ["social-avatar", 600, 600], ["wide-header", 1200, 300]],
     required: [{ competency: "brand-system-consistency", criterion: "consistency-across-applications", lesson: "colour-and-type-systems" }],
     mandatoryCriterion: "consistency-across-applications",
+    extraAssessments: [{ slug: "imagery-layout-guide", files: [["final", 1200, 800], ["preview", 400, 267]] }],
   },
   {
     path: "ui-design", title: "UI Design", module: "interface-hierarchy-and-accessibility", assessment: "mobile-screen", capstone: "booking-flow-capstone", scope: "Interface hierarchy and accessibility",
@@ -42,6 +45,7 @@ const SPECS: Spec[] = [
       { competency: "accessibility-contrast", criterion: "accessible-contrast", lesson: "readable-accessible-interfaces" },
     ],
     mandatoryCriterion: "targets-and-states",
+    extraAssessments: [],
   },
 ];
 
@@ -62,13 +66,16 @@ describe.each(SPECS)("$path", (s) => {
   const spec = content.modules.find((m) => m.def.slug === s.module)!;
   let pathId: string, levelId: string, assessmentId: string, capstoneId: string;
   const lessonId: Record<string, string> = {};
+  const allLessons = content.modules.filter((m) => m.def.path === s.path).flatMap((m) => m.lessons);
+  const extraIds: string[] = [];
 
   beforeAll(async () => {
     const level = await db.level.findFirstOrThrow({ where: { tier: "BEGINNER", path: { slug: s.path } } });
     levelId = level.id; pathId = level.pathId;
     assessmentId = (await db.assignment.findUniqueOrThrow({ where: { slug: s.assessment } })).id;
     capstoneId = (await db.assignment.findUniqueOrThrow({ where: { slug: s.capstone } })).id;
-    for (const l of await db.lesson.findMany({ where: { module: { slug: s.module } } })) lessonId[l.slug] = l.id;
+    for (const l of await db.lesson.findMany({ where: { module: { levelId } } })) lessonId[l.slug] = l.id;
+    for (const e of s.extraAssessments) extraIds.push((await db.assignment.findUniqueOrThrow({ where: { slug: e.slug } })).id);
   });
 
   const learner = async (enroll = true) => {
@@ -77,7 +84,7 @@ describe.each(SPECS)("$path", (s) => {
     return u;
   };
   const answers = async (slug: string, right: boolean) => {
-    const want = new Map(spec.lessons.find((l) => l.meta.slug === slug)!.questions.map((q) => [q.prompt, q.answer]));
+    const want = new Map(allLessons.find((l) => l.meta.slug === slug)!.questions.map((q) => [q.prompt, q.answer]));
     const qs = await db.quizQuestion.findMany({ where: { lessonId: lessonId[slug] } });
     return Object.fromEntries(qs.map((q) => { const a = want.get(q.prompt)!; return [q.id, right ? (Array.isArray(a) ? a : [a]) : ["__wrong__"]]; }));
   };
@@ -87,7 +94,7 @@ describe.each(SPECS)("$path", (s) => {
     for (let i = 0; i < ci; i++) await recordBlockView(u, lessonId[slug], i);
     return submitCheck(u, lessonId[slug], await answers(slug, right));
   };
-  const passAllLessons = async (u: string) => { for (const l of spec.lessons) expect((await check(u, l.meta.slug, true)).completed, l.meta.slug).toBe(true); };
+  const passAllLessons = async (u: string) => { for (const l of allLessons) expect((await check(u, l.meta.slug, true)).completed, l.meta.slug).toBe(true); };
   const submit = async (u: string, assignmentId: string, files: [string, number, number][], marker: string) => {
     const { submissionId } = await createSubmission(u, assignmentId, {
       files: await Promise.all(files.map(async ([slot, w, h]) => ({ slot, name: `${slot}.png`, data: await img(w, h) }))),
@@ -96,6 +103,11 @@ describe.each(SPECS)("$path", (s) => {
     const out = await evaluateSubmission(submissionId, { provider: fake });
     if (out.state !== "evaluated") throw new Error(`expected evaluated, got ${out.state}`);
     return out;
+  };
+  /** Pass the first module's assessment and every other module's, as the capstone requires. */
+  const passAssessments = async (u: string) => {
+    expect(await submit(u, assessmentId, s.assessmentFiles, "[fake:score=90]")).toMatchObject({ passed: true });
+    for (const [i, e] of s.extraAssessments.entries()) expect(await submit(u, extraIds[i], e.files, "[fake:score=90]"), e.slug).toMatchObject({ passed: true });
   };
   const rows = (u: string) => db.progress.count({ where: { userId: u, nodeType: "LEVEL", nodeId: levelId } });
 
@@ -118,11 +130,21 @@ describe.each(SPECS)("$path", (s) => {
     expect(await getLessonAccess(u, lessonId[second])).toMatchObject({ allowed: true });
   });
 
+  it("keeps the capstone closed while any other module's assessment is not passed", async () => {
+    if (s.extraAssessments.length === 0) return;
+    const u = await learner();
+    await passAllLessons(u);
+    expect(await submit(u, assessmentId, s.assessmentFiles, "[fake:score=90]")).toMatchObject({ passed: true });
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: false, reason: "modules_incomplete" });
+    for (const [i, e] of s.extraAssessments.entries()) await submit(u, extraIds[i], e.files, "[fake:score=90]");
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: true });
+  });
+
   it("runs the whole path: lessons, module assessment, capstone, then an honest level record", async () => {
     const u = await learner();
     await passAllLessons(u);
     expect(await getAssignmentAccess(u, assessmentId)).toMatchObject({ allowed: true });
-    expect(await submit(u, assessmentId, s.assessmentFiles, "[fake:score=90]")).toMatchObject({ passed: true });
+    await passAssessments(u);
     expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: true, attempt: 1 });
     expect(await submit(u, capstoneId, s.capstoneFiles, "[fake:score=95]")).toMatchObject({ passed: true });
     expect(await rows(u)).toBe(1);
@@ -138,7 +160,7 @@ describe.each(SPECS)("$path", (s) => {
   it("does not unlock on a high score when a mandatory criterion is below its minimum (and the first-mandatory marker works)", async () => {
     const u = await learner();
     await passAllLessons(u);
-    await submit(u, assessmentId, s.assessmentFiles, "[fake:score=90]");
+    await passAssessments(u);
     const out = await submit(u, capstoneId, s.capstoneFiles, `[fake:score=100] [fake:set=${s.mandatoryCriterion}:50]`);
     expect(out.passed).toBe(false);
     expect(out.score).toBeGreaterThanOrEqual(85); // the weighted score alone would pass
@@ -148,7 +170,7 @@ describe.each(SPECS)("$path", (s) => {
   it.each(s.required.map((r) => [r.competency, r]))("holds the level back while %s is below 80, and unlocks once it is demonstrated again", async (_c, r) => {
     const u = await learner();
     await passAllLessons(u);
-    await submit(u, assessmentId, s.assessmentFiles, "[fake:score=90]");
+    await passAssessments(u);
     const out = await submit(u, capstoneId, s.capstoneFiles, `[fake:score=95] [fake:set=${r.criterion}:70]`);
     expect(out.passed).toBe(true); // capstone passed: 70 is above the criterion's minimum of 60
     expect(await rows(u)).toBe(0); // but the required skill is not demonstrated

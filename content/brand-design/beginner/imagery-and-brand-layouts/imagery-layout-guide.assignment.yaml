@@ -1,0 +1,29 @@
+slug: imagery-layout-guide
+kind: MODULE_ASSESSMENT
+title: Create an imagery and layout guide
+objective: "Show that you can turn a short brief into a one-page guide with image style rules, one layout template and a brand voice, and explain your choices."
+scenario: >
+  Fernhill Bakery, the small neighbourhood bakery from the brand sheet exercise, now posts on social media and prints
+  flyers. The owners describe the brand as warm, honest and unfussy: "good bread, no airs". They need a one-page guide
+  for the staff member who takes photos and writes the posts. The guide is fictional: nothing you make is used by a
+  real business.
+requirements:
+  - "State three or four checkable image style rules (light and colour, crop, subject, treatment) with one do and one don't example, shown or described."
+  - "Show one layout template with labelled zones for image, headline, caption and logo, and say what is fixed and what can change."
+  - "Show the template used for two different pieces of content so the reuse is visible."
+  - "Write a brand voice of three traits, with a sample headline and a sample caption that follow it."
+  - "Make every choice fit the brief: warm, honest and unfussy."
+  - "In your rationale explain three design decisions, each tied to the brand. Give the measurements you used: proportions, margins, sizes."
+constraints:
+  - "Original work only. Any image, illustration or typeface must be one you are licensed to use. Simple drawn placeholders are fine."
+  - "Do not copy an existing brand guide."
+  - "Use only the information in the brief. Do not invent products, prices or a street address."
+deliverables:
+  - { key: final, label: Guide, description: "PNG, JPEG or WebP export of the full one-page guide.", role: final, required: true }
+  - { key: preview, label: Small-scale preview, description: "The same guide exported at about 400 px on its long side, to check that the structure still reads.", role: preview, required: true }
+  - { key: process, label: Process image, description: "A sketch or an earlier version, if you want to show your process.", role: process, required: false }
+difficulty: 2
+estimatedMinutes: 120
+rubric: { slug: imagery-layout-guide, version: 1 }
+maxAttempts: 3
+status: DRAFT

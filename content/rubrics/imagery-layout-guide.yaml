@@ -1,0 +1,50 @@
+slug: imagery-layout-guide
+title: Imagery and layout guide
+version: 1
+threshold: 80
+criteria:
+  - key: image-style-rules
+    title: Image style rules
+    weight: 25
+    mandatory: true
+    minScore: 60
+    competency: imagery-style
+    description: |
+      Does the guide state three or four rules that are specific and checkable on a finished image (light and colour, crop, subject, treatment), with a do and a don't example, and do they fit a warm, honest, unfussy bakery? You cannot judge photographs that are only described; judge the rules and any examples that are shown.
+      Strong (85-100): specific, checkable rules with clear do and don't examples that fit the brand.
+      Adequate (60-84): sound rules, but one is vague or the examples are thin.
+      Weak (0-59): vague rules ("nice, authentic photos"), no examples, or rules that do not fit the brand.
+  - key: layout-template
+    title: Layout template
+    weight: 25
+    mandatory: true
+    minScore: 60
+    competency: brand-layout-system
+    description: |
+      Is there one template with clearly labelled zones for image, headline, caption and logo, with fixed and flexible parts stated, and is it shown used for two different pieces of content? You cannot measure exact proportions from pixels: judge what is visible and compare with the proportions the rationale reports.
+      Strong (85-100): zones are clear and consistent, fixed against flexible is stated, and the two examples visibly follow it.
+      Adequate (60-84): a usable template, but the reuse or the fixed against flexible rule is only partly shown.
+      Weak (0-59): no real template, zones move between examples, or only one example.
+  - key: brand-voice
+    title: Brand voice
+    weight: 20
+    competency: brand-voice
+    description: |
+      Does the guide give three voice traits and a sample headline and caption that follow them, in a voice that suits the bakery?
+      Strong (85-100): specific traits, and sample lines that are concrete and match each other.
+      Adequate (60-84): traits are named but lines are generic or only partly match.
+      Weak (0-59): no voice, generic copy, or a headline and caption in different voices.
+  - key: legibility-at-small-size
+    title: Legibility at small size
+    weight: 15
+    mandatory: true
+    minScore: 60
+    description: |
+      Judge the small-scale preview only from the preview image itself. Does the structure of the guide (the sections, the template and its zones) still read, and can headings be told from body text?
+      Strong (85-100): the sections and the template remain clear. Adequate (60-84): the structure survives but details are strained. Weak (0-59): the structure is lost, or the preview is missing or not a smaller version of the final.
+  - key: design-rationale
+    title: Design rationale
+    weight: 15
+    description: |
+      Does the rationale explain three real decisions tied to the brand, report the measurements used (proportions, margins, sizes), and match what is visible? Judge reasoning, not writing style.
+      Strong (85-100): three specific decisions with reasons and measurements that match the work. Adequate (60-84): decisions named, measurements thin or missing. Weak (0-59): generic statements, or claims the work does not show.

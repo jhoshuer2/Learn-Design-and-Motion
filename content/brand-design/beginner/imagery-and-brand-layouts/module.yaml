@@ -1,0 +1,15 @@
+discipline: brand-design
+path: brand-design
+level: BEGINNER
+slug: imagery-and-brand-layouts
+title: Imagery and Brand Layouts
+position: 1
+objectives:
+  - Choose and treat images so that a set of them feels like one brand.
+  - Build a simple layout template that can be reused across different content.
+  - Write headlines and captions in a consistent brand voice.
+status: DRAFT
+lessons:
+  - image-style-and-treatment
+  - brand-layout-templates
+  - voice-in-headlines-and-captions

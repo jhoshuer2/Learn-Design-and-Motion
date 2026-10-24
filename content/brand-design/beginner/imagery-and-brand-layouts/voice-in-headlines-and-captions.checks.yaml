@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: What is a brand voice?
+    options: [The way a brand sounds in its writing described as specific traits, A recording of the founder, The loudest message in a campaign, A slogan]
+    answer: The way a brand sounds in its writing described as specific traits
+    explanation: A voice is a set of traits with examples. It guides every line a brand writes.
+    competency: brand-voice
+  - type: MULTIPLE_CHOICE
+    prompt: Which line is more specific?
+    options: [Cardamom buns on Saturdays while they last, Delicious baked goods for everyone, Quality you can trust, The best in town]
+    answer: Cardamom buns on Saturdays while they last
+    explanation: A day and a flavour and a limit make a line sound like a real shop. The others could belong to anyone.
+    competency: brand-voice
+  - type: MULTIPLE_SELECT
+    prompt: Which of these help a voice stay consistent? Select all that apply.
+    options: [Three or four traits with examples, Do and don't lines, Habits such as short sentences, Writing each line in a different style]
+    answer: [Three or four traits with examples, Do and don't lines, Habits such as short sentences]
+    explanation: Traits and examples and habits give writers something to follow. Changing style each time removes consistency.
+    competency: brand-voice
+  - type: ERROR_DETECTION
+    prompt: A friendly bakery's headline is warm, but its caption says Our artisans prepare products using premium ingredients. What is the problem?
+    options: [The caption sounds corporate so the two lines do not sound like the same brand, The caption is too short, The headline is too warm, Nothing is wrong because both are correct English]
+    answer: The caption sounds corporate so the two lines do not sound like the same brand
+    explanation: Voice must stay consistent between headline and caption. A stiff caption under a warm headline breaks the voice.
+    competency: brand-voice
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the voice-compare demo, which version sounds most like a real neighbourhood bakery?
+    options: [The warm plain specific version, The shouting generic version, The corporate vague version]
+    answer: The warm plain specific version
+    explanation: It names a real item and a day, uses short sentences and sounds like a person. The others sound generic.
+    competency: brand-voice
+  - type: MULTIPLE_CHOICE
+    prompt: Why prefer one real detail to three adjectives?
+    options: [A detail makes a line sound specific and believable, Adjectives are not allowed in headlines, Details are shorter than adjectives, It makes headlines longer]
+    answer: A detail makes a line sound specific and believable
+    explanation: Real details give a reader something to picture. Strings of adjectives make a brand sound like every other.
+    competency: brand-voice

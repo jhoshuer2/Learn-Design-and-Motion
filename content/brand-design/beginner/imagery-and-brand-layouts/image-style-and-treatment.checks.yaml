@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: What makes a set of images feel like one brand?
+    options: [The same choices of light and colour and crop and treatment repeated every time, The same subject in every picture, The use of a very strong filter, Using as many styles as possible]
+    answer: The same choices of light and colour and crop and treatment repeated every time
+    explanation: Consistency comes from repeated choices. Subjects can vary as long as light, crop and treatment stay the same.
+    competency: imagery-style
+  - type: MULTIPLE_CHOICE
+    prompt: Which image style rule is easiest to check on a finished picture?
+    options: [The subject fills at least two thirds of the frame, Photos should feel authentic, Pictures should be nice, Use good pictures]
+    answer: The subject fills at least two thirds of the frame
+    explanation: A rule is useful when someone can look at a finished image and say yes or no. Vague words cannot be checked.
+    competency: imagery-style
+  - type: MULTIPLE_SELECT
+    prompt: Which of these belong in a brand image style? Select all that apply.
+    options: [Light and colour, Crop and distance, Treatment such as a caption bar, The photographer's lunch order]
+    answer: [Light and colour, Crop and distance, Treatment such as a caption bar]
+    explanation: Light and colour and crop and treatment are repeatable choices that shape how images look. A lunch order has no effect on the images.
+    competency: imagery-style
+  - type: ERROR_DETECTION
+    prompt: A bakery's posts use warm close-up photos, except one that is a cold blue wide shot with a heavy filter. What is the problem?
+    options: [The image breaks the brand's light and crop and treatment rules so the set no longer feels like one brand, The image is too colourful, The bakery posted too many pictures, Nothing is wrong because every picture is different]
+    answer: The image breaks the brand's light and crop and treatment rules so the set no longer feels like one brand
+    explanation: One image that ignores the shared choices weakens the whole set, even if it is a good picture on its own.
+    competency: imagery-style
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the image-treatment demo, which row feels like one brand?
+    options: [The row with the same warm light and tight crop and caption bar, The row where every tile has a different filter, Neither because the subjects differ]
+    answer: The row with the same warm light and tight crop and caption bar
+    explanation: The subjects are the same in both rows. Only the repeated treatment makes the second row look like a set.
+    competency: imagery-style
+  - type: MULTIPLE_CHOICE
+    prompt: Why keep both do and don't examples with an image style?
+    options: [One image that breaks a rule shows the rule more clearly than a paragraph does, They make the guide longer, They replace the rules, They are required by law]
+    answer: One image that breaks a rule shows the rule more clearly than a paragraph does
+    explanation: Examples of what to avoid make the boundary of the style visible, which words alone often fail to do.
+    competency: imagery-style
