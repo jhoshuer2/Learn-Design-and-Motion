@@ -1,0 +1,119 @@
+[
+  {
+    "sample": "campaign-consistent",
+    "run": 1,
+    "assignment": "contrast-campaign-capstone",
+    "expect": "consistency-across-pieces >= 70; accessible-contrast >= 70; legibility-across-formats >= 65",
+    "ms": 54153,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5756,
+    "outputTokens": 4970,
+    "costUsd": 0.1224,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 84,
+    "passed": false,
+    "failedMandatory": [],
+    "scores": {
+      "accessible-contrast": 88,
+      "campaign-hierarchy": 86,
+      "consistency-across-pieces": 86,
+      "contrast": 86,
+      "design-rationale": 64,
+      "legibility-across-formats": 85,
+      "typography": 85
+    },
+    "strengths": [
+      "A clear, coherent campaign system: dark name block, cream serif caps, sans details and a single blue CTA, adapted to each format.",
+      "Contrast is selective: blue is reserved for the call to action, so the action stands out without anything else shouting.",
+      "Essential text appears comfortably above accessibility minimums in all pieces, and three ratios are reported and look plausible.",
+      "The banner sensibly inverts to a dark ground and uses a left-to-right split, keeping the name large and the CTA distinct."
+    ],
+    "weaknesses": [
+      "The poster has a large empty gap between the place line and the CTA, which detaches the action from the event details.",
+      "The square adds 'Creative conference', which appears only there and goes beyond the four required pieces of information.",
+      "The rationale describes choices but gives thin reasons, does not mention the audience, and uses its third point to report measurements rather than explain a decision.",
+      "The lighter grey used for the place and URL is not among the reported contrast measurements."
+    ],
+    "missingRequirements": [
+      "The rationale does not clearly explain three design decisions with reasons tied to contrast. The third point is a measurement report, not a decision.",
+      "Possible constraint issue: the square includes an extra line ('Creative conference') beyond the four required pieces of event information."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "accessible-contrast",
+        "score": 88,
+        "evidence": "Each piece pairs essential text with strongly contrasting grounds: cream serif name on a near-black block (poster, square) or near-black ground (banner); dark text on cream for the date and place; white bold 'Register now' on a saturated blue button. The place line and URL use a slightly lighter dark grey than the date, but still appear well above 4.5:1. The rationale reports 17:1 (cream on black), 15:1 (dark ink on cream) and 8.5:1 (white on blue). These look plausible from the pixels, but they are my estimates, not measurements.",
+        "where": "All three pieces. The lightest essential text is the grey place line and URL on the poster and square, and the small cream date/place line in the banner.",
+        "explanation": "Every essential pair appears clearly above the minimums, including the small banner, and the reported ratios match what is visible. The only gap is that the lighter grey used for the place and URL is not among the three reported pairs.",
+        "principle": "WCAG text contrast: 4.5:1 for normal text, 3:1 for large text.",
+        "improvement": "Add the grey-on-cream pair (place line and URL) and the banner's small date/place line on dark to your reported measurements, so every essential colour pair is covered.",
+        "verify": "Sample the hex values of the grey text, the cream and the banner ground. Run them through a contrast checker such as WebAIM and confirm each is at least 4.5:1."
+      },
+      {
+        "criterionId": "campaign-hierarchy",
+        "score": 86,
+        "evidence": "Poster: large serif name in a dark block, then the bold date and regular place, then the blue CTA and URL near the bottom. Square: the same order, compressed. Banner: name and date/place stacked on the left, CTA button on the right, so it reads left to right. In the poster, a large empty gap separates the place line from the CTA.",
+        "where": "Poster middle (the gap between about y=570 and y=900). The banner's left-to-right layout.",
+        "explanation": "In every piece, contrast of size, value and colour gives a correct and immediate order: what, then when and where, then what to do. The poster's big gap does isolate the CTA, but it also makes the lower half feel detached from the event details.",
+        "principle": "Visual hierarchy through contrast of scale, weight and colour. Proximity groups related information.",
+        "improvement": "On the poster, consider pulling the CTA group up, or using the space deliberately (for example, enlarging the name block). That way the CTA feels like the next step rather than a separate footer.",
+        "verify": "Do a five-second test with someone unfamiliar with the event. Ask what they noticed first, second and third in each piece, and whether the CTA felt connected to the details."
+      },
+      {
+        "criterionId": "consistency-across-pieces",
+        "score": 86,
+        "evidence": "All three share the near-black block or ground, cream serif caps for the name, a sans for details, a single blue CTA button and left alignment. Each layout is adapted to its shape: stacked on the poster, compact on the square, horizontal split on the banner. There is one drift: the square alone adds the subtitle 'Creative conference', and the banner omits the URL (reasonable for a clickable banner).",
+        "where": "Social square subtitle inside the dark block. Banner without the URL line.",
+        "explanation": "This is clearly one system, thoughtfully adapted rather than cropped. The subtitle that appears in only one piece is a small inconsistency in content.",
+        "principle": "Visual systems: keep shared tokens (type, colour, contrast logic) and adapt the layout to each format.",
+        "improvement": "Either remove 'Creative conference' from the square, or use it consistently. Note that the brief asks for only the four pieces of event information, so removing it is the safer choice.",
+        "verify": "Lay the three pieces side by side and list the text in each. Confirm that the same content set appears everywhere, apart from deliberate format-driven omissions that you explain in the rationale."
+      },
+      {
+        "criterionId": "contrast",
+        "score": 86,
+        "evidence": "Value contrast does the main structural work. The dark block versus the cream ground separates the name from the details. Bold dark date versus lighter regular place separates levels within a group. The single saturated blue is reserved for the CTA, so colour contrast singles out the action. The banner inverts to a dark ground, with the blue button still standing out.",
+        "where": "All pieces. The blue appears only on the CTA buttons.",
+        "explanation": "Contrast is selective and deliberate. Only three emphasis levels compete, and nothing else shouts. The poster's large empty area slightly weakens the grouping, but it does not weaken the contrast itself.",
+        "principle": "Figure/ground and selective emphasis: reserve the strongest accent for the one action you want.",
+        "improvement": "Keep the blue exclusive to the CTA. If you want more drama on the poster, scale up the dark name block rather than adding new colours.",
+        "verify": "View each piece in greyscale and blurred. The name should read first, and the CTA should still stand out by value as well as by hue."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 64,
+        "evidence": "The rationale names three points: a shared system (near-black, cream Georgia, Arial, one blue for the CTA), the reading order including a dark banner ground, and the measured ratios. These match the work visually. However, the reasons are thin. It does not explain why a dark block or a single blue helps this audience. The claim that a dark ground makes the name 'stay large at 30 points' is not explained, and points are an unusual unit for a web banner. The third point reports measurements rather than explaining a decision. The audience is not mentioned, and the square's 'Creative conference' line is not addressed.",
+        "where": "The learner rationale (100 words).",
+        "explanation": "The rubric asks for three decisions tied to contrast and to the audience, with reasons. Here the decisions are named but mostly described rather than justified.",
+        "principle": "Design reasoning: decision, then the contrast mechanism, then the effect on the audience.",
+        "improvement": "For each decision, state the choice, the contrast it creates and why that helps conference-goers. For example: 'One saturated blue only on the CTA, so the action is the single colour hit and scanners find it instantly.' Explain the banner's inversion in terms of how it stands out on a typically light web page.",
+        "verify": "Check that each of your three paragraphs answers 'what did I choose, what contrast does it create, and why does that help this audience?'"
+      },
+      {
+        "criterionId": "legibility-across-formats",
+        "score": 85,
+        "evidence": "Judged from the 728×90 banner at its native size. The serif name is large and crisp. 'Register now' is bold white on blue and clearly readable. The date and place line ('Sat 14 March, Harbour Hall, Pier 4') is the smallest text, at roughly typical web body size in a slightly muted cream. It is readable at this size but is the most strained item. The order still reads name, then details, then CTA.",
+        "where": "Banner: the second line on the left.",
+        "explanation": "All essential text and the hierarchy survive in the smallest piece. The details line has the least margin and would be first to fail if the banner were scaled down.",
+        "principle": "Minimum legible size and weight at the smallest output format.",
+        "improvement": "Consider nudging the details line up slightly in size or weight, or making it full cream rather than muted. This gives more margin on low-density screens.",
+        "verify": "View the banner at 100% on a standard (non-retina) screen from normal viewing distance. Also check that the details line stays readable at 90% browser zoom out."
+      },
+      {
+        "criterionId": "typography",
+        "score": 85,
+        "evidence": "Two faces are used consistently: a bold serif in caps for the event name (described as Georgia) and a sans for details and the CTA (described as Arial). Size and weight build the levels: bold date, regular place, bold CTA, small URL. Left alignment and line lengths are comfortable. I cannot confirm the exact font files, only how they render. The serif name leaves noticeable empty space on the right of the poster block.",
+        "where": "All pieces. The poster name block.",
+        "explanation": "This is a clear, purposeful two-face system that respects the typeface limit and is applied consistently. Only minor refinements remain, such as making the name better fill its block on the poster.",
+        "principle": "Typographic hierarchy through size and weight, and a limited, complementary type palette.",
+        "improvement": "On the poster, consider sizing the name, or the block's width, so that the type and block relate more tightly. Keep the same weight steps across all pieces.",
+        "verify": "Make a simple type spec table (role, face, weight and size per piece) and check that each role uses the same face and weight everywhere."
+      }
+    ]
+  }
+]

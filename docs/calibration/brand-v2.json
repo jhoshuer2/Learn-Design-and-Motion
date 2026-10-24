@@ -1,0 +1,221 @@
+[
+  {
+    "sample": "brand-strong",
+    "run": 1,
+    "assignment": "mini-brand-sheet",
+    "expect": "passes (>= 80); logo-and-lockup and legibility >= 70; colour and type systems >= 70",
+    "ms": 74444,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5277,
+    "outputTokens": 7211,
+    "costUsd": 0.1653,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "medium",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 71,
+    "passed": false,
+    "failedMandatory": [],
+    "scores": {
+      "brief-fit": 70,
+      "colour-system": 72,
+      "design-rationale": 55,
+      "legibility-at-small-size": 74,
+      "logo-and-lockup": 76,
+      "type-system": 78
+    },
+    "strengths": [
+      "A warm, earthy palette (Crust, Cream, Ink, Ember, Sage) that suits 'warm, honest, unfussy', with every colour labelled by name, hex and role.",
+      "A clean, readable wordmark in a sturdy bold serif, with 'BAKERY' neatly aligned to the left edge of the F.",
+      "Strong, clear hierarchy between the headline serif and the body sans, with both typefaces named on the sheet.",
+      "A calm, well-organised layout with clear section headings that a printer could navigate easily.",
+      "The rationale reports concrete values: hex codes, type sizes, an F-height clearspace and a 32 mm minimum width."
+    ],
+    "weaknesses": [
+      "The leaf mark is generic and does not connect to bread, baking or the 'Fernhill' name.",
+      "Crust is labelled primary but is not used as the primary anywhere on the sheet. Ember, the 'sparing' accent, is the most visible brand colour.",
+      "The clearspace rule is written but not drawn on the lockup, and the logo in the rule box drops 'BAKERY' without explanation.",
+      "Two of the three rationale decisions describe what was made rather than why it fits the brand or audience.",
+      "Type sizes are given in points without clarifying print or screen use, and 20 pt is very large for printed body text.",
+      "At small size, 'BAKERY', the leaf vein and the rule text are at or below the edge of legibility."
+    ],
+    "missingRequirements": [
+      "The usage rule is not clearly drawn. The clearspace is stated in text, but no measured clearspace is shown on the lockup.",
+      "The rationale does not tie decisions 2 and 3 to the brand's position or audience."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "brief-fit",
+        "score": 70,
+        "evidence": "The palette is warm and earthy: Crust brown, Cream, near-black Ink, orange Ember and a muted Sage. The wordmark is a sturdy bold serif. The layout is plain and uncluttered, and the sample line reads 'Good bread, no airs. Sourdough, pastries and coffee.' The mark is a simple orange leaf. Nothing in the mark or type suggests bread or baking, so without the word BAKERY it could belong to a tea shop, garden centre or skincare brand. The rationale links Ember and the leaf to 'warm and unfussy' for families, but it does not explain why a leaf suits a bakery or what in the identity speaks to office workers beyond text contrast.",
+        "where": "Logo and lockup (top left); palette swatches; type sample line; rationale, first decision",
+        "explanation": "Colour and tone fit 'warm, honest, unfussy' well. The mark is the most generic part of the identity, and it is also the part people will remember most.",
+        "principle": "Distinctiveness and relevance: a mark should connect to what the business is or does, not only to a general mood.",
+        "improvement": "Keep the palette and the plain layout. Push the mark towards the bakery. For example, draw the leaf so it also reads as a scored sourdough loaf or a wheat ear, or use a fern frond that echoes the name 'Fernhill'. In the rationale, say in one line why the mark suits a neighbourhood bakery, and one line on what the identity offers a busy office worker, such as quick recognition on a sign or a cup.",
+        "verify": "Show the mark without the name to two or three people and ask what kind of business it belongs to. If most of them say bakery or bread, the mark is doing its job."
+      },
+      {
+        "criterionId": "colour-system",
+        "score": 72,
+        "evidence": "There are five colours, each with a name, hex value and role: Crust #8a5a2b primary, Cream #fbf4e8 background, Ink #2b1d12 text, Ember #c8561e 'accent, sparingly', Sage #5d7a5a support. Ink on Cream reads very clearly. The rationale reports 15:1, and from the stated hex values I estimate roughly 15:1 too, but I cannot measure this from pixels. Crust is labelled primary but is never used on the sheet outside its swatch. The most visible brand colour is Ember, in the leaf mark and the dashed rule box. Sage is labelled 'support' with no indication of what it supports. Proportions are not shown. From the stated hex values, Ember on Cream is roughly 4:1, which is fine for the mark and large text but borderline for small text. That is my estimate, not a measurement.",
+        "where": "Palette and roles row; leaf mark; dashed rule box",
+        "explanation": "The roles are written down, but the sheet does not show them in action. A printer or sign maker could reasonably make Ember the main colour, since that is how the sheet itself behaves. 'Support' is too vague to act on.",
+        "principle": "Colour roles and proportion: a dominant colour, supporting neutrals and a restrained accent, shown rather than only labelled.",
+        "improvement": "Either use Crust visibly as the primary (for example a Crust sign or bag mock-up, or a Crust version of the lockup) or relabel the palette to match what you actually do. Add a simple proportion bar, such as Cream 60%, Crust 25%, Ink 10%, Ember and Sage 5%. Give Sage a concrete job, such as 'seasonal or coffee labels'. Add a note that Ember is for the mark and large text only.",
+        "verify": "Run Ink/Cream, Crust/Cream and Ember/Cream through a WCAG contrast checker. Confirm that any small text pairing reaches at least 4.5:1, and check that your proportion bar matches how the colours are used on the sheet."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 55,
+        "evidence": "Values are reported clearly: the hex codes, Georgia Bold 44 pt, Arial 20 pt, and the F-height clearspace with a 32 mm minimum width. The first decision makes real links: Ember and the leaf to warmth for families, and Ink on Cream contrast to office workers reading. The second decision lists the palette roles but does not say why these colours or roles suit the bakery. The third decision says the type roles are 'named and shown so a printer can follow them'. That restates the assignment requirement rather than explaining why Georgia and Arial fit 'warm, honest, unfussy'. One claim does not match the work: Crust is called the primary, but the sheet does not use it as one. The mention of a menu adds a context the brief does not give, though this is minor.",
+        "where": "Learner rationale, second and third decisions; palette row",
+        "explanation": "Two of the three decisions describe what was made rather than why it suits this brand and audience. That is the core of this criterion.",
+        "principle": "Design reasoning: each decision should link a choice, a reason grounded in the brief or audience, and the value chosen.",
+        "improvement": "Rewrite decisions 2 and 3 using a choice-because-value pattern. For example: 'I paired a sturdy bold serif for headlines with a plain sans for body because the owners want honest and unfussy; the serif feels traditional like a baker's sign, the sans keeps notices quick to read for people on their way to work (44 pt / 20 pt).' Make the stated roles match the sheet, particularly Crust as primary.",
+        "verify": "For each decision, check that the sentence contains a specific choice, a reason that mentions the brief or audience, and a value. Then point to where each claim is visible on the sheet."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 74,
+        "evidence": "Judged only from the 400 x 267 px preview. The leaf mark and the word 'Fernhill' remain clear, and so does 'Headline: Georgia Bold'. The five swatches and the overall sheet structure survive well. The bold swatch names are small but just readable. The role labels under them ('primary', 'background' and so on) and the section headings are at the edge of legibility. 'BAKERY' under the wordmark is very small, thin and light grey, and barely holds up. The rule text inside the dashed box is too small to read reliably at this size. The thin pale vein line in the leaf is close to disappearing.",
+        "where": "Preview image: 'BAKERY' line, swatch role labels, text in the dashed rule box, leaf vein",
+        "explanation": "The logo and name survive, which matters most. The descriptor and the usage rule are the parts most likely to be lost when the logo is printed small or seen from a distance on a sign.",
+        "principle": "Scalability: a lockup and its supporting text need enough size, weight and contrast to survive reduction.",
+        "improvement": "Make 'BAKERY' a little larger, heavier or darker (Ink rather than mid grey), or tighten its tracking slightly. Consider dropping the white vein at small sizes, or making it thicker. Enlarge the rule text and the role labels slightly.",
+        "verify": "Export the lockup at your 32 mm minimum width and print it, or view the sheet at 25% zoom. Check whether 'BAKERY', the leaf shape and the labels can still be read without already knowing what they say."
+      },
+      {
+        "criterionId": "logo-and-lockup",
+        "score": 76,
+        "evidence": "The mark is a simple orange leaf with a thin pale vein. It sits to the left of a bold serif 'Fernhill', with 'BAKERY' in small, widely spaced grey capitals below. 'BAKERY' aligns with the left edge of the F, which looks deliberate and tidy. The leaf is roughly centred on the wordmark's height and well proportioned to it. The name is easy to read. There are some inconsistencies. The version in the rule box omits 'BAKERY', and this variant is neither labelled nor explained. 'BAKERY' is much lighter and smaller than the wordmark, so it feels detached. The pale vein extends slightly beyond the leaf onto the cream background, where it nearly vanishes. The clearspace is described in words, but it is not drawn on the lockup, so the spacing system is not shown visually.",
+        "where": "Top-left lockup; lockup inside the dashed rule box",
+        "explanation": "The core lockup is usable and clean. A printer could still be unsure which version is official and how much space to leave around it.",
+        "principle": "Lockup consistency and clearspace: one defined arrangement with visible spacing rules, plus any approved variants clearly labelled.",
+        "improvement": "In the rule box, show the full primary lockup including 'BAKERY'. Draw the clearspace directly on it, with lines or brackets each equal to the height of the F on all four sides. If you want a short 'Fernhill'-only version, label it as an approved secondary lockup. Strengthen 'BAKERY' slightly so it belongs to the wordmark, and keep the leaf vein inside the leaf shape.",
+        "verify": "Hand the sheet to someone else and ask them to place the logo on a blank page with the correct spacing. If they can do it without asking you a question, the lockup and rule are clear."
+      },
+      {
+        "criterionId": "type-system",
+        "score": 78,
+        "evidence": "Two roles are named and shown: 'Headline: Georgia Bold' set large in a bold serif, and 'Body: Arial Regular' set in a plain sans with a sample sentence. The contrast between the roles is strong in style, weight and size, and the hierarchy is immediate. The pairing of a classic serif with a neutral sans broadly suits 'honest, unfussy', although both are very common default faces. I cannot confirm the exact fonts from pixels. The rendered headline serif looks wide and heavy, so check that the file really uses Georgia as stated. The rationale gives 44 pt and 20 pt, but on a 1200 px sheet it is unclear whether these are points for print or pixels on screen. For print body text, 20 pt would be unusually large. The section labels use a third style, tracked grey capitals, which is not listed as a role.",
+        "where": "Type section (bottom left); section headings; rationale, third decision",
+        "explanation": "The system is sound and readable. Clearer size units and a reason for the pairing would make it dependable for a printer.",
+        "principle": "Typographic hierarchy and specification: roles need named faces, unambiguous sizes and a reason they suit the brand.",
+        "improvement": "State the sizes for a real use, for example 'Headline 28–36 pt, Body 10–12 pt for print flyers'. Either add the tracked capitals as a third 'label' role or set those headings in one of your two roles. Add one line on why the pairing fits: a traditional serif for warmth and craft, and a plain sans for quick, honest information.",
+        "verify": "Print a sample at your stated sizes on A5 or A4 and check that body text reads comfortably at arm's length. Confirm in your design file that the fonts are Georgia Bold and Arial Regular."
+      }
+    ]
+  },
+  {
+    "sample": "brand-strong",
+    "run": 2,
+    "assignment": "mini-brand-sheet",
+    "expect": "passes (>= 80); logo-and-lockup and legibility >= 70; colour and type systems >= 70",
+    "ms": 70785,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5277,
+    "outputTokens": 6574,
+    "costUsd": 0.1526,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "medium",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 73,
+    "passed": false,
+    "failedMandatory": [],
+    "scores": {
+      "brief-fit": 70,
+      "colour-system": 74,
+      "design-rationale": 62,
+      "legibility-at-small-size": 76,
+      "logo-and-lockup": 78,
+      "type-system": 78
+    },
+    "strengths": [
+      "The main lockup is clean and confident; 'Fernhill' is very easy to read at both sizes.",
+      "The palette is a sensible size, and every colour is labelled with a name, hex value and role.",
+      "Clear headline/body hierarchy, and the logo reuses the type system, which keeps the identity consistent.",
+      "Copy is drawn only from the brief ('Good bread, no airs', sourdough, pastries and coffee), with no invented products, prices or address.",
+      "The usage rule gives concrete values (F-height clearspace, 32 mm minimum width) that a printer can act on.",
+      "The well-organised three-zone layout survives at preview size."
+    ],
+    "weaknesses": [
+      "The colour roles contradict use: the 'sparingly used' accent Ember is the logo colour, and the primary Crust appears only in its swatch.",
+      "The leaf mark doesn't clearly signal a bakery or the 'fern' in Fernhill, so it risks feeling generic.",
+      "The clearspace rule is written, not drawn: there are no F-height markers, and the logo sits off-centre in the rule box.",
+      "The rule box shows a second lockup without 'BAKERY' that is not labelled as an approved variant.",
+      "Two of the three rationale decisions describe the sheet rather than explaining choices for the brand or audience.",
+      "The hex values, role labels and rule text become marginal at preview size."
+    ],
+    "missingRequirements": [
+      "The usage rule is not clearly drawn: the clearspace is described in text but not shown visually.",
+      "Rationale decisions 2 and 3 are not tied to the brand's position or audience, as the brief asks for all three."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "brief-fit",
+        "score": 70,
+        "evidence": "The sheet uses a warm, earthy palette (Crust brown, Cream, Ink near-black, Ember orange, Sage green) on a cream background. The wordmark is a sturdy bold serif with a small leaf mark. The body sample reads 'Good bread, no airs. Sourdough, pastries and coffee.', which comes straight from the brief. The rationale links Ember and the 'rounded, friendly leaf mark' to warm and unfussy, and the Ink-on-Cream contrast to office workers.",
+        "where": "Whole sheet; logo top left; palette row; type sample; rationale decision 1.",
+        "explanation": "Colour and the bold serif feel warm and honest, and the tone is unfussy. Two choices are more generic than the brief deserves. The leaf mark doesn't say 'bakery', and could belong to a tea shop, garden centre or skincare brand. Arial is a neutral default that adds no warmth. Only one of the three rationale points explains how the identity serves families and office workers.",
+        "principle": "Brand expression: every element should carry the brand's position, not just be inoffensive.",
+        "improvement": "Make the mark connect the name and the trade: for example a simple fern frond, a wheat ear, or a loaf scored with a fern pattern. Consider a body face with a little more warmth, or justify Arial as plain and honest. Add one sentence on how the look works for both families and office workers.",
+        "verify": "Show the mark without the name to two or three people and ask what kind of business it is for. If most say 'bakery' or 'bread', the mark fits the brief."
+      },
+      {
+        "criterionId": "colour-system",
+        "score": 74,
+        "evidence": "There are five swatches, each labelled with a name, hex value and role: Crust #8a5a2b primary, Cream #fbf4e8 background, Ink #2b1d12 text, Ember #c8561e 'accent, sparingly', Sage #5d7a5a support. The rationale reports 15:1 for Ink on Cream. That is plausible from these hex values, but I cannot measure it from pixels. Section headings appear in a lighter grey-brown on cream; by eye this looks readable but lower contrast. The logo mark itself is drawn in Ember. Crust, the stated primary, appears only in its swatch.",
+        "where": "Palette row; logo mark; section headings; rationale decision 1 and 2.",
+        "explanation": "The palette is a sensible size and the roles are labelled, which helps a printer. However, the roles don't match how the colours are used. The 'sparingly used' accent is the logo colour. The 'primary' colour is not used anywhere on the sheet. 'Support' doesn't say what Sage is for. A sign maker would not know which colour the fascia or text on coloured grounds should be.",
+        "principle": "Colour roles and proportion: the primary should dominate, the accent should be rare, and each role should describe a real use.",
+        "improvement": "Decide whether the logo is in Crust (primary) or Ember (accent), and make the roles agree. Show proportions, for example with a proportion bar or a note like 60% Cream / 25% Crust / 10% Ink / 5% Ember. Give Sage a concrete job, or drop it. List approved text pairings, for example Cream text on Crust and Ink on Cream.",
+        "verify": "Measure each text pairing in a contrast checker (aim for at least 4.5:1 for small text, including the grey section headings). Check that every colour on the sheet is used in the way its label says."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 62,
+        "evidence": "Decision 1 is specific: Ember #c8561e and the leaf mark express warmth, and Ink #2b1d12 on Cream is claimed at 15:1 contrast for office workers. Decision 2 restates the palette roles but gives no reason tied to the brand or audience. Decision 3 names Georgia Bold 44 pt and Arial 20 pt, and gives the reason 'so a printer can follow them'. That is a production reason, not a brand or audience one. Calling Ember an accent 'used sparingly' conflicts with the logo being drawn in Ember.",
+        "where": "Learner rationale; logo mark colour.",
+        "explanation": "Only one of the three decisions does what the brief asks: a choice, a reason linked to position or audience, and values. The other two describe what is on the sheet rather than why it was chosen. The rubric asks for reasoning that matches the work.",
+        "principle": "Design rationale: decision → reason tied to the brand or user → value or evidence.",
+        "improvement": "Rewrite decisions 2 and 3 as reasons. For example: why Crust as the primary suits a bread-led, 'no airs' bakery. Why a bold serif feels honest and established to families, while a plain sans keeps menus quick to scan for office workers. State whether 44/20 pt is for print, and on what format. Resolve the Ember-as-logo contradiction, or explain it.",
+        "verify": "For each decision, check that you can answer 'why this, for these people?' in one sentence, and that the answer is visibly true on the sheet."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 76,
+        "evidence": "Judged from the 400×267 preview only. The leaf mark and the 'Fernhill' wordmark stay clearly readable, and the sheet's three-zone structure (logo, palette, type plus rule box) survives. 'BAKERY' is very small and faint but still distinguishable as a word. The bold swatch labels look just about readable. At this size the hex characters are tiny, and similar characters such as 8, a and 5 risk being confused. The role words below them (primary, background, text…) and the two-line rule text are at the edge of legibility.",
+        "where": "Preview image: logo top left, swatch labels, rule box bottom right.",
+        "explanation": "The logo and name pass comfortably. The smallest information, which is the exact values and the rule a printer must follow, is what degrades first.",
+        "principle": "Scalability and hierarchy: critical specification text needs a size floor, and fine detail should not be relied on at reduced scale.",
+        "improvement": "Enlarge the hex values and role labels, and the rule text in particular. Consider a heavier weight or larger tracking for 'BAKERY' so it holds up when the lockup is small. Check that the white midrib in the leaf doesn't fill in at the 32 mm minimum width.",
+        "verify": "Export the sheet at 400 px and at a smaller size (for example 200 px), and view at 100% zoom. Then print the lockup at 32 mm wide and check that 'BAKERY' and the leaf detail still read."
+      },
+      {
+        "criterionId": "logo-and-lockup",
+        "score": 78,
+        "evidence": "The mark is a simple orange leaf with a light midrib, set to the left of a bold serif 'Fernhill'. A small, widely tracked sans 'BAKERY' sits beneath, aligned to the left edge of the name. The mark is roughly centred on the name's height and the proportions look balanced. The rule-box version shows the mark with 'Fernhill' only, without 'BAKERY'. The dashed box around it appears to leave more space to the right of the name than to the left of the mark. No F-height clearspace is drawn.",
+        "where": "Top-left lockup; rule box bottom right.",
+        "explanation": "The main lockup is clean and the name is very easy to read. Spacing between the mark and the name looks deliberate. The second version, without 'Bakery', is not explained as an approved variant, so a sign maker might use either. Uneven space in the rule box weakens the clearspace message.",
+        "principle": "Lockup consistency and clearspace: approved versions should be few and named, and spacing should be defined by a visible unit.",
+        "improvement": "Either use the full lockup in the rule box, or label the short version as an approved secondary lockup. Centre the logo in the rule box and draw the clearspace with F-height markers on all four sides.",
+        "verify": "Overlay a square equal to the F height on each side of the lockup and check that the gaps are equal. Confirm that every logo on the sheet is a named, approved version."
+      },
+      {
+        "criterionId": "type-system",
+        "score": 78,
+        "evidence": "Two roles are named and shown. 'Headline: Georgia Bold' is set large in a bold serif, and 'Body: Arial Regular' has a sample line in a regular sans. The size and weight contrast between them is clear. The wordmark uses a bold serif and 'BAKERY' a tracked sans, so the logo echoes the type system. The rationale gives 44 pt and 20 pt. I cannot confirm the exact typefaces from pixels, but what is visible is consistent with a bold serif and a plain sans as stated.",
+        "where": "Type section, left of bottom half; logo; rationale decision 3.",
+        "explanation": "The hierarchy is clear and the system is consistent with the logo. The pairing fits only partly: Georgia gives some warmth, but Arial reads as a default rather than a choice, and the rationale doesn't say why either suits the bakery. Licensing for print and signage use is not mentioned, which matters because the brief requires licensed typefaces.",
+        "principle": "Type pairing and hierarchy: contrast in role, harmony in character, and fonts chosen for the brand rather than by default.",
+        "improvement": "Justify the pairing in brand terms, or try a sans with a bit more warmth. Show sizes in context, for example a sample menu heading and line at the stated sizes. Add a short note confirming the licence covers print and signage.",
+        "verify": "Print a menu-style sample at 44/20 pt and read it at arm's length. Check the font licences (or the open-licence terms of any replacement) to confirm they cover commercial print and signs."
+      }
+    ]
+  }
+]

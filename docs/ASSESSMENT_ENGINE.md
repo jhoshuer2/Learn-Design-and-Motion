@@ -20,6 +20,9 @@ The submit action only stores the work and calls `enqueue`; a worker runs `evalu
 - **Budget:** `EVAL_DAILY_BUDGET_USD` pauses the queue when estimated spend (recorded tokens at configured list prices) reaches the cap.
 - **People:** `humanAssess` lets a reviewer give a *first* assessment to work with no completed evaluation (refused, gave up, stuck, never queued), through the same `computeResult` and `applyEvaluation`. Refused for learners, for the reviewer's own work, and when any completed evaluation exists (that is an appeal). A person's first assessment is final (not appealable). `/admin/assessments` shows queue, pause, spend and the attention list.
 
+## Calibration (M10)
+The real provider was measured on synthetic samples (`GRADER_CALIBRATION.md`). One fault was found and fixed: the assessor credited text as readable in a tiny preview because it could read it in the full-size image. The system prompt now judges the preview only from the preview itself, and `checks.previewLongEdge` gives it the preview's pixel size. Agreement with human experts is still unmeasured.
+
 ## Attempts
 Consumed only by **completed** evaluations; queueing, pausing, deferral and crash recovery never consume one. `needs_evidence` (amend the same submission), `FAILED_TO_EVALUATE` (retry) and `not_configured` do not cost an attempt. Default 3 per assignment. From attempt 2 the learner must say what they changed.
 
