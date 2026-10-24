@@ -200,7 +200,7 @@ describe("daily budget", () => {
   it("estimates spend from recorded tokens at the configured prices", async () => {
     const before = await spendTodayUsd();
     await spend(1_000_000, 100_000);
-    expect((await spendTodayUsd()) - before).toBeCloseTo(5 + 2.5, 5);
+    expect((await spendTodayUsd()) - before).toBeCloseTo(4 + 2, 5);
   });
 
   it("pauses at the cap, and lifts the pause when the cap is raised", async () => {

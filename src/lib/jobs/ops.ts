@@ -82,8 +82,8 @@ export async function runJob(job: EvaluationJob, deps: { provider?: EvaluationPr
 export async function spendTodayUsd(now = new Date()): Promise<number> {
   const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
   const agg = await db.evaluation.aggregate({ where: { provider: "claude", createdAt: { gte: start } }, _sum: { inputTokens: true, outputTokens: true } });
-  const priceIn = Number(process.env.EVAL_PRICE_IN_PER_MTOK ?? 5);
-  const priceOut = Number(process.env.EVAL_PRICE_OUT_PER_MTOK ?? 25);
+  const priceIn = Number(process.env.EVAL_PRICE_IN_PER_MTOK ?? 4);
+  const priceOut = Number(process.env.EVAL_PRICE_OUT_PER_MTOK ?? 20);
   return ((agg._sum.inputTokens ?? 0) * priceIn + (agg._sum.outputTokens ?? 0) * priceOut) / 1_000_000;
 }
 

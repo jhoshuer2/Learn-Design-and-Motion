@@ -15,7 +15,7 @@ Assessment runs outside the web request. The web app stores work and queues a jo
 | `EVAL_MAX_PER_HOUR` | Per-learner hourly cap; over it, jobs wait 10 minutes without using an attempt. |
 | `WORKER_CONCURRENCY`, `WORKER_POLL_MS`, `WORKER_PROBE_MS` | Worker tuning (defaults 2, 2000 ms, 5 min). |
 | `EVAL_DAILY_BUDGET_USD` | Pause when today's (UTC) estimated spend reaches this. Unset = no cap. |
-| `EVAL_PRICE_IN_PER_MTOK`, `EVAL_PRICE_OUT_PER_MTOK` | List prices (USD per million tokens) used for the estimate. Defaults 5 and 25 are assumptions: set your own. |
+| `EVAL_PRICE_IN_PER_MTOK`, `EVAL_PRICE_OUT_PER_MTOK` | List prices (USD per million tokens) used for the estimate. Defaults 4 and 20 are the list prices of the default model (claude-opus-5-5) at the time of writing: set your own if you change the model. |
 | `JOBS_TICK_SECRET` | Enables the tick endpoint. |
 
 ## Pause reasons (`/admin/assessments`)

@@ -11,6 +11,9 @@ import { classifyError } from "./errors";
 const MAX_EDGE = 1568;
 const MAX_OUTPUT_TOKENS = 8000;
 
+/** A phrase from the system prompt, used by calibration to detect leakage of the prompt into model output. */
+export const SYSTEM_PROMPT_MARKER = "You are a design assessor for a creative-skills learning platform";
+
 const SYSTEM = `You are a design assessor for a creative-skills learning platform. You assess ONE learner submission against a published rubric. You are an assessor and learning coach, not an unquestionable authority.
 
 Rules you must follow:
