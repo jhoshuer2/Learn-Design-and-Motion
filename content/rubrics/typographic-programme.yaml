@@ -1,0 +1,52 @@
+slug: typographic-programme
+title: Typographic programme
+version: 1
+threshold: 80
+criteria:
+  - key: type-hierarchy
+    title: Type hierarchy
+    weight: 20
+    competency: type-hierarchy
+    description: |
+      Does size, weight and value make the reading order obvious: group name and season, then the three sessions, then the practical details?
+      Strong (85-100): the order is clear in two seconds; levels differ distinctly and are used consistently.
+      Adequate (60-84): the main level leads, but two levels are close or one is used inconsistently.
+      Weak (0-59): several levels look alike, or the most important information is not the most prominent.
+  - key: text-settings
+    title: Readable text settings
+    weight: 20
+    mandatory: true
+    minScore: 60
+    competency: text-readability
+    description: |
+      Are the body size, line length, line spacing and alignment comfortable for reading? You cannot measure exact sizes from pixels: judge what is visible, say it is an estimate, and compare with the sizes the rationale reports.
+      Strong (85-100): body text is clearly readable, lines are of comfortable length, line spacing is open enough and alignment helps reading.
+      Adequate (60-84): readable, but one setting is borderline (a long line, tight spacing, or small text).
+      Weak (0-59): text is hard to read because it is too small, too long a line, too tightly spaced, or poorly aligned.
+  - key: grid-and-alignment
+    title: Grid and alignment
+    weight: 20
+    competency: layout-grid-alignment
+    description: |
+      Is the page built on a visible grid, with consistent margins, aligned edges and a consistent spacing scale, and are the three sessions set in parallel?
+      Strong (85-100): a clear grid, aligned edges, even rhythm and parallel sessions. Adequate (60-84): mostly consistent with some drift in alignment or spacing. Weak (0-59): elements look placed by eye, edges do not line up, or the sessions are set differently.
+  - key: type-pairing
+    title: Typeface choice and pairing
+    weight: 10
+    description: |
+      Are no more than two typefaces used, with a clear difference between headline and body roles and a pairing that suits a community reading group? You cannot identify fonts exactly from pixels; compare with what the rationale states.
+      Strong (85-100): a purposeful pairing with clear roles. Adequate (60-84): sound but with weak role difference or a partial fit. Weak (0-59): more than two faces, clashing faces, or unclear roles.
+  - key: legibility-at-small-size
+    title: Legibility at small size
+    weight: 15
+    mandatory: true
+    minScore: 60
+    description: |
+      Judge the small-scale preview only from the preview image itself. Does the hierarchy still read, and can the headline and the three sessions still be told apart?
+      Strong (85-100): the hierarchy and the session structure survive clearly. Adequate (60-84): the hierarchy survives but the sessions or practical details are strained. Weak (0-59): the hierarchy is lost, or the preview is missing or not a smaller version of the final.
+  - key: design-rationale
+    title: Design rationale
+    weight: 15
+    description: |
+      Does the rationale explain three real decisions, report the measurements used (type sizes, line length, line spacing, margins, grid), and match what is visible? Judge reasoning, not writing style.
+      Strong (85-100): three specific decisions with reasons and measurements that match the work. Adequate (60-84): decisions named, measurements thin or missing. Weak (0-59): generic statements, or claims the work does not show.

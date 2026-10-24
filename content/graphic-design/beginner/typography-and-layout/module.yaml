@@ -1,0 +1,15 @@
+discipline: graphic-design
+path: graphic-design
+level: BEGINNER
+slug: typography-and-layout
+title: Typography and Layout
+position: 1
+objectives:
+  - Build a clear hierarchy with a small set of type sizes and weights, and pair typefaces with intent.
+  - Set body text for comfortable reading, using sensible size, line length, line spacing and alignment.
+  - Organise a page on a grid so that alignment and spacing feel deliberate.
+status: DRAFT
+lessons:
+  - type-hierarchy-and-pairing
+  - readable-text-settings
+  - grids-and-alignment

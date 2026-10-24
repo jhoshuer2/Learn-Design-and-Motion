@@ -1,0 +1,31 @@
+slug: typographic-programme
+kind: MODULE_ASSESSMENT
+title: Design a typographic programme
+objective: "Show that you can organise a page of real text with clear type hierarchy, readable text settings and a visible grid, and explain your choices with measurements."
+scenario: >
+  Harbour Reading Group is a small community book club. It needs a one-page A4 programme for its autumn season,
+  to be printed and also shared as a small image. The programme lists three sessions, all in Quay Library, Room 2,
+  at 18:30, admission free: Tuesday 7 October, The Lighthouse Keeper's Letters, led by Mara Quinn;
+  Tuesday 14 October, Short Stories from the Coast, led by Joe Alder; Tuesday 21 October, Poems for Winter,
+  led by Priya Nair. Each session has one sentence of description that you write yourself. The group is fictional:
+  nothing you make is used by a real organisation.
+requirements:
+  - "Make the group name and season the clear first level, then the three sessions, then the practical details (place, time, admission)."
+  - "Use no more than two typefaces, with a clear difference between headline and body roles."
+  - "Set body text at about 10 points or larger on A4, with a line length of roughly 45 to 75 characters and line spacing of roughly 1.3 to 1.6 times the type size."
+  - "Build the page on a visible grid: consistent margins, aligned edges and one spacing scale."
+  - "Keep the three sessions parallel: each one is set the same way."
+  - "In your rationale explain three design decisions and give the measurements you used: type sizes, line length, line spacing, margins and the grid."
+constraints:
+  - "Original work only. Any typeface or image must be one you are licensed to use."
+  - "Do not copy a template or a real programme."
+  - "Use only the information in the brief. Do not invent extra sessions, prices or contact details."
+deliverables:
+  - { key: final, label: Programme, description: "PNG, JPEG or WebP export of the full A4 page.", role: final, required: true }
+  - { key: preview, label: Small-scale preview, description: "The same page exported at about 400 px on its long side, to check that the hierarchy still reads.", role: preview, required: true }
+  - { key: process, label: Process image, description: "A sketch, a grid drawing or an earlier version, if you want to show your process.", role: process, required: false }
+difficulty: 2
+estimatedMinutes: 120
+rubric: { slug: typographic-programme, version: 1 }
+maxAttempts: 3
+status: DRAFT

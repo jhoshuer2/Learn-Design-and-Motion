@@ -91,7 +91,7 @@ describe("level and capstone publishing", () => {
     const cap = level.assignments.filter((a) => a.kind === "CAPSTONE");
     expect(cap).toHaveLength(1);
     expect(cap[0]).toMatchObject({ slug: "contrast-campaign-capstone", moduleId: null, maxAttempts: 3 });
-    expect(level.assignments.filter((a) => a.kind === "MODULE_ASSESSMENT")).toHaveLength(1);
+    expect(level.assignments.filter((a) => a.kind === "MODULE_ASSESSMENT")).toHaveLength(2);
   });
 
   it("refuses to change a published level's threshold or required competencies", async () => {

@@ -4,6 +4,8 @@ export const DEMO_NAMES = [
   "motion-clarity", "brand-lockup", "figure-ground", "contrast-lab",
   // Brand Design
   "position-compare", "logo-clearspace", "lockup-misuse", "palette-roles",
+  // Graphic Design: typography and layout
+  "type-pairing", "line-length-leading", "grid-alignment",
   // UI Design
   "spacing-rhythm", "touch-targets", "form-states",
 ] as const;

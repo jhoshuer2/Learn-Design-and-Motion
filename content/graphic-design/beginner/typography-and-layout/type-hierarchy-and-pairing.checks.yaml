@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: A page has ten different text sizes used at random. What is the most likely result?
+    options: [The hierarchy becomes unclear because nothing is used consistently, The page becomes easier to read, The page uses less ink, The headlines become more important]
+    answer: The hierarchy becomes unclear because nothing is used consistently
+    explanation: A hierarchy depends on a few levels used the same way every time. Many random sizes remove the ranking.
+    competency: type-hierarchy
+  - type: MULTIPLE_CHOICE
+    prompt: How many typefaces do most simple pages need?
+    options: [One or two with clear roles, Five or six for variety, One for each paragraph, As many as the client likes]
+    answer: One or two with clear roles
+    explanation: One or two faces with clear roles keep a page coherent. More faces usually add noise.
+    competency: type-hierarchy
+  - type: MULTIPLE_SELECT
+    prompt: Which of these can create a type hierarchy? Select all that apply.
+    options: [Size, Weight, Value or colour, Using the same style for every line]
+    answer: [Size, Weight, Value or colour]
+    explanation: Size weight and value all rank text. Using the same style everywhere removes the ranking.
+    competency: type-hierarchy
+  - type: ERROR_DETECTION
+    prompt: A page pairs two typefaces that are almost the same but not identical. What is the problem?
+    options: [They look like a mistake because the difference is too small to read as intentional, They are too different to match, They use too much ink, Nothing is wrong]
+    answer: They look like a mistake because the difference is too small to read as intentional
+    explanation: A pairing should be clearly different or use one family in several weights. Near-identical faces look accidental.
+    competency: type-hierarchy
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the type-pairing demo, which version makes the reading order clearest?
+    options: [The version with four distinct levels used consistently, The version with every line at one size, The version with two near-identical faces]
+    answer: The version with four distinct levels used consistently
+    explanation: Distinct levels used the same way show the order at a glance. The other versions remove or blur it.
+    competency: type-hierarchy
+  - type: MULTIPLE_CHOICE
+    prompt: What should you decide before choosing typefaces for a page?
+    options: [What each level of text is for, Which fonts are most fashionable, How many colours to use, The size of the paper only]
+    answer: What each level of text is for
+    explanation: Roles come first. Once you know what each level does you can choose faces and sizes that serve it.
+    competency: type-hierarchy

@@ -7,3 +7,6 @@ competencies:
   - { slug: brand-system-consistency, title: Keeping a brand consistent across applications, critical: true }
   - { slug: ui-hierarchy, title: Building clear hierarchy and layout in interfaces }
   - { slug: ui-touch-targets-and-states, title: Sizing targets and showing states in interfaces, critical: true }
+  - { slug: type-hierarchy, title: Building hierarchy and pairing with type }
+  - { slug: text-readability, title: Setting body text for comfortable reading }
+  - { slug: layout-grid-alignment, title: Using grids and alignment to organise a page }

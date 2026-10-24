@@ -3,9 +3,10 @@ path: graphic-design
 tier: BEGINNER
 scopeLabel: Contrast foundations
 scopeNote: >
-  Only one Beginner module is authored so far: Understanding Contrast. Passing this capstone records
-  evidence of contrast foundations. It does not show mastery of the full Beginner curriculum,
-  which is not written yet.
+  Two Beginner modules are authored so far: Understanding Contrast and Typography and Layout. Both
+  must be complete before this capstone opens, but the capstone itself still assesses only the
+  contrast skills from the first module. Passing it records evidence of contrast foundations. It
+  does not show mastery of the full Beginner curriculum, which is not written yet.
 objectives:
   - Use contrast deliberately to build hierarchy, grouping and legibility.
   - Check text contrast against accessibility minimums and fix failures.

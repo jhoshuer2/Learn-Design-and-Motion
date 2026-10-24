@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: What is a grid in page layout?
+    options: [An invisible set of margins and columns that elements line up to, A pattern of decorative squares, A type of font, A printing method]
+    answer: An invisible set of margins and columns that elements line up to
+    explanation: A grid is a set of placement rules. Elements snap to it so edges are shared and the page looks ordered.
+    competency: layout-grid-alignment
+  - type: MULTIPLE_CHOICE
+    prompt: Two text blocks have left edges a few pixels apart. What should you do?
+    options: [Make them share exactly the same edge, Leave them because nobody will notice, Move one further away, Centre both]
+    answer: Make them share exactly the same edge
+    explanation: Near-miss edges look like mistakes. A shared edge reads as deliberate.
+    competency: layout-grid-alignment
+  - type: MULTIPLE_SELECT
+    prompt: Which of these are parts of a grid? Select all that apply.
+    options: [Margins, Columns, Gutters, A random scatter of items]
+    answer: [Margins, Columns, Gutters]
+    explanation: Margins columns and gutters are the parts of a basic grid. A random scatter is the opposite of a grid.
+    competency: layout-grid-alignment
+  - type: ERROR_DETECTION
+    prompt: Three sessions in a programme are each set differently, with different sizes and spacing. What is the problem?
+    options: [Parallel items are not set in parallel so the list is hard to scan, The sessions are too short, The page has too many margins, There is no problem]
+    answer: Parallel items are not set in parallel so the list is hard to scan
+    explanation: Items of the same kind should share structure. Differences suggest differences in meaning and slow scanning.
+    competency: layout-grid-alignment
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the grid-alignment demo, which version feels more ordered?
+    options: [The version with shared edges and consistent spacing on a visible grid, The version where items were placed freely]
+    answer: The version with shared edges and consistent spacing on a visible grid
+    explanation: Shared edges and a spacing scale create order. Free placement produces near-misses and uneven gaps.
+    competency: layout-grid-alignment
+  - type: MULTIPLE_CHOICE
+    prompt: Why use a small spacing scale such as 8 16 32 and 64 units?
+    options: [So gaps are deliberate and closeness tells the viewer what belongs together, So the page uses more paper, So text can be smaller, So every gap is identical]
+    answer: So gaps are deliberate and closeness tells the viewer what belongs together
+    explanation: A small scale makes gaps meaningful. Different gap sizes then signal different levels of grouping.
+    competency: layout-grid-alignment

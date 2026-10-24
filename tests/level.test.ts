@@ -21,12 +21,14 @@ const img = (w: number, h: number) => sharp({ create: { width: w, height: h, cha
 const code = (p: Promise<unknown>) => p.then(() => "ok", (e) => (e instanceof SubmissionError || e instanceof RemediationError ? e.code : `other:${e}`));
 const PLAN = "I will darken the date and venue text, measure every pair against the minimum, and rebuild the banner hierarchy.";
 
-async function lessonsDone(userId: string) {
-  const ls = await db.lesson.findMany({ where: { module: { slug: "understanding-contrast" } }, select: { id: true } });
+/** Complete the lessons of the level's modules; `only` limits it to one module slug. */
+async function lessonsDone(userId: string, only?: string) {
+  const ls = await db.lesson.findMany({ where: { module: { levelId, ...(only ? { slug: only } : {}) } }, select: { id: true } });
   await db.progress.createMany({ data: ls.map((l) => ({ userId, nodeType: "LESSON", nodeId: l.id, state: "COMPLETED" as const, completedAt: new Date() })), skipDuplicates: true });
 }
-async function moduleAssessmentPassed(userId: string) {
-  await db.progress.createMany({ data: [{ userId, nodeType: "ASSIGNMENT", nodeId: moduleAssessmentId, state: "COMPLETED" as const, completedAt: new Date() }], skipDuplicates: true });
+async function moduleAssessmentPassed(userId: string, only?: string) {
+  const as = await db.assignment.findMany({ where: { kind: "MODULE_ASSESSMENT", module: { levelId, ...(only ? { slug: only } : {}) } }, select: { id: true } });
+  await db.progress.createMany({ data: as.map((a) => ({ userId, nodeType: "ASSIGNMENT", nodeId: a.id, state: "COMPLETED" as const, completedAt: new Date() })), skipDuplicates: true });
 }
 /** Evidence the learner would have from lessons: accessibility-contrast demonstrated at the given score. */
 async function evidence(userId: string, slug: string, score: number, source = "QUIZ") {
@@ -91,11 +93,22 @@ afterAll(async () => {
 describe("capstone access", () => {
   it("is locked until every module, including its assessment, is complete", async () => {
     const u = await makeUser();
-    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: false, reason: "modules_incomplete", missing: ["Understanding Contrast"] });
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: false, reason: "modules_incomplete", missing: ["Understanding Contrast", "Typography and Layout"] });
     await lessonsDone(u);
-    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: false, reason: "modules_incomplete" }); // assessment not passed
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: false, reason: "modules_incomplete" }); // assessments not passed
     await moduleAssessmentPassed(u);
     expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: true, attempt: 1, attemptsUsed: 0, maxAttempts: 3 });
+  });
+
+  it("stays closed until the second module is done, and names it", async () => {
+    const u = await makeUser();
+    await lessonsDone(u, "understanding-contrast");
+    await moduleAssessmentPassed(u, "understanding-contrast");
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: false, reason: "modules_incomplete", missing: ["Typography and Layout"] });
+    await lessonsDone(u, "typography-and-layout");
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: false, reason: "modules_incomplete", missing: ["Typography and Layout"] });
+    await moduleAssessmentPassed(u, "typography-and-layout");
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: true });
   });
 
   it("requires every required piece, and needs no unknown deliverables", async () => {

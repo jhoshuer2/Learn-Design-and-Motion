@@ -26,10 +26,10 @@ async function signUp(page: Page) {
 /** Lessons and the module assessment are covered by other specs; start from "ready for the capstone". */
 async function readyForCapstone(email: string, accessibilityEvidence: number | null = 90) {
   const user = await db.user.findUniqueOrThrow({ where: { email } });
-  const ls = await db.lesson.findMany({ where: { module: { slug: "understanding-contrast" } }, select: { id: true } });
+  const ls = await db.lesson.findMany({ where: { module: { level: { path: { slug: "graphic-design" } } } }, select: { id: true } });
   await db.progress.createMany({ data: ls.map((l) => ({ userId: user.id, nodeType: "LESSON", nodeId: l.id, state: "COMPLETED" as const, completedAt: new Date() })), skipDuplicates: true });
-  const asg = await db.assignment.findUniqueOrThrow({ where: { slug: "high-contrast-event-poster" } });
-  await db.progress.create({ data: { userId: user.id, nodeType: "ASSIGNMENT", nodeId: asg.id, state: "COMPLETED", completedAt: new Date() } });
+  const asgs = await db.assignment.findMany({ where: { kind: "MODULE_ASSESSMENT", module: { level: { path: { slug: "graphic-design" } } } } });
+  await db.progress.createMany({ data: asgs.map((a) => ({ userId: user.id, nodeType: "ASSIGNMENT", nodeId: a.id, state: "COMPLETED" as const, completedAt: new Date() })) });
   if (accessibilityEvidence !== null) {
     const c = await db.competency.findUniqueOrThrow({ where: { slug: "accessibility-contrast" } });
     await db.skillEvidence.create({ data: { userId: user.id, competencyId: c.id, source: "QUIZ", sourceId: "e2e", score: accessibilityEvidence, tier: "BEGINNER" } });
@@ -191,7 +191,7 @@ test("capstone stays closed until the module assessment is passed, even by direc
   const page = await ctx.newPage();
   const email = await signUp(page);
   const user = await db.user.findUniqueOrThrow({ where: { email } });
-  const ls = await db.lesson.findMany({ where: { module: { slug: "understanding-contrast" } }, select: { id: true } });
+  const ls = await db.lesson.findMany({ where: { module: { level: { path: { slug: "graphic-design" } } } }, select: { id: true } });
   await db.progress.createMany({ data: ls.map((l) => ({ userId: user.id, nodeType: "LESSON", nodeId: l.id, state: "COMPLETED" as const, completedAt: new Date() })), skipDuplicates: true });
   const cap = await db.assignment.findUniqueOrThrow({ where: { slug: "contrast-campaign-capstone" } });
   await page.goto(`/learn/assignment/${cap.id}`);

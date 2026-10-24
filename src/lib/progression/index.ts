@@ -335,8 +335,14 @@ export async function getTimeline(userId: string, pathId: string): Promise<Timel
   });
 
   const openLevels = full.filter((l) => l.state === "active");
-  const nextLesson = openLevels.flatMap((l) => l.modules).flatMap((m) => m.lessons).find((l) => l.state === "active" || l.state === "available");
-  const nextAssessment = openLevels.flatMap((l) => l.modules).map((m) => m.assessment).find((a) => a && (a.state === "available" || a.state === "in_progress"));
+  // Follow module order: finish a module (its lessons, then its assessment) before recommending the next module.
+  let nextLesson: LessonNode | undefined;
+  let nextAssessment: AssessmentNode | null | undefined;
+  for (const m of openLevels.flatMap((l) => l.modules)) {
+    nextLesson = m.lessons.find((l) => l.state === "active" || l.state === "available");
+    if (nextLesson) break;
+    if (m.assessment && (m.assessment.state === "available" || m.assessment.state === "in_progress")) { nextAssessment = m.assessment; break; }
+  }
   const cap = openLevels.map((l) => l.capstone).find((c) => c && (c.state === "available" || c.state === "in_progress" || c.state === "remediation"));
   const blockedLevel = openLevels.find((l) => l.id && l.capstone?.state === "passed" && l.blockedBy.length > 0);
   const next: NextStep | null = nextLesson ? { lessonId: nextLesson.id, title: nextLesson.title }

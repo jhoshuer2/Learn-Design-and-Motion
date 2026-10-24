@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: What line length is generally comfortable for body text?
+    options: [About 45 to 75 characters, About 10 characters, About 140 characters, As many as fit the width]
+    answer: About 45 to 75 characters
+    explanation: Lines of about 45 to 75 characters let the eye return to the next line easily. Much longer or shorter lines are harder to read.
+    competency: text-readability
+  - type: MULTIPLE_CHOICE
+    prompt: Roughly what line spacing suits body text?
+    options: [About 1.3 to 1.6 times the type size, Exactly the type size, Three times the type size, It makes no difference]
+    answer: About 1.3 to 1.6 times the type size
+    explanation: That range opens the text so lines do not collide, without letting the paragraph fall apart.
+    competency: text-readability
+  - type: MULTIPLE_SELECT
+    prompt: Which of these make a paragraph harder to read? Select all that apply.
+    options: [A very long line length, Very tight line spacing, Centring a long paragraph, A ragged right edge on left-aligned text]
+    answer: [A very long line length, Very tight line spacing, Centring a long paragraph]
+    explanation: Long lines tight spacing and centred paragraphs all hurt reading. A ragged right edge on left-aligned text is normal and usually helps.
+    competency: text-readability
+  - type: ERROR_DETECTION
+    prompt: A web page lets paragraphs run across a very wide screen. Readers lose their place at the end of each line. What is the best fix?
+    options: [Limit the width of the text column to a comfortable measure, Make the text bold, Reduce the line spacing, Use a smaller size]
+    answer: Limit the width of the text column to a comfortable measure
+    explanation: A narrower column brings the line length into a comfortable range. Bolder text or tighter spacing makes the problem worse.
+    competency: text-readability
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the line-length-leading demo, which paragraph is the most comfortable to read?
+    options: [The one with about 60 characters per line and open line spacing, The one with a very long line, The one with a very narrow line]
+    answer: The one with about 60 characters per line and open line spacing
+    explanation: A moderate measure with open spacing supports reading. The long and narrow versions break the rhythm.
+    competency: text-readability
+  - type: MULTIPLE_CHOICE
+    prompt: Which alignment usually suits a long paragraph best?
+    options: [Left aligned with a ragged right edge, Centred, Right aligned, Random]
+    answer: Left aligned with a ragged right edge
+    explanation: Left alignment gives each line a consistent start, which helps the eye. Centred text is better for short lines.
+    competency: text-readability
