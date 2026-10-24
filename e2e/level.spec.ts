@@ -85,6 +85,7 @@ async function learner(browser: Browser, evidence: number | null = 90) {
 }
 
 test("capstone: fail three times, remediate, pass, and the level records honest evidence", async ({ browser }) => {
+  test.setTimeout(90_000); // about 20 s alone; three graded failures, remediation and a pass can exceed 30 s on a loaded machine
   const { ctx, page, userId } = await learner(browser);
 
   // The capstone is open, the next level is shown as not written, and the level states what it covers.

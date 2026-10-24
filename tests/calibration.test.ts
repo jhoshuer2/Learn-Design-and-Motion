@@ -25,7 +25,7 @@ const row = (over: Partial<Row>): Row => ({
 describe("synthetic samples", () => {
   it("have unique ids and are covered by the registry for every calibrated assignment", () => {
     expect(new Set(REGISTRY.map((s) => s.id)).size).toBe(REGISTRY.length);
-    expect(new Set(REGISTRY.map((s) => s.assignment))).toEqual(new Set(["high-contrast-event-poster", "contrast-campaign-capstone", "mini-brand-sheet", "mobile-screen"]));
+    expect(new Set(REGISTRY.map((s) => s.assignment))).toEqual(new Set(["high-contrast-event-poster", "contrast-campaign-capstone", "mini-brand-sheet", "mobile-screen", "typographic-programme", "imagery-layout-guide", "form-screen"]));
   });
 
   it.each(REGISTRY.map((s) => [s.id, s] as const))("%s supplies every required deliverable and passes the deterministic checks", async (_id, s) => {

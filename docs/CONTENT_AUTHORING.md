@@ -25,12 +25,16 @@ Author → schema validation (CI) → editorial review checklist (accuracy, clar
 `content/<discipline>/<level>/level.yaml` defines a level: `scopeLabel`, `scopeNote` (what it does and does not cover, shown to learners), `objectives`, `capstoneThreshold`, `requiredCompetencies`. Capstone assignments (`kind: CAPSTONE`) sit next to `level.yaml`; module assignments sit inside their module. The loader rejects: a required competency that is unknown or not `critical`; a capstone rubric whose threshold differs from the level's; a rubric with no criterion for a required competency, or whose criterion for it is not mandatory (the capstone could not otherwise produce evidence for it); a capstone inside a module; a non-capstone next to `level.yaml`. A published level's threshold and required competencies are immutable.
 Assignment deliverables have a `key` (the upload slot), a `label`, and a `role` of `final`, `preview`, `process` or `piece`. The server derives each file's role from the assignment; clients never choose it.
 
-## Paths authored so far (M9)
-| Path | Beginner module | Module assessment | Capstone | Required competencies |
+## Paths authored so far (M9, M11)
+Each Beginner level has two modules. **Both** modules (lessons and module assessment) must be complete before the capstone opens. The capstones were written for the first module and are unchanged, so each capstone still assesses only module-1 skills; the second module is assessed by its own module assessment, and each level's `scopeNote` says so.
+
+| Path | Module 1 (assessment) | Module 2 (assessment, rubric) | Capstone | Required competencies |
 |---|---|---|---|---|
-| `graphic-design` | Understanding Contrast (3 lessons) | High-contrast event poster | Contrast campaign (3 pieces) | accessibility-contrast |
-| `brand-design` | Brand Identity Foundations (3 lessons) | Mini brand sheet | Identity kit in three applications | brand-system-consistency |
-| `ui-design` | Interface Hierarchy and Accessibility (3 lessons) | One mobile screen | Three-screen booking flow | accessibility-contrast, ui-touch-targets-and-states |
+| `graphic-design` | Understanding Contrast (High-contrast event poster) | Typography and Layout: type hierarchy and pairing, readable text settings, grids and alignment (Typographic programme, `typographic-programme@1`) | Contrast campaign (3 pieces) | accessibility-contrast |
+| `brand-design` | Brand Identity Foundations (Mini brand sheet) | Imagery and Brand Layouts: image style, layout templates, voice (Imagery and layout guide, `imagery-layout-guide@1`) | Identity kit in three applications | brand-system-consistency |
+| `ui-design` | Interface Hierarchy and Accessibility (One mobile screen) | Forms, Navigation and Feedback: forms, navigation, feedback and empty states (Passenger details screen, `form-screen@1`) | Three-screen booking flow | accessibility-contrast, ui-touch-targets-and-states |
+
+Module 2 adds nine competencies (none critical, none required by a level): `type-hierarchy`, `text-readability`, `layout-grid-alignment`, `imagery-style`, `brand-layout-system`, `brand-voice`, `ui-forms`, `ui-navigation`, `ui-feedback`.
 
 All of it is `DRAFT` and **AI-drafted without review by a working practitioner**. Each lesson carries `reviewNotes`; `tests/curriculum.test.ts` refuses to pass if a path loses them or becomes non-draft by accident.
 

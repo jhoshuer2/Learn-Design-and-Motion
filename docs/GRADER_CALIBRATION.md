@@ -71,3 +71,16 @@ The script stops on a billing or auth error, stops before a call that could pass
 ## Operational notes
 - The API key was pasted into a chat earlier. **Rotate it.** It lives only in the git-ignored `.env` and appears in no tracked file (checked again: no `sk-ant-` string in the repository or the results files).
 - Spend defaults for the operator budget now use the model's current list price (4 / 20).
+
+## M11 smoke test of the three second-module rubrics (partial: credit ran out)
+Samples (synthetic, invented businesses, checked by eye before any spend; I fixed a clipped headline, an overflowing post headline and a crowded success cue in my own "strong" samples first): `typo-strong`/`typo-weak` (`typographic-programme@1`), `imagery-strong`/`imagery-weak` (`imagery-layout-guide@1`), `form-strong`/`form-weak` (`form-screen@1`). Cap $4, 2 runs each.
+
+**Measured (6 of 12 planned calls, about $0.64; results in `m11-second-modules.json`, report in `m11-second-modules-report.md`):**
+- `typographic-programme`: strong 81 and 82 (passes, every mandatory minimum met, criteria within 1 point between runs); weak 17 and 15 (fails, both mandatory criteria below minimum). Clear separation, stable.
+- `imagery-layout-guide`: strong 79 on one run, which is 1 point under the threshold of 80, so the strong sample does **not** pass. The weakest criterion was the rationale (66). Same strict-top-end pattern as the poster and capstone; not changed. Only one run of this sample exists.
+
+**Not measured:** a second run of `imagery-strong`, both runs of `imagery-weak`, and all four `form-screen` runs. The API returned "credit balance is too low" on the seventh call and the harness stopped, as designed. The results file is resumable: after adding credit, re-run
+`npx tsx scripts/calibrate-grader.ts --samples typo-strong,typo-weak,imagery-strong,imagery-weak,form-strong,form-weak --runs 2 --budget-usd 4 --out docs/calibration/m11-second-modules.json`
+and only the missing runs are made (about $0.8).
+
+So `form-screen@1` and the weak side of `imagery-layout-guide@1` have **no** real-grader evidence yet. The blind human scoring pack was **not** regenerated, so as not to reshuffle entries you may already be scoring; the new assessments are not in it.

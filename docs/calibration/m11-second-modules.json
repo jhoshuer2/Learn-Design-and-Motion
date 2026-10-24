@@ -1,0 +1,567 @@
+[
+  {
+    "sample": "typo-strong",
+    "run": 1,
+    "assignment": "typographic-programme",
+    "expect": "overall >= 70; type-hierarchy >= 70; text-settings >= 70; grid-and-alignment >= 70",
+    "ms": 66926,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5277,
+    "outputTokens": 6237,
+    "costUsd": 0.1458,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 82,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "design-rationale": 76,
+      "grid-and-alignment": 80,
+      "legibility-at-small-size": 80,
+      "text-settings": 87,
+      "type-hierarchy": 81,
+      "type-pairing": 85
+    },
+    "strengths": [
+      "The two-column grid (dates at x≈80, content at x≈220) is clear and reads well.",
+      "The three sessions are set identically and spaced evenly at about 170 px, so the programme is easy to scan.",
+      "Body text settings (about 12 pt, about 46 to 53 characters per line, 1.6 leading, left aligned) sit within the brief's ranges.",
+      "The group name and session titles stay clearly readable in the 400 px preview.",
+      "Two typefaces with clear, consistent roles; the serif gives a fitting literary tone.",
+      "Only brief information is used; descriptions are original single sentences."
+    ],
+    "weaknesses": [
+      "'AUTUMN SEASON' is small and light, so it reads weaker than the session titles despite being part of the first level.",
+      "The vertical spacing drifts at the bottom: there is a large gap before the footer and a bottom margin much bigger than the stated 80 px.",
+      "Practical details and secondary grey text are strained in the small preview.",
+      "The rationale lists measurements but gives few reasons for the choices.",
+      "The rationale does not name the typefaces or their licences, and the 15:1 contrast claim is unmeasured and does not cover the grey text."
+    ],
+    "missingRequirements": [],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 76,
+        "evidence": "The rationale names three decisions: (1) hierarchy, with sizes of 46 px group name, 18 px letter-spaced season, 26 px session titles and 16 px practical details; (2) body settings of 16 px (12 pt on A4), about 55 characters per line, 26 px leading (1.6), left aligned; (3) grid, with an 80 px margin, a date column at x=80, a text column at x=220 and sessions 170 px apart. Most of this matches what I can see. The left edge sits at about x=80, the closing rule ends at about x=714 (an 80 px right margin), the second column starts at about x=220, and session titles sit roughly 170 px apart. Two claims do not fully match or cannot be checked. The top and bottom margins are visibly not 80 px: there is about 170 px of empty space below the footer. The 15:1 contrast cannot be measured from pixels, and it cannot apply to the lighter grey text. The rationale says what was done but rarely why.",
+        "where": "Rationale text, compared with the margins, the column edges and the session spacing in the final image.",
+        "explanation": "The measurements are specific and mostly verifiable, which is the core of this brief. A strong rationale also gives the reason behind each choice and makes only claims the page shows. Here the reasons are mostly missing, and the '80 px margin' claim holds only for the left and right sides.",
+        "principle": "Design reasoning: decision, then reason, then measurement, all consistent with the artefact.",
+        "improvement": "For each decision, add a 'because' sentence. For example: a serif for titles because it signals books and literature; a 55-character measure because it keeps the two-line descriptions easy to scan; a 170 px session interval because it groups each session tightly and separates sessions clearly. State top and bottom margins separately, or fix them to match. Name the two typefaces and their licence. Report contrast as a measured value for both the dark ink and the grey text.",
+        "verify": "Read each decision and check that it has a what, a why and a number. Then measure every number you quote on the final file, for example with the ruler or guides in your layout tool, and correct any that differ.\",\"principle\":\"Design reasoning: decision → reason → measurement, consistent with the artefact."
+      },
+      {
+        "criterionId": "grid-and-alignment",
+        "score": 80,
+        "evidence": "There is a clear two-column structure. The dates align on a left edge at about x=80, and the titles, leaders and descriptions align on about x=220. The headline, season, rules and footer share the x=80 left edge. Both rules end at about x=714, giving matching side margins. The three sessions are set identically, with the date level with the title, a grey 'Led by' line and a two-line description. They repeat at an even interval of about 170 px. The vertical distribution drifts, though. About 160 px of empty space separates the last session from the footer rule, and about 170 px sits below the footer. That is much larger than the visible top margin, so the bottom of the page looks unplanned rather than part of a spacing scale.",
+        "where": "Left edges at x≈80 and x≈220; session blocks at y≈290, 460 and 630; gap between y≈720 and y≈880; bottom of page below y≈955.",
+        "explanation": "The horizontal grid and the parallel sessions are strong. The vertical rhythm is uneven at the bottom. A reader will see the page as top-heavy, and the footer as floating rather than placed on the grid.",
+        "principle": "Grid systems and spacing scale: margins and gaps drawn from one consistent set of values.",
+        "improvement": "Define one base unit, for example 10 px or 8 px, and derive every gap from it. Then either anchor the footer to the bottom margin, so the bottom margin equals your top margin, or spread the sessions to fill the text area evenly. Make the gap above the footer rule a value from the same scale as the gap between sessions.",
+        "verify": "Turn on guides for all four margins and a baseline or base-unit grid. Check that every block's top edge lands on a grid line, and that the top and bottom margins measure the same."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 80,
+        "evidence": "This is judged only from the 283×400 px preview. 'Harbour Reading Group' is clearly readable and dominant. The three session titles survive as distinct bold lines and can be read, and the three blocks are easy to tell apart thanks to the even spacing and the left date column. The dates and the 'Quay Library, Room 2' line appear as very small bold text, just a few pixels high (an estimate). They are strained but still recognisable as separate elements. The 'Led by' lines, the descriptions and '18:30 on each Tuesday. Admission free.' are tiny and light at this size. I would not count them as comfortably readable from the preview itself. 'AUTUMN SEASON' is small and light grey and reads weakly.",
+        "where": "Preview image: headline, three session titles, date column, footer block.",
+        "explanation": "The hierarchy and the session structure survive well, which is the main goal. However, the practical details (time, admission) and the season, which are key for an image shared online, are strained at this size.",
+        "principle": "Scale-dependent hierarchy: key information must stay readable at the smallest size people will see.",
+        "improvement": "Raise the weight or size of the season line and the practical details so they hold up when reduced. For example, set the season in a darker tone, and set the time and admission line in the bold weight. You could also make a preview-specific crop or layout with larger details if the image will mostly be seen small.",
+        "verify": "View the preview at 100% (283×400 px) on a phone, without zooming. Ask someone who has not seen the full page to read out the season, the dates and the time. Each item should be readable without effort."
+      },
+      {
+        "criterionId": "text-settings",
+        "score": 87,
+        "evidence": "These are estimates. The description text looks about 16 px high on the 794 px-wide page, which is consistent with the stated 12 pt on A4 (at 96 px per inch). The leading measures about 26 px between lines, about 1.6 times the type size, as stated. The description lines contain roughly 46 to 53 characters, near the lower end of the 45 to 75 range and close to the stated 'about 55'. The text is left aligned with a ragged right edge, which reads comfortably. The 'Led by' lines and the footer's second line are a lighter grey than the main ink. They still look readable, but the stated 15:1 contrast cannot be checked from pixels and would not apply to this grey.",
+        "where": "Session descriptions at x≈220; 'Led by' lines; footer second line.",
+        "explanation": "Size, measure, leading and alignment all fall within the brief's ranges, so the body text is comfortable to read in print. The one point to watch is the lighter grey secondary text, whose contrast is unverified.",
+        "principle": "Readable text setting: size, measure and leading in balance, with sufficient contrast.",
+        "improvement": "Keep these settings. Measure the contrast of the grey text against the cream background. If it is lower than you expect, darken the grey slightly. Using one grey value for all secondary text would also keep it consistent.",
+        "verify": "Use a contrast checker on sampled colour values for both the ink and the grey (aim for at least 4.5:1 for small text). Print the page at 100% on A4 and read the descriptions at arm's length."
+      },
+      {
+        "criterionId": "type-hierarchy",
+        "score": 81,
+        "evidence": "The group name is clearly the most prominent element, a large bold serif estimated at about 46 to 50 px. Session titles form a distinct second level in bold serif at about 26 to 30 px, and they are used consistently. Dates, 'Led by' lines and descriptions are subordinate and consistent across all three sessions. The practical details come last, separated by a rule, with the venue in bold. One issue: 'AUTUMN SEASON' is set small, light and grey. That makes it visually weaker than the session titles, even though the brief asks for the group name and season together to form the first level. A reader may pick up the session titles before the season.",
+        "where": "'AUTUMN SEASON' under the headline, compared with the session titles.",
+        "explanation": "The reading order is mostly obvious within two seconds. But the season, which is part of the required first level, reads more like a detail. It is held up mainly by its position, not its weight.",
+        "principle": "Visual hierarchy: importance should be expressed through size, weight and value, not position alone.",
+        "improvement": "Strengthen the season line so it clearly belongs with the group name. Use a darker tone, a larger size (for example 22 to 24 px), or a medium or bold weight, while keeping the letter-spacing. Keep it visibly stronger than the 'Led by' and description text.",
+        "verify": "Squint at the page, or blur a screenshot slightly. The group name and the season should stand out together, before the session titles."
+      },
+      {
+        "criterionId": "type-pairing",
+        "score": 85,
+        "evidence": "Two typefaces are visible: a heavy, wide bold serif for the group name and session titles, and a neutral sans for the season, dates, leaders, descriptions and practical details. This matches the rationale's 'serif for headlines and a sans for details'. The roles are clearly separated and used consistently. A bookish serif suits a reading group, and the plain sans keeps the details calm. The rationale does not name the typefaces or confirm their licences, and I cannot identify the fonts exactly from pixels.",
+        "where": "Headline and session titles (serif); all other text (sans).",
+        "explanation": "The pairing is purposeful and the roles are clear. Naming the faces would let the choice and its licensing be confirmed, which the constraints require.",
+        "principle": "Type pairing: contrast in structure with clear, consistent role assignment.",
+        "improvement": "Name both typefaces and their licences in the rationale, with one sentence on why each suits a community book club. You might try a slightly lighter or narrower serif weight for the session titles so they feel less heavy beside the light sans.",
+        "verify": "Check your font menu or the document's font list to confirm exactly two families are used, and record the licence source (for example the foundry or library page) for each."
+      }
+    ]
+  },
+  {
+    "sample": "typo-strong",
+    "run": 2,
+    "assignment": "typographic-programme",
+    "expect": "overall >= 70; type-hierarchy >= 70; text-settings >= 70; grid-and-alignment >= 70",
+    "ms": 59002,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5277,
+    "outputTokens": 5366,
+    "costUsd": 0.1284,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 81,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "design-rationale": 76,
+      "grid-and-alignment": 80,
+      "legibility-at-small-size": 80,
+      "text-settings": 88,
+      "type-hierarchy": 80,
+      "type-pairing": 84
+    },
+    "strengths": [
+      "The three sessions are set identically on a clear two-column structure, with dates at x≈80 and text at x≈220, and repeat at an even interval of about 170 px.",
+      "The body text settings sit comfortably inside the brief: about 12 pt, about 53–55 characters per line, and 1.6 leading, left aligned.",
+      "The rationale's measurements match what is visible on the page.",
+      "The page is restrained, with no invented contact details or prices, and all required session, place, time and admission information is present.",
+      "The small preview keeps the headline and the three session titles clearly distinguishable."
+    ],
+    "weaknesses": [
+      "The lower part of the page has uneven vertical space: a large gap before the footer and a bottom margin about twice the side margins.",
+      "'AUTUMN SEASON' is visually weaker than the session titles, so the name and season do not read as one equal first level.",
+      "The practical details, dates and descriptions are strained in the small preview.",
+      "The grey secondary text may have noticeably lower contrast than the stated 15:1; this needs measuring.",
+      "The rationale reports measurements well but gives few reasons for the decisions, and does not name the typefaces or state a spacing scale."
+    ],
+    "missingRequirements": [
+      "The rationale does not name the two typefaces or confirm they are licensed, which the constraints require.",
+      "The rationale does not describe the vertical spacing scale or the top and bottom margins, which the brief asks to be explained with measurements."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 76,
+        "evidence": "The rationale names three decisions: the size ladder (46 px name, 18 px season, 26 px session titles, 16 px details), body settings (16 px = 12 pt, about 55 characters, 26 px leading = 1.6, left aligned) and the grid (80 px margin, date column at x=80, text column at x=220, sessions 170 px apart). These match the image. The text column starts near x=220, a description line holds about 53 characters, and the sessions repeat at even intervals. What is missing is the 'why': no reason is given for the serif/sans split, for 1.6 leading, or for the two-column layout. The typefaces are not named. Top and bottom margins and the overall spacing scale are not described. The 15:1 contrast figure covers only the dark ink, not the grey text.",
+        "where": "Learner rationale, all three paragraphs; checked against the final page",
+        "explanation": "The measurements are specific and honest, which is the hardest part. But each decision reads as a description of what was done rather than a design argument. A reader cannot tell what problem each choice solves for this book club and its audience.",
+        "principle": "Design rationale links each decision to a goal: reading comfort, scanning order, or fitness for print and small-image use.",
+        "improvement": "For each decision, add one sentence of reasoning. For example: 'I put dates in their own column so members can scan when a session is before what it is.' Name both typefaces and confirm their licence. State the top and bottom margins and the spacing units you used, such as 26 px and multiples of it.",
+        "verify": "Read each decision and ask 'why?'. If the sentence already answers it with a reader-focused reason, it is complete. Check that every number you quote can be found on the page."
+      },
+      {
+        "criterionId": "grid-and-alignment",
+        "score": 80,
+        "evidence": "The left edge is strong. The heading, season, rules, dates and footer all start at about x=80, and the rules end at about x=714, giving equal left and right margins of about 80 px. Session titles, 'Led by' lines and descriptions share one left edge at about x=220. The three sessions repeat at even intervals of about 170 px and are set identically. Below the last session, about 150 px of empty space separates it from the footer rule. A further roughly 165 px sits below the footer, which is about twice the 80 px side margin. This lower part of the page feels unplanned rather than part of the same rhythm.",
+        "where": "Final page: left and right edges; session blocks at about y=290, 460 and 630; the gap at about y=730–880 and the bottom margin below about y=955",
+        "explanation": "The horizontal grid and the session rhythm are clear and disciplined. The vertical distribution drifts at the bottom of the page, so it does not read as one consistent spacing scale and the footer looks parked rather than placed.",
+        "principle": "Consistent margins and a single vertical spacing scale make a page feel built rather than arranged by eye.",
+        "improvement": "Choose a base unit, for example 26 px from your leading, and set every vertical gap to a multiple of it. Then either anchor the footer to an 80 px bottom margin, or spread the session blocks so the space between the last session and the footer matches the space between sessions.",
+        "verify": "Overlay horizontal guides at your base unit in your design tool and check that every block's top or baseline lands on one. Measure the bottom margin and confirm it matches the side margins or a stated multiple of them."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 80,
+        "evidence": "Judged only from the 283×400 px preview. The group name is clearly readable as the dominant element. The three bold serif session titles are distinct and readable at roughly 9 px. The three-block structure with dates on the left is easy to see. The dates, the 'Led by' lines, the descriptions and the practical details at the bottom are very small, roughly 5–6 px, and grey or light. They are strained and hard to read at this size; only the bold 'Quay Library, Room 2' line is partly legible. 'AUTUMN SEASON' is small and light but just readable.",
+        "where": "Preview image: headline (top), session titles (middle), dates column, descriptions and footer details",
+        "explanation": "The hierarchy and the session structure survive well, which is the main goal. The practical details, which someone sharing the image needs most after the titles, are the weakest part of the preview.",
+        "principle": "At reduced size only the largest, heaviest type and the overall shapes survive, so key information needs enough size and weight to cross that threshold.",
+        "improvement": "Consider making the date column and the venue line a little larger or heavier, or setting the time and admission line in the dark ink rather than grey. Any of these would help the practical details hold up in the shared image without disturbing the print hierarchy.",
+        "verify": "View the preview at actual size on a phone screen at arm's length. You should be able to read each session title, each date and the venue without zooming."
+      },
+      {
+        "criterionId": "text-settings",
+        "score": 88,
+        "evidence": "These are estimates from pixels. The description text looks about 16 px on a 794 px-wide A4 page, consistent with the stated 12 pt. A description line such as 'A year of letters from a remote light, read aloud and' is about 53 characters, inside the 45–75 range. Lines are about 26 px apart, matching the stated 1.6 ratio. Text is left aligned with a natural ragged right. The 'Led by' lines and the footer's second line are set in grey, which lowers contrast against the cream background. Its exact ratio cannot be measured from pixels and will be lower than the 15:1 quoted for the dark ink.",
+        "where": "Session descriptions, 'Led by' lines and footer text on the final page",
+        "explanation": "Body settings are comfortably within the brief and read easily in print. The only borderline point is the lighter grey secondary text, which may lose contrast when printed on a home or office printer.",
+        "principle": "Readable text needs adequate size, a moderate measure, open leading and sufficient contrast. Secondary text can be lighter, but not so light that it weakens readability.",
+        "improvement": "Check the grey text's contrast and keep it comfortably above 4.5:1. Darken it slightly if needed. Your 1.6 leading sits at the top of the range; 1.5 would also work if you want the descriptions to feel slightly tighter as blocks.",
+        "verify": "Use a contrast checker on the actual grey and cream colour values from your file. Print the page at 100% and read a description at normal reading distance."
+      },
+      {
+        "criterionId": "type-hierarchy",
+        "score": 80,
+        "evidence": "The group name, about 46 px bold serif, is clearly the first thing seen. Session titles in bold serif at about 26 px clearly form the second level. The practical details at the bottom, separated by a rule, read last. However, 'AUTUMN SEASON' is set at about 18 px in a light grey, letter-spaced sans. It is visually lighter and smaller than every session title, though its position under the name and above the rule keeps it in the header. The venue line uses the same size as the body descriptions, with bold as its only distinction.",
+        "where": "Header ('AUTUMN SEASON'), session titles, footer details",
+        "explanation": "The brief asks for the group name and season together as the clear first level. The season currently reads as a quieter label below the session titles in visual weight, so it relies on position alone. The reading order still works within a couple of seconds, so this is a refinement rather than a failure.",
+        "principle": "Hierarchy is built from contrast in size, weight and value. Items meant to share a level should carry comparable visual weight.",
+        "improvement": "Give the season more presence. Options include setting it darker or a little larger, or combining it more directly with the name (for example 'Autumn Season 2025' style placement with stronger ink) so the header reads as one unit that outranks the sessions.",
+        "verify": "Squint at the page or blur it slightly. The name and season should register together as the strongest block, before any session title."
+      },
+      {
+        "criterionId": "type-pairing",
+        "score": 84,
+        "evidence": "Two typefaces are visible: a sturdy bold serif for the group name and session titles, and a neutral sans for the season, dates, 'Led by' lines, descriptions and footer. This matches the rationale. The roles are clearly separated, and the bookish serif headline suits a reading group. The rationale does not name either typeface or confirm a licence, so I cannot check the licensing constraint. It also describes the sans as being 'for details' when it actually sets all the body text.",
+        "where": "All headings versus all supporting text on the final page; rationale's typeface sentence",
+        "explanation": "The pairing is sound and the role difference is clear. Naming the faces and the reason for choosing them would show the choice was purposeful rather than default.",
+        "principle": "A pairing works when each face has a distinct job and the combination suits the audience's tone.",
+        "improvement": "Name both typefaces, state their licences, and add a sentence on why they fit a community book club. For example, the serif could evoke printed books while the sans keeps practical information plain.",
+        "verify": "Confirm each font's licence on its source page and record it in your rationale."
+      }
+    ]
+  },
+  {
+    "sample": "typo-weak",
+    "run": 1,
+    "assignment": "typographic-programme",
+    "expect": "does not pass; text-settings < 60; grid-and-alignment < 60",
+    "ms": 51031,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5108,
+    "outputTokens": 4678,
+    "costUsd": 0.114,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 17,
+    "passed": false,
+    "failedMandatory": [
+      "legibility-at-small-size",
+      "text-settings"
+    ],
+    "scores": {
+      "design-rationale": 15,
+      "grid-and-alignment": 10,
+      "legibility-at-small-size": 30,
+      "text-settings": 10,
+      "type-hierarchy": 25,
+      "type-pairing": 15
+    },
+    "strengths": [
+      "The page includes the correct group name, season and the three session titles and leaders from the brief, and the descriptions are your own writing.",
+      "The rationale is honest and matches what is on the page. That self-awareness is a good starting point for revision.",
+      "The preview is a correctly proportioned smaller version of the final, as requested."
+    ],
+    "weaknesses": [
+      "The session 1 line runs off the right edge of the page and is cut off, so part of its description and its practical details are lost.",
+      "At least three typefaces appear to be used, with inconsistent roles.",
+      "Body text appears well below 10 pt (estimate), set in very long single lines and pale grey.",
+      "There is no visible grid: left edges vary widely and the spacing is uneven.",
+      "The three sessions are each set differently, so they are not parallel.",
+      "The bold session 2 title competes with the group name for first place in the hierarchy.",
+      "The practical details are not a distinct level, and 'free' appears for only one session.",
+      "The lower two-thirds of the A4 page is empty.",
+      "The rationale has no measurements and no reasoned decisions."
+    ],
+    "missingRequirements": [
+      "No more than two typefaces with clear headline and body roles.",
+      "Body text at about 10 pt or larger, with lines of 45–75 characters and line spacing of 1.3–1.6.",
+      "A visible grid with consistent margins, aligned edges and one spacing scale.",
+      "The three sessions set in parallel, the same way each time.",
+      "Practical details (place, time, admission) as a clear third level. Admission free is not shown for sessions 1 and 2, and session 1's details are cut off.",
+      "Session 3 dated as 'Tuesday 21 October' and its leader shown as 'led by Priya Nair', consistent with the other sessions (it currently reads '21 Oct … Priya Nair').",
+      "A rationale explaining three design decisions with measurements: type sizes, line length, line spacing, margins and grid."
+    ],
+    "criticalFailures": [
+      "Text runs off the right edge of the page: the session 1 line is cut off mid-word, so its full description and practical details are missing from the printed and shared programme."
+    ],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 15,
+        "evidence": "The rationale is 35 words long. It names an intention (a relaxed, informal look), says fonts were mixed and some items centred, says the text is small and some lines are long, and states 'I did not measure anything.' No type sizes, line length, line spacing, margins or grid are reported. Its claims do match the page, which is honest, but they describe departures from the brief rather than reasoned decisions.",
+        "where": "Learner rationale (whole text).",
+        "explanation": "The brief asks for three design decisions, each with a reason and measurements. Without measurements, neither you nor a reader can check whether the text settings meet the brief, and the reasoning cannot be followed.",
+        "principle": "Design rationale: decisions should be specific, justified against the brief and audience, and backed by measurable values.",
+        "improvement": "Write three short paragraphs, one per decision, for example (1) the hierarchy, (2) the body text settings, (3) the grid. For each, say what you chose, why it suits a community book club, and give the values: headline, session title and body sizes in pt; body line spacing in pt; line length in characters; page margins in mm; number of columns, gutter width and your spacing unit.",
+        "verify": "Check each number in the rationale against your layout file. Ask someone to read the rationale and point to each decision on the printed page. They should find all three."
+      },
+      {
+        "criterionId": "grid-and-alignment",
+        "score": 10,
+        "evidence": "There is no visible grid. Left edges vary: session 1 starts at about x=40, the session 2 title at about x=60, its description at about x=46, the session 3 title at about x=510, and its description at about x=30. The title block is centred. The session 1 line runs off the right edge and is cut off mid-word ('talke…'). Vertical gaps between items are uneven. The lower two-thirds of the page (roughly y=400 to 1123) is empty. The three sessions are each set differently.",
+        "where": "Whole page, especially the sessions band between about y=220 and y=380, and the right edge at the end of the session 1 line.",
+        "explanation": "Shared edges and a regular spacing rhythm make a page look organised and help the eye find the next item. Text running off the page loses information. The empty lower area also shows the content was not planned within the page.",
+        "principle": "Grid systems: consistent margins, shared alignment axes, one spacing scale, and repetition (parallelism) for items of equal status.",
+        "improvement": "Set margins of, for example, 20 mm on all sides. Choose one alignment, such as flush left on a single column or a simple two-column grid. Pick a base spacing unit (for example 6 mm) and use only multiples of it for gaps. Set the three sessions as one repeated block, with the same order, sizes and spacing each time. Spread the content down the page so the sessions and practical details use the space.",
+        "verify": "Turn on guides in your layout software and check that every text block starts on a guide. Measure the gaps between sessions; they should be identical. Confirm that no text touches or crosses the margins."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 30,
+        "evidence": "In the 283x400 preview itself, 'Harbour Reading Group / Autumn season' is readable, and the bold 'Tuesday 14 October, Short Stories from the Coast' is readable. The session 1 line is a faint grey strip that cannot be read. The session 3 title ('21 Oct Poems for Winter…') is a tiny grey fragment at the right and is barely decipherable. All three descriptions and the venue and time details are unreadable, pale, thin lines. The bold session 2 title competes with the group name. Because only one session stands out, the preview does not read as three parallel sessions.",
+        "where": "Preview image: the headline block at the top and the band of session lines just below it.",
+        "explanation": "The programme will be shared as a small image, so the structure must survive at that size. Here only the headline and one session survive. A viewer would likely think there is a single event.",
+        "principle": "Hierarchy and scale: at small sizes only large, high-contrast shapes survive, so each important level needs enough size, weight and contrast.",
+        "improvement": "Give all three session titles the same clear size and weight (for example dates and titles in bold at a size well above body text). Keep the group name the largest and strongest element. Use dark text rather than pale grey so the lines survive reduction. Group each session as a distinct block with space around it.",
+        "verify": "Export the preview at 400 px tall and view it on a phone at arm's length without opening the full-size file. You should be able to count three sessions and read the group name and each date and title."
+      },
+      {
+        "criterionId": "text-settings",
+        "score": 10,
+        "evidence": "These are estimates from pixels, and the rationale gives no sizes to compare with. On a 794 px wide A4 page, the description text appears roughly 6–8 pt, below the brief's minimum of about 10 pt. The session 1 line is far longer than 75 characters (well over 150) and runs off the page. The session 2 and session 3 descriptions are also single lines of roughly 100–110 characters. Much of the text is very light grey on white, which looks like low contrast. Fonts change from session to session.",
+        "where": "Session description lines at about y=227, y=285 and y=376.",
+        "explanation": "Small, pale text on very long lines is tiring to read and easy to lose your place in. Printed for a community group that may include older readers, it would be hard to read for many people. The clipped line also hides content.",
+        "principle": "Readable text settings: body at about 10–12 pt, 45–75 characters per line, line spacing of 1.3–1.6 times the size, and strong tonal contrast.",
+        "improvement": "Set the body text at 10–11 pt with 14–16 pt line spacing. Limit the column to about 90–120 mm wide so lines hold roughly 55–70 characters. Let descriptions wrap onto two lines instead of running in one. Use near-black text for body copy.",
+        "verify": "Count the characters in a typical line (aim for 45–75). Check the size and leading in your software's type panel. Print the page at 100% and read it at normal reading distance. Measure text contrast with a contrast checker; WCAG 4.5:1 is a useful benchmark."
+      },
+      {
+        "criterionId": "type-hierarchy",
+        "score": 25,
+        "evidence": "The group name sits at the top and is centred, so it leads by position. However, the session 2 title is bold and visually as heavy as, or heavier than, the group name. Session 1 is tiny grey text, and session 3 is a small grey title. So the three sessions sit on three different levels instead of one. The practical details (Quay Library Room 2, 18:30, free) are buried inside the description lines and not set as their own level. 'Free' appears only for session 3.",
+        "where": "Title block (about y=95–155) compared with the session 2 heading (about y=254), and the session 1 and 3 lines.",
+        "explanation": "The brief asks for a clear order: group and season, then sessions, then practical details. At present the eye jumps to session 2. Sessions 1 and 3 read as minor notes, and readers have to hunt for where and when.",
+        "principle": "Visual hierarchy: use distinct steps of size, weight and value, applied consistently to items of the same rank.",
+        "improvement": "Use three clearly separated levels. (1) Group name and season, largest. (2) Each session's date and title, the same style for all three. (3) Description and practical details at body size. Consider setting the shared details (Quay Library, Room 2, 18:30, admission free) once as a clear practical-details block.",
+        "verify": "Show the page to someone for two seconds, then ask what the group is, how many sessions there are, and where they happen. They should answer all three correctly."
+      },
+      {
+        "criterionId": "type-pairing",
+        "score": 15,
+        "evidence": "Exact fonts cannot be identified from pixels. Visually, the page appears to use at least three families: a monospaced face (group name, session 1 and session 2 description), a serif (season line and session 3 description) and a bold sans-serif (session 2 and 3 titles). The rationale confirms 'I mixed fonts'. Roles are not consistent, for example session descriptions switch between monospace and serif.",
+        "where": "Title block and all three session blocks.",
+        "explanation": "The brief allows no more than two typefaces with clear headline and body roles. Mixing three families at random makes the page feel disorganised rather than relaxed, and it weakens the hierarchy.",
+        "principle": "Type pairing: limit families, give each a distinct role, and choose faces whose character suits the audience (warm and readable for a community book club).",
+        "improvement": "Choose two licensed typefaces, for example a friendly serif for body text and a contrasting sans or display serif for headings, or a single family using weight for contrast. Assign headings to one and body to the other, and use them the same way everywhere. Name them and their licence in the rationale.",
+        "verify": "Use your software's font list (for example Find Font, or the used-fonts panel) to confirm that only two families appear in the document, and check each session uses identical styles."
+      }
+    ]
+  },
+  {
+    "sample": "typo-weak",
+    "run": 2,
+    "assignment": "typographic-programme",
+    "expect": "does not pass; text-settings < 60; grid-and-alignment < 60",
+    "ms": 52070,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5108,
+    "outputTokens": 4857,
+    "costUsd": 0.1176,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 15,
+    "passed": false,
+    "failedMandatory": [
+      "legibility-at-small-size",
+      "text-settings"
+    ],
+    "scores": {
+      "design-rationale": 10,
+      "grid-and-alignment": 12,
+      "legibility-at-small-size": 22,
+      "text-settings": 12,
+      "type-hierarchy": 20,
+      "type-pairing": 15
+    },
+    "strengths": [
+      "The group name and season are placed at the top of the page and centred as a unit.",
+      "The session 2 title shows you can create a strong, readable heading at a clear size and weight; applying that treatment to all three sessions would be a good start.",
+      "The descriptions you wrote are short, evocative and fit the coastal, community tone (for example, 'Poems for the dark months chosen by the group and read in turn with tea').",
+      "Your rationale is honest about what you did, which makes it easy to see what to work on next."
+    ],
+    "weaknesses": [
+      "Session 1's text runs off the right edge of the page and is cut off.",
+      "At least three typefaces are used, with inconsistent roles.",
+      "Body text appears well below 10 pt (estimate), in pale grey, on very long single lines.",
+      "The three sessions are each styled and positioned differently, so they do not read as parallel.",
+      "Session 2's title competes with the group name for first place in the hierarchy.",
+      "There is no visible grid: left edges vary and the vertical spacing is uneven.",
+      "About two-thirds of the page is empty while the text is crammed small.",
+      "At preview size, only one session is identifiable."
+    ],
+    "missingRequirements": [
+      "No more than two typefaces (at least three are visible).",
+      "Body text at about 10 pt or larger, with 45–75 characters per line and 1.3–1.6 line spacing.",
+      "A visible grid with consistent margins, aligned edges and one spacing scale.",
+      "Three sessions set in parallel.",
+      "Practical details (place, time, admission) as a distinct third level; admission 'free' is not shown for session 2, and session 1's details are cut off.",
+      "Session dates set consistently (session 3 shows '21 Oct' without 'Tuesday').",
+      "A rationale explaining three decisions with measurements for type sizes, line length, line spacing, margins and grid."
+    ],
+    "criticalFailures": [
+      "Session 1's text extends beyond the right edge of the page and is truncated. Part of its description, and possibly its practical details, cannot be read in either the print or the shared image."
+    ],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 10,
+        "evidence": "The rationale is 35 words long. It says the learner 'mixed fonts and centred some things', that 'the text is small' and that some lines were left long, and it states 'I did not measure anything.' It names no type sizes, line length, line spacing, margins or grid. It does not explain three decisions with reasons.",
+        "where": "Learner rationale (whole text)",
+        "explanation": "The statements are honest and do match what is visible: mixed fonts, small text and long lines. However, the brief asks for three explained decisions backed by measurements, and none are given. Without measurements, neither you nor a reviewer can check whether the settings meet the brief.",
+        "principle": "Design reasoning: each choice should connect a goal (audience, purpose, constraint) to a specific, measurable setting.",
+        "improvement": "Write three short paragraphs, one per decision, for example: (1) hierarchy: the headline is X pt, session titles Y pt and details Z pt, because…; (2) text settings: body at 10–11 pt on 14–15 pt leading, about 60 characters per line, because…; (3) grid: 20 mm margins, a 12-column grid and an 8 pt spacing scale, because…. Report the values from your layout software.",
+        "verify": "Check each number in your rationale against your document settings. Then ask: could someone rebuild my page from these numbers alone?"
+      },
+      {
+        "criterionId": "grid-and-alignment",
+        "score": 12,
+        "evidence": "The left edges vary from line to line. Measured in pixels on the 794 px final, session 1 starts at about x=40, the session 2 title at about x=60, its description at about x=46, the session 3 title at about x=510 (pushed right) and its description at about x=30. The headline block is centred. Session 1's line runs past the right edge of the page. The vertical gaps between items are uneven, and roughly the bottom two-thirds of the page is empty. Each session is set differently: session 1 is one tiny monospace line, session 2 has a large bold sans title, and session 3 has a small grey sans title placed on the right.",
+        "where": "Whole page; session block between about y=220 and y=380; empty area from about y=400 to the bottom",
+        "explanation": "Without shared edges and a steady rhythm, the page looks placed by eye. The reader cannot see that the three sessions are equal items in one list. Content falling off the page is a production error.",
+        "principle": "Grid systems and parallelism: repeated items share the same structure, alignment and spacing, and all content sits inside consistent margins.",
+        "improvement": "Set equal margins (for example 20 mm on all sides) and choose one left edge for all text, or a clear column structure. Give every session the same template: date line, title, leader, one-sentence description. Use one spacing unit (for example 8 pt) and its multiples between elements. Spread the content to use the full page height, perhaps with a separate practical-details block near the bottom.",
+        "verify": "Turn on your grid or guides and confirm that every text block starts on the same line. Check that the gaps between sessions are identical values in your software. Confirm no text crosses the margins."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 22,
+        "evidence": "Judged only from the 283x400 px preview (400 px long edge). The headline 'Harbour Reading Group / Autumn season' can be made out. The session 2 title is the most prominent text block on the page and is clearly visible. The session 1 line and both descriptions appear as faint grey streaks that cannot be read at this size. The session 3 title is a tiny short line on the right and is barely distinguishable. The practical details cannot be read.",
+        "where": "Preview image: session block in the upper third",
+        "explanation": "At small size, only session 2 stands out as a session. Sessions 1 and 3 do not read as equal items, so the session structure is lost. Session 2 also competes with the headline, so the intended hierarchy is not preserved. Someone seeing the shared image would likely think there is only one event.",
+        "principle": "Scalable hierarchy: levels must differ enough in size, weight and contrast to survive reduction. Parallel items must look alike at every size.",
+        "improvement": "Give all three session titles the same clearly visible size and weight, set below the headline's size. Use darker text instead of pale grey. Keep the date and title of each session as short, bold lines that still show as three distinct blocks when reduced.",
+        "verify": "Export a 400 px-tall version and view it at 100% (or on a phone). Can you count three equal sessions and see the headline first without zooming?"
+      },
+      {
+        "criterionId": "text-settings",
+        "score": 12,
+        "evidence": "These are estimates from pixels, since no sizes are reported in the rationale. On a 794 px-wide A4 render, the description text has letters only a few pixels tall. That suggests roughly 6–8 pt, well below the required ~10 pt. Several of these lines are long single lines of around 110–130+ characters, and session 1's line is cut off at the right edge. The descriptions are set in pale grey that looks low in contrast against white (an estimate; please measure). Every description is a single line, so line spacing cannot be judged. The rationale confirms the text is small and the lines are long.",
+        "where": "Session 1 line (y≈227), session 2 description (y≈285) and session 3 description (y≈376)",
+        "explanation": "Small, pale text on very long lines is tiring and error-prone to read, especially in print and for older readers in a community group. The truncated session 1 text cannot be read at all.",
+        "principle": "Readable text settings: body at about 10–12 pt, 45–75 characters per line, leading of 1.3–1.6× the type size and sufficient tonal contrast.",
+        "improvement": "Set the descriptions at 10–11 pt in a dark grey or black. Limit the text column to about 60 characters (for example around 100–110 mm wide at 10 pt) so descriptions wrap onto two lines. Set leading at about 14–15 pt for 10 pt text. Use left alignment for the body text.",
+        "verify": "Print the page at 100% on A4 and read it at arm's length. Count the characters in a typical line (aim for 45–75). Check the leading value in your software, and measure text contrast with a contrast checker (aim for at least 4.5:1)."
+      },
+      {
+        "criterionId": "type-hierarchy",
+        "score": 20,
+        "evidence": "The group name is set in a medium-sized monospace face and 'Autumn season' in a serif, centred at the top. The session 2 title is set in a large bold sans that looks heavier and darker than the headline, so it competes with or outweighs the first level. The session 1 title is not distinguished from its description: it is one tiny monospace line. The session 3 title is small grey sans. There is no separate practical-details level: place, time and admission are buried inside the description lines and are inconsistent (session 3 says 'free', session 2 does not, and session 1's line is cut off).",
+        "where": "Headline (y≈110–140), session 2 title (y≈254), session 1 and 3 lines",
+        "explanation": "The required order is group name and season, then three sessions, then practical details. On this page, one session dominates, the other two sessions look like captions and the details have no level of their own. A reader cannot tell what matters first within two seconds.",
+        "principle": "Visual hierarchy: size, weight and value should step down in a consistent order, and each level should be used the same way every time it appears.",
+        "improvement": "Make the group name the largest and heaviest element, with the season clearly attached to it. Give all three session titles one shared style, smaller than the headline. Set dates and leaders in a consistent secondary style. Present 'Quay Library, Room 2 · 18:30 · Admission free' once, as its own clearly labelled details line or block.",
+        "verify": "Squint at the page or blur a screenshot. You should see one dominant headline, three equal session blocks and one details block, in that order."
+      },
+      {
+        "criterionId": "type-pairing",
+        "score": 15,
+        "evidence": "At least three visually different typefaces are visible: a monospace (headline and session 1 and 2 descriptions), a serif ('Autumn season' and the session 3 description) and a sans serif (session 2 and 3 titles). The rationale confirms the fonts were deliberately mixed. I cannot identify the exact fonts from pixels. The roles are not consistent: the same face appears as both headline and body, and the session titles use different styles.",
+        "where": "Headline, subtitle, session titles and descriptions throughout",
+        "explanation": "The brief allows no more than two typefaces with clear headline and body roles. Using three or more faces in shifting roles breaks the requirement. It also makes the page look accidental rather than relaxed.",
+        "principle": "Type pairing: limit the page to one or two families. Assign each a fixed role, and contrast them clearly (for example a characterful serif for headings and a plain sans for body).",
+        "improvement": "Choose two licensed typefaces. Use one only for the headline and session titles, and one only for the body and details. A warm serif paired with a clean sans can feel friendly and informal while staying orderly. Apply the roles consistently.",
+        "verify": "List every text element and its font in your software. There should be at most two families, and every element of the same role should use the same one."
+      }
+    ]
+  },
+  {
+    "sample": "imagery-strong",
+    "run": 1,
+    "assignment": "imagery-layout-guide",
+    "expect": "overall >= 70; image-style-rules >= 70; layout-template >= 70; brand-voice >= 70",
+    "ms": 57207,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5613,
+    "outputTokens": 5581,
+    "costUsd": 0.1341,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 79,
+    "passed": false,
+    "failedMandatory": [],
+    "scores": {
+      "brand-voice": 84,
+      "design-rationale": 66,
+      "image-style-rules": 78,
+      "layout-template": 86,
+      "legibility-at-small-size": 78
+    },
+    "strengths": [
+      "Four image rules cover light and colour, crop, subject and treatment, and most can be checked on a finished photo.",
+      "The do and don't tiles contrast clearly in warmth, distance and subject size.",
+      "The labelled skeleton sits beside two filled examples, so the reuse of the template is immediately visible.",
+      "Fixed and flexible parts of the template are stated explicitly.",
+      "The voice traits fit 'good bread, no airs', and the sample headline and caption share one voice.",
+      "The template measurements in the rationale (176 by 110 image, 12 px margin) match what is visible.",
+      "Clear numbered sections and a restrained cream and brown palette suit an unfussy brand."
+    ],
+    "weaknesses": [
+      "The 'dark caption bar' treatment rule is not used in the template, which puts text below the image on cream.",
+      "The 'two thirds of the frame' rule does not say whether it means width, height or area, and the DO tile may not meet it.",
+      "The DON'T tile changes several things at once, so it does not show which rule it breaks.",
+      "The rationale's claim that text is 18 px or larger does not match the small text in the cards and zone labels (estimated about 10 to 13 px).",
+      "The rationale ties decisions to 'warm' but barely to 'honest' or 'unfussy', and it gives no overall card size or proportion.",
+      "Voice traits have no 'avoid' guidance.",
+      "The flexible accent colour is never shown varying between the two examples.",
+      "The bottom of the page is unused while the template diagrams are small."
+    ],
+    "missingRequirements": [
+      "Constraint 'Do not invent products': the samples name specific products and details not in the brief (rye loaf, cardamom buns, Fridays, Saturdays, 5 a.m.). Use placeholders or only details from the brief.",
+      "Rationale: the template's overall proportions or format size are not reported, and the brand reasons for each decision are only partly given."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "brand-voice",
+        "score": 84,
+        "evidence": "Section 3 names three traits: 'Warm. Plain-spoken. Specific: a day, a flavour, a real detail.' The sample headline 'Cardamom buns, Saturdays, while they last.' and caption 'Baked at 5 a.m. so they are still warm when you collect them.' are short, concrete and plainly worded. They read as one voice. The template examples ('Rye loaf, back on Fridays' / 'Baked slowly, sold until gone.') use the same voice.",
+        "where": "Section 3 Voice, bottom third of the page; also the headlines and captions in the two template examples in Section 2.",
+        "explanation": "The traits suit 'good bread, no airs', and the headline and caption clearly follow them. The traits are one word each, though, with no guidance on what to avoid. The 'Specific' trait is shown with details the brief does not give (cardamom buns, rye loaf, Fridays, 5 a.m.). The brief asks you not to invent products, so these samples sit uneasily with the constraints.",
+        "principle": "A voice guide works best when each trait has a short 'this, not that' line. Staff can then check a new post against it, as they can with your image rules.",
+        "improvement": "Add one short 'not' line under each trait, for example 'Plain-spoken: no exclamation marks or words like artisanal'. Rework the samples so their specifics come only from the brief (bread, the neighbourhood, honesty), or present them clearly as placeholders such as '[product], [day]'. This keeps the 'Specific' trait without inventing products.",
+        "verify": "Read a new draft post against each trait and its 'not' line and tick each one. Check every noun in your samples against the brief to confirm nothing is invented."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 66,
+        "evidence": "The rationale covers three decisions: checkable image rules, a four-zone template with fixed parts, and a voice that leads with a real detail. It reports an image zone of 176 by 110 and a 12 px margin. Both match what is visible: the image block runs from about x=72 to 248 and y=702 to 812 inside a card edge at about x=60. It also claims 'Text is 18 px or larger' and contrast 'about 12:1'.",
+        "where": "Learner rationale; Section 2 template cards; small text inside the cards.",
+        "explanation": "The template measurements are accurate, which is good practice. The '18 px or larger' claim does not match the work. The captions in the cards ('Baked slowly, sold until gone.'), the FERNHILL wordmark and the zone labels look roughly 10 to 13 px on the 1000 px page (estimated from pixels). I cannot check the 12:1 contrast from pixels. Dark brown on cream looks high-contrast, but the orange subtitle and the green and red do/don't labels look lower; this is an estimate. Links to the brand are thin: only 'warm' is mentioned, and 'honest' and 'unfussy' are not used to justify any decision. The overall card size and proportion are not given.",
+        "principle": "A rationale earns trust when every claim can be checked against the artefact, and each decision says which brand quality it serves.",
+        "improvement": "Restructure as three short paragraphs: decision, brand reason (warm, honest or unfussy), measurement. State the card's overall size and ratio, the margin, the image-to-text proportion and the actual type sizes per role. Correct the 18 px claim or enlarge the small text to match it. Measure contrast for each colour pair, including the orange, green and red text, rather than giving one figure.",
+        "verify": "Check each number in the rationale against the file in your design tool. Run each text and background colour pair through a contrast checker and record the results."
+      },
+      {
+        "criterionId": "image-style-rules",
+        "score": 78,
+        "evidence": "Section 1 lists four rules covering the four required areas. Light and colour: 'Natural window light, warm tones, no filters.' Crop: 'The subject fills at least two thirds of the frame.' Subject: 'Hands and bread, never faces.' Treatment: 'One dark caption bar at the bottom when text is needed.' It shows a warm DO tile (large brown loaf shape on a warm ground) and a cool DON'T tile (small grey shape on blue).",
+        "where": "Section 1 Image style, top of the page.",
+        "explanation": "The rules are concrete, mostly checkable, and fit a warm, honest, unfussy bakery. 'No filters' supports honesty, and hands and bread keep the focus on the product. Two things weaken them. First, 'two thirds of the frame' does not say width, height or area. Your own DO loaf spans about 70% of the width but only about 45% of the height, and roughly a quarter of the area (estimated), so it is unclear whether it passes your rule. Second, the 'dark caption bar' treatment does not appear anywhere in your template, which puts text on cream below the image. Staff could be confused about which to follow. The DON'T tile also changes colour, distance and size all at once, so it does not show which single rule is broken.",
+        "principle": "A checkable rule names a measurable quantity, and the do and don't examples should each isolate the rule they illustrate.",
+        "improvement": "Reword the crop rule to something measurable, such as 'the bread spans at least two thirds of the frame width'. Make sure the DO tile clearly passes it. Either show the dark caption bar in use or replace that rule with a treatment the template actually uses. Consider a do/don't pair for each rule, or at least label which rule the DON'T breaks.",
+        "verify": "Overlay a thirds grid on the DO tile and check it passes the reworded rule. Ask someone unfamiliar with the guide to sort two test photos using only your rules and see whether they reach the same verdict."
+      },
+      {
+        "criterionId": "layout-template",
+        "score": 86,
+        "evidence": "A dashed skeleton labels IMAGE, HEADLINE, CAPTION and LOGO. The text states 'Fixed: image on top, headline under it, caption below, logo bottom left, 12 px margin' and 'Flexible: the words, the photo and one accent colour from the palette.' Two filled cards ('Rye loaf, back on Fridays' and 'Saturday buns') place image, headline, caption and the FERNHILL logo in the same positions as the skeleton.",
+        "where": "Section 2 Layout template, middle of the page.",
+        "explanation": "This is clear and consistent. The zones do not move between examples, the fixed and flexible rule is explicit, and placing the labelled skeleton beside the filled cards makes the reuse easy to see. Minor gaps: the card's overall size or ratio is not stated; both examples use the same orange block, so the flexible accent colour is never shown changing; and there is a large empty band between caption and logo whose purpose is not explained.",
+        "principle": "A template should define its frame (format and proportions) as well as its zones, and the examples should show the flexible parts actually flexing.",
+        "improvement": "Add the card format (for example its pixel size and ratio, and whether it is used for both posts and flyers). Show one example with a different accent or a different-length headline to prove the zones hold. Note how long a headline or caption may be.",
+        "verify": "Drop a long headline and a one-line headline into the template and check that the logo and margins stay fixed. Lay the two examples over the skeleton to confirm the zones align."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 78,
+        "evidence": "In the 286 by 400 px preview, the title 'Fernhill Bakery' and the section headings '1 Image style', '2 Layout template' and '3 Voice' stand out as bold, larger lines. The orange rule, the two do/don't tiles, the three template cards and the sample headline 'Cardamom buns, Saturdays, while they last.' are all distinguishable. The do/don't labels are readable, though small. Body lines are small but legible with effort at this size. The text inside the cards and the skeleton zone labels (IMAGE, HEADLINE, CAPTION, LOGO) are tiny and strained.",
+        "where": "Small-scale preview image (286x400).",
+        "explanation": "The three-part structure and the template's shape survive well, and headings are clearly different from body text. Detail inside the template (the zone labels and the example captions) is what strains first. That is the part that explains the template, so it matters.",
+        "principle": "Hierarchy through size and weight lets the structure survive reduction. The smallest functional labels are the first to fail.",
+        "improvement": "Enlarge the skeleton's zone labels and the card headlines and captions, or scale the template diagrams up. The page has a large empty band at the bottom, so there is room to do so.",
+        "verify": "Export the page at 286 by 400 px again and view it on a phone at arm's length. Check that you can still read IMAGE, HEADLINE, CAPTION and LOGO without zooming."
+      }
+    ]
+  },
+  {
+    "sample": "imagery-strong",
+    "run": 2,
+    "assignment": "imagery-layout-guide",
+    "expect": "overall >= 70; image-style-rules >= 70; layout-template >= 70; brand-voice >= 70",
+    "ms": 20625,
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgMu7GP7CW9d53XevMwbQ\"}",
+    "errorKind": "billing"
+  }
+]
