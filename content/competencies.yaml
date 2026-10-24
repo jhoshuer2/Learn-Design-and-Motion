@@ -13,3 +13,6 @@ competencies:
   - { slug: imagery-style, title: Defining and applying a consistent image style }
   - { slug: brand-layout-system, title: Building a reusable brand layout template }
   - { slug: brand-voice, title: Writing headlines and captions in a consistent brand voice }
+  - { slug: ui-forms, title: Designing clear, short, well-labelled forms }
+  - { slug: ui-navigation, title: Showing location and movement in app navigation }
+  - { slug: ui-feedback, title: Giving feedback for loading, errors and empty states }

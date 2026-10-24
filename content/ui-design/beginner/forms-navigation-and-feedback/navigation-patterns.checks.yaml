@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: Which three questions should navigation answer on every screen?
+    options: [Where am I and where can I go and how do I get back, What colour is it and how big is it and who made it, Who owns this and when was it written and how much does it cost, What is the logo and the slogan and the price]
+    answer: Where am I and where can I go and how do I get back
+    explanation: Orientation, options and a way back are what navigation is for.
+    competency: ui-navigation
+  - type: MULTIPLE_CHOICE
+    prompt: How should the current item in a navigation bar be marked?
+    options: [With more than colour such as bold or an underline as well, With a very slightly different grey only, It should not be marked, With an animation only]
+    answer: With more than colour such as bold or an underline as well
+    explanation: A second cue makes the current location clear to people who cannot tell the colours apart.
+    competency: ui-navigation
+  - type: MULTIPLE_SELECT
+    prompt: Which of these help people move around a small app? Select all that apply.
+    options: [Short text labels with icons, The same items in the same order on every screen, A visible back link inside a task, Moving the navigation bar to a new place on each screen]
+    answer: [Short text labels with icons, The same items in the same order on every screen, A visible back link inside a task]
+    explanation: Labels and consistency and a way back reduce guessing. Moving the bar around forces people to search for it.
+    competency: ui-navigation
+  - type: ERROR_DETECTION
+    prompt: A form screen has no back link and the navigation bar is hidden. What is the problem?
+    options: [People are trapped in the task with no visible way back, The screen is too short, The button is too wide, Nothing is wrong because phones have a back gesture]
+    answer: People are trapped in the task with no visible way back
+    explanation: Gestures are not obvious to everyone. A visible way back is part of clear navigation.
+    competency: ui-navigation
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the nav-patterns demo, which screen answers where you are without tapping?
+    options: [The one with labelled items and a marked current tab and a back link, The one with unlabelled shapes, Neither because they have the same title]
+    answer: The one with labelled items and a marked current tab and a back link
+    explanation: The labelled version shows the current location and the way back. The icon-only version hides them.
+    competency: ui-navigation
+  - type: MULTIPLE_CHOICE
+    prompt: About how many main items suit a bottom navigation bar on a phone?
+    options: [Three to five, Fifteen, One hundred, None]
+    answer: Three to five
+    explanation: A few main areas stay readable and tappable. More items shrink the targets and hide what matters.
+    competency: ui-navigation

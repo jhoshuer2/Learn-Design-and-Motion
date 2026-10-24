@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: Which error message is most useful?
+    options: [Add the part after the dot for example .com, Error, Invalid input, Something went wrong]
+    answer: Add the part after the dot for example .com
+    explanation: It names the problem and how to fix it. The others leave the person guessing.
+    competency: ui-feedback
+  - type: MULTIPLE_CHOICE
+    prompt: Why should an error be shown with more than a red border?
+    options: [Some people cannot tell the colours apart so an icon and text are needed too, Red is not allowed, Borders are slow, Colour makes forms longer]
+    answer: Some people cannot tell the colours apart so an icon and text are needed too
+    explanation: A second cue such as an icon and a message makes the error clear for everyone.
+    competency: ui-feedback
+  - type: MULTIPLE_SELECT
+    prompt: Which of these are good feedback practices? Select all that apply.
+    options: [Saying that the app is saving, Putting the error message next to the field, Keeping what the person typed after an error, Showing a blank screen when there is nothing to display]
+    answer: [Saying that the app is saving, Putting the error message next to the field, Keeping what the person typed after an error]
+    explanation: Progress messages and nearby errors and preserved input all help. A blank screen offers no guidance.
+    competency: ui-feedback
+  - type: ERROR_DETECTION
+    prompt: An empty ticket list shows a white screen with no text. What is the problem?
+    options: [It does not say what will appear or what to do next, The screen is too bright, The list is too long, Nothing is wrong because the list is empty]
+    answer: It does not say what will appear or what to do next
+    explanation: An empty state should explain itself and point to the next step.
+    competency: ui-feedback
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the feedback-states demo, which email field helps you recover best?
+    options: [The one with an icon and an outline and a message saying how to fix it, The one with only a red border and the word Error, Neither because both are red]
+    answer: The one with an icon and an outline and a message saying how to fix it
+    explanation: It names the problem and the fix and uses more than colour. The other leaves you guessing.
+    competency: ui-feedback
+  - type: MULTIPLE_CHOICE
+    prompt: Why disable a button while a form is saving?
+    options: [So it cannot be pressed twice by accident, So it looks smaller, So people stop using the app, So errors are hidden]
+    answer: So it cannot be pressed twice by accident
+    explanation: A disabled button with a visible saving message prevents duplicate submissions and shows the app is working.
+    competency: ui-feedback

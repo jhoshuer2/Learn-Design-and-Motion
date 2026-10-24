@@ -1,0 +1,30 @@
+slug: form-screen
+kind: MODULE_ASSESSMENT
+title: Design a passenger details screen
+objective: "Show that you can design one mobile form screen with clear structure, visible navigation and useful feedback, and explain your decisions with measurements."
+scenario: >
+  Tidewater Ferries, the small passenger ferry operator from the first UI module, needs the next screen after a rider
+  picks a departure: passenger details. The screen asks for the rider's full name and an email address for the ticket,
+  and offers an optional bicycle space. It has one main action, continue to payment, and a way back to the departures
+  list. It is for a phone about 390 by 844 points. The operator is fictional: nothing you make is used by a real
+  operator.
+requirements:
+  - "Show the form with a visible label for every field, related fields grouped, and the optional field marked as optional."
+  - "Show a navigation bar of three labelled items (Tickets, Timetable, Account) with the current item marked in more than one way, and a visible way back to the departures."
+  - "Show one field in an error state with an icon or other non-colour cue and a message that says how to fix the problem."
+  - "Show a loading or success cue for the main action, such as a saving state on the button."
+  - "Make every interactive element at least 44 by 44 points, with space between neighbouring targets, and keep body text at 16 points or larger with accessible contrast."
+  - "In your rationale explain three design decisions and give the measurements you used: target sizes, font sizes and at least two contrast ratios."
+constraints:
+  - "Original work only. Any icon, illustration or typeface must be one you are licensed to use."
+  - "Do not copy a real app's screen or a template."
+  - "Use only the information in the brief. Do not invent extra fields, fares or contact details."
+deliverables:
+  - { key: final, label: Screen design, description: "PNG, JPEG or WebP export of the full screen at phone size or larger.", role: final, required: true }
+  - { key: preview, label: Small-scale preview, description: "The same screen exported at about 400 px on its long side, to check that the structure still reads at thumbnail size.", role: preview, required: true }
+  - { key: process, label: Process image, description: "A sketch or an earlier version, if you want to show your process.", role: process, required: false }
+difficulty: 2
+estimatedMinutes: 120
+rubric: { slug: form-screen, version: 1 }
+maxAttempts: 3
+status: DRAFT

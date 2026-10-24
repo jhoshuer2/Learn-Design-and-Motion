@@ -17,6 +17,12 @@ describe("authored curriculum", () => {
     const modules = c.modules.filter((m) => m.def.path === path);
     const rubric = (a: { rubric: { slug: string; version: number } }) => c.rubrics.find((r) => r.slug === a.rubric.slug && r.version === a.rubric.version)!;
 
+    it("has at least two Beginner modules, in order, each with its own assessment", () => {
+      expect(modules.map((m) => m.def.position).sort()).toEqual(modules.map((_, i) => i));
+      expect(modules.length).toBeGreaterThanOrEqual(2);
+      for (const m of modules) expect(m.assignments.filter((a) => a.kind === "MODULE_ASSESSMENT"), m.def.slug).toHaveLength(1);
+    });
+
     it("is all DRAFT, so it is only shown with CONTENT_PREVIEW and never presented as reviewed", () => {
       expect(level.def.status).toBe("DRAFT");
       for (const m of modules) {

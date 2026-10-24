@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: Why should a form field have a visible label above it instead of only placeholder text?
+    options: [The label stays visible after typing so people know what the field is for, Placeholder text is never allowed on screens, Labels make the form shorter, Placeholders cannot be written in any language]
+    answer: The label stays visible after typing so people know what the field is for
+    explanation: A placeholder disappears when someone types. A visible label lets them check the field later.
+    competency: ui-forms
+  - type: MULTIPLE_CHOICE
+    prompt: Which button label tells people more about what happens next?
+    options: [Continue to payment, Submit, OK, Go]
+    answer: Continue to payment
+    explanation: A specific label names the next step. Generic labels leave people guessing.
+    competency: ui-forms
+  - type: MULTIPLE_SELECT
+    prompt: Which of these make a form easier to complete on a phone? Select all that apply.
+    options: [One column of fields, Related fields grouped under a short heading, Optional fields marked as optional, Fields squeezed side by side in tiny boxes]
+    answer: [One column of fields, Related fields grouped under a short heading, Optional fields marked as optional]
+    explanation: One column and grouping and optional markers reduce effort. Tiny side-by-side boxes are hard to read and tap.
+    competency: ui-forms
+  - type: ERROR_DETECTION
+    prompt: A form asks for name and email and also for date of birth and home address that the service never uses. What is the problem?
+    options: [It asks for more than it needs so fewer people will finish, The form is too short, The labels are too large, Nothing is wrong]
+    answer: It asks for more than it needs so fewer people will finish
+    explanation: Every extra field adds effort and lowers completion. Ask only for what you will use.
+    competency: ui-forms
+  - type: VISUAL_IDENTIFICATION
+    prompt: In the form-layout demo, which version makes the structure clearest?
+    options: [The version with visible labels and groups and a specific button, The version with placeholder-only labels, Neither because both have the same fields]
+    answer: The version with visible labels and groups and a specific button
+    explanation: Visible labels and grouping show the structure at a glance. The weak version hides it.
+    competency: ui-forms
+  - type: MULTIPLE_CHOICE
+    prompt: What should the space between groups of fields be compared with the space inside a group?
+    options: [Larger so that groups read as separate, The same, Smaller, There should be no space]
+    answer: Larger so that groups read as separate
+    explanation: Proximity shows what belongs together. More space between groups than within them makes the groups visible.
+    competency: ui-forms

@@ -45,7 +45,7 @@ const SPECS: Spec[] = [
       { competency: "accessibility-contrast", criterion: "accessible-contrast", lesson: "readable-accessible-interfaces" },
     ],
     mandatoryCriterion: "targets-and-states",
-    extraAssessments: [],
+    extraAssessments: [{ slug: "form-screen", files: [["final", 390, 844], ["preview", 185, 400]] }],
   },
 ];
 

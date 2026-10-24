@@ -4,6 +4,7 @@ import { ContrastLab } from "./ContrastLab";
 import { ReadingOrder } from "./ReadingOrder";
 import { GridAlignment, LineLengthLeading, TypePairing } from "./TypographyDemos";
 import { FormStates, SpacingRhythm, TouchTargets } from "./UiDemos";
+import { FeedbackStates, FormLayout, NavPatterns } from "./FormDemos";
 import { ImageTreatment, LayoutTemplate, VoiceCompare } from "./BrandLayoutDemos";
 import { LockupMisuse, LogoClearspace, PaletteRoles, PositionCompare } from "./BrandDemos";
 
@@ -141,6 +142,9 @@ export const DEMOS: Record<DemoName, () => React.ReactElement> = {
   "spacing-rhythm": () => <SpacingRhythm />,
   "touch-targets": () => <TouchTargets />,
   "form-states": () => <FormStates />,
+  "form-layout": () => <FormLayout />,
+  "nav-patterns": () => <NavPatterns />,
+  "feedback-states": () => <FeedbackStates />,
   "type-pairing": () => <TypePairing />,
   "line-length-leading": () => <LineLengthLeading />,
   "grid-alignment": () => <GridAlignment />,

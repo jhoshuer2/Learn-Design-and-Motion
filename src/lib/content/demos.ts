@@ -9,6 +9,7 @@ export const DEMO_NAMES = [
   "type-pairing", "line-length-leading", "grid-alignment",
   // UI Design
   "spacing-rhythm", "touch-targets", "form-states",
+  "form-layout", "nav-patterns", "feedback-states",
 ] as const;
 export type DemoName = (typeof DEMO_NAMES)[number];
 

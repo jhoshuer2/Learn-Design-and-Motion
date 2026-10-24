@@ -3,10 +3,12 @@ path: ui-design
 tier: BEGINNER
 scopeLabel: Interface hierarchy and accessibility
 scopeNote: >
-  Only one Beginner module is authored so far: Interface Hierarchy and Accessibility. Passing this capstone
-  records evidence that you can design a small mobile flow with clear hierarchy, usable targets and states, and
-  accessible text. It does not show mastery of interaction design, research, prototyping or the full Beginner
-  curriculum, which is not written yet. Work is judged from exported images, so behaviour and animation are not assessed.
+  Two Beginner modules are authored so far: Interface Hierarchy and Accessibility and Forms, Navigation and
+  Feedback. Both must be complete before this capstone opens, but the capstone itself still assesses only the
+  hierarchy, target, state and contrast skills from the first module. Passing it records evidence that you can
+  design a small mobile flow with clear hierarchy, usable targets and states, and accessible text. It does not
+  show mastery of interaction design, research, prototyping or the full Beginner curriculum, which is not written
+  yet. Work is judged from exported images, so behaviour and animation are not assessed.
 objectives:
   - Build clear visual hierarchy and consistent spacing on a mobile screen.
   - Size touch targets and show interface states (default, focus, error, disabled) clearly.

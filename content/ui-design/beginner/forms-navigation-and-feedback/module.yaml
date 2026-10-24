@@ -1,0 +1,15 @@
+discipline: ui-design
+path: ui-design
+level: BEGINNER
+slug: forms-navigation-and-feedback
+title: Forms, Navigation and Feedback
+position: 1
+objectives:
+  - Lay out a form so that each field is labelled, grouped and easy to complete.
+  - Show people where they are and how to move between the main parts of an app.
+  - Give clear feedback for loading, success, errors and empty screens, and say how to recover.
+status: DRAFT
+lessons:
+  - form-design
+  - navigation-patterns
+  - feedback-and-empty-states
