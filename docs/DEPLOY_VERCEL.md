@@ -7,6 +7,9 @@ This gets the app running on Vercel for **review, not launch**. All content is D
 2. **A Postgres database** reachable from Vercel (Neon, Supabase or Vercel's Postgres marketplace integration). Use a **pooled** connection string for `DATABASE_URL`.
 3. **A private S3-compatible bucket** for uploads (Cloudflare R2, AWS S3, Backblaze B2). Do **not** make it public: every read goes through the app's access checks.
 
+## Neon database (done for the preview)
+A Neon project `creative-mastery-preview` exists in org `org-small-base-83531964`, region AWS US East (N. Virginia), Postgres 18, default database `neondb`. Copy its **direct** connection string from the Neon console (Connect) into Vercel's `DATABASE_URL`. The migrations and seed have **not** been run against it yet (the sandbox cannot reach the database host); the first Vercel build does it, so watch that log. Revoke any API key that was ever pasted into chat.
+
 ## Bucket settings for direct uploads
 1. **CORS** on the bucket, allowing the browser to PUT from your app's origin:
 ```json
