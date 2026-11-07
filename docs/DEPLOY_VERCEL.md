@@ -7,6 +7,15 @@ This gets the app running on Vercel for **review, not launch**. All content is D
 2. **A Postgres database** reachable from Vercel (Neon, Supabase or Vercel's Postgres marketplace integration). Use a **pooled** connection string for `DATABASE_URL`.
 3. **A private S3-compatible bucket** for uploads (Cloudflare R2, AWS S3, Backblaze B2). Do **not** make it public: every read goes through the app's access checks.
 
+## Bucket settings for direct uploads
+1. **CORS** on the bucket, allowing the browser to PUT from your app's origin:
+```json
+[{ "AllowedOrigins": ["https://<your-app>.vercel.app"], "AllowedMethods": ["PUT"], "AllowedHeaders": ["Content-Type"], "MaxAgeSeconds": 3000 }]
+```
+(Cloudflare R2 takes the same rules in its CORS policy; for AWS S3 use the JSON form your console expects. Add each preview origin you use.)
+2. **Lifecycle rule:** expire objects under the prefix `pending/` after 1 day. Uploads that were never submitted are left there, and the app only deletes the ones it used.
+3. The bucket stays **private**. Presigned URLs allow one PUT of one declared size and type, for 10 minutes, to a key under the signed-in person's own `pending/<their id>/` prefix, and only after the server confirmed they can submit that assessment. Requests are rate limited per person (`RATE_UPLOAD_URL_PER_HOUR`, default 30).
+
 ## What the build does
 `npm run vercel-build` = `prisma generate` → `prisma migrate deploy` (applies the checked-in migrations to the database) → `tsx prisma/seed.ts` (publishes `/content` as DRAFT; safe to repeat, published rubric versions are immutable) → `next build`. Every deploy therefore migrates and re-publishes content. For anything beyond a preview, run migrations as a separate, reviewed step.
 
@@ -33,8 +42,8 @@ There is no long-running worker on Vercel. Grading runs when `/api/internal/jobs
 Until something calls it, submissions stay queued (visible to the learner as waiting).
 
 ## Known limits of this setup
-- **Upload size:** Vercel functions accept request bodies up to about **4.5 MB**. The app allows up to 8 MB per image through a server action, so large images will fail on Vercel until uploads go direct to the bucket (a code change, not done). Small images work.
-- The S3 adapter is unit-tested against an in-memory stand-in only; it has **not** run against a real bucket.
+- **Uploads go straight from the browser to the bucket** with a short-lived presigned URL (so Vercel's 4.5 MB body limit does not apply; each image can be up to 8 MB). The server then reads the object back and fully decodes and validates it before storing it, exactly as before. This needs the bucket settings below.
+- The S3 adapter and direct uploads are tested against an in-process stand-in for S3 only (it does not check signatures or CORS); they have **not** run against a real bucket or from a real browser.
 - The worker's 200 s tick budget needs a plan whose function duration allows it (`maxDuration = 300` on the route).
 - Migrations at build time can fail a deploy halfway; use a throwaway database for the preview.
 - Rate limiting and sessions are database-backed, so they work across serverless instances, but the connection count needs the pooled URL.

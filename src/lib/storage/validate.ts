@@ -11,7 +11,7 @@ export const LIMITS = {
 
 const FORMATS = { png: "image/png", jpeg: "image/jpeg", webp: "image/webp" } as const;
 
-export type UploadErrorCode = "too_large" | "unsupported" | "corrupt" | "too_many" | "too_small" | "empty";
+export type UploadErrorCode = "too_large" | "unsupported" | "corrupt" | "too_many" | "too_small" | "empty" | "missing";
 export class UploadError extends Error {
   constructor(public code: UploadErrorCode, message: string) {
     super(message);

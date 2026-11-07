@@ -5,6 +5,10 @@ import { requireUser } from "@/lib/session";
 import { getAssignmentAccess, type AssignmentDenied } from "@/lib/progression";
 import { SubmissionError, UploadError, createSubmission, type UploadedFile } from "@/lib/submissions";
 import { enqueue } from "@/lib/jobs/queue";
+import { getDirectUpload } from "@/lib/storage";
+import { readPendingUploads } from "@/lib/submissions/direct";
+import { BlockWhileUploading } from "@/components/submission/BlockWhileUploading";
+import { DirectUploadInput } from "@/components/submission/DirectUploadInput";
 import { Button } from "@/components/ui/Button";
 import { StateBadge } from "@/components/ui/StateBadge";
 
@@ -40,13 +44,19 @@ async function submitWork(formData: FormData) {
   const asg = await db.assignment.findUnique({ where: { id: assignmentId } });
   const defs = ((asg?.brief ?? {}) as { deliverables?: { key: string }[] }).deliverables ?? [];
   const files: UploadedFile[] = [];
+  const tokenOf = (k: string) => { const v = formData.get(`upload_${k}`); return typeof v === "string" && v ? v : null; };
   for (const d of defs) {
     const f = formData.get(d.key);
-    if (f instanceof File && f.size > 0) files.push({ slot: d.key, name: f.name, data: Buffer.from(await f.arrayBuffer()) });
+    // A token means the browser already sent this image straight to the bucket; the server reads and validates it below.
+    if (!tokenOf(d.key) && f instanceof File && f.size > 0) files.push({ slot: d.key, name: f.name, data: Buffer.from(await f.arrayBuffer()) });
   }
 
   let target = `/learn/assignment/${assignmentId}`;
+  let cleanup: (() => Promise<void>) | undefined;
   try {
+    const pending = await readPendingUploads(user.id, defs.map((d) => ({ key: d.key, token: tokenOf(d.key), name: String(formData.get(`name_${d.key}`) ?? "") })));
+    cleanup = pending.cleanup;
+    files.push(...pending.files);
     const { submissionId } = await createSubmission(user.id, assignmentId, {
       files, rationale: String(formData.get("rationale") ?? ""), changesNote: String(formData.get("changesNote") ?? ""),
     });
@@ -56,6 +66,8 @@ async function submitWork(formData: FormData) {
     if (e instanceof SubmissionError) target = `/learn/assignment/${assignmentId}?error=${e.code}`;
     else if (e instanceof UploadError) target = `/learn/assignment/${assignmentId}?upload=${encodeURIComponent(e.message)}`;
     else throw e;
+  } finally {
+    await cleanup?.();
   }
   redirect(target);
 }
@@ -85,6 +97,7 @@ export default async function AssignmentPage({
   const rv = a.rubricVersion;
   const amending = access.allowed && access.amending;
   const error = searchParams.error as keyof typeof DENIED | undefined;
+  const direct = getDirectUpload() !== null;
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
@@ -143,7 +156,9 @@ export default async function AssignmentPage({
           <form action={submitWork} encType="multipart/form-data" className="mt-4 space-y-5">
             <input type="hidden" name="assignmentId" value={a.id} />
             {amending && <p className="rounded border border-line bg-raised p-3 text-sm">Your last submission needs more evidence. Add the missing items below and it will be assessed again. This does not use another attempt.</p>}
-            {brief.deliverables.map((d) => (
+            {brief.deliverables.map((d) => direct ? (
+              <DirectUploadInput key={d.key} assignmentId={a.id} slotKey={d.key} label={d.label} hint={d.description} required={d.required} />
+            ) : (
               <div key={d.key}>
                 <label htmlFor={d.key} className="block text-sm font-medium">{d.label} ({d.required ? "required" : "optional"})</label>
                 <p id={`${d.key}-hint`} className="text-sm text-muted">{d.description}</p>
@@ -157,6 +172,7 @@ export default async function AssignmentPage({
               <div><label htmlFor="changesNote" className="block text-sm font-medium">What did you change after the last feedback?</label>
                 <textarea id="changesNote" name="changesNote" required rows={3} className="mt-1 w-full rounded border border-line bg-raised p-3" /></div>
             )}
+            {direct && <BlockWhileUploading />}
             <Button type="submit">Submit for assessment</Button>
             <p className="text-sm text-muted">Assessment can take a minute. Please keep this page open after you submit.</p>
           </form>

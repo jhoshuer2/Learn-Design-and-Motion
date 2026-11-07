@@ -16,6 +16,7 @@ export const LIMITS = {
   imageAnon: () => ({ bucket: "image", max: num(process.env.RATE_IMAGE_ANON_PER_MIN, 300), windowMs: 60_000 }),
   pageUser: () => ({ bucket: "page-user", max: num(process.env.RATE_PAGE_USER_PER_MIN, 600), windowMs: 60_000 }),
   imageUser: () => ({ bucket: "image-user", max: num(process.env.RATE_IMAGE_USER_PER_MIN, 1200), windowMs: 60_000 }),
+  uploadUrl: () => ({ bucket: "upload-url", max: num(process.env.RATE_UPLOAD_URL_PER_HOUR, 30), windowMs: 3_600_000 }),
   takedown: () => ({ bucket: "takedown", max: num(process.env.RATE_TAKEDOWN_PER_HOUR, 5), windowMs: 3_600_000 }),
 } as const;
 
