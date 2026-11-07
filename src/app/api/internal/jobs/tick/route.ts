@@ -15,7 +15,7 @@ function authorised(req: Request, secret: string) {
  * For hosts without a long-running process: a scheduler calls this every minute. Same loop as the worker, bounded in
  * time. Disabled (404) unless JOBS_TICK_SECRET is set, so it does not exist by accident.
  */
-export async function POST(req: Request) {
+async function tick(req: Request) {
   const secret = process.env.JOBS_TICK_SECRET;
   if (!secret) return new NextResponse(null, { status: 404 });
   if (!authorised(req, secret)) return new NextResponse(null, { status: 401 });
@@ -23,3 +23,7 @@ export async function POST(req: Request) {
   const summary = await runDueJobs({ workerId: `tick-${process.pid}`, concurrency: Number(process.env.WORKER_CONCURRENCY ?? 2), timeBudgetMs: 200_000 });
   return NextResponse.json({ probe, ...summary });
 }
+
+export const POST = tick;
+/** Vercel Cron calls with GET and `Authorization: Bearer $CRON_SECRET`; set CRON_SECRET to the same value as JOBS_TICK_SECRET. */
+export const GET = tick;
