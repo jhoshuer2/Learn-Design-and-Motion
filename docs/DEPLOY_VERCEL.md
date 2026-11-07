@@ -53,3 +53,10 @@ Until something calls it, submissions stay queued (visible to the learner as wai
 
 ## First checks after deploying
 Sign up → enrol in a path → open a lesson (demos render) → check a lesson → open `/dashboard`. Submitting work needs the bucket; grading needs the tick.
+
+## Troubleshooting
+**`{"message":"There was a problem with the server configuration. Check the server logs for more information."}` on `/api/auth/...`** is Auth.js's catch-all error, shown for a missing setting *and* for any exception inside sign-in or session checks. Open Vercel → the deployment → **Logs** and reload the page; the first error names the cause:
+1. `[config] AUTH_SECRET is not set ...` or `MissingSecret`: add `AUTH_SECRET` for the environment being served (Production vs Preview are separate), then **redeploy** (variables only apply to new deployments).
+2. `P1001 can't reach database` or `relation "User" does not exist`: `DATABASE_URL` is wrong or the migrations never ran. Use the Neon **direct** string, make sure the build command is `npm run vercel-build`, redeploy, and look for the migrations and `seed ok` in the **build** log.
+3. Only on a custom domain: set `AUTH_URL` to the site's public URL.
+A healthy signed-out `/api/auth/session` returns `null` (or `{}`).

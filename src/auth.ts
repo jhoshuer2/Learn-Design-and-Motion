@@ -6,6 +6,12 @@ import { db } from "@/lib/db";
 import { dummyHash } from "@/lib/auth/password";
 import { checkLogin, clearLoginFailures, recordLoginFailure } from "@/lib/auth/throttle";
 
+// Auth.js reports every startup or callback failure as the same vague "problem with the server configuration".
+// On a deployed host, say which required setting is missing (names only, never values).
+if (process.env.VERCEL) {
+  for (const name of ["AUTH_SECRET", "DATABASE_URL"]) if (!process.env[name]) console.error(`[config] ${name} is not set for this deployment environment`);
+}
+
 const credentials = z.object({ email: z.string().email(), password: z.string().min(1) });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
