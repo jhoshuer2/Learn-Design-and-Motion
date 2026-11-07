@@ -72,15 +72,18 @@ The script stops on a billing or auth error, stops before a call that could pass
 - The API key was pasted into a chat earlier. **Rotate it.** It lives only in the git-ignored `.env` and appears in no tracked file (checked again: no `sk-ant-` string in the repository or the results files).
 - Spend defaults for the operator budget now use the model's current list price (4 / 20).
 
-## M11 smoke test of the three second-module rubrics (partial: credit ran out)
-Samples (synthetic, invented businesses, checked by eye before any spend; I fixed a clipped headline, an overflowing post headline and a crowded success cue in my own "strong" samples first): `typo-strong`/`typo-weak` (`typographic-programme@1`), `imagery-strong`/`imagery-weak` (`imagery-layout-guide@1`), `form-strong`/`form-weak` (`form-screen@1`). Cap $4, 2 runs each.
+## M11 smoke test of the three second-module rubrics
+Samples (synthetic, invented businesses, checked by eye before any spend): `typo-strong`/`typo-weak` (`typographic-programme@1`), `imagery-strong`/`imagery-weak` (`imagery-layout-guide@1`), `form-strong`/`form-weak` (`form-screen@1`). 2 runs each, about $1.7 in total (cap $4). Results: `m11-second-modules.json`, report `m11-second-modules-report.md`. The first attempt stopped half way when API credit ran out; the harness resumed the missing runs.
 
-**Measured (6 of 12 planned calls, about $0.64; results in `m11-second-modules.json`, report in `m11-second-modules-report.md`):**
-- `typographic-programme`: strong 81 and 82 (passes, every mandatory minimum met, criteria within 1 point between runs); weak 17 and 15 (fails, both mandatory criteria below minimum). Clear separation, stable.
-- `imagery-layout-guide`: strong 79 on one run, which is 1 point under the threshold of 80, so the strong sample does **not** pass. The weakest criterion was the rationale (66). Same strict-top-end pattern as the poster and capstone; not changed. Only one run of this sample exists.
+| Sample | Overall (runs) | Result |
+|---|---|---|
+| typo-strong | 82, 81 | passes, stable |
+| typo-weak | 17, 15 | fails, both mandatory criteria under minimum |
+| imagery-strong | 79, 77 (one more call failed on billing and was re-run) | **does not pass**; weakest criterion is the rationale (60-66) |
+| imagery-weak | 9, 9 | fails, three mandatory criteria under minimum |
+| form-strong (fixed sample) | 81, 83 | passes |
+| form-weak | 13, 13 | fails, two mandatory criteria under minimum |
 
-**Not measured:** a second run of `imagery-strong`, both runs of `imagery-weak`, and all four `form-screen` runs. The API returned "credit balance is too low" on the seventh call and the harness stopped, as designed. The results file is resumable: after adding credit, re-run
-`npx tsx scripts/calibrate-grader.ts --samples typo-strong,typo-weak,imagery-strong,imagery-weak,form-strong,form-weak --runs 2 --budget-usd 4 --out docs/calibration/m11-second-modules.json`
-and only the missing runs are made (about $0.8).
+**What the grader found in my own sample:** the first `form-strong` (77-78, did not pass) had no loading or success cue on the main action, which the brief requires, and its error wording made no sense for an address with no dot. Both were real defects in my sample, so I fixed the sample (not the rubric) and re-ran; the first-version results are kept in `m11-form-strong-v1-sample.json`.
 
-So `form-screen@1` and the weak side of `imagery-layout-guide@1` have **no** real-grader evidence yet. The blind human scoring pack was **not** regenerated, so as not to reshuffle entries you may already be scoring; the new assessments are not in it.
+**Reading it honestly:** all three rubrics separate strong from weak clearly and run to run scores are stable (typically within a few points; imagery brand-voice varied 74-84). The strong imagery sample sits just under the threshold of 80, the same strict top end seen on the poster and capstone; it is a measurement, not a defect I chose to hide, and no thresholds or rubric text were changed. This is synthetic work only, with no human agreement measured. The blind human scoring pack was not regenerated (that would reshuffle entries you may be scoring), so the new assessments are not in it.

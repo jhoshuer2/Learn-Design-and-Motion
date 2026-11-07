@@ -117,11 +117,12 @@ const formStrong = `
   ${t(24, 120, 30, "#1c1b16", "Passenger details", { w: "bold" })}
   ${t(24, 168, 14, "#4a463b", "WHO IS TRAVELLING", { w: "bold", ls: 1.5 })}
   ${field(204, "Full name", { value: "Sam Harbour", ok: "Name saved" })}
-  ${field(336, "Email for your ticket", { value: "sam@harbour", error: ["Add the part after the dot,", "for example .com"] })}
+  ${field(336, "Email for your ticket", { value: "sam@harbour", error: ["Your email needs an ending,", "for example sam@harbour.com"] })}
   ${t(24, 492, 14, "#4a463b", "EXTRAS", { w: "bold", ls: 1.5 })}
   ${field(524, "Bicycle space", { optional: true })}
-  <rect x="24" y="670" width="342" height="60" rx="10" fill="#1a2fb8"/>
-  ${t(195, 707, 20, "#ffffff", "Continue to payment", { a: "middle", w: "bold" })}
+  <rect x="24" y="670" width="342" height="60" rx="10" fill="#d9d6cc" stroke="#6b675a" stroke-width="1.5"/>
+  <circle cx="92" cy="700" r="10" fill="none" stroke="#1c1b16" stroke-width="3" stroke-dasharray="40 24"/>
+  ${t(215, 707, 20, "#1c1b16", "Saving your details…", { a: "middle", w: "bold" })}
   <rect x="0" y="764" width="390" height="80" fill="#f4f2ec"/>
   ${navItem(65, "Tickets", true)}${navItem(195, "Timetable", false)}${navItem(325, "Account", false)}`;
 const formWeak = `
@@ -132,7 +133,7 @@ const formWeak = `
   ${t(24, 196, 11, RED, "Error")}
   <rect x="24" y="204" width="342" height="26" rx="2" fill="#ffffff" stroke="#dddddd"/>${t(32, 222, 11, "#cccccc", "Bike")}
   <rect x="24" y="260" width="90" height="26" rx="3" fill="#cdd6f7"/>${t(69, 277, 11, "#ffffff", "Submit", { a: "middle" })}`;
-const FORM_GOOD = "First, every field has a visible label at 16 px bold above a 52 px tall field, related fields are grouped under small caps headings with 40 px between groups, and the optional bicycle field is marked (optional). Second, navigation is a bottom bar of three labelled items 80 px tall; the current item, Tickets, is marked by blue, bold text, a filled icon and a 4 px bar, and a Back to departures link sits at the top. Third, the email field is in an error state with a 3 px red outline, a warning icon and the message Add the part after the dot, for example .com, and the name field shows a check mark and Name saved. Targets are at least 52 px and the main button is 60 px. Body text is 16 to 18 px. Contrast is dark ink on white at about 17:1, white on the blue button at about 8.5:1.";
+const FORM_GOOD = "First, every field has a visible label at 16 px bold above a 52 px tall field, related fields are grouped under small caps headings with 40 px between groups, and the optional bicycle field is marked (optional). Second, navigation is a bottom bar of three labelled items 80 px tall; the current item, Tickets, is marked by blue, bold text, a filled icon and a 4 px bar, and a Back to departures link sits at the top. Third, the email field is in an error state with a 3 px red outline, a warning icon and the message Your email needs an ending, for example sam@harbour.com, and the name field shows a check mark and Name saved. The main button shows a loading state: a spinner and the words Saving your details, in a grey disabled style so it cannot be pressed twice. Targets are at least 52 px and the main button is 60 px. Body text is 16 to 18 px. Contrast is dark ink on white at about 17:1, white on the blue button at about 8.5:1.";
 const FORM_WEAK = "I kept the screen light and compact so it feels simple. The fields are small with grey hints, the error is a red border, and the button is small. I did not measure any sizes or contrast.";
 
 export const m11Samples: Sample[] = [

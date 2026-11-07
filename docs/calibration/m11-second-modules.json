@@ -563,5 +563,825 @@
     "ms": 20625,
     "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.\"},\"request_id\":\"req_011CgMu7GP7CW9d53XevMwbQ\"}",
     "errorKind": "billing"
+  },
+  {
+    "sample": "imagery-strong",
+    "run": 2,
+    "assignment": "imagery-layout-guide",
+    "expect": "overall >= 70; image-style-rules >= 70; layout-template >= 70; brand-voice >= 70",
+    "ms": 61865,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5613,
+    "outputTokens": 5734,
+    "costUsd": 0.1371,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "medium",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 77,
+    "passed": false,
+    "failedMandatory": [],
+    "scores": {
+      "image-style-rules": 80,
+      "layout-template": 85,
+      "brand-voice": 74,
+      "design-rationale": 60,
+      "legibility-at-small-size": 82
+    },
+    "strengths": [
+      "Four image rules covering light and colour, crop, subject and treatment, most of them testable as yes or no (for example 'subject fills at least two thirds of the frame', 'never faces').",
+      "A clear do/don't pair of drawn placeholders that contrasts warm and close against cool and distant.",
+      "The template states its fixed and flexible parts explicitly, and the two examples follow it exactly; the 176 by 110 image and 12 px margin match the rationale.",
+      "A labelled skeleton card next to the filled examples makes the zones easy to understand.",
+      "The voice samples are short, concrete and consistent with each other and with 'good bread, no airs'.",
+      "A calm, uncluttered page with a warm palette that suits an unfussy bakery, and clear numbered section headings."
+    ],
+    "weaknesses": [
+      "The sample copy invents products and facts (cardamom buns, rye loaf, Friday and Saturday schedules, baking at 5 a.m.), which the brief rules out and which sits awkwardly with an 'honest' brand.",
+      "The 'dark caption bar' treatment rule is not used in the template, which may confuse staff.",
+      "'Warm tones' is less checkable than the other rules, and the subject and treatment rules have no visual example.",
+      "The rationale describes decisions but rarely ties them explicitly to warm, honest or unfussy.",
+      "The rationale claims text is 18 px or larger, but the text inside the template cards looks clearly smaller (estimate). The 12:1 contrast figure is unverified.",
+      "Only 'Specific' is defined among the voice traits.",
+      "There is a large unused area at the bottom of the page that could have made the template larger."
+    ],
+    "missingRequirements": [
+      "Constraint 'Do not invent products, prices or a street address' is not fully met: the samples name specific products (cardamom buns, rye loaf) and invented details (a 5 a.m. baking time, Friday and Saturday availability).",
+      "The rationale should tie each of its three decisions to the brand; this link is mostly implicit rather than explained."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "image-style-rules",
+        "score": 80,
+        "evidence": "Section 1 states four rules on three lines: 'Natural window light, warm tones, no filters.' / 'The subject fills at least two thirds of the frame.' / 'Hands and bread, never faces. One dark caption bar at the bottom when text is needed.' Two drawn placeholder tiles follow. The DO tile shows a warm cream and tan field with a large brown loaf shape spanning most of the width, labelled 'DO: warm, tight crop'. The DON'T tile shows a pale blue and grey field with a small grey shape, labelled 'DON'T: cool, distant, small subject'.",
+        "where": "Section 1 'Image style', the rule text and the two tiles under it (upper third of the page).",
+        "explanation": "The rules cover all four areas (light and colour, crop, subject, treatment). Most can be tested on a finished photo: 'two thirds of the frame', 'no filters' and 'never faces' are yes-or-no checks. They fit a warm, honest, unfussy bakery, since unfiltered window light reads as honest. Three things hold the score back. 'Warm tones' is the vaguest rule. The do/don't pair only shows light and crop, so the subject rule and the caption-bar rule are never illustrated. And the 'dark caption bar' treatment does not appear in your own template, where the text sits on cream below the image. A staff member could be unsure which one to follow.",
+        "principle": "Checkable rules and consistency: a style rule works when anyone can apply it to a photo the same way, and when every part of the guide agrees with it.",
+        "improvement": "Make 'warm tones' testable, for example 'white balance warm or neutral, never blue-tinted; no colour grading'. Either drop the dark caption-bar rule or show it in the template and say when it applies. You could also add a second small do/don't pair, or annotate the existing tiles, to show the 'hands and bread, never faces' rule.",
+        "verify": "Give the rules to someone who has not seen the tiles, along with three test photos (or descriptions). Check that they sort them into pass and fail the same way you would. Then check that no rule contradicts anything in Section 2."
+      },
+      {
+        "criterionId": "layout-template",
+        "score": 85,
+        "evidence": "Section 2 states: 'Fixed: image on top, headline under it, caption below, logo bottom left, 12 px margin. Flexible: the words, the photo and one accent colour from the palette.' Three cards follow. Two filled examples ('Rye loaf, back on Fridays' / 'Baked slowly, sold until gone.' and 'Saturday buns' / 'Cardamom, still warm.') each have an orange image block at the top, a serif headline, a small caption and 'FERNHILL' bottom left. A dashed skeleton card labels the zones IMAGE, HEADLINE, CAPTION and LOGO. Measured against the page, the image block in each example is about 176 by 110 px with roughly a 12 px inset from the card edge, which agrees with the rationale.",
+        "where": "Section 2 'Layout template', the three cards in the middle of the page.",
+        "explanation": "This meets the strong band. The zones are labelled, the fixed and flexible parts are stated explicitly, and the two examples line up zone for zone, so the reuse is easy to see. Two small gaps: both examples use the same flat orange image and the same colours, so the 'one accent colour' flexibility is stated but never shown. There is also a large empty gap between caption and logo with no rule for how long a caption may be.",
+        "principle": "Modular grid and fixed versus variable elements: a template earns its keep when content can change while the structure stays recognisably the same.",
+        "improvement": "Show the flexibility you allow by giving the second example a different accent colour or a different image placeholder. Add a caption length limit (for example 'caption: one line, under about 40 characters') so the zones stay balanced.",
+        "verify": "Overlay the two example cards (or measure them). Image, headline, caption and logo positions should match exactly. Only the words, the image and the permitted accent colour should differ."
+      },
+      {
+        "criterionId": "brand-voice",
+        "score": 74,
+        "evidence": "Section 3 gives three traits: 'Warm. Plain-spoken. Specific: a day, a flavour, a real detail.' Sample headline: 'Cardamom buns, Saturdays, while they last.' Sample caption: 'Baked at 5 a.m. so they are still warm when you collect them.' The template examples also mention 'Rye loaf, back on Fridays' and 'Baked slowly, sold until gone.'",
+        "where": "Section 3 'Voice', plus the copy inside the two template examples in Section 2.",
+        "explanation": "The traits are specific and the lines are concrete, short and clearly in the same voice. 'Plain-spoken' and 'warm' suit 'good bread, no airs' well. However, the brief says to use only its information and not invent products. Cardamom buns, rye loaf, the Friday and Saturday schedule and the 5 a.m. baking time are all invented details. For a brand built on honesty, a voice guide whose samples state facts that may not be true is a real weakness. Also, only 'Specific' is explained; 'Warm' and 'Plain-spoken' are single words with no guidance.",
+        "principle": "Brand voice must be truthful and usable: traits need short definitions, and sample copy should model the honesty the brand promises.",
+        "improvement": "Rewrite the samples so they keep your specific style without inventing facts. You could use clearly marked placeholders, such as '[Bread name], [day], while they last.' Or build only on what the brief gives, for example 'Good bread, no airs.' Add one line under each trait saying what it means and what to avoid, for example 'Plain-spoken: short sentences, no exclamation marks or buzzwords.'",
+        "verify": "Check each sample line against the brief. Every fact should either come from the brief or be an obvious placeholder. Then test whether a colleague can write a new caption using only your three trait definitions."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 60,
+        "evidence": "The rationale (126 words) names three decisions: checkable image rules, a four-zone template, and a specific voice. It gives measurements: image 176 by 110, 12 px margin, text 18 px or larger, and contrast of about 12:1. The image size and margin match what is visible. However, the template cards show caption text, headlines and the 'FERNHILL' logo text that look much smaller than 18 px (roughly 10 to 13 px by estimate from the image). The 12:1 contrast cannot be checked from pixels; dark brown on cream looks high contrast but this is only an estimate.",
+        "where": "Learner rationale, compared with Section 2's example cards.",
+        "explanation": "The decisions are real and two measurements match the work, which is good. But the brief asks for each decision to be tied to the brand (warm, honest, unfussy), and the rationale mostly describes what was done rather than why it suits the bakery. For example, it never says that 'no filters' expresses honesty or that the plain layout expresses 'unfussy'. The '18 px or larger' claim seems contradicted by the small text in the template cards. That puts this at the boundary between adequate and weak.",
+        "principle": "Design rationale links each choice to a goal and reports measurements accurately enough that someone else could check them.",
+        "improvement": "For each of your three decisions, add one sentence of the form 'I chose X because the brand is Y'. For example: 'No filters, because an honest bakery shows bread as it really looks.' Correct the text-size claim to give the actual sizes you used for the headline, caption and logo inside the cards, and add the card proportion (it looks like about 200 by 260 px). State how you measured the contrast, for example which colours and which checker tool.",
+        "verify": "Read the rationale next to the guide and tick each number against the file. Every number should match what is visible. Each of the three decisions should name at least one of 'warm', 'honest' or 'unfussy'. Run your two text colours through a contrast checker and quote the result."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 82,
+        "evidence": "Judged from the 286 by 400 px preview only. 'Fernhill Bakery' and the three section headings ('1 Image style', '2 Layout template', '3 Voice') stand out clearly from body text by size and weight. The warm and cool tiles are distinguishable, and their coloured labels show as green and red. The three template cards remain clear as shapes: an orange image block at the top, small text lines, and a logo line at the bottom, with the dashed skeleton card visibly different. The sample headline in Section 3 is still bold and prominent. Body lines appear as very small text, and the text inside the cards (headline, caption, 'FERNHILL', and the skeleton's zone labels) is reduced to tiny marks that are not reliably readable at this size.",
+        "where": "Preview image as a whole, especially the Section 2 cards and the body lines under each heading.",
+        "explanation": "The structure survives well: the three sections, the do/don't pair and the template with its zones can all be identified, and headings are easy to tell from body text. Details are strained, especially inside the template cards. That is where the zone labels matter most for someone scanning the guide.",
+        "principle": "Visual hierarchy at reduced scale: structure, contrast in size and weight, and clear shapes should carry the page when fine text cannot.",
+        "improvement": "Enlarge the skeleton card's zone labels or make them bolder, or give each zone a distinct tint so the zones read as shapes even when the labels cannot be read. You could also use the large empty space at the bottom of the page to make the template cards bigger.",
+        "verify": "Export the page at about 286 by 400 px again and look at it at 100% without zooming. Check whether you can still name all four zones in the skeleton card."
+      }
+    ]
+  },
+  {
+    "sample": "imagery-weak",
+    "run": 1,
+    "assignment": "imagery-layout-guide",
+    "expect": "does not pass; image-style-rules < 60; layout-template < 60",
+    "ms": 37373,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5442,
+    "outputTokens": 3649,
+    "costUsd": 0.0947,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 9,
+    "passed": false,
+    "failedMandatory": [
+      "image-style-rules",
+      "layout-template",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "image-style-rules": 5,
+      "layout-template": 5,
+      "brand-voice": 12,
+      "design-rationale": 5,
+      "legibility-at-small-size": 25
+    },
+    "strengths": [
+      "The page is clean and uncluttered, which is a reasonable starting point for an unfussy brand.",
+      "The title is clear and survives at small size.",
+      "You submitted a correctly scaled preview with a matching aspect ratio.",
+      "The rationale is honest that nothing was measured, which makes it clear what to add next."
+    ],
+    "weaknesses": [
+      "Image guidance is one vague sentence (\"nice and authentic\") with no checkable rules and no do or don't examples.",
+      "The template is an unlabelled grey box with no zones, no fixed or flexible rules and no examples of use.",
+      "The voice has one generic trait, and the sample line is hype-driven, which conflicts with \"good bread, no airs\".",
+      "The rationale gives no design decisions, brand links or measurements.",
+      "Body text is small and light grey (estimated low contrast), and most of the page is empty.",
+      "At preview size, no sections can be identified."
+    ],
+    "missingRequirements": [
+      "Three or four checkable image style rules covering light and colour, crop, subject and treatment.",
+      "One do and one don't image example, shown or described.",
+      "A layout template with labelled zones for image, headline, caption and logo.",
+      "A statement of what is fixed and what can change in the template.",
+      "The template used for two different pieces of content.",
+      "Three brand voice traits (only one is given).",
+      "A sample headline and a separate sample caption that follow the voice.",
+      "A rationale explaining three design decisions tied to the brand.",
+      "Measurements: proportions, margins and sizes."
+    ],
+    "criticalFailures": [
+      "The guide cannot do its job: the staff member gets no checkable photo rules, no labelled template and no examples of reuse, so they cannot use it to take photos or lay out posts and flyers."
+    ],
+    "criteria": [
+      {
+        "criterionId": "image-style-rules",
+        "score": 5,
+        "evidence": "The only image guidance is one sentence: \"Photos should look nice and authentic.\" There are no separate rules for light and colour, crop, subject or treatment. There is no do or don't example, either shown or described.",
+        "where": "Final image, single line of grey body text at about y=295, below the title.",
+        "explanation": "The person taking photos cannot check a finished photo against \"nice and authentic\"; two people would disagree about whether a picture passes. The rubric uses this kind of wording as its example of a weak rule. With one rule and no examples, the brief's requirement of three or four checkable rules is not met.",
+        "principle": "Checkable style rules: each rule should name something you can see in the photo (light direction, colour temperature, crop, subject, editing), so that a yes or no answer is possible.",
+        "improvement": "Write three or four rules that each describe a visible feature. Rule types to cover: light and colour (for example, natural window light and warm tones), crop (for example, how close and from what angle), subject (for example, real bread and real hands, no staged props), and treatment (for example, no heavy filters or added text on the photo). Tie each rule to warm, honest or unfussy. Under each rule add one Do and one Don't example. A simple drawn placeholder with a short caption is fine.",
+        "verify": "Hand the rules to a friend with two of your own photos and ask them to mark each rule pass or fail. If they can do it without asking you what a rule means, the rules are checkable. Also confirm every rule has both a Do and a Don't."
+      },
+      {
+        "criterionId": "layout-template",
+        "score": 5,
+        "evidence": "There is one light grey rectangle (about 300×200 px) with the word \"template\" inside it. It has no zones for image, headline, caption or logo. It does not say what is fixed and what can change. It is not shown used for any piece of content, let alone two.",
+        "where": "Final image, grey box at roughly x=60–360, y=400–600.",
+        "explanation": "A template only helps staff if it shows where each element goes and which parts must never move. An unlabelled box cannot guide a post or flyer, and with no examples the reuse cannot be seen.",
+        "principle": "Modular templates: fixed zones (position, size, margins of logo and headline) give consistency, while flexible slots (the photo, the wording) give variety.",
+        "improvement": "Draw the template at a real format, for example a square social post. Mark four labelled zones: Image, Headline, Caption and Logo. Add a short note listing what is fixed (for example, logo position and size, margins, headline typeface) and what can change (photo, headline wording, caption length within a limit). Then show the same template filled twice with different content, such as two different loaves or two different notices. Use only content allowed by the brief: no invented prices, products or address.",
+        "verify": "Place the two filled examples side by side. Check that the logo, headline and caption sit in exactly the same zones in both, and that only the flexible parts differ. Then check that each of the four zone labels is present."
+      },
+      {
+        "criterionId": "brand-voice",
+        "score": 12,
+        "evidence": "Only one trait is named: \"Our voice is friendly.\" There is one sample line: \"Amazing deals on delicious baked goods for everyone!!!\" There is no separate headline and caption.",
+        "where": "Final image, two grey lines at about y=755 and y=795.",
+        "explanation": "The brief asks for three traits plus a sample headline and a sample caption. The sample line also works against the brand. \"Amazing deals\", \"for everyone\" and the triple exclamation marks are hype, while the owners asked for honest and unfussy: \"good bread, no airs\". \"Deals\" also hints at offers the brief never mentions, and the line is generic enough to fit any shop.",
+        "principle": "Brand voice consistency: the traits should come from the brand's own words, and every sample line should visibly obey them.",
+        "improvement": "Choose three traits that come straight from the brief, for example warm, honest and plain-spoken. Give each a one-line \"this, not that\" description. Write one short, concrete headline and one caption of two or three sentences that both follow all three traits. Use calm punctuation and say plainly what is in the photo. Do not mention prices or offers.",
+        "verify": "Read your headline and caption aloud and tick each trait against each line. Check that no line would sound right for a supermarket chain. Also check you have not invented a product, price or address."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 5,
+        "evidence": "The rationale is 26 words: \"I kept it simple and friendly. The photos should look nice, there is a template box, and the voice is friendly. I did not measure anything.\" It names no specific decisions or reasons, and it states that no measurements were used.",
+        "where": "Learner rationale text.",
+        "explanation": "The brief asks for three design decisions, each tied to warm, honest or unfussy, with the proportions, margins and sizes used. Without them, a reader cannot see why the guide looks the way it does or repeat your choices.",
+        "principle": "Design rationale: link each decision to the brief and back it with concrete specifications, so others can understand and reproduce the work.",
+        "improvement": "Pick three real decisions, for example your typeface, the template proportions and your photo-light rule. For each, write one or two sentences: what you chose, why it suits warm, honest or unfussy, and the numbers. Examples of numbers: page size, margins in px or mm, template ratio such as 1:1 or 4:5, and heading and body text sizes.",
+        "verify": "Hold the rationale next to the final page. Each measurement you quote should match what is visible: same ratio, same margins, same sizes. Each decision should name the brand quality it supports."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 25,
+        "evidence": "Judged from the 286×400 px preview only. The title \"Fernhill guide\" is still readable as a heading. The grey rectangle survives as a pale shape. The three lines of body text shrink to faint grey streaks that cannot be read. There are no section headings, so the image, template and voice sections cannot be told apart. The light grey text on white also looks low-contrast in the full-size image (an estimate from pixels, not a measurement).",
+        "where": "Preview image: title near the top, faint lines at about y=85, y=215 and y=228, grey box at about y=115–170.",
+        "explanation": "At small size a reader should still see the guide's sections and the template structure. Here only the title and an empty box survive, so the structure of the guide does not come through. Partly this is because there is very little structure on the page to begin with.",
+        "principle": "Visual hierarchy and contrast: clear section headings, strong contrast and well-defined blocks keep a layout readable when it is scaled down.",
+        "improvement": "Add a bold, dark heading for each section (Image style, Layout template, Brand voice) at a clearly larger size than body text. Make body text darker and keep the template zones as outlined blocks with labels. Use most of the page so the sections are spaced as distinct blocks rather than floating lines.",
+        "verify": "Export the preview again at 286×400 and look at it without zooming. Check you can name each section and see the template's zones as separate shapes. Measure the text and background colours with a contrast checker and aim for at least 4.5:1 for body text."
+      }
+    ]
+  },
+  {
+    "sample": "imagery-weak",
+    "run": 2,
+    "assignment": "imagery-layout-guide",
+    "expect": "does not pass; image-style-rules < 60; layout-template < 60",
+    "ms": 31733,
+    "model": "claude-opus-5-5",
+    "inputTokens": 5442,
+    "outputTokens": 2948,
+    "costUsd": 0.0807,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 9,
+    "passed": false,
+    "failedMandatory": [
+      "image-style-rules",
+      "layout-template",
+      "legibility-at-small-size"
+    ],
+    "scores": {
+      "brand-voice": 10,
+      "design-rationale": 5,
+      "image-style-rules": 5,
+      "layout-template": 5,
+      "legibility-at-small-size": 25
+    },
+    "strengths": [
+      "The page has a clear title, and it stays readable in the small preview.",
+      "You have reserved space for the three main parts (images, template and voice), which is a sensible starting order."
+    ],
+    "weaknesses": [
+      "The single image rule is vague and cannot be checked, and there are no do or don't examples.",
+      "The template is an empty box with no labelled zones and no reuse shown.",
+      "The voice has one generic trait, and its sample line is hype-driven, which conflicts with 'no airs'.",
+      "The rationale has no decisions, reasons or measurements.",
+      "The body text appears very light grey (an estimate), which hurts legibility at both sizes.",
+      "Most of the page is unused, and there are no section headings."
+    ],
+    "missingRequirements": [
+      "Three or four checkable image style rules covering light and colour, crop, subject and treatment",
+      "One do and one don't example for the image rules",
+      "Labelled template zones for image, headline, caption and logo",
+      "A statement of what is fixed and what can change in the template",
+      "The template shown used for two different pieces of content",
+      "Three brand voice traits",
+      "A separate sample headline and sample caption",
+      "A rationale explaining three design decisions tied to the brand",
+      "Measurements: proportions, margins and sizes"
+    ],
+    "criticalFailures": [
+      "The guide cannot be used for its stated purpose. A staff member gets no checkable image rules, no usable layout template and no clear voice to follow."
+    ],
+    "criteria": [
+      {
+        "criterionId": "brand-voice",
+        "score": 10,
+        "evidence": "The guide gives one trait, 'Our voice is friendly.', and one sample line, 'Amazing deals on delicious baked goods for everyone!!!'. There is no separate headline and caption, and no second or third trait.",
+        "where": "Lower-left text block, about one-third of the way up from the bottom of the final image.",
+        "explanation": "The brief asks for three traits plus a sample headline and a sample caption that follow them. 'Friendly' alone is too general to guide a staff member. The sample line reads like a sales advert: superlatives, 'deals' and triple exclamation marks are the opposite of 'good bread, no airs'. Mentioning 'deals' also introduces offers that the brief never states.",
+        "principle": "Voice consistency: traits should be specific enough to test a sentence against, and sample copy should demonstrate each trait.",
+        "improvement": "Choose three traits drawn from the brief, for example 'plain-spoken', 'warm' and 'honest about how things are made'. Add a one-line 'we say / we don't say' for each. Then write a short headline and a one or two sentence caption about bread itself, with no hype and at most one exclamation mark. Do not mention offers, products or prices that are not in the brief.",
+        "verify": "Read your headline and caption aloud and check each against the three traits. Each line should pass all three, and someone shown only the copy should be able to name the traits."
+      },
+      {
+        "criterionId": "design-rationale",
+        "score": 5,
+        "evidence": "The rationale is 26 words. It says 'I kept it simple and friendly... I did not measure anything.' It names no specific decisions, gives no reasons tied to the brand and reports no measurements.",
+        "where": "Learner rationale.",
+        "explanation": "The brief asks for three design decisions, each tied to warm, honest and unfussy, plus proportions, margins and sizes. Without these, a reader cannot see why the guide looks the way it does, or check the work against your intent.",
+        "principle": "Design rationale: decisions should be explicit, justified by the brief and backed by measurable values that match the artefact.",
+        "improvement": "Write three short paragraphs, each covering one decision (for example the image crop ratio, the template grid, and the typeface and type sizes), why it suits the bakery, and the numbers. Example: 'Image takes the top 60% of a 4:5 post; 40 px margins; headline 48 px, caption 18 px.'",
+        "verify": "Measure the final file and check that every number in your rationale matches what is on the page."
+      },
+      {
+        "criterionId": "image-style-rules",
+        "score": 5,
+        "evidence": "There is a single line, 'Photos should look nice and authentic.' There are no separate rules for light and colour, crop, subject or treatment, and no do or don't examples are shown or described.",
+        "where": "Upper-left text line, below the title.",
+        "explanation": "The rubric names 'nice, authentic photos' as an example of a vague rule. A staff member could not check a finished photo against 'nice'. Without do and don't examples, they have no reference point.",
+        "principle": "Checkable rules: each rule should describe something you can verify by looking at the image.",
+        "improvement": "Write three or four rules. For example: 'Light: natural daylight from a window, warm tones, no flash.' 'Crop: close crop on the bread, edges allowed to bleed off the frame.' 'Subject: real loaves on the counter or on hands, not staged props.' 'Treatment: no filters, stickers or heavy text over the photo.' For each rule, add a do and a don't. A simple drawn sketch or a one-line description of each is fine.",
+        "verify": "Take any photo and go through each rule as a yes or no question. If you can't answer yes or no, the rule needs to be more specific."
+      },
+      {
+        "criterionId": "layout-template",
+        "score": 5,
+        "evidence": "There is one light grey rectangle labelled 'template'. It has no zones for image, headline, caption or logo, no statement of what is fixed or flexible, and no second example of reuse.",
+        "where": "Left-middle of the final image.",
+        "explanation": "The template is the main tool the staff member will reuse. An empty box gives them nothing to follow, and without two filled examples the reuse cannot be seen.",
+        "principle": "Grid and template systems: fixed zones create recognisability, and flexible content shows how the system adapts.",
+        "improvement": "Draw the template with four labelled zones: image, headline, caption and logo. Add notes such as 'Fixed: logo bottom right, margins, headline position. Can change: photo and wording.' Then show the same template twice, filled with two different posts, for example one about a morning bake and one about the shop itself, using only information from the brief.",
+        "verify": "Put the two filled examples side by side. Every zone should sit in the same place in both, with only the content changing."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 25,
+        "evidence": "In the 286x400 px preview (400 px on the long edge), the title 'Fernhill guide' is readable. The body lines show only as faint grey streaks and cannot be read, and the grey box is visible only as a shape with an unreadable label. There are no section headings, so the preview shows no sections. The title stands out from the body text, but nothing separates one part of the guide from another.",
+        "where": "Preview image as a whole.",
+        "explanation": "At small size, a guide should still show its sections and its template at a glance. Here only the title survives. The body text looks very light grey even at full size (an estimate from pixels, not a measurement), which makes it fade further when shrunk.",
+        "principle": "Visual hierarchy and contrast: section headings and strong zone outlines carry structure when details are lost.",
+        "improvement": "Add bold section headings ('Images', 'Layout', 'Voice'). Use darker text for body copy, give the template zones clear outlines and labels, and fill the page so the sections are evenly spaced.",
+        "verify": "Export at 286x400 px, view it at actual size and check that you can name each section and see the template's zones. Measure body text contrast with a contrast checker and aim for at least 4.5:1."
+      }
+    ]
+  },
+  {
+    "sample": "form-weak",
+    "run": 1,
+    "assignment": "form-screen",
+    "expect": "does not pass; feedback-and-recovery < 60; targets-and-states < 60; navigation-clarity < 50",
+    "ms": 45051,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4462,
+    "outputTokens": 4360,
+    "costUsd": 0.105,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 13,
+    "passed": false,
+    "failedMandatory": [
+      "feedback-and-recovery",
+      "targets-and-states"
+    ],
+    "scores": {
+      "design-rationale": 10,
+      "feedback-and-recovery": 10,
+      "form-structure": 25,
+      "legibility-at-small-size": 25,
+      "navigation-clarity": 0,
+      "readable-text-and-contrast": 8,
+      "targets-and-states": 10
+    },
+    "strengths": [
+      "The screen is uncluttered and keeps to the fields named in the brief, without inventing extras.",
+      "An error state is attempted on a sensible field (Email), and the red border does draw some attention to it.",
+      "The rationale is honest about what was and was not measured, which is a good starting point for improving."
+    ],
+    "weaknesses": [
+      "Field labels are faint placeholder hints only and will disappear while typing.",
+      "The error relies on colour, and the message 'Error' gives no fix.",
+      "There is no loading or success cue on the main action.",
+      "The button label 'Submit' does not say that payment comes next.",
+      "Fields and the button look much smaller than 44×44 pt, with little spacing.",
+      "Placeholder, heading and button text look small and low in contrast (visual estimate).",
+      "The rationale gives no decisions with reasons and no measurements."
+    ],
+    "missingRequirements": [
+      "Navigation bar with three labelled items (Tickets, Timetable, Account) and the current item marked in more than one way",
+      "Visible way back to the departures list",
+      "Visible, persistent label for every field",
+      "Grouping of related fields",
+      "Bicycle space marked as optional",
+      "Error with an icon or other non-colour cue and a message that explains how to fix it",
+      "Loading or success cue for the main action",
+      "Interactive elements at least 44×44 pt with space between them",
+      "Body text at 16 pt or larger with accessible contrast",
+      "Rationale explaining three design decisions with target sizes, font sizes and at least two contrast ratios"
+    ],
+    "criticalFailures": [
+      "There is no way back to the departures list and no navigation bar, so a rider cannot leave this screen or move around the app as the brief requires.",
+      "Field labels exist only as very faint, small placeholder text (estimated well below 4.5:1). This, combined with a near-invisible button label, means many riders could not reliably tell what each field is for or what the main action does."
+    ],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 10,
+        "evidence": "The rationale is 37 words. It describes the look (\"light and compact\", \"fields are small with grey hints\", \"error is a red border\", \"button is small\") and says plainly that no sizes or contrast were measured. It does not explain three decisions, and it gives no target sizes, font sizes or contrast ratios.",
+        "where": "Learner rationale (whole text)",
+        "explanation": "It is good that the rationale is honest and matches the image. But the brief asks for three decisions with reasons and measurements, and the choices described (small fields, faint hints, colour-only error, small button) go against the brief's requirements without saying why.",
+        "principle": "Design rationale: link each decision to the user's need and back it with measurable evidence.",
+        "improvement": "Write three short paragraphs, each with one decision, why you made it for a rider on a phone, and the numbers behind it. For example: 'Fields are 48 pt tall with 16 pt labels above them so they are easy to tap on a moving ferry.' Include at least two measured contrast ratios, such as body text on background and button text on button fill.",
+        "verify": "Check each paragraph names a decision, a reason and at least one number. Measure each ratio with a contrast checker and make sure every number matches what is visible in the screen."
+      },
+      {
+        "criterionId": "feedback-and-recovery",
+        "score": 10,
+        "evidence": "The Email field has a red border, and a red word \"Error\" sits below it. There is no icon or other non-colour cue, and the message does not say what is wrong or how to fix it. The \"Submit\" button shows no saving, loading or success state.",
+        "where": "Email field and the text under it (upper-middle of the final); Submit button",
+        "explanation": "Riders with colour-vision differences may not notice a red border, and \"Error\" alone does not tell anyone what to change. Without a loading cue on the button, riders may tap again or think the app is frozen.",
+        "principle": "Error prevention and recovery: errors should be easy to see without relying on colour, and should explain the fix. The system should show its status.",
+        "improvement": "Add a warning icon next to the message and write a specific fix, such as 'Enter an email address like name@example.com'. Keep the message directly under the field. Add a second button state, such as 'Saving…' with a spinner, or a short success confirmation.",
+        "verify": "View the screen in greyscale and check the error can still be found. Read the message aloud and ask whether someone would know exactly what to type. Make sure a frame of the button in its saving state appears in your submission."
+      },
+      {
+        "criterionId": "form-structure",
+        "score": 25,
+        "evidence": "Three fields are shown. Their only labels are faint placeholder hints inside the boxes (\"Name\", \"Email\", \"Bike\"), and these would disappear once typing starts. There is no grouping, for example rider details apart from the bicycle option. The bicycle field is not marked as optional and is shown as a text box. The main action is labelled \"Submit\", not something like 'Continue to payment'. The section title is the generic \"Details\".",
+        "where": "Form area and button in the top third of the final",
+        "explanation": "Placeholder-only labels vanish while the rider types, which makes the form harder to check and correct. An unmarked optional field may make riders think a bicycle is required. 'Submit' does not tell the rider that payment comes next.",
+        "principle": "Form design: persistent visible labels, logical grouping, clear optional/required marking, and a specific action label.",
+        "improvement": "Put a visible label above each field ('Full name', 'Email for your ticket'). Group the name and email under a heading such as 'Passenger', and put the bicycle option in its own group labelled 'Bicycle space (optional)'. A checkbox or switch may suit it better than a text box. Rename the button 'Continue to payment'.",
+        "verify": "Fill in a mock-up field and check its label is still visible. Ask someone who has not seen the brief what the button will do next. Their answer should mention payment."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 25,
+        "evidence": "Judging only the 185×400 preview: the field outlines and the red-bordered field are visible as shapes, and the 'Details' heading is barely visible as faint grey. The placeholder text inside the fields is unreadable. The button is a pale lavender block and its text cannot be read. There is no navigation bar to survive at any size.",
+        "where": "Small-scale preview image (whole)",
+        "explanation": "At small size, the form exists only as a few outlined boxes. The main action is so pale it barely stands out, and the navigation is missing entirely, so two of the three things this criterion looks for do not come through.",
+        "principle": "Visual hierarchy and contrast: key structure and the main action should still stand out when the screen is shrunk.",
+        "improvement": "Give the main button a strong, solid fill with high-contrast text, and use darker field borders and labels. Add the navigation bar so it shows as a distinct band at the bottom.",
+        "verify": "Shrink your final to about 185×400 and squint, or view it from arm's length. You should be able to point to the form, the navigation bar and the main button straight away."
+      },
+      {
+        "criterionId": "navigation-clarity",
+        "score": 0,
+        "evidence": "No navigation bar is visible. Tickets, Timetable and Account do not appear, and there is no back control or link to the departures list anywhere on the screen.",
+        "where": "Whole final image, especially the top edge and bottom area, which are empty",
+        "explanation": "Without a way back, a rider who picked the wrong departure is stuck. Without the navigation bar, riders cannot tell where they are in the app.",
+        "principle": "Wayfinding: users need to know where they are and how to go back.",
+        "improvement": "Add a top bar with a back control labelled for its destination, such as '‹ Departures', at least 44×44 pt. Add a bottom navigation bar with three labelled items (Tickets, Timetable, Account). Mark Tickets as current in at least two ways, such as a filled icon plus bold text or an indicator bar, as well as colour.",
+        "verify": "View the screen in greyscale. You should still be able to tell which navigation item is current and find the way back to departures."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 8,
+        "evidence": "These are visual estimates, not measurements. The placeholder text looks roughly 11–12 px in very light grey on white, likely well under 4.5:1. The button text is white on a pale lavender fill, which also looks far below 4.5:1. The 'Details' heading is mid-grey and smaller than 16 px, and is probably borderline at best. The red 'Error' text is small. The rationale reports no ratios to compare against.",
+        "where": "Placeholder text in all three fields, Submit button text, 'Details' heading, 'Error' message",
+        "explanation": "The text that tells riders what each field is for, and what the button does, is the faintest and smallest on the screen. Many people, especially outdoors on a ferry dock in sunlight, would struggle to read it.",
+        "principle": "Accessible contrast (about 4.5:1 for normal text, 3:1 for large text) and a minimum body size of about 16 pt.",
+        "improvement": "Set labels, input text and button text to at least 16 pt. Use dark text (near-black on white) for labels and input text. Give the button a darker fill with white text, or a light fill with dark text, so it reaches at least 4.5:1.",
+        "verify": "Measure each text colour against its background with a contrast checker and record the ratios in your rationale. Check font sizes in your design tool's inspector."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 10,
+        "evidence": "These are estimates from the image. The input fields look about 26 px tall, and the Submit button looks about 90×26 px, well under 44×44 pt. The gaps between fields are small (around 6 px, plus the error line). The only state shown is the red error border. There is no focus, saving, disabled or pressed state, and the rationale gives no sizes to compare.",
+        "where": "All three input fields and the Submit button",
+        "explanation": "Small, tightly spaced targets cause mis-taps, especially on a moving boat or for people with limited dexterity. With so few states, riders get little feedback.",
+        "principle": "Touch target sizing (at least 44×44 pt) with spacing between targets, and states that do not rely on colour alone.",
+        "improvement": "Make fields and the button at least 44 pt tall, ideally 48 pt, and give the button the full content width. Leave at least 8–16 pt between neighbouring targets. Show states with more than colour, for example a thicker border plus an icon for error, a visible focus ring, and a label change plus spinner for saving.",
+        "verify": "In your design tool, check each interactive element's frame is 44×44 pt or larger, and measure the gaps between them. Compare states side by side in greyscale to confirm they look different."
+      }
+    ]
+  },
+  {
+    "sample": "form-weak",
+    "run": 2,
+    "assignment": "form-screen",
+    "expect": "does not pass; feedback-and-recovery < 60; targets-and-states < 60; navigation-clarity < 50",
+    "ms": 43221,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4462,
+    "outputTokens": 4211,
+    "costUsd": 0.1021,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 13,
+    "passed": false,
+    "failedMandatory": [
+      "feedback-and-recovery",
+      "targets-and-states"
+    ],
+    "scores": {
+      "design-rationale": 10,
+      "feedback-and-recovery": 12,
+      "form-structure": 20,
+      "legibility-at-small-size": 30,
+      "navigation-clarity": 0,
+      "readable-text-and-contrast": 10,
+      "targets-and-states": 10
+    },
+    "strengths": [
+      "The rationale is honest and accurately describes what was made, which is a good habit to build on.",
+      "The screen is uncluttered and the fields are stacked in a clear top-to-bottom reading order.",
+      "An error state was attempted on a sensible field, Email, with the message placed directly beneath it."
+    ],
+    "weaknesses": [
+      "Fields use placeholder text only, with no persistent labels.",
+      "The error relies on a red border and the generic word 'Error', with no icon and no fix.",
+      "The main button is small, pale, labelled 'Submit', and has no loading or success state.",
+      "Text appears small and very low contrast (estimate), particularly the placeholders and the button label.",
+      "Touch targets appear well under 44 pt tall with tight spacing (estimate).",
+      "The rationale contains no decisions with reasons and no measurements."
+    ],
+    "missingRequirements": [
+      "Navigation bar with three labelled items (Tickets, Timetable, Account) and the current item marked in more than one way.",
+      "Visible way back to the departures list.",
+      "Visible label for every field (currently placeholder-only).",
+      "Optional bicycle field marked as optional.",
+      "Error message that says how to fix the problem, plus a non-colour cue such as an icon.",
+      "Loading or success cue for the main action.",
+      "Main action labelled for what happens next (continue to payment).",
+      "Rationale explaining three decisions with target sizes, font sizes and at least two contrast ratios."
+    ],
+    "criticalFailures": [
+      "There is no way back to the departures list and no navigation bar, so a rider cannot leave this screen or move elsewhere in the app.",
+      "The main action's label is barely visible against its pale fill (estimate), and the button is visibly undersized, so the primary task is hard to complete."
+    ],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 10,
+        "evidence": "The rationale is 37 words. It describes the look ('light and compact', 'fields are small with grey hints', 'error is a red border', 'button is small') and says plainly: 'I did not measure any sizes or contrast.' It gives no reasons tied to the riders or the brief, and no target sizes, font sizes or contrast ratios.",
+        "where": "Learner rationale",
+        "explanation": "The rationale is honest and matches what is visible, which is good. But it names no design decisions with reasons, and the assignment requires target sizes, font sizes and at least two contrast ratios. Two of the choices it describes, small targets and grey hints, also conflict with the brief's requirements.",
+        "principle": "Design rationale should connect each choice to the user's need and back it with measurable evidence.",
+        "improvement": "Write about three decisions, for example how you labelled and grouped the fields, how the error explains its fix, and how you sized targets. For each, state the reason (for example, riders filling in details on a moving ferry need large targets) and the numbers: field height in points, body font size, and measured contrast ratios for body text on background and button text on button colour.",
+        "verify": "Check that the rationale contains three 'I did X because Y, measured at Z' statements, and that each number matches what you can see in the final image."
+      },
+      {
+        "criterionId": "feedback-and-recovery",
+        "score": 12,
+        "evidence": "The Email field has a red border, and a small red word 'Error' sits below it. There is no icon or other non-colour cue, and the message does not say what is wrong or how to fix it. The Submit button shows no saving, loading or success state.",
+        "where": "Email field and the 'Error' text beneath it; Submit button",
+        "explanation": "Riders with colour-vision differences may not notice a red border. A bare 'Error' leaves everyone guessing what to change. Without a saving cue, riders may tap Continue twice or think nothing happened.",
+        "principle": "Error messages should be specific, constructive and not rely on colour alone. Systems should show the status of an action.",
+        "improvement": "Add a warning icon next to a message such as 'Enter an email address like name@example.com' placed directly under the Email field. Thicken the border or add an icon inside the field as well. Show a second state of the main button, for example a spinner with 'Saving…', or a success tick.",
+        "verify": "View the screen in greyscale and confirm the error is still obvious. Read the message aloud and check it tells the rider what to do. Check that the button's saving state is shown in your submission."
+      },
+      {
+        "criterionId": "form-structure",
+        "score": 20,
+        "evidence": "Three fields show placeholder text only ('Name', 'Email', 'Bike') in very light grey, with no labels above them. The fields are evenly stacked with no grouping, for example rider details apart from the optional extra. 'Bike' is not marked optional. The main button reads 'Submit'.",
+        "where": "The three input fields and the Submit button",
+        "explanation": "Placeholder-only labels disappear once a rider starts typing, so they lose track of what each field is for. The brief asks for 'full name' and 'email address for the ticket'; 'Name' and 'Bike' are vaguer than that. 'Submit' does not tell riders they are going on to payment.",
+        "principle": "Persistent visible labels, logical grouping, marking optional fields, and action-specific button labels.",
+        "improvement": "Place a persistent label above each field: 'Full name', 'Email for your ticket', and 'Bicycle space (optional)'. The bicycle space could be a checkbox or toggle, since it is a yes/no choice. Group name and email under a heading such as 'Passenger' and separate the bicycle option under 'Extras'. Rename the button 'Continue to payment'.",
+        "verify": "Mock up a field with text typed into it and confirm its label is still visible. Ask someone to say what the button will do before tapping it."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 30,
+        "evidence": "In the 185×400 px preview, I can see the outlines of three field boxes, the red-bordered field, a small red word, and a pale rectangle for the button. The placeholder text and the button label are unreadable at this size. The 'Details' heading is faint. There is no navigation bar to survive.",
+        "where": "Small-scale preview image",
+        "explanation": "The rough stack of fields survives, but the main action is a faint pale shape with no readable label, and the navigation is absent. Only the form outline reads.",
+        "principle": "Strong hierarchy and contrast help structure survive when a design is scaled down.",
+        "improvement": "Give the main button a strong, saturated fill with high-contrast text, and add a visible navigation bar. Then the three key parts, form, navigation and action, will still read as shapes at thumbnail size.",
+        "verify": "Export the preview again at the same size and squint at it, or view it from arm's length. You should be able to point to the form, the button and the navigation bar."
+      },
+      {
+        "criterionId": "navigation-clarity",
+        "score": 0,
+        "evidence": "There is no navigation bar with Tickets, Timetable and Account, and no back control or link to the departures list. The screen shows only a 'Details' heading, the form and a button.",
+        "where": "Whole screen; the top and bottom areas are empty",
+        "explanation": "Without a way back, a rider who picked the wrong departure is stuck. Without the navigation bar, they cannot tell where they are in the app or move elsewhere.",
+        "principle": "Visibility of navigation and user control: always provide a clear exit and show the current location.",
+        "improvement": "Add a top bar with a back chevron plus the text 'Departures', sized at least 44×44 pt. Add a bottom navigation bar with three labelled items: Tickets, Timetable and Account. Mark Tickets as current in at least two ways, for example a filled icon, bold label and an indicator bar, not colour alone.",
+        "verify": "View the screen in greyscale and confirm the current tab is still distinguishable. Check that a first-time viewer can find the way back within a few seconds."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 10,
+        "evidence": "Placeholder text appears very light grey on white and looks smaller than 16 pt, roughly 11–12 pt judged by eye. The button label is white on a pale lavender fill and is barely visible. The heading 'Details' is mid-grey. These are visual estimates only; I cannot measure exact sizes or ratios from pixels, and the rationale reports none.",
+        "where": "Field placeholders, Submit button label, 'Details' heading",
+        "explanation": "Essential text appears to fall well below the 4.5:1 guideline for normal text. The placeholders and the button label look closer to roughly 1.5–2:1, as an estimate. Text this small and faint is hard to read for many riders, especially outdoors on a ferry dock.",
+        "principle": "Text should meet WCAG contrast minimums (4.5:1 normal, 3:1 large), and body text should be at least 16 pt.",
+        "improvement": "Set labels and input text to at least 16 pt in a dark colour, such as near-black on white. Give the button a darker fill with white text, or a light fill with dark text. Measure every text pair with a contrast checker.",
+        "verify": "Use a contrast checker on each text/background pair and record the ratios in your rationale; aim for 4.5:1 or more. Confirm the font size of body and label text in your design tool."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 10,
+        "evidence": "The input fields look roughly 26–28 pt tall, and the Submit button roughly 90×26 pt, judged visually against the 390 pt frame. These are estimates. Gaps between fields look about 6–8 pt. The rationale confirms 'the button is small' and reports no sizes. The only state shown is a red border on Email, which relies on colour alone, and the pale button may look disabled.",
+        "where": "All three fields and the Submit button",
+        "explanation": "Targets well under 44 pt tall with tight gaps make mis-taps likely, especially on a moving boat or with one hand. If the only state is a colour change, some riders cannot see it. And if the button looks disabled, riders may not realise they can tap it.",
+        "principle": "Minimum touch target size (44×44 pt) with spacing, and distinct states that don't rely on colour alone.",
+        "improvement": "Make fields and the button at least 44–48 pt tall, with the button full-width or nearly so. Leave at least 8–16 pt between targets. Design clear default, focused, error and saving states that use shape, icons or text as well as colour.",
+        "verify": "Measure each target's frame in your design tool and list the heights in your rationale. Lay out the states side by side in greyscale and check that each can be told apart."
+      }
+    ]
+  },
+  {
+    "sample": "form-strong",
+    "run": 1,
+    "assignment": "form-screen",
+    "expect": "overall >= 70; form-structure >= 70; navigation-clarity >= 70; feedback-and-recovery >= 70",
+    "ms": 64030,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4719,
+    "outputTokens": 5919,
+    "costUsd": 0.1373,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 81,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "design-rationale": 72,
+      "feedback-and-recovery": 88,
+      "form-structure": 72,
+      "legibility-at-small-size": 84,
+      "navigation-clarity": 88,
+      "readable-text-and-contrast": 78,
+      "targets-and-states": 82
+    },
+    "strengths": [
+      "The error message is specific and helpful. It sits directly under its field, uses a warning icon, and shows an example of a valid email.",
+      "The current navigation item is marked four ways (colour, bold, filled icon, top bar), so it does not depend on colour.",
+      "Clear grouping with small-caps section headings and generous spacing between groups.",
+      "The loading state on the main button combines a spinner, wording and a disabled style to prevent double submission.",
+      "Most measurements in the rationale match what is visible: field height, button height and bar height."
+    ],
+    "weaknesses": [
+      "The bicycle space is a free-text field. For an optional yes/no extra, a checkbox or toggle would be clearer.",
+      "The resting main button and its 'Continue to payment' label are never shown, yet the rationale reports a contrast ratio for the blue button.",
+      "The email error and the saving state appear together, which suggests the form saves despite invalid input.",
+      "Several grey text elements look borderline in size or contrast (section headings, '(optional)', inactive nav labels). These are estimates that need measuring.",
+      "The tap area of the 'Back to departures' text link is not visible, so its target size cannot be confirmed."
+    ],
+    "missingRequirements": [
+      "The main action's specific resting label (continue to payment) is not shown. Only the saving state is visible.",
+      "A contrast ratio that matches a visible element: the 8.5:1 blue-button figure refers to a state that does not appear in the submission."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 72,
+        "evidence": "The rationale names three decisions: labelled and grouped fields, the bottom navigation, and error, success and loading feedback. It gives measurements: 16 px bold labels, 52 px fields, 40 px between groups, an 80 px bar, a 4 px current-item bar, a 3 px error outline, targets of at least 52 px, a 60 px button, 16 to 18 px body text, and two contrast ratios (about 17:1 for ink on white, about 8.5:1 for white on the blue button). Most of these match the final image. For example, the fields look about 52 px tall, the button about 60 px and the bar about 80 px. However, no blue button appears anywhere. The only button state shown is grey with dark text, so the 8.5:1 claim cannot be checked against the work. The rationale mostly describes what was done. It gives few reasons why, apart from the grey disabled style preventing a double press.",
+        "where": "Rationale, last two sentences (the contrast claims), and the main button in the final image.",
+        "explanation": "Measurements are most useful when a reviewer can match each one to something on the screen. A ratio for a state that is not shown cannot support the decision. Explaining why a choice was made, not just what it is, shows the reasoning the rubric is looking for.",
+        "principle": "Design rationale should be traceable: every claim maps to something visible, and every decision is tied to a user need.",
+        "improvement": "Either add a frame showing the resting blue 'Continue to payment' button, or replace that ratio with one for a pair that is visible. Good candidates are the red error text on white, the grey disabled button text, or the grey nav labels on the beige bar. For each of the three decisions, add one sentence on the user need behind it. For example: a 4 px bar plus a filled icon so the current tab is clear to people who cannot tell blue from grey.",
+        "verify": "Reread the rationale with the images side by side. Tick each measurement only if you can point to the element it describes. Every number should get a tick."
+      },
+      {
+        "criterionId": "feedback-and-recovery",
+        "score": 88,
+        "evidence": "The email field has a thicker red outline. Directly below it sit a warning-triangle icon and the message 'Your email needs an ending, for example sam@harbour.com'. That message says what is wrong and shows how to fix it. The name field shows a green check mark and 'Name saved', a success cue that does not rely on colour alone. The main button shows a spinner and 'Saving your details…' in a greyed style. One logic point: the email is shown as invalid while the form is saving at the same time. In a real flow, saving would normally be blocked until the error is fixed.",
+        "where": "Email field and message (centre of the screen); 'Name saved' line; main button above the navigation bar.",
+        "explanation": "The error sits next to its field, uses an icon as well as colour, and gives a concrete example of a valid answer. That is strong recovery support. The loading state stops double submission and tells the rider something is happening.",
+        "principle": "Error prevention and recovery: identify the error, describe it in plain words, suggest a fix, and do not rely on colour alone (WCAG 1.4.1 and 3.3.3).",
+        "improvement": "Show the error and the saving state as separate frames, or note in the rationale that this frame combines states for the assessment. That avoids implying the form saves with an invalid email. You could also show what the rider sees after saving succeeds, before payment.",
+        "verify": "Walk through the flow in order: type an invalid email, press continue, fix the email, press continue again. Check that each frame shows only the states that could really happen together."
+      },
+      {
+        "criterionId": "form-structure",
+        "score": 72,
+        "evidence": "Every field has a visible bold label above it ('Full name', 'Email for your ticket', 'Bicycle space'). The fields are grouped under the small-caps headings 'WHO IS TRAVELLING' and 'EXTRAS', with clear space between the groups. 'Bicycle space' is marked '(optional)'. Two weaknesses. First, the bicycle space is an empty text box, so it is unclear what a rider should type. A yes/no choice such as a checkbox or switch would match the brief's 'offers an optional bicycle space' better. Second, the main button only appears in its saving state. Its resting label, which should say what happens next (for example 'Continue to payment'), is never shown.",
+        "where": "Bicycle space field in the EXTRAS group; main button above the navigation bar.",
+        "explanation": "Riders need to know what kind of answer each field expects. They also need to see what the main button will do before they press it. A free-text box for a yes/no option invites confusion and inconsistent answers.",
+        "principle": "Match the control to the data (a binary choice gets a checkbox or toggle), and give actions specific, outcome-based labels.",
+        "improvement": "Replace the bicycle text field with a labelled checkbox or toggle, for example 'Add a bicycle space (optional)', with a target of at least 44 pt. Add a frame or inset showing the resting button labelled 'Continue to payment'.",
+        "verify": "Ask someone unfamiliar with the brief what they would enter in each field and what the button will do. If they answer both without hesitating, the structure is working."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 84,
+        "evidence": "Judged only from the 185 by 400 px preview. At that size the headline 'Passenger details' and the three field boxes are clear. The red outline on the email field stands out, the wide button block is distinct, and the navigation bar reads, with the blue top bar and filled dot under 'Tickets'. Labels and the button text are still roughly legible at this size. The smaller lines strain: the error message, the small-caps section headings and the grey nav labels. The main action is the weakest part. Because the button is shown in its grey disabled style, it reads as a pale block rather than an obvious primary action.",
+        "where": "Preview image: main button area and the small grey text (section headings, nav labels).",
+        "explanation": "At small sizes, people recognise a screen by its shapes and strongest contrasts. A low-contrast disabled button weakens the cue for where the main action is.",
+        "principle": "Visual hierarchy should survive reduction: the primary action should stay the strongest element at a glance.",
+        "improvement": "Make sure the resting primary button, in solid blue, is the strongest block in the composition, and consider including that state in the preview. Keep the small-caps headings dark enough that they do not fade out when reduced.",
+        "verify": "View the preview at 100% from arm's length, or squint at it. You should be able to point to the form, the navigation and the main action within a second."
+      },
+      {
+        "criterionId": "navigation-clarity",
+        "score": 88,
+        "evidence": "A bottom bar holds three labelled items: Tickets, Timetable and Account. The current item, Tickets, is marked four ways: blue colour, bold text, a filled circle instead of an outline, and a blue bar along the top edge. This matches the rationale and does not rely on colour alone. A '‹ Back to departures' link sits at the top left in blue. The icons are plain circles, so they add no meaning beyond the labels. The labels carry the meaning, which is acceptable.",
+        "where": "Bottom navigation bar; top-left 'Back to departures' link.",
+        "explanation": "Several redundant cues let riders with colour-vision differences tell where they are. The labelled back link makes it clear how to return to the departures list.",
+        "principle": "Wayfinding: show location with redundant cues, and always offer a clear way back (WCAG 1.4.1).",
+        "improvement": "Consider simple distinctive icons, such as a ticket, a clock or calendar, and a person. That would help quick scanning. Keep the labels.",
+        "verify": "Convert the screenshot to greyscale. The current tab and the back link should still be obvious."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 78,
+        "evidence": "These are estimates from pixels; please measure them. Labels, field text and the button text look about 16 to 18 pt. Dark text on white looks very high contrast, plausibly near the claimed 17:1. The red error text and green success text look dark enough to probably pass 4.5:1. Several items look borderline. The small-caps headings ('WHO IS TRAVELLING', 'EXTRAS') look about 13 to 14 pt in grey. '(optional)' is lighter grey and may be under 16 pt. 'Timetable' and 'Account' are grey on a beige bar and look about 15 pt. The rationale's 8.5:1 ratio is for a blue button that is not shown. No ratio is given for the grey disabled button or for the grey nav text.",
+        "where": "Section headings, '(optional)' marker, inactive nav labels, and the disabled button.",
+        "explanation": "Secondary text such as the 'optional' marker and the nav labels is still essential for understanding. Grey on off-white is where contrast most often fails.",
+        "principle": "WCAG 1.4.3 contrast minimum: 4.5:1 for normal text and 3:1 for large text, plus a comfortable minimum size for body text.",
+        "improvement": "Measure the grey text pairs: section headings on white, '(optional)' on white, inactive nav labels on beige, and dark button text on the grey disabled fill. Darken any that fall below 4.5:1. Consider raising '(optional)' and the nav labels to 16 pt.",
+        "verify": "Run each colour pair through a contrast checker and record the ratios in the rationale. Each should read 4.5:1 or higher."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 82,
+        "evidence": "These are estimates from pixels. The fields look about 52 pt tall with clear gaps between them. The main button looks about 60 pt tall and spans the width. Each nav item has roughly a 130 by 80 pt area. All of this is consistent with the rationale's claim of at least 52 px. The 'Back to departures' link shows only about 20 pt of visible text height. Its hit area cannot be seen, so the 52 px claim cannot be confirmed for this target. The states are distinct without relying on colour alone: error (thicker outline plus icon plus text), success (check mark plus text), loading (spinner plus wording plus grey fill) and current nav item (bar, filled icon, bold text). No focus or resting state is shown for the button or fields.",
+        "where": "'Back to departures' link at the top left; main button; fields; nav items.",
+        "explanation": "Text links are the targets most often left too small. A visible 44 pt hit area makes the back link easy to tap. Showing the resting state lets reviewers compare it with the loading state.",
+        "principle": "Target size (Apple's guideline of at least 44 by 44 pt, WCAG 2.5.8) and distinct, redundant state cues.",
+        "improvement": "Annotate the hit area of the back link, or give it at least 44 pt of padding. Add a frame with the resting button, and ideally a focused field, so every state of the main elements can be compared.",
+        "verify": "Overlay a 44 by 44 pt square on each interactive element in your design tool. Each square should fit within the element's tap area without touching a neighbour's."
+      }
+    ]
+  },
+  {
+    "sample": "form-strong",
+    "run": 2,
+    "assignment": "form-screen",
+    "expect": "overall >= 70; form-structure >= 70; navigation-clarity >= 70; feedback-and-recovery >= 70",
+    "ms": 67054,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4719,
+    "outputTokens": 6404,
+    "costUsd": 0.147,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "high",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 83,
+    "passed": true,
+    "failedMandatory": [],
+    "scores": {
+      "design-rationale": 70,
+      "feedback-and-recovery": 90,
+      "form-structure": 76,
+      "legibility-at-small-size": 85,
+      "navigation-clarity": 92,
+      "readable-text-and-contrast": 80,
+      "targets-and-states": 82
+    },
+    "strengths": [
+      "The error message is specific and actionable, giving an example of a correct email, and uses an outline, an icon and text rather than colour alone.",
+      "The current navigation item is marked four ways (colour, bold text, filled icon, top bar), so it does not depend on colour.",
+      "Labels stay visible above every field, and the fields are clearly grouped under 'WHO IS TRAVELLING' and 'EXTRAS'.",
+      "Touch targets look generous: about 52 px fields, a 60 px button and an 80 px navigation bar.",
+      "The loading state uses a spinner, explanatory text and a disabled style to prevent double submission.",
+      "Most rationale measurements match what is visible in the design."
+    ],
+    "weaknesses": [
+      "The main button's default label is never shown, so the action 'Continue to payment' is not visible on the screen.",
+      "The bicycle space is an empty text box, which leaves it unclear what to enter for an optional yes-or-no extra.",
+      "The screen shows the form saving while the email error is still unresolved, which is logically inconsistent.",
+      "The rationale's white-on-blue contrast ratio refers to a button state that is not shown, and no ratios are given for the red, green or grey text that does appear.",
+      "Some secondary text (group headings, '(optional)', inactive nav labels) is small or light grey and may be borderline for contrast. Measure it to confirm.",
+      "The rationale lists decisions but gives few reasons for them."
+    ],
+    "missingRequirements": [
+      "The main action's normal label (continue to payment) is not shown. Only the loading state of the button is visible."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 70,
+        "evidence": "The rationale names three decisions (labelled, grouped fields; a bottom navigation bar with a four-cue current item; error and loading feedback). It gives measurements: 16 px bold labels, 52 px fields, 40 px between groups, an 80 px navigation bar, a 4 px current-item bar, a 3 px error outline, targets of at least 52 px, a 60 px main button, 16 to 18 px body text, and two contrast ratios (dark ink on white about 17:1, white on blue button about 8.5:1). Most of these match the image. The white-on-blue ratio describes a button that does not appear on this screen, because the button is shown only in its grey loading style with dark text. Reasons are thin. Only the disabled button ('so it cannot be pressed twice') carries an explicit why. The other points mostly describe what was done.",
+        "where": "Learner rationale, all three paragraphs; main button near the bottom of the final image",
+        "explanation": "A rationale earns most credit when each decision is tied to a reason, such as a user need or a risk, and when every measurement can be checked against the work. A ratio for a state the reviewer cannot see cannot be checked. The text colours actually visible (red error, green success, grey secondary text, dark text on the grey button) have no reported ratios.",
+        "principle": "Design rationale should be traceable: claims must match visible evidence, and decisions should be justified, not only listed.",
+        "improvement": "For each decision, add one sentence on why. For example: 'labels sit above fields so they stay visible while typing'; 'the error gives an example so riders know exactly what to add'. Report contrast for pairs that appear on this screen: red error text on white, green 'Name saved' on white, grey '(optional)' on white, grey nav labels on the beige bar, and dark text on the grey loading button. If you mention the blue button, also show its default state in a second frame.",
+        "verify": "Check that every number in your rationale can be pointed to on a submitted image. Check that each of the three decisions contains a 'because' or 'so that' clause."
+      },
+      {
+        "criterionId": "feedback-and-recovery",
+        "score": 90,
+        "evidence": "The email field has a thick red outline. Directly beneath it is a warning-triangle icon and the message 'Your email needs an ending, for example sam@harbour.com', which says what is wrong and gives a concrete fix. The full name field shows a check mark with 'Name saved' as a success cue. The main button shows a spinner and the text 'Saving your details…' in a greyed style. One logical oddity: the form appears to be saving while the email is still invalid.",
+        "where": "Email field and message in the middle of the screen; 'Name saved' under the Full name field; main button above the navigation bar",
+        "explanation": "The error uses three cues (outline, icon, text), so it does not depend on colour. It sits next to its field and tells the rider exactly how to recover. The loading cue is clear and stops a double tap. Showing a save in progress alongside an unresolved error could confuse a reviewer about the real flow, because in practice validation would normally block the save.",
+        "principle": "Error prevention and recovery: identify the error, describe it in plain language, and suggest a fix; give visible system status for actions.",
+        "improvement": "Show the error and the loading states as two frames: one where the email error is visible and the button is still enabled, and one after the email is fixed where the button shows 'Saving your details…'. That keeps the story of the flow consistent.",
+        "verify": "Walk through your frames in order as a rider would. Each state should follow logically from the previous one, with no save starting while an error is still showing."
+      },
+      {
+        "criterionId": "form-structure",
+        "score": 76,
+        "evidence": "Every field has a persistent label above it: 'Full name', 'Email for your ticket', 'Bicycle space (optional)'. Fields are grouped under the uppercase headings 'WHO IS TRAVELLING' and 'EXTRAS' with clear space between groups. The optional field is marked '(optional)'. The main button is visible only in its loading state, so its normal label is never shown. Nothing on the screen says the action is 'Continue to payment'. The bicycle space is drawn as an empty text box, which leaves it unclear what a rider should type for a yes-or-no extra.",
+        "where": "Form fields and group headings in the upper and middle screen; Bicycle space field; main button",
+        "explanation": "Labels, grouping and optional marking are handled well. The rubric also asks for one clear main action whose label says what happens next. 'Saving your details…' tells the rider about the current process but not that the next step is payment. A text box for an optional extra invites free-form or uncertain input where a simple choice is clearer.",
+        "principle": "Match the control to the data (a binary choice suits a checkbox or toggle). Action labels should state the outcome ('Continue to payment').",
+        "improvement": "Add a frame showing the button in its default state labelled 'Continue to payment'. Consider replacing the bicycle text field with a labelled checkbox or toggle such as 'Add a bicycle space (optional)', at least 44 by 44 points including its label area.",
+        "verify": "Ask someone unfamiliar with the brief to say what tapping the main button will do and what they would enter for the bicycle. Both answers should be immediate and correct."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 85,
+        "evidence": "Judged from the 185 by 400 pixel preview only. The 'Passenger details' headline is readable. The stack of white fields with dark outlines reads clearly as a form. The red-outlined email field stands out. The wide grey main button and its spinner shape are distinct, and its larger label is just about readable. The bottom bar shows three items, and the current one is identifiable from the filled blue dot and the bar above it. Smaller text is strained at this size: the error message, '(optional)', the group headings and the inactive nav labels are tiny and hard to read.",
+        "where": "Small-scale preview image as a whole; error message, group headings and nav labels in particular",
+        "explanation": "At this size the overall structure survives: title, form, error, main action and navigation with a clear current item. Body-size secondary text is close to the limit of readability, so the preview relies on shape and colour for those parts.",
+        "principle": "Visual hierarchy: the most important elements should remain recognisable at reduced size through size, weight and shape.",
+        "improvement": "If you want the error and the nav labels to hold up better at small size, increase the weight or size of the error text slightly. Make sure the inactive nav labels are a darker grey.",
+        "verify": "View the preview at 100% on an actual phone or at arm's length on screen. Check that you can point to the form, the error, the main button and the current nav item without zooming."
+      },
+      {
+        "criterionId": "navigation-clarity",
+        "score": 92,
+        "evidence": "A bottom bar shows three labelled items: Tickets, Timetable and Account. Tickets is marked as current by blue colour, bold text, a filled circle icon instead of an outline, and a bar along the top edge, which matches the rationale's four cues. A '‹ Back to departures' link with a chevron sits at the top left in blue.",
+        "where": "Bottom navigation bar; top-left back link",
+        "explanation": "The current item is marked in several ways that do not depend on colour, so riders with colour-vision differences can still find it. The back link is visible and specifically says where it goes. Its tappable area cannot be seen from the image; visually it is a single line of text.",
+        "principle": "Wayfinding: show where the user is and how to go back, using redundant cues.",
+        "improvement": "State the back link's hit area in your rationale, for example 'a 44 point tall tap area that extends beyond the text'. Optionally show its pressed state.",
+        "verify": "Overlay a 44 by 44 point box on the back link in your design tool and confirm the tappable region covers it."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 80,
+        "evidence": "Labels, field text, error text and the button label appear to be about 16 to 18 px, matching the rationale. These sizes are estimated from the 390-pixel-wide image, where one pixel is roughly one point. The main text is near-black on white, plausibly well above 4.5:1, so the rationale's 17:1 is believable. The error red and success green look dark enough to likely pass, but this is an estimate. Some secondary text looks borderline: the uppercase group headings appear around 13 px in grey; '(optional)' is a lighter grey; the inactive labels 'Timetable' and 'Account' are grey on a beige bar. Field borders are mid grey and may be close to the 3:1 non-text minimum. The rationale's white-on-blue 8.5:1 cannot be checked because no blue button is shown.",
+        "where": "Group headings, '(optional)', inactive nav labels, field borders, main button",
+        "explanation": "Essential body text is comfortably sized and high-contrast. The lighter greys and smaller headings are where contrast is most likely to slip. They still carry meaning: the optional marker and the navigation labels matter for completing the task.",
+        "principle": "WCAG contrast: 4.5:1 for normal text, 3:1 for large text and for essential UI component boundaries.",
+        "improvement": "Measure the grey '(optional)', the group headings, the inactive nav labels on beige, and the field borders against their backgrounds. Darken any that fall below 4.5:1 for text or 3:1 for borders. Consider raising the group headings toward 14 px or more.",
+        "verify": "Use a contrast checker on each colour pair from your design file and record the ratios in your rationale."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 82,
+        "evidence": "Estimated from the image: input fields are about 52 px tall and full width, the main button about 60 px tall, and the nav bar about 80 px tall with three items about 130 px wide each. These are consistent with the rationale and comfortably above 44 points. Fields are separated by labels and messages, and there is clear space between the button and the nav bar. Several states are shown distinctly without relying on colour alone: error (outline, icon, text), success (check and text), loading or disabled (spinner, text, grey fill), and current nav item (filled icon, bar, bold). Two things cannot be judged: the back link's hit area, which is visually only a line of text, and the default, pressed and focus states of fields and the button.",
+        "where": "All input fields, main button, bottom navigation items, top back link",
+        "explanation": "Targets look generous and well spaced, and the states shown are easy to tell apart. Without the default button state and with an unconfirmed hit area for the back link, the claim that every target is at least 52 px cannot be fully confirmed.",
+        "principle": "Fitts's law and touch-target guidance (at least 44 by 44 points with spacing); states should be distinguishable by more than colour.",
+        "improvement": "Show the main button's default and pressed states and a focused field state. Annotate the back link's tap area size.",
+        "verify": "In your design tool, draw 44 by 44 point boxes over every interactive element, including the back link, and confirm each fits inside its tappable area without overlapping a neighbour's."
+      }
+    ]
   }
 ]

@@ -1,0 +1,243 @@
+[
+  {
+    "sample": "form-strong",
+    "run": 1,
+    "assignment": "form-screen",
+    "expect": "overall >= 70; form-structure >= 70; navigation-clarity >= 70; feedback-and-recovery >= 70",
+    "ms": 71193,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4670,
+    "outputTokens": 6662,
+    "costUsd": 0.1519,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "medium",
+    "reviewFlag": false,
+    "missingEvidence": [],
+    "overall": 78,
+    "passed": false,
+    "failedMandatory": [],
+    "scores": {
+      "design-rationale": 74,
+      "feedback-and-recovery": 62,
+      "form-structure": 84,
+      "legibility-at-small-size": 84,
+      "navigation-clarity": 88,
+      "readable-text-and-contrast": 80,
+      "targets-and-states": 78
+    },
+    "strengths": [
+      "Every field has a persistent, bold label above it, and the fields are grouped under clear section headings.",
+      "The error state combines a thicker outline, a warning icon and a specific fix with an example, placed directly under the field.",
+      "The current navigation item is marked four ways (colour, weight, filled icon, indicator bar), so it does not rely on colour.",
+      "The main button label 'Continue to payment' says exactly what happens next.",
+      "The rationale reports concrete measurements that match what is visible."
+    ],
+    "weaknesses": [
+      "There is no loading or success cue for the main action: the button appears only in its default state.",
+      "The bicycle space is a free-text box, although it is really a yes/no choice.",
+      "The error message refers to 'the part after the dot', but the entered address has no dot.",
+      "Inactive nav labels and the '(optional)' text are light grey and possibly close to contrast minimums (estimate).",
+      "The rationale describes choices but gives few reasons, and omits contrast for the red, green and grey text.",
+      "The back link's tap area is not visible, and the nav icons are generic circles."
+    ],
+    "missingRequirements": [
+      "A loading or success cue for the main action (for example a saving state on the 'Continue to payment' button)."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 74,
+        "evidence": "The rationale names three decisions: labelled, grouped fields; a bottom navigation bar with a multi-cue current item; and an error state plus a 'Name saved' cue. It reports many measurements that match the image as far as I can estimate: 52 px fields, a 60 px button, an 80 px nav bar, a 4 px current-item bar, a 3 px error outline, 40 px between groups, 16\u201318 px body text, and two contrast ratios (about 17:1 for dark ink on white, about 8.5:1 for white on blue). It mostly describes what was done rather than why. It does not report contrast for the red error text, the green success text or the grey inactive nav labels. It does not mention a loading state for the main button.",
+        "where": "Learner rationale, all three paragraphs",
+        "explanation": "The measurements are specific and plausible, which is the hardest part to get right. However, the brief asks you to explain decisions, and a reader cannot tell from this text why you chose labels above fields, a 4 px bar, or 52 px rather than 44 px. Presenting 'Name saved' as the feedback cue also hides the fact that the main-action cue is missing.",
+        "principle": "Design rationale: each decision should link a choice to a user need or constraint, backed by a measurement.",
+        "improvement": "For each decision, add one 'because' sentence. For example: 'Labels sit above fields so they stay visible while typing, which helps riders who get interrupted on a ferry dock.' Add measured ratios for the error red, the success green and the inactive nav grey. Describe the button's saving state once you add it.",
+        "verify": "Reread each decision and check it answers what, why and how much. Every colour pair in the screen should have a measured ratio listed."
+      },
+      {
+        "criterionId": "feedback-and-recovery",
+        "score": 62,
+        "evidence": "The email field shows a thicker dark-red outline, a warning-triangle icon and the message 'Add the part after the dot, for example .com', placed directly under the field. That is a strong error state that does not rely on colour alone. The only success cue is a green check with 'Name saved' under the name field. The 'Continue to payment' button is shown only in its default state, with no saving, loading or success cue for the main action. The error wording is slightly confusing: the entered text 'sam@harbour' contains no dot, so 'the part after the dot' is hard to act on, although the '.com' example helps.",
+        "where": "Email field and its message; 'Name saved' under Full name; 'Continue to payment' button",
+        "explanation": "The error half of this criterion is strong. The brief, though, specifically asks for a loading or success cue for the main action, such as a saving state on the button. A field-level 'Name saved' does not tell the rider that their tap on 'Continue to payment' was received. Without that cue, people often tap twice or think the app has frozen.",
+        "principle": "Visibility of system status: every action, especially the main one, should give immediate feedback.",
+        "improvement": "Add a second state of the button (a small frame or a variant beside the screen), for example a spinner with 'Saving details\u2026', keeping the same size and position. Consider rewording the error to something like 'Add the end of the address, for example .com'.",
+        "verify": "Show the button's default and saving states side by side. Ask someone unfamiliar with the screen what is happening in each, and whether they know how to fix 'sam@harbour' from the message alone."
+      },
+      {
+        "criterionId": "form-structure",
+        "score": 84,
+        "evidence": "Every field has a bold label above it that stays visible: 'Full name', 'Email for your ticket', 'Bicycle space'. Fields are grouped under 'WHO IS TRAVELLING' and 'EXTRAS' with clear space between the groups. The bicycle field is marked '(optional)'. There is one main button with a specific label, 'Continue to payment'. However, the bicycle space is shown as an empty text box, which gives no hint of what to type for what is really a yes/no choice.",
+        "where": "Whole form area; the Bicycle space field under EXTRAS",
+        "explanation": "Clear, persistent labels and named groups make the form quick to scan, and the button says exactly what happens next. The text box for the bicycle space is the one weak point: riders may wonder whether to type a number, 'yes', or a bike description.",
+        "principle": "Match the control to the data: binary choices suit a checkbox or switch, not free text.",
+        "improvement": "Replace the bicycle text box with a labelled checkbox or switch, at least 44 pt tall, for example 'Add a bicycle space (optional)'. Keep the grouping and labels as they are.",
+        "verify": "Ask two or three people what they would enter in the bicycle control. With a checkbox or switch, nobody should hesitate."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 84,
+        "evidence": "Judged from the 185\u00d7400 preview only. The headline 'Passenger details' and the blue 'Continue to payment' button read clearly. The stacked field boxes, the red-outlined email field and the three-item bottom bar with its blue current marker all keep their shapes. Body-size text such as labels, the error message, the 'WHO IS TRAVELLING' heading and the nav labels is very small at this scale and strained, although the overall layout is still recognisable.",
+        "where": "Preview image",
+        "explanation": "At small size people read structure, not words. Here the form, the error highlight, the main action and the navigation all survive as distinct shapes. The fine text, especially the grey nav labels and small section headings, is where legibility starts to break down.",
+        "principle": "Visual hierarchy: the most important elements should survive reduction through size, weight and contrast.",
+        "improvement": "Strengthen the parts that strain most. Make the inactive nav labels slightly darker, and consider meaningful icons rather than plain circles so the nav reads by shape. Make the section headings a little heavier or darker.",
+        "verify": "Export again at 185\u00d7400, view it on a phone at arm's length or blur it slightly, and check that the form, the button and the current nav item can still be picked out."
+      },
+      {
+        "criterionId": "navigation-clarity",
+        "score": 88,
+        "evidence": "A bottom bar shows three labelled items: Tickets, Timetable, Account. The current item, Tickets, is marked four ways: blue colour, bold text, a filled circle instead of an outline, and a bar along the top edge. 'Back to departures' with a chevron sits at the top left. The icons are plain circles, so they carry no meaning of their own.",
+        "where": "Bottom navigation bar; 'Back to departures' link at the top",
+        "explanation": "The current state does not rely on colour, so it works for colour-blind riders and in bright sunlight. The way back is clearly worded and in the expected place. The generic circles add little, because the labels do all the work.",
+        "principle": "Redundant coding of state, and wayfinding through clear labels.",
+        "improvement": "Either use simple, meaningful icons (ticket, clock, person), drawn yourself or under a suitable licence, or remove the circles and let the labels and indicator bar carry the design. Consider making the back link slightly larger or adding a visible tap area.",
+        "verify": "View the screen in greyscale and confirm the current item is still obvious. Ask someone where they would tap to return to the departures list."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 80,
+        "evidence": "Labels, field text and the button text look about 16\u201318 px, which matches the rationale. Dark text on white looks very strong, so the stated 17:1 is plausible. White on the deep blue button looks strong, so about 8.5:1 is plausible. The red error text and green success text look dark enough, probably above 4.5:1, but that is an estimate. Borderline items: the inactive nav labels ('Timetable', 'Account') appear mid-grey at roughly 14\u201315 px on a light tinted background, and '(optional)' is a lighter grey. Both may be close to the minimums. The uppercase section headings look smaller than 16 px.",
+        "where": "Bottom nav labels; '(optional)'; section headings; error and success messages",
+        "explanation": "The essential text is comfortably readable. The lighter grey secondary text sits on the edge, and riders reading outdoors on a ferry dock are the people most likely to struggle with it. These are visual estimates only, not measurements.",
+        "principle": "WCAG contrast minimums: 4.5:1 for normal text, 3:1 for large text, with a margin for outdoor mobile use.",
+        "improvement": "Measure the grey nav labels on their tinted background, the '(optional)' grey on white, and the red and green message colours. Darken any colour below 4.5:1. Consider 16 px for the nav labels.",
+        "verify": "Use a contrast checker on the exact colour values from your design file. List each ratio in the rationale and confirm every pair is at least 4.5:1."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 78,
+        "evidence": "Estimated from the 390\u00d7844 image. The input fields look about 52 px tall and the main button about 60 px, which matches the rationale. Each nav item spans roughly a third of the width and about 80 px of height. Spacing between fields is generous. The 'Back to departures' link appears as text only, about 20 px high, so I cannot see whether its tap area reaches 44 pt, even though the rationale says all targets are at least 52 px. The states shown are distinct and not colour-only: default fields have a thin grey outline, the error field has a thicker outline plus an icon and text, and the success has a check and text. The button has only one state shown, with no pressed, focus or loading state.",
+        "where": "'Back to departures' link; 'Continue to payment' button; form fields; nav items",
+        "explanation": "Most targets are clearly generous and well spaced. Two gaps remain. The back link's tap area is not visible, and the main button has no other states shown, which this criterion asks for.",
+        "principle": "Fitts's law and minimum target size (44\u00d744 pt), plus distinct, non-colour-only interaction states.",
+        "improvement": "Show the back link's tap area, for example with a light outline or an annotation showing at least 44 pt tall, with padding. Add pressed and saving states for the main button, and a focus state for one field.",
+        "verify": "Overlay a 44\u00d744 pt square on the back link in your design tool. Present the button's states side by side and check they differ by more than colour."
+      }
+    ]
+  },
+  {
+    "sample": "form-strong",
+    "run": 2,
+    "assignment": "form-screen",
+    "expect": "overall >= 70; form-structure >= 70; navigation-clarity >= 70; feedback-and-recovery >= 70",
+    "ms": 57573,
+    "model": "claude-opus-5-5",
+    "inputTokens": 4670,
+    "outputTokens": 5553,
+    "costUsd": 0.1297,
+    "schemaValid": true,
+    "status": "complete",
+    "confidence": "medium",
+    "reviewFlag": true,
+    "missingEvidence": [],
+    "overall": 77,
+    "passed": false,
+    "failedMandatory": [
+      "feedback-and-recovery"
+    ],
+    "scores": {
+      "design-rationale": 76,
+      "feedback-and-recovery": 58,
+      "form-structure": 82,
+      "legibility-at-small-size": 87,
+      "navigation-clarity": 88,
+      "readable-text-and-contrast": 78,
+      "targets-and-states": 76
+    },
+    "strengths": [
+      "Clear, persistent labels above every field, with sensible grouping under section headings.",
+      "The error state uses a thick outline, a warning icon and a specific fix message placed directly under its field.",
+      "The current navigation item is marked in four ways (colour, bold text, filled icon, top bar), not colour alone.",
+      "Visible, plainly worded 'Back to departures' link.",
+      "Specific main action label 'Continue to payment' on a large, high-contrast button.",
+      "The rationale reports concrete target sizes, font sizes and two plausible contrast ratios that match the screen."
+    ],
+    "weaknesses": [
+      "No loading or success cue is shown for the main action button. The 'Name saved' message is field-level only.",
+      "The bicycle space is a free-text box rather than a yes/no control, so it is unclear what to enter.",
+      "The error wording 'Add the part after the dot' is confusing when the entered address has no dot yet.",
+      "Secondary greys (section headings, '(optional)', inactive nav labels) and field borders look borderline for contrast and are not measured in the rationale.",
+      "The back link's tap area is not visibly 44 by 44 points.",
+      "The rationale describes decisions more than it explains the reasons behind them."
+    ],
+    "missingRequirements": [
+      "A loading or success cue for the main action (for example a saving state on the 'Continue to payment' button)."
+    ],
+    "criticalFailures": [],
+    "criteria": [
+      {
+        "criterionId": "design-rationale",
+        "score": 76,
+        "evidence": "The rationale names three decisions: labelled and grouped fields, a bottom navigation bar with a multi-cue current item, and error and success feedback. It gives measurements: labels 16 px bold, fields 52 px, 40 px between groups, nav bar 80 px, a 4 px current bar, a 3 px error outline, targets at least 52 px, a 60 px button, body text 16 to 18 px, and two contrast ratios (about 17:1 and about 8.5:1). Most claims match the image. Two gaps: it gives few reasons why (it mostly says what was done), and it does not address the brief's loading or success cue for the main action.",
+        "where": "Rationale text as a whole; compare with the final screen.",
+        "explanation": "Measurements and visual descriptions are present and mostly verifiable. The 'because' behind each choice is thin, and the brief's main-action cue is not discussed, so the rationale does not fully account for the brief.",
+        "principle": "Design rationale should link each decision to a user need or constraint, not only describe it.",
+        "improvement": "For each decision, add one sentence on the reason. For example: 'the error sits directly under the email field so riders on a small screen see the fix without scrolling.' Also explain how the button shows saving, and give the contrast of your grey secondary text, for example the section headings and inactive nav labels.",
+        "verify": "Re-read each decision and check it answers what, why and how measured. Make sure every requirement in the brief is mentioned at least once."
+      },
+      {
+        "criterionId": "feedback-and-recovery",
+        "score": 58,
+        "evidence": "The email field has a thick dark-red outline, a warning-triangle icon and the message 'Add the part after the dot, for example .com' directly beneath it. This is a non-colour cue with a specific fix. The full name field shows a check icon and 'Name saved'. The main button 'Continue to payment' appears only in its default state. I can see no saving, loading or success cue for the main action anywhere in the image. The error wording is also slightly confusing, because the entered address 'sam@harbour' has no dot yet.",
+        "where": "Email field and message (middle of the screen); 'Continue to payment' button (lower third).",
+        "explanation": "The error state is strong. However, the brief and this criterion explicitly ask for a loading or success cue for the main action. A field-level 'Name saved' message does not tell the rider that their tap on Continue is being processed. Without that cue, riders may tap twice or think nothing happened. I placed this just under the 60 minimum because the main-action cue is missing, though a field-level success cue is present.",
+        "principle": "Visibility of system status: users should always know what the system is doing after they act.",
+        "improvement": "Add a second frame, or an inset, showing the button in a saving state. For example: a spinner plus 'Saving\u2026' or 'Going to payment\u2026', the button kept the same size, and the label changed so the state does not rely on colour. Reword the error to match what the rider typed, for example 'Add the end of the address, for example .com'.",
+        "verify": "Show the two button states side by side in greyscale and confirm they can be told apart by icon and text. Ask someone to read the error and say exactly what they would type to fix it."
+      },
+      {
+        "criterionId": "form-structure",
+        "score": 82,
+        "evidence": "Every field has a persistent bold label above it: 'Full name', 'Email for your ticket' and 'Bicycle space'. Fields are grouped under the headings 'WHO IS TRAVELLING' and 'EXTRAS' with clear space between the groups. The bicycle field is marked '(optional)'. The single main button says 'Continue to payment'. However, the bicycle space is shown as an empty free-text box, so it is unclear what the rider should type.",
+        "where": "Form body; the 'Bicycle space' field in the EXTRAS group.",
+        "explanation": "Labels, grouping, optional marking and a specific button label all meet the strong anchor. The control type for the bicycle option makes that field ambiguous. The brief 'offers' a bicycle space, which suggests a yes/no choice rather than typed text.",
+        "principle": "Match the control to the data: a binary choice should use a checkbox or switch, not a text input.",
+        "improvement": "Replace the bicycle text box with a labelled checkbox or switch, for example 'Add a bicycle space (optional)', with a target of at least 44 by 44 points. Keep the label visible beside it.",
+        "verify": "Ask a tester what they would enter in each field. If anyone hesitates on the bicycle option, the control is still unclear."
+      },
+      {
+        "criterionId": "legibility-at-small-size",
+        "score": 87,
+        "evidence": "Judged from the 185 by 400 pixel preview only. The title, the field outlines, the red-outlined error field, the large blue 'Continue to payment' button and the three-part bottom bar all read clearly as shapes. The current Tickets item still shows its top bar and filled circle. The smallest text in the preview (the error message, section headings, '(optional)' and nav labels) is tiny and strained. The overall structure of form, error, main action and navigation survives.",
+        "where": "Preview image.",
+        "explanation": "At this size a rider can still see where the form is, which field has a problem, where to continue and where they are in the app. That is the structural reading this criterion asks for.",
+        "principle": "Visual hierarchy should survive reduction, carried by size, weight and contrast.",
+        "improvement": "To strengthen this further, make the section headings and inactive nav labels slightly darker or larger so they hold up when scaled down.",
+        "verify": "View the preview at 100% on a phone at arm's length, or blur the full screen slightly, and check that form, error, button and nav are still distinguishable."
+      },
+      {
+        "criterionId": "navigation-clarity",
+        "score": 88,
+        "evidence": "A bottom bar shows three labelled items: Tickets, Timetable and Account. Tickets is marked by blue colour, bold text, a filled circle icon instead of an outline, and a bar along the top edge. That is four cues, not colour alone. A '\u2039 Back to departures' link with a chevron sits at the top left. The icons are plain circles, so the text labels carry all the meaning.",
+        "where": "Bottom navigation bar; top-left back link.",
+        "explanation": "The current item is marked in several non-colour ways, and the way back is visible and clearly worded. This fully meets the brief.",
+        "principle": "Wayfinding: show where the user is, using redundant cues, and how to go back.",
+        "improvement": "Consider simple distinct icons, such as a ticket, a clock or calendar, and a person, so items are recognisable at a glance. Keep the labels.",
+        "verify": "Convert the screen to greyscale and confirm the current tab is still obvious. Ask a tester how to return to the departures list."
+      },
+      {
+        "criterionId": "readable-text-and-contrast",
+        "score": 78,
+        "evidence": "Body and field text look about 16 to 18 px, matching the rationale. Main text is near-black on white. Button text is white on a deep blue. The error text is bold dark red and the success text bold dark green, both likely readable. The rationale's 17:1 and about 8.5:1 figures look plausible for these pairs, but this is an estimate from pixels and I could not measure them. Borderline items: the small capitals section headings appear smaller than 16 px and mid-grey; '(optional)' is a lighter grey; the inactive nav labels are grey on a light beige bar and look under 16 px. Field outlines are mid-grey and may be near 3:1.",
+        "where": "'WHO IS TRAVELLING' and 'EXTRAS' headings, '(optional)', inactive nav labels, field borders.",
+        "explanation": "Essential text is probably comfortably above the minimums. Several secondary greys and small labels are borderline and are not covered by the rationale's measurements.",
+        "principle": "WCAG contrast: 4.5:1 for normal text, 3:1 for large text and for UI component boundaries.",
+        "improvement": "Darken the grey used for the headings, '(optional)' and the inactive nav labels. Check that field borders reach at least 3:1 against white. Consider nav labels at 14 to 16 px or larger.",
+        "verify": "Use a contrast checker on the actual hex values for each grey-on-white and grey-on-beige pair and the field border, and record the ratios in your rationale."
+      },
+      {
+        "criterionId": "targets-and-states",
+        "score": 76,
+        "evidence": "These are estimates from pixels. Fields look about 52 px tall and full width. The button looks about 60 px tall. Each nav item is roughly 130 by 80 px. All of these match the rationale, and spacing between targets is generous. The 'Back to departures' link appears as a single line of text about 20 px tall; its tap area may be larger, but that cannot be seen and should be confirmed. Visible states (error, success, current tab) are distinct without colour alone. The main button shows no pressed, focused or saving state.",
+        "where": "Top-left back link; 'Continue to payment' button; fields and nav bar.",
+        "explanation": "Most targets are clearly adequate. The back link is the one target that may be tight, and the button state set is incomplete, so this sits in the adequate band.",
+        "principle": "Fitts's law and minimum target size (44 by 44 points); state distinctness without reliance on colour.",
+        "improvement": "Give the back link a visible or annotated tap area of at least 44 by 44 points. Show the button's default, pressed or focused, and saving states, each distinguished by more than colour.",
+        "verify": "Overlay a 44 by 44 point box on the back link and every control in your design tool, and annotate the sizes. Check that each button state is identifiable in greyscale."
+      }
+    ]
+  }
+]
