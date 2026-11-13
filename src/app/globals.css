@@ -7,12 +7,12 @@
   --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
   --font-sans: "Atkinson Hyperlegible Next Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
   /* Ink on a cool paper. The playhead (magenta) and keyframe (sun) colours are for shapes, never for text. */
-  --surface: #f3f5fa;
-  --raised: #ffffff;
-  --ink: #10142b;
-  --muted: #4f5675;
-  --line: #d5daea;
-  --accent: #2a45f5;
+  --surface: #faf5ed;
+  --raised: #fffdf9;
+  --ink: #1a1830;
+  --muted: #5b5668;
+  --line: #e6dac6;
+  --accent: #232a7a;
   --accent-ink: #ffffff;
   --playhead: #e5359a;
   --key: #ffc21a;
@@ -20,21 +20,21 @@
   --warn: #8a5a00;
   --danger: #b42318;
   --accent-warm: #b4410a;
-  --shadow-card: 0 1px 2px rgb(16 20 43 / 0.06), 0 10px 28px -10px rgb(16 20 43 / 0.14);
-  --shadow-float: 0 2px 4px rgb(16 20 43 / 0.06), 0 24px 48px -12px rgb(16 20 43 / 0.22), 0 64px 120px -40px rgb(16 20 43 / 0.28);
+  --shadow-card: 0 1px 2px rgb(60 40 10 / 0.06), 0 10px 28px -10px rgb(60 40 10 / 0.16);
+  --shadow-float: 0 2px 4px rgb(20 20 60 / 0.08), 0 28px 56px -12px rgb(20 20 60 / 0.3), 0 70px 130px -40px rgb(20 20 60 / 0.35);
   /* The illustrated world (light) */
-  --sc-sky-top: #cfd9ff; --sc-sky-bot: #ffe6d2; --sc-sun: #fff4d6; --sc-far: #9bb0f5; --sc-mid: #6f86e8; --sc-near: #3d4fc4; --sc-front: #26338f; --sc-stars: 0;
+  --sc-sky-top: #0d69e5; --sc-sky-bot: #ffc9a3; --sc-sun: #fff1c9; --sc-far: #4f9cf2; --sc-mid: #2a6fd9; --sc-near: #1c4fb5; --sc-front: #123387; --sc-stars: 0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --surface: #0c0f1f;
-    --raised: #151a33;
-    --ink: #eef0ff;
-    --muted: #a9b0d6;
-    --line: #2b3257;
-    --accent: #93a5ff;
-    --accent-ink: #0b0f26;
+    --surface: #14110f;
+    --raised: #1f1b18;
+    --ink: #f7efe3;
+    --muted: #bdb2a3;
+    --line: #3a322b;
+    --accent: #ffb27a;
+    --accent-ink: #1b120a;
     --playhead: #ff6db8;
     --key: #ffc21a;
     --success: #4fd9be;

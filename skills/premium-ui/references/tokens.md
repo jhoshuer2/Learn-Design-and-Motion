@@ -53,3 +53,10 @@ Durations 120 ms (hover), 240 ms (state), 700 ms (entrance). Easing `cubic-bezie
 ```css
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 ```
+
+## Reference-matched themes (pick one)
+- **Cream + forest + coral (Plait/Ember):** ground `#faf5ed`, surface `#ffffff`, ink `#1d2a1f`, muted `#5d6a5f`, primary pill `#1f3d2b`, accent/italic `#d4552f`, butter tile `#fcc85d`, coral tile `#f0654c`.
+- **Sky + sunset (Tenure):** scene `#0d69e5` to `#109df5` to `#19dbda`, trees `#d3867c` and `#f2a35e`, ground below `#faf5ed`, white pill with ink text.
+- **Mesa (Pave):** ground `#fdfdfd`, scene `#e7c3a6` to `#6e2e18`, dark cards `#1c1410`, amber pill `#e8a33a`.
+- **Dark glow (Lovable):** ground `#000`, glow coral `#ff6b5a` to magenta `#d4359a`, ink `#fff`, pill coral.
+Set page ground to a warm value in light mode; in dark mode use a deep warm ink (`#14100d`) instead of blue-black.

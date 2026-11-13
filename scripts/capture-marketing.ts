@@ -16,7 +16,7 @@ async function main() {
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   const email = `demo-${Date.now()}@example.com`;
-  const ctx0 = await browser.newContext({ viewport: { width: 1280, height: 800 }, timezoneId: "UTC" });
+  const ctx0 = await browser.newContext({ viewport: { width: 900, height: 640 }, timezoneId: "UTC" });
   const p0 = await ctx0.newPage();
   await p0.goto(`${BASE}/signup`);
   await p0.getByLabel("Name").fill("Sam");
@@ -44,12 +44,12 @@ async function main() {
     ["lesson", `${BASE}/learn/lesson/${third.id}`, async (p) => { await p.getByRole("button", { name: "Continue" }).click(); await p.waitForTimeout(600); await p.getByRole("button", { name: "Continue" }).click(); await p.waitForTimeout(1000); }],
   ];
   for (const scheme of ["light", "dark"] as const) {
-    const ctx = await browser.newContext({ storageState: state, colorScheme: scheme, viewport: { width: 1280, height: 800 }, timezoneId: "UTC", reducedMotion: "reduce" });
+    const ctx = await browser.newContext({ storageState: state, colorScheme: scheme, viewport: { width: 900, height: 640 }, timezoneId: "UTC", reducedMotion: "reduce" });
     for (const [name, url, prep] of shots) {
       const page = await ctx.newPage();
       await page.goto(url, { waitUntil: "networkidle" });
       await prep(page);
-      const png = await page.screenshot({ clip: { x: 0, y: 0, width: 1280, height: 800 } });
+      const png = await page.screenshot({ clip: { x: 0, y: 0, width: 900, height: 640 } });
       await sharp(png).webp({ quality: 84 }).toFile(path.join(OUT, `${name}-${scheme}.webp`));
       await page.close();
     }

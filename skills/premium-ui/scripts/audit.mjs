@@ -44,6 +44,8 @@ const m = await page.evaluate(() => {
     maxLineChars: lines.length ? Math.max(...lines) : null,
     radii: [...radii], layeredShadows: shadows.filter((s) => (s.match(/rgba?\(/g) || []).length >= 2).length, shadowCount: shadows.length,
     spacingOnScale: onScale.total ? Math.round((onScale.yes / onScale.total) * 100) : null,
+    ground: (() => { const c = getComputedStyle(document.body).backgroundColor.match(/\d+/g)?.map(Number) || [255, 255, 255]; return c.slice(0, 3); })(),
+    bleeds: imgs.some((i) => { const r = i.getBoundingClientRect(); return r.width >= 480 && r.top < innerHeight - 80 && r.bottom > innerHeight; }) || [...document.querySelectorAll("svg")].some((v) => { const r = v.getBoundingClientRect(); return r.width >= 900 && r.top < innerHeight - 80 && r.bottom > innerHeight; }),
     images: imgs.length, imagesMissingAlt: imgs.filter((i) => !i.hasAttribute("alt")).length,
     ctas: [...document.querySelectorAll("a,button")].filter(vis).filter((e) => getComputedStyle(e).backgroundColor !== "rgba(0, 0, 0, 0)" && e.getBoundingClientRect().top < 900).length,
   };
@@ -57,7 +59,10 @@ try {
 } catch { /* axe not installed */ }
 await browser.close();
 
+const [gr, gg, gb] = m.ground, gLum = (gr + gg + gb) / 3;
 const checks = [
+  ["Warm or deep ground (not cool grey)", gLum < 60 || gr >= gb - 3, `rgb(${m.ground.join(",")})`],
+  ["Landing pages only: a large visual crosses the first screen's bottom edge", new URL(url).pathname !== "/" ? null : m.bleeds, m.bleeds ? "yes" : "nothing large reaches the fold"],
   ["Hero headline is large (40px or more)", m.h1 && m.h1.px >= 40, m.h1 ? `${m.h1.px}px ${m.h1.family}, leading ${m.h1.lineHeight}` : "no h1"],
   ["Headline leading is tight (1.15 or less)", m.h1 && Number(m.h1.lineHeight) <= 1.15, m.h1?.lineHeight],
   ["At most two type families", m.families.length <= 2, m.families.join(", ")],

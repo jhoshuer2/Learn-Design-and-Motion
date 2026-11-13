@@ -20,11 +20,14 @@ Any request to raise the visual quality of a page or app: landing pages, hero se
 4. **Build.** Use the recipes and `assets/` examples. Work top-down: hero first, then rhythm of sections, then details (borders, shadows, icons, microcopy). Draw any illustration in code with `references/illustration-kit.md` and look at a render before using it.
 5. **Critique.** Re-shoot, compare with the before shots, rerun the audit, fix the biggest remaining gap. Take one thing away (the "mirror" rule). Check dark mode, 390 px wide, keyboard focus, reduced motion and contrast.
 
+## Start from the measured formula
+Read `references/reference-spec.md` first: it lists the actual grounds, world colours, headline sizes, spacing and the layout formula (saturated scene, dense mockup cropped by the fold, colour-blocked tiles, one filled pill) taken from the six reference pages, plus a diagnosis list for why a UI "looks weird" next to them.
+
 ## The eight traits (rules, not suggestions)
 
 1. **One display voice.** A large serif (or equally characterful) headline, tight leading, balanced line breaks, at most one coloured, italic *phrase* that carries the benefit, once per page. Body in a clean, readable sans.
-2. **Show the product.** The hero's main image is the real UI in a floating, framed window or phone, slightly larger than feels safe, overlapping the backdrop. Never a stock photo of people at laptops.
-3. **One world.** A single illustrated, photographic or dark backdrop in one hue family plus one accent. Depth by layers, not by many colours.
+2. **Show the product, dense and cropped.** The hero's main image is the real UI in a floating, framed window or phone, inside the first viewport and cropped by its bottom edge, overlapping the scene. It must be dense with real detail, not a sparse screenshot with empty margins. Never a stock photo of people at laptops.
+3. **One world, saturated, on a warm ground.** Page ground is cream (`#faf5ed`), warm white or deep black, never cool grey. The backdrop is a full-width saturated scene (sky blue, mesa orange, meadow green, dark glow) in one hue family plus one accent. Depth by layers, not by many colours.
 4. **Space is the luxury.** Big vertical rhythm (96 to 160 px between major sections on desktop), centred or strongly left-aligned compositions, short line lengths (45 to 75 characters).
 5. **Quiet chrome.** Thin nav, small type, pill CTAs (one primary per view), 1 px borders, no heavy outlines.
 6. **Layered depth.** Soft multi-layer shadows, subtle gradients, consistent radii (one scale), glass or blur only where it separates layers.
@@ -43,6 +46,7 @@ Keep the system's names and tokens; change values, scale and composition. If the
 Responsive to 390 px, visible keyboard focus, AA contrast, readable at small sizes, reduced motion respected, no layout shift from fonts or images, images optimised and lazy below the fold, bundled fonts (no render-blocking third-party font requests).
 
 ## Files
+- `references/reference-spec.md`: measured colours, type, spacing and layout of the six pages, and the "why it looks weird" diagnosis.
 - `references/traits.md`: what the six reference sites do and the principle behind each.
 - `references/recipes.md`: six layout recipes with wireframes and Tailwind/CSS.
 - `references/tokens.md`: starter tokens, light and dark.

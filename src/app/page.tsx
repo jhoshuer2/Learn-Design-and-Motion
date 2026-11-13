@@ -27,12 +27,12 @@ export default function Landing({ searchParams }: { searchParams: { deleted?: st
     </div>
     <div className="relative mt-12 overflow-hidden">
       <Scene className="absolute inset-0 h-full w-full" />
-      <div className="relative mx-auto max-w-4xl px-6 pb-16 pt-14">
-        <FramedWindow title="My learning">
+      <div className="relative mx-auto max-w-4xl px-6 pt-16">
+        <FramedWindow title="My learning" className="rounded-b-none border-b-0">
           <picture>
             <source srcSet="/marketing/learning-dark.webp" media="(prefers-color-scheme: dark)" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/marketing/learning-light.webp" alt="The My learning page: a row of keyframe diamonds shows two lessons done and the next one ready." width={1280} height={800} className="w-full" />
+            <img src="/marketing/learning-light.webp" alt="The My learning page: a row of keyframe diamonds shows two lessons done and the next one ready." width={900} height={640} className="block w-full" />
           </picture>
         </FramedWindow>
       </div>
@@ -54,6 +54,21 @@ export default function Landing({ searchParams }: { searchParams: { deleted?: st
           </div>
         </section>
       ))}
+
+      {outcomes[0] && (
+        <ul className="mt-16 grid gap-4 sm:grid-cols-3" aria-label="At a glance">
+          {[
+            { big: `${outcomes[0].hours}`, small: "hours, about, start to finish", bg: "bg-[#fcc85d] text-[#2a1f00]" },
+            { big: `${outcomes[0].tools.length}`, small: `free tools work: ${outcomes[0].tools.join(", ")}`, bg: "bg-[#1f3d2b] text-[#f7efe3]" },
+            { big: "1", small: "real piece you make and share", bg: "bg-[#c2410c] text-[#fff7ed]" },
+          ].map((t) => (
+            <li key={t.small} className={`rounded-window p-7 ${t.bg}`}>
+              <p className="font-display text-7xl leading-none">{t.big}</p>
+              <p className="mt-3 text-base">{t.small}</p>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <section className="mt-20" aria-labelledby="how">
         <h2 id="how" className="font-display text-3xl">How it works</h2>

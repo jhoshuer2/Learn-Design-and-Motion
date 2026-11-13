@@ -8,7 +8,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
       <div className="flex items-center justify-center lg:justify-start">{children}</div>
       <aside aria-hidden className="relative hidden overflow-hidden rounded-window border border-line shadow-float lg:block">
         <Scene className="absolute inset-0 h-full w-full" />
-        <p className="absolute left-10 right-10 top-12 font-display text-5xl text-ink">Your path, one small step at a time.</p>
+        <p className="absolute left-10 right-10 top-12 font-display text-5xl text-white [text-shadow:0_1px_24px_rgb(10_30_90/0.45)]">Your path, one small step at a time.</p>
       </aside>
     </div>
   );
