@@ -8,7 +8,7 @@ export const DEMO_NAMES = [
   // Graphic Design: typography and layout
   "type-pairing", "line-length-leading", "grid-alignment",
   // Motion Design
-  "easing-compare", "keyframe-timeline", "stagger-reveal", "loop-seam", "small-check",
+  "easing-compare", "keyframe-timeline", "stagger-reveal", "loop-seam", "small-check", "format-adapt",
   // UI Design
   "spacing-rhythm", "touch-targets", "form-states",
   "form-layout", "nav-patterns", "feedback-states",

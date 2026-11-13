@@ -5,7 +5,8 @@ import { loadContent } from "../src/lib/content/loader";
 import { publishContent } from "../src/lib/content/publish";
 import { evaluateSubmission } from "../src/lib/assessment/evaluate";
 import { FakeProvider } from "../src/lib/assessment/fake";
-import { getAssignmentAccess, getLessonAccess, getTimeline, recordBlockView, submitCheck, type StoredBlock } from "../src/lib/progression";
+import { getAssignmentAccess, getLessonAccess, recordBlockView, submitCheck, type StoredBlock } from "../src/lib/progression";
+import { assessLevel } from "../src/lib/progression/level";
 import { createSubmission } from "../src/lib/submissions";
 import { RATIONALE, cleanup, makeUser, useTempStorage } from "./helpers";
 
@@ -14,7 +15,7 @@ const fake = new FakeProvider();
 const content = loadContent();
 const spec = content.modules.find((m) => m.def.slug === "kinetic-type-loop")!;
 const img = (w: number, h: number) => sharp({ create: { width: w, height: h, channels: 3, background: "#14110f" } }).png().toBuffer();
-let pathId: string, assessmentId: string;
+let pathId: string, levelId: string, assessmentId: string, capstoneId: string;
 const lessonId: Record<string, string> = {};
 
 beforeAll(async () => {
@@ -22,8 +23,9 @@ beforeAll(async () => {
   process.env.CONTENT_PREVIEW = "true";
   await publishContent(db, loadContent());
   const level = await db.level.findFirstOrThrow({ where: { tier: "BEGINNER", path: { slug: "motion-design" } } });
-  pathId = level.pathId;
+  pathId = level.pathId; levelId = level.id;
   assessmentId = (await db.assignment.findUniqueOrThrow({ where: { slug: "kinetic-type-loop" } })).id;
+  capstoneId = (await db.assignment.findUniqueOrThrow({ where: { slug: "kinetic-type-capstone" } })).id;
   for (const l of await db.lesson.findMany({ where: { module: { levelId: level.id } } })) lessonId[l.slug] = l.id;
 });
 afterAll(async () => {
@@ -77,14 +79,66 @@ describe("motion-design path", () => {
     }
   });
 
-  it("says plainly that there is no capstone and the level cannot complete yet", async () => {
+  const strip = async (slot: string, w: number, h: number) => ({ slot, name: `${slot}.png`, data: await img(w, h) });
+  const submitAssessment = async (u: string) => {
+    const { submissionId } = await createSubmission(u, assessmentId, { files: [await strip("final", 1600, 300), await strip("preview", 400, 75)], rationale: `${RATIONALE} [fake:score=90]` });
+    expect(await evaluateSubmission(submissionId, { provider: fake })).toMatchObject({ passed: true });
+  };
+  const submitCapstone = async (u: string, marker: string) => {
+    const { submissionId } = await createSubmission(u, capstoneId, { files: [await strip("square", 1600, 300), await strip("story", 1600, 300), await strip("banner", 1600, 300)], rationale: `${RATIONALE} ${marker}` });
+    const out = await evaluateSubmission(submissionId, { provider: fake });
+    if (out.state !== "evaluated") throw new Error(out.state);
+    return out;
+  };
+  const levelRows = (u: string) => db.progress.count({ where: { userId: u, nodeType: "LEVEL", nodeId: levelId } });
+
+  it("keeps the capstone closed until every lesson and the module assessment are done, and names the module", async () => {
     const u = await learner();
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: false, reason: "modules_incomplete", missing: ["Make a kinetic type loop"] });
     await passAll(u);
-    const t = await getTimeline(u, pathId);
-    const level = t!.levels.find((l) => l.tier === "BEGINNER")!;
-    expect(level.capstone).toBeNull();
-    expect(level.scopeNote).toMatch(/no capstone yet/i);
-    expect(level.state).not.toBe("complete");
-    expect(await db.levelCompletion.count({ where: { userId: u } })).toBe(0);
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: false, reason: "modules_incomplete" }); // assessment not passed yet
+    await submitAssessment(u);
+    expect(await getAssignmentAccess(u, capstoneId)).toMatchObject({ allowed: true, attempt: 1, maxAttempts: 3 });
+  });
+
+  it("teaches the new lesson last, after polish and export", async () => {
+    const u = await learner();
+    expect(spec.lessons.map((l) => l.meta.slug).at(-1)).toBe("one-motion-three-formats");
+    expect(await getLessonAccess(u, lessonId["one-motion-three-formats"])).toMatchObject({ allowed: false, reason: "prerequisites" });
+  });
+
+  it("completes the level on a passing capstone with an honest record", async () => {
+    const u = await learner();
+    await passAll(u); await submitAssessment(u);
+    expect(await submitCapstone(u, "[fake:score=95]")).toMatchObject({ passed: true });
+    expect(await levelRows(u)).toBe(1);
+    const rec = await db.levelCompletion.findFirstOrThrow({ where: { userId: u } });
+    expect(rec.title).toBe("Motion Design, Beginner: Kinetic type basics");
+    const e = rec.evidence as { limits: string; scope: { note: string }; testEvaluatorUsed: boolean; requiredCompetencies: { slug: string }[] };
+    expect(e.limits).toMatch(/not a professional qualification/);
+    expect(e.scope.note).toMatch(/does not show mastery of motion design/);
+    expect(e.testEvaluatorUsed).toBe(true);
+    expect(e.requiredCompetencies.map((c) => c.slug)).toEqual(["motion-consistency"]);
+  });
+
+  it("does not unlock on a high score when consistency across formats is below its minimum", async () => {
+    const u = await learner();
+    await passAll(u); await submitAssessment(u);
+    const out = await submitCapstone(u, "[fake:score=100] [fake:set=format-consistency:50]");
+    expect(out.passed).toBe(false);
+    expect(out.score).toBeGreaterThanOrEqual(85); // the weighted total alone would pass
+    expect(await levelRows(u)).toBe(0);
+  });
+
+  it("holds the level back while the required skill is below 80, until lesson 6's check is retaken", async () => {
+    const u = await learner();
+    await passAll(u); await submitAssessment(u);
+    expect(await submitCapstone(u, "[fake:score=95] [fake:set=format-consistency:70]")).toMatchObject({ passed: true }); // 70 clears the criterion's minimum of 60
+    expect(await levelRows(u)).toBe(0);
+    const blocked = (await assessLevel(db, u, levelId))!.checks.find((c) => c.slug === "motion-consistency")!;
+    expect(blocked).toMatchObject({ met: false, latestScore: 70 });
+    expect(blocked.retakeLessons.map((l) => l.title)).toEqual(["One motion, three formats"]); // only this path's lesson
+    expect((await check(u, "one-motion-three-formats", true)).passed).toBe(true);
+    expect(await levelRows(u)).toBe(1);
   });
 });

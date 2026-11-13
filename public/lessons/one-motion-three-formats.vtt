@@ -1,0 +1,53 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:01.590
+Posts come in different shapes.
+
+2
+00:00:01.590 --> 00:00:02.769
+A square is one to one.
+
+3
+00:00:02.769 --> 00:00:04.615
+A vertical story is nine to sixteen.
+
+4
+00:00:04.615 --> 00:00:06.308
+A wide banner is sixteen to nine.
+
+5
+00:00:06.308 --> 00:00:08.000
+Your words have to fit all three.
+
+6
+00:00:08.000 --> 00:00:11.761
+If you stretch the square version to fill the wide banner, the letters get squashed.
+
+7
+00:00:11.761 --> 00:00:17.000
+Instead re-lay it out: move and resize the words for the wide shape and keep the letters at their normal proportions.
+
+8
+00:00:17.000 --> 00:00:20.952
+On a vertical story, apps place buttons and captions over the top and bottom edges.
+
+9
+00:00:20.952 --> 00:00:25.000
+Keep your important words in the middle, inside the safe zone, so nothing is covered.
+
+10
+00:00:25.000 --> 00:00:31.150
+Keep the timing identical in every format: the same delay between letters, the same easing and the same rest time per word.
+
+11
+00:00:31.150 --> 00:00:34.000
+That is what makes three layouts feel like one animation.
+
+12
+00:00:34.000 --> 00:00:37.264
+Finally shrink all three and look at them together.
+
+13
+00:00:37.264 --> 00:00:42.000
+The words should still read in each one, and they should look like family.

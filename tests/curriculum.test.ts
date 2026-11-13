@@ -5,7 +5,7 @@ import { MACHINE_SCORED } from "../src/lib/progression/scoring";
 /** Properties every authored path must have, so adding a path cannot quietly skip them. */
 const c = loadContent();
 const PATHS = [...new Set(c.levels.map((l) => l.def.path))].sort();
-/** Paths that are a first slice, not a full Beginner level: one module, no capstone yet, and their scope note says so. */
+/** Paths that are a first slice, not a full Beginner level: one module so far (they still need a capstone and every capstone rule). */
 const SLICES = new Set(["motion-design"]);
 
 describe("authored curriculum", () => {
@@ -39,7 +39,6 @@ describe("authored curriculum", () => {
 
     it("tells the learner honestly what the level does not cover", () => {
       expect(level.def.scopeNote).toMatch(/not (show|written)/i);
-      if (SLICES.has(path)) expect(level.def.scopeNote).toMatch(/no capstone yet/i);
     });
 
     it("has a module assessment with final and preview, and a three-piece capstone", () => {
@@ -48,7 +47,6 @@ describe("authored curriculum", () => {
         expect(ma, m.def.slug).toHaveLength(1);
         expect(ma[0].deliverables.filter((d) => d.required).map((d) => d.role)).toEqual(expect.arrayContaining(["final", "preview"]));
       }
-      if (SLICES.has(path)) { expect(level.capstones).toHaveLength(0); return; }
       expect(level.capstones).toHaveLength(1);
       expect(level.capstones[0].deliverables.filter((d) => d.required && d.role === "piece")).toHaveLength(3);
     });
@@ -70,7 +68,6 @@ describe("authored curriculum", () => {
     });
 
     it("teaches every required competency in a lesson, and makes it a mandatory capstone criterion", () => {
-      if (SLICES.has(path)) { expect(level.def.requiredCompetencies).toEqual([]); return; }
       const taught = new Set(modules.flatMap((m) => m.lessons.flatMap((l) => l.meta.competencies)));
       const r = rubric(level.capstones[0]);
       for (const req of level.def.requiredCompetencies) {

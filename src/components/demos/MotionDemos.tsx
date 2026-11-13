@@ -108,3 +108,33 @@ export function SmallCheck() {
     </Box>
   );
 }
+
+/** The same three words in three shapes. Stretching squashes the letters; re-laying out keeps them clean. */
+export function FormatAdapt() {
+  const [stretched, setStretched] = useState(false);
+  const frames: { name: string; w: number; h: number; size: number; text: string[] }[] = [
+    { name: "Square 1:1", w: 150, h: 150, size: 30, text: ["BUNS", "ARE", "BACK"] },
+    { name: "Story 9:16", w: 100, h: 178, size: 26, text: ["BUNS", "ARE", "BACK"] },
+    { name: "Banner 16:9", w: 260, h: 146, size: 30, text: ["BUNS ARE", "BACK"] },
+  ];
+  return (
+    <Box>
+      <div className="flex flex-wrap items-end justify-center gap-5">
+        {frames.map((f, i) => (
+          <figure key={f.name} className="text-center">
+            <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-lg border" style={{ width: f.w, height: f.h, background: "#2b251f", borderColor: LINE }}>
+              {i === 1 && <><span className="absolute inset-x-0 top-0 h-[18%]" style={{ background: "rgba(255,106,92,.25)" }} /><span className="absolute inset-x-0 bottom-0 h-[18%]" style={{ background: "rgba(255,106,92,.25)" }} /></>}
+              {(stretched ? ["BUNS", "ARE", "BACK"] : f.text).map((w) => (
+                <span key={w} className="font-mono font-bold" style={{ color: CREAM, fontSize: f.size, lineHeight: 1.1, transform: stretched ? `scale(${f.w / f.h > 1 ? 1.7 : f.w / f.h < 1 ? 0.7 : 1}, ${f.w / f.h > 1 ? 0.8 : f.w / f.h < 1 ? 1.2 : 1})` : undefined, display: "inline-block" }}>{w}</span>
+              ))}
+            </div>
+            <figcaption className="mt-1 text-xs" style={{ color: MUTED }}>{f.name}{i === 1 ? " (shaded edges: apps cover these)" : ""}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <button type="button" aria-pressed={stretched} onClick={() => setStretched((s) => !s)} className="mt-4 min-h-11 rounded-full border-2 px-5 text-sm font-semibold" style={{ borderColor: LINE, color: CREAM }}>
+        {stretched ? "Stretched: letters get squashed. Show re-laid out" : "Re-laid out: letters stay clean. Show stretched"}
+      </button>
+    </Box>
+  );
+}

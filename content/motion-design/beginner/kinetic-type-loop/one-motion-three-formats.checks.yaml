@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: "What does it mean to re-lay out an animation for a new format?"
+    options: [Moving and resizing the elements to suit the new shape, Stretching the same picture to fill the frame, Deleting the text, Changing the words]
+    answer: Moving and resizing the elements to suit the new shape
+    explanation: "Re-laying out keeps the words and style but fits them to each shape, so nothing is squashed."
+    competency: motion-consistency
+  - type: MULTIPLE_CHOICE
+    prompt: "Which aspect ratio is a vertical story?"
+    options: ["9:16", "1:1", "16:9", "4:3"]
+    answer: "9:16"
+    explanation: "A story is tall and narrow: 9 wide by 16 high. Square is 1:1 and a wide banner is 16:9."
+    competency: motion-consistency
+  - type: MULTIPLE_SELECT
+    prompt: "Which of these should stay the same across formats? Select all that apply."
+    options: [Timing and easing, The order of the words, The overall look and feel, The exact pixel positions]
+    answer: [Timing and easing, The order of the words, The overall look and feel]
+    explanation: "Timing and order and style make it feel like one piece. Positions have to change to suit each shape."
+    competency: motion-consistency
+  - type: ERROR_DETECTION
+    prompt: "A wide banner is the square version stretched sideways and the letters look squashed. What is the fix?"
+    options: [Re-lay out the words for the wide shape and keep their proportions, Stretch it even more, Make the banner taller than wide, Remove the easing]
+    answer: Re-lay out the words for the wide shape and keep their proportions
+    explanation: "Stretching distorts letters. Moving and resizing the words keeps them clean."
+    competency: motion-consistency
+  - type: VISUAL_IDENTIFICATION
+    prompt: "In the one-motion-three-formats explainer, which banner looks right?"
+    options: [The re-laid-out one with normal letter shapes, The stretched one with squashed letters, Neither of them]
+    answer: The re-laid-out one with normal letter shapes
+    explanation: "The re-laid-out version keeps the letters undistorted and fits the shape."
+    competency: motion-consistency
+  - type: MULTIPLE_CHOICE
+    prompt: "Why keep important words inside the safe zone on a vertical story?"
+    options: [Apps can cover the top and bottom edges with buttons and captions, Because stories are square, To make the file smaller, Safe zones are required by law]
+    answer: Apps can cover the top and bottom edges with buttons and captions
+    explanation: "Interface elements sit over the edges, so words near them can be hidden."
+    competency: motion-consistency

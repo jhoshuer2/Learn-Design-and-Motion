@@ -8,6 +8,7 @@ objectives:
   - Choose timing and easing so a move feels alive.
   - Animate move, scale and fade with keyframes.
   - Animate words with stagger and reveal, then make the result loop and polish it.
+  - Adapt one animation to square, vertical and wide formats.
 status: DRAFT
 lessons:
   - motion-feels-alive
@@ -15,3 +16,4 @@ lessons:
   - animate-words
   - make-it-loop
   - polish-and-export
+  - one-motion-three-formats

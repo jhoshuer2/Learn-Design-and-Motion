@@ -226,4 +226,39 @@ const v6: Video = {
   ],
 };
 
-export const VIDEOS: Video[] = [v1, v2, v3, v4, v5, v6];
+
+// ───────── 7. One motion, three formats
+const boxes = (t: number, fn: (k: number) => string) => [[120, 150, 220, 220], [400, 90, 124, 220 * 1.0], [570, 160, 300, 170]].map(([x, y, w, h], k) => R(x, y, w, h, C.panel, { rx: 10, stroke: C.line }) + fn(k)).join("");
+const v7: Video = {
+  name: "one-motion-three-formats",
+  scenes: [
+    { dur: 8, title: "Three shapes", takeaway: "Same words. Three different shapes.",
+      caption: "Posts come in different shapes. A square is one to one. A vertical story is nine to sixteen. A wide banner is sixteen to nine. Your words have to fit all three.",
+      draw: (t) => boxes(t, (k) => { const c = [[230, 260], [462, 200], [720, 245]][k]; return T(c[0], c[1], k === 1 ? 26 : 34, C.cream, ["BUNS", "ARE", "BACK"][Math.floor((t / 2) % 3)], { w: "bold", a: "middle", f: MONO }); }) + T(230, 405, 20, C.muted, "1:1", { a: "middle" }) + T(462, 405, 20, C.muted, "9:16", { a: "middle" }) + T(720, 405, 20, C.muted, "16:9", { a: "middle" }) },
+    { dur: 9, title: "Do not stretch", takeaway: "Stretching squashes the letters.",
+      caption: "If you stretch the square version to fill the wide banner, the letters get squashed. Instead re-lay it out: move and resize the words for the wide shape and keep the letters at their normal proportions.",
+      draw: (t) => {
+        const p = ease.inOut(pingpong(t, 1.4, 1.8, ease.linear));
+        return R(60, 150, 400, 190, C.panel, { rx: 10, stroke: C.red }) + `<g transform="translate(${260} ${268}) scale(${lerp(1, 2.2, p)} 1)">${T(0, 0, 70, C.cream, "BUNS", { w: "bold", a: "middle", f: MONO })}</g>` + T(260, 372, 20, C.red, "Stretched: letters squashed", { a: "middle", w: "bold" }) +
+          R(500, 150, 400, 190, C.panel, { rx: 10, stroke: C.teal }) + T(700, 268, 64, C.cream, "BUNS ARE BACK", { w: "bold", a: "middle", f: MONO }).replace('font-size="64"', 'font-size="40"') + T(700, 372, 20, C.teal, "Re-laid out: clean letters", { a: "middle", w: "bold" });
+      } },
+    { dur: 8, title: "Safe zones", takeaway: "Keep words away from the edges of a story.",
+      caption: "On a vertical story, apps place buttons and captions over the top and bottom edges. Keep your important words in the middle, inside the safe zone, so nothing is covered.",
+      draw: (t) => R(380, 70, 200, 355, C.panel, { rx: 14, stroke: C.line }) + R(380, 70, 200, 60, C.red, { rx: 14, op: 0.25 }) + R(380, 365, 200, 60, C.red, { rx: 14, op: 0.25 }) + L(380, 130, 580, 130, C.teal, 2, "6 6") + L(380, 365, 580, 365, C.teal, 2, "6 6") +
+        T(480, 255, 34, C.cream, ["BUNS", "ARE", "BACK"][Math.floor((t / 1.6) % 3)], { w: "bold", a: "middle", f: MONO }) + T(330, 105, 18, C.red, "app buttons", { a: "end" }) + T(330, 400, 18, C.red, "captions", { a: "end" }) + T(610, 250, 18, C.teal, "safe zone", { a: "start" }) },
+    { dur: 9, title: "Same timing everywhere", takeaway: "Change the layout. Keep the timing.",
+      caption: "Keep the timing identical in every format: the same delay between letters, the same easing and the same rest time per word. That is what makes three layouts feel like one animation.",
+      draw: (t) => [150, 255, 360].map((y, k) => {
+        const c = t % 4, p = ease.out(prog(c, 0.3, 0.8)), q = ease.in(prog(c, 2.8, 0.6));
+        return T(70, y - 22, 18, C.muted, ["Square", "Story", "Banner"][k], { w: "bold" }) + R(70, y, 820, 6, C.line) + R(70 + 820 * p * (1 - q), y - 6, 18, 18, C.acc, { rx: 9 }) + R(70 + 820 * clamp(c / 4), y - 14, 3, 34, C.teal);
+      }).join("") },
+    { dur: 8, title: "Check each one small", takeaway: "Check all three at a small size.",
+      caption: "Finally shrink all three and look at them together. The words should still read in each one, and they should look like family.",
+      draw: (t) => {
+        const s = lerp(1, 0.4, ease.inOut(prog(t % 6, 0.8, 1.4)));
+        return [[180, 270, 160, 160, "BUNS"], [480, 270, 90, 160, "ARE"], [760, 270, 220, 120, "BACK"]].map(([cx, cy, w, h, word]) => R((cx as number) - ((w as number) * s) / 2, (cy as number) - ((h as number) * s) / 2, (w as number) * s, (h as number) * s, C.panel, { rx: 8, stroke: C.line }) + T(cx as number, (cy as number) + 10 * s, 30 * s, C.cream, word as string, { w: "bold", a: "middle", f: MONO })).join("");
+      } },
+  ],
+};
+
+export const VIDEOS: Video[] = [v1, v2, v3, v4, v5, v6, v7];

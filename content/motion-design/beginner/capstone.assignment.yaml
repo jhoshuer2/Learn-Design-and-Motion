@@ -1,0 +1,31 @@
+slug: kinetic-type-capstone
+kind: CAPSTONE
+title: One animation, three formats
+objective: "Carry one looping kinetic type animation across a square post, a vertical story and a wide banner so that all three feel like one piece, and explain your choices with the numbers you used."
+scenario: >
+  Fernhill Bakery, the small neighbourhood bakery from the earlier exercises, is bringing back its Saturday buns. It
+  needs one looping animation of three words, in this order: BUNS, ARE, BACK. It will be posted as a square feed post,
+  a vertical story and a wide web banner. All three must carry the same words and clearly belong together, but each
+  should be laid out for its own shape. You share each as a filmstrip of its frames, because the buddy looks at still
+  frames, not at the moving video. The bakery is fictional: nothing you make is used by a real business.
+requirements:
+  - "Deliver three pieces: a square (1:1), a vertical story (9:16) and a wide banner (16:9), each as a filmstrip of 6 to 8 frames in order, including the first and the last frame."
+  - "Show the words BUNS, ARE, BACK in that order in every piece, each readable at rest."
+  - "Keep the motion language the same in all three: the same easing, a similar stagger and the same rest time per word."
+  - "Re-lay out each piece for its own shape instead of stretching one version. Keep letters at their normal proportions and keep important words out of the top and bottom edges of the story."
+  - "Make each one loop: the last frame leads back to the first."
+  - "In your rationale give the numbers you used (length, rest time per word, delay between letters, easing, how each loop closes) and say what you changed between formats and what you kept. Explain three choices."
+constraints:
+  - "Original work only. Any font or shape must be one you are licensed to use. Use no music."
+  - "Do not reuse your module assessment loop unchanged. This must be a new animation with the new words."
+  - "Use only these three words. Do not add other text or a logo."
+deliverables:
+  - { key: square, label: Square post, description: "Filmstrip of 6 to 8 frames of the 1:1 version, in order, as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: story, label: Vertical story, description: "Filmstrip of 6 to 8 frames of the 9:16 version, in order, as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: banner, label: Wide banner, description: "Filmstrip of 6 to 8 frames of the 16:9 version, in order, as PNG, JPEG or WebP.", role: piece, required: true }
+  - { key: process, label: Timeline screenshot, description: "A screenshot of your editor's timeline showing your keyframes, if you want to show your process.", role: process, required: false }
+difficulty: 3
+estimatedMinutes: 240
+rubric: { slug: kinetic-type-capstone, version: 1 }
+maxAttempts: 3
+status: DRAFT

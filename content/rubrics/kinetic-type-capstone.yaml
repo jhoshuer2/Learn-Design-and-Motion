@@ -1,0 +1,56 @@
+slug: kinetic-type-capstone
+title: One animation, three formats
+version: 1
+threshold: 85
+criteria:
+  - key: format-consistency
+    title: Consistency across formats
+    weight: 25
+    mandatory: true
+    minScore: 60
+    competency: motion-consistency
+    description: |
+      Do the three filmstrips read as one animation (the same words and order, a similar stagger, and the same rest time per word), adapted to each shape rather than stretched? You cannot judge smoothness or exact timing from stills: compare what is visible across the three strips and check it against the numbers the rationale reports.
+      Strong (85-100): clearly one piece, with each format re-laid out for its shape, letters undistorted and the same style in all three.
+      Adequate (60-84): related, with some drift in stagger or rest time, or one format feels like a stretched copy.
+      Weak (0-59): the pieces feel unrelated, or one or more is a stretched or cropped copy of another.
+  - key: kinetic-type
+    title: Kinetic type
+    weight: 15
+    competency: motion-kinetic-type
+    description: |
+      Are BUNS, ARE and BACK shown in that order in every piece, with a visible stagger or reveal, each word fully readable at rest, and the vertical story keeping words out of the top and bottom edges?
+      Strong (85-100): all three words, in order, readable at rest in all three formats, with a clear stagger or reveal.
+      Adequate (60-84): words present but the order, a reveal or one piece's safe zone is unclear.
+      Weak (0-59): a word is missing or out of order in a piece, or words are hard to read.
+  - key: timing-and-easing
+    title: Timing and easing
+    weight: 15
+    competency: motion-timing-easing
+    description: |
+      Does the spacing between frames suggest eased motion, and does the rationale report durations and an easing choice that suit a warm, friendly mood? You cannot measure speed from stills: judge what is visible, say it is an estimate, and compare with the reported numbers.
+      Strong (85-100): spacing and reported numbers both point to eased, unhurried motion.
+      Adequate (60-84): plausible easing but rushed timing or thin numbers.
+      Weak (0-59): motion looks mechanical or frantic, or no timing or easing is reported.
+  - key: loop-seam
+    title: Loop seam
+    weight: 15
+    competency: motion-looping
+    description: |
+      In each piece does the last frame lead back to the first, and does the rationale say how each loop was closed? You cannot test the restart from stills: compare first and last frames in each strip.
+      Strong (85-100): first and last frames match in all three, with the method stated.
+      Adequate (60-84): close in most, or the method is unclear.
+      Weak (0-59): first and last frames clearly differ in one or more, or looping is not claimed.
+  - key: legibility-across-formats
+    title: Legibility across formats
+    weight: 15
+    competency: motion-polish
+    description: |
+      Judge the format that is hardest to read (usually the wide banner or the small end of the story). Do the words stay readable and the composition stay clean, with no clutter?
+      Strong (85-100): words stay clear and the composition is clean in every format. Adequate (60-84): readable but strained in one format, or slightly cluttered. Weak (0-59): words become hard to read in one or more formats.
+  - key: design-rationale
+    title: Design rationale
+    weight: 15
+    description: |
+      Does the rationale give the numbers used (length, rest time per word, delay between letters, easing, how each loop closes), say what changed between formats and what was kept, and explain three real choices that match what is visible? Judge reasoning, not writing style.
+      Strong (85-100): three specific choices with numbers that match the strips and a clear changed-versus-kept account. Adequate (60-84): choices named, numbers or the changed-versus-kept account thin. Weak (0-59): generic statements, or claims the strips do not show.

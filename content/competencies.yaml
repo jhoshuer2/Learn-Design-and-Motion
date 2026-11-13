@@ -21,3 +21,4 @@ competencies:
   - { slug: motion-kinetic-type, title: Animating words with stagger and reveal }
   - { slug: motion-looping, title: Making an animation loop without a visible jump }
   - { slug: motion-polish, title: Polishing and exporting a short animation }
+  - { slug: motion-consistency, title: Keeping one motion style consistent across formats, critical: true }

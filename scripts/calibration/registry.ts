@@ -3,6 +3,7 @@ import { SAMPLES as POSTERS, previewOf } from "../sample-posters";
 import { brandSamples } from "./sample-brand";
 import { uiSamples } from "./sample-ui";
 import { m11Samples } from "./sample-m11";
+import { motionSamples } from "./sample-motion";
 import { campaignSamples } from "./sample-campaign";
 import { complete, modelText, score, type Expectation, type Img, type Row, type Sample } from "./types";
 
@@ -49,11 +50,12 @@ const posters: Sample[] = POSTERS.map((s) => ({
   id: s.id, assignment: POSTER, note: s.note, expect: s.expect, expectations: POSTER_EXPECT[s.id] ?? [], rationale: s.rationale, images: () => posterImages(s),
 }));
 
-export const REGISTRY: Sample[] = [...posters, ...campaignSamples, ...brandSamples, ...uiSamples, ...m11Samples];
+export const REGISTRY: Sample[] = [...posters, ...campaignSamples, ...brandSamples, ...uiSamples, ...m11Samples, ...motionSamples];
 
 /** Rough per-call cost used before any call has been measured (USD, list price of claude-opus-5-5). */
 export const DEFAULT_ESTIMATE: Record<string, number> = {
   "high-contrast-event-poster": 0.15, "contrast-campaign-capstone": 0.45, "mini-brand-sheet": 0.2, "mobile-screen": 0.2,
   "typographic-programme": 0.2, "imagery-layout-guide": 0.25, "form-screen": 0.2,
+  "kinetic-type-loop": 0.2, "kinetic-type-capstone": 0.5,
 };
 export type { Row };

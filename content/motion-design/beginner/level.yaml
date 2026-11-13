@@ -4,13 +4,15 @@ tier: BEGINNER
 scopeLabel: Kinetic type basics
 scopeNote: >
   This is a first slice of Motion Design: one module that takes you from never having animated anything to
-  making a ten second looping kinetic type animation with free tools. There is no capstone yet, so this level
-  cannot be completed, and it does not show mastery of motion design. The full Beginner curriculum is not
-  written yet. Work is judged from exported still frames, so smoothness and exact timing are not assessed.
+  making a looping kinetic type animation with free tools, and a capstone that asks you to carry one animation
+  across three formats. Passing it does not show mastery of motion design, and the full Beginner curriculum is
+  not written yet. Work is judged from exported still frames, so smoothness and exact timing are not assessed.
 objectives:
   - Choose timing and easing so a move feels alive instead of mechanical.
   - Animate move, scale and fade with keyframes in a free tool.
   - Animate words with a stagger or a reveal, and keep them readable.
   - Make the animation loop with no visible jump, then polish and export it.
-requiredCompetencies: []
+  - Carry one animation across square, vertical and wide formats without losing its character.
+capstoneThreshold: 85
+requiredCompetencies: [motion-consistency]
 status: DRAFT

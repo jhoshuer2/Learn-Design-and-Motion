@@ -93,3 +93,30 @@ test("the stagger demo responds to its slider, also with reduced motion", async 
   expect((await new AxeBuilder({ page }).exclude("figure").analyze()).violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
   await ctx.close();
 });
+
+test("the capstone is locked until the module is done, then asks for three formats", async ({ page }) => {
+  const email = await signUp(page);
+  const user = await db.user.findUniqueOrThrow({ where: { email } });
+  const level = await db.level.findFirstOrThrow({ where: { tier: "BEGINNER", path: { slug: "motion-design" } } });
+  await db.enrollment.create({ data: { userId: user.id, pathId: level.pathId } });
+  const cap = await db.assignment.findUniqueOrThrow({ where: { slug: "kinetic-type-capstone" } });
+
+  await page.goto(`/learn/assignment/${cap.id}`);
+  await expect(page.getByText("Finish every module in this level first, including its assessment.")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Submit for assessment" })).toHaveCount(0);
+
+  const lessons = await db.lesson.findMany({ where: { module: { levelId: level.id } } });
+  await db.progress.createMany({ data: lessons.map((l) => ({ userId: user.id, nodeType: "LESSON", nodeId: l.id, state: "COMPLETED" as const, completedAt: new Date() })) });
+  const asg = await db.assignment.findUniqueOrThrow({ where: { slug: "kinetic-type-loop" } });
+  await db.progress.create({ data: { userId: user.id, nodeType: "ASSIGNMENT", nodeId: asg.id, state: "COMPLETED", completedAt: new Date() } });
+
+  await page.goto(`/learn/assignment/${cap.id}`);
+  await expect(page.getByRole("heading", { name: "One animation, three formats" })).toBeVisible();
+  for (const label of [/Square post/, /Vertical story/, /Wide banner/]) await expect(page.getByLabel(label)).toBeVisible();
+  await expect(page.getByText("Only images are inspected")).toBeVisible();
+  expect((await new AxeBuilder({ page }).analyze()).violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
+  await page.screenshot({ path: "test-results/screens/m12-capstone-brief.png", fullPage: true });
+
+  await page.goto("/learn");
+  await expect(page.getByText(/does not show mastery of motion design/)).toBeVisible();
+});
