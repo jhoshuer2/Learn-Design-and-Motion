@@ -2,37 +2,45 @@ import Link from "next/link";
 import { loadOutcomes } from "@/lib/content/outcomes";
 import { Button } from "@/components/ui/Button";
 import { KeyframeTrack } from "@/components/ui/Keyframes";
-
-const HEADLINE = "Learn it by making it.";
+import { FramedWindow } from "@/components/ui/FramedWindow";
+import { Scene } from "@/components/art/Scene";
 
 /** The real way a path works, so the numbering is a true sequence. */
 const STEPS = ["Pick what you want to make", "Watch or read a short step", "Make a small piece", "Get feedback on your own work", "Make the real thing"];
 
 export default function Landing({ searchParams }: { searchParams: { deleted?: string } }) {
   const outcomes = loadOutcomes();
-  let i = 0;
   return (
-    <div className="mx-auto max-w-5xl px-6 pb-24 pt-14">
+    <>
+    <div className="mx-auto max-w-5xl px-6 pt-16 text-center">
       {searchParams.deleted && <p role="status" className="mb-8 rounded-lg border-2 border-line bg-raised p-4">Your account and everything in it were deleted.</p>}
 
-      <h1 className="kinetic font-display text-6xl sm:text-8xl" aria-label={HEADLINE}>
-        {HEADLINE.split(" ").map((w, wi, all) => (
-          <span key={wi} aria-hidden className="inline-block whitespace-nowrap">
-            {[...w].map((ch) => <span key={i} className="k" style={{ ["--i" as string]: i++ }}>{ch}</span>)}
-            {wi < all.length - 1 ? " " : ""}
-          </span>
-        ))}
-      </h1>
-      <p className="mt-6 max-w-[34rem] text-xl">
+      <h1 className="font-display hero-in text-6xl sm:text-8xl">Learn it by <em>making it.</em></h1>
+      <p className="mx-auto mt-6 max-w-[34rem] text-xl text-muted">
         Pick something you want to make. Learn it in short steps you can watch or read, make a small piece each time, and get kind, specific feedback on your own work until you can do it without us.
       </p>
-      <div className="mt-8 flex flex-wrap gap-3">
+      <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link href="/signup"><Button>Create an account</Button></Link>
         <Link href="/signin"><Button variant="secondary">Sign in</Button></Link>
       </div>
+      <p className="mt-6 text-sm text-muted">6 short lessons · 1 real project · feedback on your own work</p>
+    </div>
+    <div className="relative mt-12 overflow-hidden">
+      <Scene className="absolute inset-0 h-full w-full" />
+      <div className="relative mx-auto max-w-4xl px-6 pb-16 pt-14">
+        <FramedWindow title="My learning">
+          <picture>
+            <source srcSet="/marketing/learning-dark.webp" media="(prefers-color-scheme: dark)" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/marketing/learning-light.webp" alt="The My learning page: a row of keyframe diamonds shows two lessons done and the next one ready." width={1280} height={800} className="w-full" />
+          </picture>
+        </FramedWindow>
+      </div>
+    </div>
 
+    <div className="mx-auto max-w-5xl px-6 pb-24 text-left">
       {outcomes.map((o) => (
-        <section key={o.slug} className="mt-16 grid items-center gap-8 sm:grid-cols-2" aria-labelledby={`o-${o.slug}`}>
+        <section key={o.slug} className="mt-8 grid items-center gap-8 sm:grid-cols-2" aria-labelledby={`o-${o.slug}`}>
           <Link href={`/learn/outcome/${o.slug}`} className="group block overflow-hidden rounded-2xl border-2 border-ink" aria-label={`See what you will make: ${o.title}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/lessons/${o.showcase ?? "kinetic-type-loop-example"}.jpg`} alt="" className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" />
@@ -59,5 +67,6 @@ export default function Landing({ searchParams }: { searchParams: { deleted?: st
         <p className="mt-6 text-sm text-muted">Also here: Graphic Design, Brand Design and UI Design paths, all in draft.</p>
       </section>
     </div>
+    </>
   );
 }

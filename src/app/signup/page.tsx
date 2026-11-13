@@ -6,6 +6,7 @@ import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { createLearner } from "@/lib/signup";
 import { Button } from "@/components/ui/Button";
+import { AuthShell } from "@/components/AuthShell";
 import { Field } from "@/components/ui/Field";
 
 async function signup(formData: FormData) {
@@ -30,8 +31,9 @@ async function signup(formData: FormData) {
 
 export default function SignUp({ searchParams }: { searchParams: { error?: string } }) {
   return (
-    <form action={signup} className="mx-auto flex max-w-sm flex-col gap-5 px-6 py-24">
-      <h1 className="font-display text-3xl">Create your account</h1>
+    <AuthShell>
+    <form action={signup} className="flex w-full max-w-sm flex-col gap-5 py-12">
+      <h1 className="font-display text-5xl">Create your account</h1>
       {searchParams.error && <p role="alert" className="text-danger">{searchParams.error}</p>}
       <Field id="name" label="Name" required autoComplete="name" />
       <Field id="email" label="Email" type="email" required autoComplete="email" />
@@ -39,5 +41,6 @@ export default function SignUp({ searchParams }: { searchParams: { error?: strin
       <Button type="submit">Sign up</Button>
       <p className="text-sm text-muted">We will email you a link to confirm your address. By signing up you agree to the <Link className="underline" href="/terms">terms</Link> and <Link className="underline" href="/policy">content policy</Link>.</p>
     </form>
+    </AuthShell>
   );
 }

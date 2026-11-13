@@ -11,6 +11,7 @@ import { loadOutcome } from "@/lib/content/outcomes";
 import { vttToTranscript } from "@/lib/content/media";
 import { LessonVideo } from "@/components/Media";
 import { Button } from "@/components/ui/Button";
+import { StatCard } from "@/components/ui/StatCard";
 import { PlacementCheck } from "@/components/PlacementCheck";
 import { getPlacementQuestions, parseBits, scorePlacement, summarise, toBits } from "@/lib/placement";
 import { LIMITS, clientKey, hit } from "@/lib/ratelimit";
@@ -51,6 +52,7 @@ export default async function OutcomePage({ params, searchParams }: { params: { 
   if (o.showcase) {
     try { transcript = vttToTranscript(fs.readFileSync(path.join(process.cwd(), "public", "lessons", `${o.showcase}.vtt`), "utf8")); } catch { /* none */ }
   }
+  const lessonCount = await db.lesson.count({ where: { module: { level: { path: { slug: o.path } } } } });
   const questions = await getPlacementQuestions(o);
   const bits = parseBits(searchParams.placed, questions.length);
   const result = bits ? (() => {
@@ -64,19 +66,25 @@ export default async function OutcomePage({ params, searchParams }: { params: { 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <p className="text-sm font-medium text-muted">By the end you can make</p>
-      <h1 className="mt-2 font-display text-5xl leading-tight">{o.title}</h1>
+      <h1 className="mt-2 font-display text-6xl sm:text-7xl">{o.title}</h1>
       <p className="mt-4 max-w-measure text-xl">{o.promise}</p>
       {o.status === "DRAFT" && <p className="mt-3 inline-block rounded border border-line px-3 py-1 text-sm text-muted">Draft: still being written and checked</p>}
 
       {o.showcase && <div className="mt-8"><LessonVideo name={o.showcase} caption={`What you will make: ${o.title}`} transcript={transcript} /></div>}
 
-      <section className="mt-10 grid gap-8 sm:grid-cols-2">
+      <section className="mt-10 grid gap-4 sm:grid-cols-3" aria-label="At a glance">
+        <StatCard value={String(o.hours)} label="hours, at your own pace" tone="accent" />
+        <StatCard value={String(o.skills.length)} label="skills you will practise" />
+        <StatCard value={String(lessonCount)} label="short lessons" />
+      </section>
+
+      <section className="mt-12 grid gap-8 sm:grid-cols-2">
         <div>
-          <h2 className="font-display text-2xl">What you will learn</h2>
+          <h2 className="font-display text-4xl">What you will learn</h2>
           <ul className="mt-3 space-y-2">{o.skills.map((s) => <li key={s} className="flex gap-2"><span aria-hidden>✓</span><span>{titles[s] ?? s}</span></li>)}</ul>
         </div>
         <div>
-          <h2 className="font-display text-2xl">How it works</h2>
+          <h2 className="font-display text-4xl">How it works</h2>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-muted">
             <li>Short steps. Watch or read, your choice.</li>
             <li>You make a small piece at every step.</li>

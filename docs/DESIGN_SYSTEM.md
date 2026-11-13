@@ -16,3 +16,10 @@ Locked (shows the prerequisite), Active, Completed, Needs work / Failed (shows w
 
 ## Accessibility and responsive
 WCAG 2.1 AA, keyboard-complete, semantic landmarks, captions/transcripts for video, alt text required by content schema. Lessons, quizzes, progress and feedback fully usable on mobile; submission workspace desktop-first.
+# Design system
+
+The look (serif display headlines with one italic accent phrase, framed real-app screenshots over an illustrated scene, layered surfaces, keyframe/timeline motifs) follows the reusable skill in `skills/premium-ui/` (packaged: `skills/dist/premium-ui.skill`).
+
+- Run `node skills/premium-ui/scripts/audit.mjs <url>` and `shoot.mjs <url>` to measure and review a page. The audit reports signals, not taste: look at the screenshots too.
+- Home-page screenshots in `public/marketing/` are regenerated with `CHROMIUM_PATH=... npx tsx scripts/capture-marketing.ts` against a running server. They show a seeded demo account, not real learners.
+- Rules: no invented logos, testimonials, user counts or ratings; illustrations are original code-made SVG.

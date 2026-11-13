@@ -27,7 +27,7 @@ export function Prose({ body, mode = "read", transcripts = {} }: { body: string;
         {parts.filter((p) => "media" in p).map((p, i) => <MediaFigure key={i} media={(p as { media: MediaPart }).media} transcripts={transcripts} />)}
         {parts.filter((p) => "demo" in p).map((p, i) => <DemoFigure key={`d${i}`} p={p as { demo: DemoName; caption: string }} />)}
         {text.length > 0 && (
-          <details className="rounded border border-line bg-raised p-4">
+          <details className="rounded-card border border-line bg-raised p-4 shadow-card">
             <summary className="cursor-pointer font-medium">Read the written version</summary>
             <div className="mt-3 max-w-measure space-y-3 leading-relaxed">{text.map((t, i) => <ReactMarkdown key={i}>{t.md}</ReactMarkdown>)}</div>
           </details>
@@ -42,7 +42,7 @@ export function Prose({ body, mode = "read", transcripts = {} }: { body: string;
           <div key={i} className="max-w-measure space-y-3 leading-relaxed"><ReactMarkdown>{p.md}</ReactMarkdown></div>
         ) : "media" in p ? (
           hasMedia && mode === "read"
-            ? <details key={i} className="rounded border border-line bg-raised p-4"><summary className="cursor-pointer font-medium">Watch instead</summary><div className="mt-3"><MediaFigure media={p.media} transcripts={transcripts} /></div></details>
+            ? <details key={i} className="rounded-card border border-line bg-raised p-4 shadow-card"><summary className="cursor-pointer font-medium">Watch instead</summary><div className="mt-3"><MediaFigure media={p.media} transcripts={transcripts} /></div></details>
             : <MediaFigure key={i} media={p.media} transcripts={transcripts} />
         ) : (
           <DemoFigure key={i} p={p} />
@@ -54,7 +54,7 @@ export function Prose({ body, mode = "read", transcripts = {} }: { body: string;
 
 function DemoFigure({ p }: { p: { demo: DemoName; caption: string } }) {
   return (
-    <figure className="rounded border border-line bg-raised p-4">
+    <figure className="rounded-card border border-line bg-raised p-4 shadow-card">
       {DEMOS[p.demo]()}
       <figcaption className="mt-3 max-w-measure text-sm text-muted">{p.caption}</figcaption>
     </figure>

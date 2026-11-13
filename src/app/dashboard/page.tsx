@@ -44,7 +44,7 @@ export default async function Dashboard() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
       <header className="flex items-baseline justify-between">
-        <h1 className="font-display text-4xl">Welcome, {user.name ?? user.email}</h1>
+        <h1 className="font-display text-5xl">Welcome, {user.name ?? user.email}</h1>
         <form action={logout}><Button variant="secondary" type="submit">Sign out</Button></form>
       </header>
       <nav aria-label="Sharing" className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm">
@@ -61,7 +61,7 @@ export default async function Dashboard() {
           </>
         )}
       </nav>
-      <section className="mt-8 grid gap-6 border-y border-line py-6 sm:grid-cols-3">
+      <section className="mt-8 grid gap-6 rounded-card border border-line bg-raised p-6 shadow-card sm:grid-cols-3">
         <div>
           <h2 className="text-sm font-medium text-muted">Where am I</h2>
           <p className="mt-2">{timelines.find((t) => t)?.pathTitle ?? "Not enrolled yet"}</p>
@@ -84,7 +84,7 @@ export default async function Dashboard() {
         <section key={o.slug} className="mt-10" aria-label="Something to make">
           <Link href={`/learn/outcome/${o.slug}`} className="group grid items-center gap-5 sm:grid-cols-[14rem_1fr]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/lessons/${o.showcase ?? o.slug}.jpg`} alt="" className="aspect-video w-full rounded-xl border-2 border-ink object-cover" />
+            <img src={`/lessons/${o.showcase ?? o.slug}.jpg`} alt="" className="aspect-video w-full rounded-card border border-line object-cover shadow-card" />
             <span>
               <span className="block text-sm font-medium text-muted">Want something to make?</span>
               <span className="mt-1 block font-display text-2xl underline-offset-4 group-hover:underline">{o.title}</span>
@@ -93,9 +93,9 @@ export default async function Dashboard() {
           </Link>
         </section>
       ))}
-      <h2 className="mt-12 font-display text-2xl">Learning paths</h2>
+      <h2 className="mt-12 font-display text-4xl">Learning paths</h2>
       {paths.length === 0 && <p className="mt-4 text-muted">No paths published yet. Run the seed script.</p>}
-      <ul className="mt-4 divide-y divide-line border-y border-line">
+      <ul className="mt-4 divide-y divide-line overflow-hidden rounded-card border border-line bg-raised px-5 shadow-card">
         {paths.map((p) => (
           <li key={p.id} className="flex items-center justify-between gap-4 py-4">
             <div>

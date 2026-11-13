@@ -23,6 +23,8 @@ export default {
         sans: ["var(--font-sans)"],
       },
       maxWidth: { measure: "68ch" },
+      borderRadius: { card: "20px", window: "28px" },
+      boxShadow: { card: "var(--shadow-card)", float: "var(--shadow-float)" },
     },
   },
   plugins: [],

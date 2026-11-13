@@ -121,7 +121,7 @@ export default async function LessonPage({
   return (
     <article className="mx-auto max-w-3xl px-6 pb-16 pt-10">
       <nav className="text-sm"><Link href="/learn" className="underline">My learning</Link></nav>
-      <h1 className="mt-4 font-display text-5xl">{view.title}</h1>
+      <h1 className="mt-4 font-display text-6xl">{view.title}</h1>
       <p className="mt-2 max-w-measure text-muted">{view.objective}</p>
       <div className="mt-6 flex items-center justify-between text-sm">
         <span>Step {step + 1} of {view.blocks.length}: <strong>{KIND_LABEL[block.kind] ?? block.kind}</strong></span>
@@ -138,7 +138,7 @@ export default async function LessonPage({
       <KeyframeProgress total={view.blocks.length} current={step} />
 
       <section className="mt-8">
-        <h2 className="font-display text-2xl">{block.title}</h2>
+        <h2 className="font-display text-4xl">{block.title}</h2>
         <div className="mt-4"><Prose body={block.body} mode={mode} transcripts={transcriptsFor(block.body)} /></div>
 
         {block.kind === "check" && (

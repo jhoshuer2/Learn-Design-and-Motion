@@ -29,7 +29,7 @@ function Module({ m }: { m: ModuleNode }) {
       <h4 className="font-medium">{m.title} {m.complete && <StateBadge state="completed" />}</h4>
       {m.complete && <p className="mt-1 text-sm text-muted">Module complete: lessons and assessment passed.</p>}
       <KeyframeTrack items={trackFor(m)} />
-      <ol className="mt-4 divide-y divide-line border-y border-line">
+      <ol className="mt-4 divide-y divide-line overflow-hidden rounded-card border border-line bg-raised px-5 shadow-card">
         {m.lessons.map((l) => (
           <li key={l.id} className="flex items-center justify-between gap-4 py-3">
             <div>
@@ -83,7 +83,7 @@ function Level({ l }: { l: LevelNode }) {
   const status: NodeState = l.state === "complete" ? "completed" : l.state === "active" ? "active" : "locked";
   return (
     <section className="mt-10 border-t border-line pt-6" aria-labelledby={`lv-${l.tier}`}>
-      <h3 id={`lv-${l.tier}`} className="font-display text-2xl">
+      <h3 id={`lv-${l.tier}`} className="font-display text-4xl">
         {TIER(l.tier)}{l.title !== TIER(l.tier) ? `: ${l.title}` : ""}
         {l.state !== "not_authored" && <span className="ml-3 align-middle font-sans text-base"><StateBadge state={status} /></span>}
       </h3>
@@ -132,11 +132,11 @@ export default async function MyLearning() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
       <nav className="flex gap-4 text-sm"><Link href="/dashboard" className="underline">Dashboard</Link><Link href="/profile/skills" className="underline">My skills</Link></nav>
-      <h1 className="mt-4 font-display text-4xl">My learning</h1>
+      <h1 className="mt-4 font-display text-6xl">My learning</h1>
       {timelines.length === 0 && <p className="mt-6 text-muted">You are not enrolled in a path yet. Enroll from the dashboard.</p>}
       {timelines.map(({ e, t }) => (
         <section key={e.id} className="mt-10">
-          <h2 className="font-display text-3xl">{e.path.discipline.title}</h2>
+          <h2 className="font-display text-5xl">{e.path.discipline.title}</h2>
           {t?.next ? (
             <p className="mt-2">Next: <Link className="underline" href={nextHref(t.next)}>{t.next.title}</Link></p>
           ) : (

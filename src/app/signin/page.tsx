@@ -5,6 +5,7 @@ import { checkLogin } from "@/lib/auth/throttle";
 import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { Button } from "@/components/ui/Button";
+import { AuthShell } from "@/components/AuthShell";
 import { Field } from "@/components/ui/Field";
 
 async function login(formData: FormData) {
@@ -28,8 +29,9 @@ async function login(formData: FormData) {
 
 export default function SignIn({ searchParams }: { searchParams: { error?: string; reset?: string } }) {
   return (
-    <form action={login} className="mx-auto flex max-w-sm flex-col gap-5 px-6 py-24">
-      <h1 className="font-display text-3xl">Sign in</h1>
+    <AuthShell>
+    <form action={login} className="flex w-full max-w-sm flex-col gap-5 py-12">
+      <h1 className="font-display text-5xl">Sign in</h1>
       {searchParams.error === "locked" && <p role="alert" className="text-danger">Too many failed attempts. Wait a few minutes and try again, or <Link className="underline" href="/forgot-password">reset your password</Link>.</p>}
       {searchParams.error && searchParams.error !== "locked" && <p role="alert" className="text-danger">Email or password is incorrect.</p>}
       {searchParams.reset && <p role="status" className="text-success">Your password was changed. Sign in with the new one.</p>}
@@ -38,5 +40,6 @@ export default function SignIn({ searchParams }: { searchParams: { error?: strin
       <Button type="submit">Sign in</Button>
       <p className="text-sm"><Link className="underline" href="/forgot-password">Forgot your password?</Link></p>
     </form>
+    </AuthShell>
   );
 }

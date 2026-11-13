@@ -42,11 +42,11 @@ export default async function Today({ searchParams }: { searchParams: { note?: s
     <div className="mx-auto max-w-3xl px-6 py-12">
       <TimeZoneCookie current={t.tz} />
       <nav className="text-sm"><Link href="/dashboard" className="underline">Dashboard</Link></nav>
-      <h1 className="mt-4 font-display text-5xl">Today&rsquo;s session</h1>
+      <h1 className="mt-4 font-display text-6xl">Today&rsquo;s session</h1>
       <p className="mt-3 max-w-measure text-lg text-muted">About 15 minutes. Small steps count.</p>
 
       <section className="mt-8" aria-labelledby="week">
-        <h2 id="week" className="font-display text-2xl">This week</h2>
+        <h2 id="week" className="font-display text-4xl">This week</h2>
         <KeyframeTrack showLabels items={t.week.map((d) => ({ label: dayName(d.day), pin: d.isToday, state: d.active ? "done" : d.isToday ? "current" : "next" }))} />
         <p className="mt-3 text-sm text-muted">
           {t.run >= 2 ? `${t.run} days in a row. ` : ""}
@@ -57,12 +57,12 @@ export default async function Today({ searchParams }: { searchParams: { note?: s
       {searchParams.note && NOTES[searchParams.note] && <p role="alert" className="mt-6 rounded-lg border-2 border-line bg-raised p-4">{NOTES[searchParams.note]}</p>}
 
       <section className="mt-12" aria-labelledby="warm">
-        <h2 id="warm" className="font-display text-3xl">Warm-up{t.warmup.state !== "none" ? `: ${t.warmup.skill}` : ""}</h2>
+        <h2 id="warm" className="font-display text-4xl">Warm-up{t.warmup.state !== "none" ? `: ${t.warmup.skill}` : ""}</h2>
         {t.warmup.state === "none" && <p className="mt-3 max-w-measure text-muted">Finish your first lesson and a short warm-up will appear here.</p>}
         {t.warmup.state === "open" && (
           <>
             <p className="mt-2 max-w-measure text-muted">Three quick questions to keep it fresh. Practice only: it does not change your results.</p>
-            <form action={warmup} className="mt-6 space-y-6">
+            <form action={warmup} className="mt-6 space-y-6 rounded-card border border-line bg-raised p-6 shadow-card">
               {t.warmup.questions.map((q, qi) => (
                 <fieldset key={q.id} className="space-y-2">
                   <input type="hidden" name="qid" value={q.id} />
@@ -100,7 +100,7 @@ export default async function Today({ searchParams }: { searchParams: { note?: s
 
       {t.fix && (
         <section className="mt-12" aria-labelledby="fix">
-          <h2 id="fix" className="font-display text-3xl">Fix this next</h2>
+          <h2 id="fix" className="font-display text-4xl">Fix this next</h2>
           <p className="mt-2 font-medium">{t.fix.fix.title} <span className="text-muted">{t.fix.fix.score}%</span></p>
           <p className="mt-1 max-w-measure text-muted">{t.fix.fix.improvement}</p>
           <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm">
@@ -111,7 +111,7 @@ export default async function Today({ searchParams }: { searchParams: { note?: s
       )}
 
       <section className="mt-12" aria-labelledby="next">
-        <h2 id="next" className="font-display text-3xl">Your next step</h2>
+        <h2 id="next" className="font-display text-4xl">Your next step</h2>
         {t.next ? (
           <p className="mt-2 text-lg"><Link className="font-semibold underline underline-offset-4" href={t.next.href}>{t.next.title}</Link> <span className="text-muted">(about 5 minutes)</span></p>
         ) : <p className="mt-2 text-muted">Enroll in a path to get a next step.</p>}

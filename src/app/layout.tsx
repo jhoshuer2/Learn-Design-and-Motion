@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/bricolage-grotesque/wdth.css";
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
 import "@fontsource-variable/atkinson-hyperlegible-next/index.css";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";

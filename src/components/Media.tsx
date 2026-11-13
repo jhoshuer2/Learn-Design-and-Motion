@@ -1,7 +1,7 @@
 /** Our own explainer: captions are required by the loader, so the track is always present, with the transcript under it. */
 export function LessonVideo({ name, caption, transcript }: { name: string; caption: string; transcript: string[] }) {
   return (
-    <figure className="rounded border border-line bg-raised p-4">
+    <figure className="rounded-card border border-line bg-raised p-4 shadow-card">
       <video controls preload="metadata" playsInline poster={`/lessons/${name}.jpg`} className="w-full rounded bg-black" aria-label={caption}>
         <source src={`/lessons/${name}.mp4`} type="video/mp4" />
         <track kind="captions" src={`/lessons/${name}.vtt`} srcLang="en" label="English" default />
@@ -20,7 +20,7 @@ export function LessonVideo({ name, caption, transcript }: { name: string; capti
 /** A curated outside tutorial. We say why it is worth watching and link out; the player loads only when asked (privacy-friendly host). */
 export function WatchCard({ id, title, why }: { id: string; title: string; why: string }) {
   return (
-    <figure className="rounded border border-line bg-raised p-4">
+    <figure className="rounded-card border border-line bg-raised p-4 shadow-card">
       <p className="text-sm font-medium text-muted">Worth watching</p>
       <p className="mt-1 font-medium">{title}</p>
       <p className="mt-1 max-w-measure text-sm text-muted">{why}</p>
