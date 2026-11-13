@@ -4,6 +4,7 @@ import { requireUser } from "@/lib/session";
 import { getTimeline, type AssessmentNode, type LevelNode, type ModuleNode } from "@/lib/progression";
 import { nextHref } from "@/lib/progression/links";
 import { StateBadge, type NodeState } from "@/components/ui/StateBadge";
+import { KeyframeTrack, type KeyframeState } from "@/components/ui/Keyframes";
 
 const ASSESSMENT_BADGE: Record<AssessmentNode["state"], NodeState> = {
   locked: "locked", available: "available", in_progress: "awaiting", passed: "completed", needs_work: "failed", remediation: "failed",
@@ -11,12 +12,24 @@ const ASSESSMENT_BADGE: Record<AssessmentNode["state"], NodeState> = {
 const BADGE: Record<string, NodeState> = { completed: "completed", active: "active", available: "available", locked: "locked" };
 const TIER = (t: string) => t.charAt(0) + t.slice(1).toLowerCase();
 
+/** Lessons then the assessment as keyframes: done, the one to do now (the playhead), what is next, what is locked. */
+function trackFor(m: ModuleNode) {
+  const items: { state: KeyframeState; label: string }[] = [
+    ...m.lessons.map((l) => ({ label: l.title, state: (l.state === "completed" ? "done" : l.state === "locked" ? "locked" : "next") as KeyframeState })),
+    ...(m.assessment ? [{ label: m.assessment.title, state: (m.assessment.state === "passed" ? "done" : m.assessment.state === "locked" ? "locked" : "next") as KeyframeState }] : []),
+  ];
+  const cur = items.findIndex((x) => x.state === "next");
+  if (cur >= 0) items[cur] = { ...items[cur], state: "current" };
+  return items;
+}
+
 function Module({ m }: { m: ModuleNode }) {
   return (
     <div className="mt-6">
       <h4 className="font-medium">{m.title} {m.complete && <StateBadge state="completed" />}</h4>
       {m.complete && <p className="mt-1 text-sm text-muted">Module complete: lessons and assessment passed.</p>}
-      <ol className="mt-3 divide-y divide-line border-y border-line">
+      <KeyframeTrack items={trackFor(m)} />
+      <ol className="mt-4 divide-y divide-line border-y border-line">
         {m.lessons.map((l) => (
           <li key={l.id} className="flex items-center justify-between gap-4 py-3">
             <div>
@@ -117,7 +130,7 @@ export default async function MyLearning() {
   const timelines = await Promise.all(enrollments.map(async (e) => ({ e, t: await getTimeline(user.id, e.pathId) })));
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
+    <div className="mx-auto max-w-3xl px-6 py-12">
       <nav className="flex gap-4 text-sm"><Link href="/dashboard" className="underline">Dashboard</Link><Link href="/profile/skills" className="underline">My skills</Link></nav>
       <h1 className="mt-4 font-display text-4xl">My learning</h1>
       {timelines.length === 0 && <p className="mt-6 text-muted">You are not enrolled in a path yet. Enroll from the dashboard.</p>}

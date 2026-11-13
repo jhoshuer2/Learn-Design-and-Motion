@@ -11,6 +11,7 @@ import {
 import { Prose } from "@/components/Prose";
 import { Button } from "@/components/ui/Button";
 import { StateBadge } from "@/components/ui/StateBadge";
+import { KeyframeProgress } from "@/components/ui/Keyframes";
 
 const KIND_LABEL: Record<string, string> = {
   objective: "Objective", concept: "Concept", demo: "See it", realWorld: "In real work", goodVsBad: "Good vs bad",
@@ -118,25 +119,23 @@ export default async function LessonPage({
   const lessonHasMedia = view.blocks.some((b) => blockHasMedia(b.body));
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-12">
+    <article className="mx-auto max-w-3xl px-6 pb-16 pt-10">
       <nav className="text-sm"><Link href="/learn" className="underline">My learning</Link></nav>
-      <h1 className="mt-4 font-display text-4xl">{view.title}</h1>
+      <h1 className="mt-4 font-display text-5xl">{view.title}</h1>
       <p className="mt-2 max-w-measure text-muted">{view.objective}</p>
       <div className="mt-6 flex items-center justify-between text-sm">
         <span>Step {step + 1} of {view.blocks.length}: <strong>{KIND_LABEL[block.kind] ?? block.kind}</strong></span>
         {view.completed && <StateBadge state="completed" />}
       </div>
       {lessonHasMedia && (
-        <form action={setMode} className="mt-3 inline-flex rounded border border-line p-0.5 text-sm" aria-label="How do you want to learn?">
+        <form action={setMode} className="mt-3 inline-flex rounded-full border-2 border-ink p-0.5 text-sm" aria-label="How do you want to learn?">
           <input type="hidden" name="lessonId" value={view.id} />
           <input type="hidden" name="step" value={step} />
-          <button name="mode" value="watch" aria-pressed={mode === "watch"} className={`min-h-11 rounded px-4 ${mode === "watch" ? "bg-accent text-accent-ink" : ""}`}>Watch</button>
-          <button name="mode" value="read" aria-pressed={mode === "read"} className={`min-h-11 rounded px-4 ${mode === "read" ? "bg-accent text-accent-ink" : ""}`}>Read</button>
+          <button name="mode" value="watch" aria-pressed={mode === "watch"} className={`min-h-11 rounded-full px-5 font-semibold ${mode === "watch" ? "bg-accent text-accent-ink" : ""}`}>Watch</button>
+          <button name="mode" value="read" aria-pressed={mode === "read"} className={`min-h-11 rounded-full px-5 font-semibold ${mode === "read" ? "bg-accent text-accent-ink" : ""}`}>Read</button>
         </form>
       )}
-      <div className="mt-2 h-1.5 rounded bg-line" role="progressbar" aria-label="Lesson progress" aria-valuemin={0} aria-valuemax={view.blocks.length} aria-valuenow={step + 1}>
-        <div className="h-full rounded bg-accent" style={{ width: `${((step + 1) / view.blocks.length) * 100}%` }} />
-      </div>
+      <KeyframeProgress total={view.blocks.length} current={step} />
 
       <section className="mt-8">
         <h2 className="font-display text-2xl">{block.title}</h2>
@@ -188,7 +187,7 @@ export default async function LessonPage({
         )}
       </section>
 
-      <div className="mt-10 flex items-center gap-4">
+      <div className="sticky bottom-0 -mx-6 mt-10 flex items-center gap-4 border-t-2 border-line bg-surface px-6 py-3">
         {step > 0 && <Link href={`/learn/lesson/${view.id}?step=${step - 1}`} className="underline">Back</Link>}
         {(block.kind !== "check" || passedCheck) && (
           <form action={advance}>

@@ -1,4 +1,5 @@
 import { revalidatePath } from "next/cache";
+import { loadOutcomes } from "@/lib/content/outcomes";
 import { signOut } from "@/auth";
 import { db } from "@/lib/db";
 import Link from "next/link";
@@ -62,22 +63,35 @@ export default async function Dashboard() {
       </nav>
       <section className="mt-8 grid gap-6 border-y border-line py-6 sm:grid-cols-3">
         <div>
-          <h2 className="text-sm uppercase tracking-widest text-muted">Where am I</h2>
+          <h2 className="text-sm font-medium text-muted">Where am I</h2>
           <p className="mt-2">{timelines.find((t) => t)?.pathTitle ?? "Not enrolled yet"}</p>
           <Link href="/learn" className="text-sm underline">My learning</Link>
         </div>
         <div>
-          <h2 className="text-sm uppercase tracking-widest text-muted">Do next</h2>
-          {next ? <Link className="mt-2 inline-block underline" href={nextHref(next)}>{next.title}</Link>
+          <h2 className="text-sm font-medium text-muted">Do next</h2>
+          {next ? <Link className="mt-2 inline-block font-display text-2xl underline underline-offset-4" href={nextHref(next)}>{next.title}</Link>
             : <p className="mt-2 text-muted">Enroll in a path to get a next step.</p>}
         </div>
         <div>
-          <h2 className="text-sm uppercase tracking-widest text-muted">Improve</h2>
+          <h2 className="text-sm font-medium text-muted">Improve</h2>
           {weak.length === 0 ? <p className="mt-2 text-muted">No weak areas found yet. This is based on assessed evidence only.</p>
             : <ul className="mt-2 text-sm">{weak.map((w) => <li key={w.title}>{w.title} ({w.score}%)</li>)}</ul>}
           <Link href="/profile/skills" className="mt-2 inline-block text-sm underline">All my skills</Link>
         </div>
       </section>
+      {loadOutcomes().map((o) => (
+        <section key={o.slug} className="mt-10" aria-label="Something to make">
+          <Link href={`/learn/outcome/${o.slug}`} className="group grid items-center gap-5 sm:grid-cols-[14rem_1fr]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/lessons/${o.showcase ?? o.slug}.jpg`} alt="" className="aspect-video w-full rounded-xl border-2 border-ink object-cover" />
+            <span>
+              <span className="block text-sm font-medium text-muted">Want something to make?</span>
+              <span className="mt-1 block font-display text-2xl underline-offset-4 group-hover:underline">{o.title}</span>
+              <span className="mt-1 block text-muted">{o.promise}</span>
+            </span>
+          </Link>
+        </section>
+      ))}
       <h2 className="mt-12 font-display text-2xl">Learning paths</h2>
       {paths.length === 0 && <p className="mt-4 text-muted">No paths published yet. Run the seed script.</p>}
       <ul className="mt-4 divide-y divide-line border-y border-line">

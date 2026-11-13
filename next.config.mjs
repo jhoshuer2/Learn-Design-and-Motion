@@ -19,6 +19,7 @@ const nextConfig = {
     serverActions: { bodySizeLimit: "34mb" },
     // Files read at request time must be bundled with the serverless function.
     outputFileTracingIncludes: {
+      "/": ["./content/outcomes/*.yaml"],
       "/learn/lesson/[lessonId]": ["./public/lessons/*.vtt"],
       "/learn/outcome/[slug]": ["./content/outcomes/*.yaml", "./content/competencies.yaml", "./public/lessons/*.vtt"],
     },

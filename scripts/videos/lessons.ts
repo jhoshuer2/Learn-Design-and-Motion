@@ -207,6 +207,7 @@ const v5: Video = {
 // ───────── 6. The finished loop (outcome showcase; t=0 and t=10 are the same picture)
 const v6: Video = {
   name: "kinetic-type-loop-example",
+  posterAt: 5.2, // EVERY is fully in and readable
   scenes: [
     { dur: 10, title: "What you will make", takeaway: "10 seconds. One loop. Free tools.",
       caption: "This is the kind of piece you will make: a ten second loop of moving words. Each word staggers in, rests long enough to read, and leaves. Then it begins again with no visible join.",

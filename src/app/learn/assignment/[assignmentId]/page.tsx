@@ -102,7 +102,7 @@ export default async function AssignmentPage({
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <nav className="text-sm"><Link href="/learn" className="underline">My learning</Link></nav>
-      <p className="mt-6 text-sm uppercase tracking-widest text-muted">{a.kind === "CAPSTONE" ? "Level capstone" : "Module assessment"}</p>
+      <p className="mt-6 text-sm font-medium text-muted">{a.kind === "CAPSTONE" ? "Level capstone" : "Module assessment"}</p>
       <h1 className="mt-1 font-display text-4xl">{a.title}</h1>
       <p className="mt-3 max-w-measure text-muted">{a.objective}</p>
       <p className="mt-2 text-sm text-muted">About {a.estimatedMinutes} minutes · difficulty {a.difficulty} of 5 · pass mark {rv.threshold}%</p>

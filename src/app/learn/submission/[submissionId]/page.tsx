@@ -80,7 +80,7 @@ export default async function SubmissionPage({ params, searchParams }: { params:
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <nav className="text-sm"><Link href="/learn" className="underline">My learning</Link></nav>
-      <p className="mt-6 text-sm uppercase tracking-widest text-muted">Attempt {v.attempt} of {v.assignment.maxAttempts}</p>
+      <p className="mt-6 text-sm font-medium text-muted">Attempt {v.attempt} of {v.assignment.maxAttempts}</p>
       <h1 className="mt-1 font-display text-4xl">{v.assignment.title}</h1>
 
       {ev?.isTestEvaluator && (

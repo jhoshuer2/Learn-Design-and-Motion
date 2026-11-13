@@ -40,7 +40,7 @@ export default async function OutcomePage({ params }: { params: { slug: string }
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
-      <p className="text-sm uppercase tracking-widest text-muted">By the end you can make</p>
+      <p className="text-sm font-medium text-muted">By the end you can make</p>
       <h1 className="mt-2 font-display text-5xl leading-tight">{o.title}</h1>
       <p className="mt-4 max-w-measure text-xl">{o.promise}</p>
       {o.status === "DRAFT" && <p className="mt-3 inline-block rounded border border-line px-3 py-1 text-sm text-muted">Draft: still being written and checked</p>}

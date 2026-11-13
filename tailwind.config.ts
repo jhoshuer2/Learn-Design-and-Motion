@@ -11,6 +11,8 @@ export default {
         muted: "var(--muted)",
         line: "var(--line)",
         accent: "var(--accent)",
+        playhead: "var(--playhead)",
+        key: "var(--key)",
         "accent-ink": "var(--accent-ink)",
         success: "var(--success)",
         warn: "var(--warn)",

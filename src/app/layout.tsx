@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import "@fontsource-variable/bricolage-grotesque/wdth.css";
+import "@fontsource-variable/atkinson-hyperlegible-next/index.css";
 import "./globals.css";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Creative Mastery",
@@ -13,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:p-3 focus:bg-raised">
           Skip to content
         </a>
+        <SiteHeader />
         <main id="main">{children}</main>
         <footer className="mx-auto max-w-4xl px-6 py-10 text-sm text-muted">
           <nav aria-label="Site" className="flex flex-wrap gap-x-5 gap-y-1">

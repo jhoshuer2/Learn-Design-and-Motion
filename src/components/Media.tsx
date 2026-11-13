@@ -21,7 +21,7 @@ export function LessonVideo({ name, caption, transcript }: { name: string; capti
 export function WatchCard({ id, title, why }: { id: string; title: string; why: string }) {
   return (
     <figure className="rounded border border-line bg-raised p-4">
-      <p className="text-xs font-medium uppercase tracking-widest text-muted">Worth watching</p>
+      <p className="text-sm font-medium text-muted">Worth watching</p>
       <p className="mt-1 font-medium">{title}</p>
       <p className="mt-1 max-w-measure text-sm text-muted">{why}</p>
       <details className="mt-3">

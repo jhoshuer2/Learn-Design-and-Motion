@@ -96,7 +96,7 @@ export default async function ProjectPage({ params, searchParams }: { params: { 
       {searchParams.notice && <p role="status" className="mt-4 text-success">{searchParams.notice}</p>}
       {searchParams.error && <p role="alert" className="mt-4 text-danger">{searchParams.error}</p>}
 
-      <p className="mt-8 text-sm uppercase tracking-widest text-muted">{v.assignment.kind === "CAPSTONE" ? "Capstone" : "Assessed project"} · {v.assignment.title}</p>
+      <p className="mt-8 text-sm font-medium text-muted">{v.assignment.kind === "CAPSTONE" ? "Capstone" : "Assessed project"} · {v.assignment.title}</p>
       <h1 className="mt-1 font-display text-4xl">{v.title}</h1>
       <p className="mt-2 text-muted">
         By {v.owner.handle ? <Link className="underline" href={`/u/${v.owner.handle}`}>{v.owner.displayName}</Link> : v.owner.displayName}

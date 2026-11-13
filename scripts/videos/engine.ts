@@ -38,7 +38,7 @@ export const L = (x1: number, y1: number, x2: number, y2: number, stroke: string
   `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="${sw}"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`;
 
 export type Scene = { dur: number; title: string; takeaway: string; caption: string; draw: (t: number) => string };
-export type Video = { name: string; scenes: Scene[] };
+export type Video = { name: string; scenes: Scene[]; /** Seconds into the video for the poster image (default: early in the first scene). */ posterAt?: number };
 
 const stamp = (s: number) => { const ms = Math.round(s * 1000); const p = (n: number, l = 2) => String(n).padStart(l, "0"); return `${p(Math.floor(ms / 3600000))}:${p(Math.floor(ms / 60000) % 60)}:${p(Math.floor(ms / 1000) % 60)}.${p(ms % 1000, 3)}`; };
 
@@ -71,7 +71,7 @@ export async function render(video: Video, outDir: string) {
       const t = i / FPS;
       const png = await sharp(Buffer.from(frameSvg(sc, t))).png({ compressionLevel: 1 }).toBuffer();
       if (!ff.stdin.write(png)) await new Promise((r) => ff.stdin.once("drain", r));
-      if (!posterDone && at + t >= Math.min(3.5, video.scenes[0].dur * 0.7)) {
+      if (!posterDone && at + t >= (video.posterAt ?? Math.min(3.5, video.scenes[0].dur * 0.7))) {
         await sharp(Buffer.from(frameSvg(sc, t))).jpeg({ quality: 82 }).toFile(path.join(outDir, `${video.name}.jpg`)); posterDone = true;
       }
     }

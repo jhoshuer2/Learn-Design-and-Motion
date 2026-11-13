@@ -16,7 +16,7 @@ export default async function LevelPage({ params }: { params: { levelId: string 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <nav className="text-sm"><Link href="/learn" className="underline">My learning</Link></nav>
-      <p className="mt-6 text-sm uppercase tracking-widest text-muted">{TIER(v.tier)} level</p>
+      <p className="mt-6 text-sm font-medium text-muted">{TIER(v.tier)} level</p>
       <h1 className="mt-1 font-display text-4xl">{v.title}</h1>
       <p className="mt-3 max-w-measure text-muted">{v.scopeNote}</p>
 

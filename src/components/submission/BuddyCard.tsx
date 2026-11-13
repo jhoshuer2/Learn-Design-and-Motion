@@ -21,7 +21,7 @@ function NextFix({ fix, imageSrc, imageAlt }: { fix: Fix; imageSrc?: string; ima
   const lesson = fix.links.find((l) => l.contrast) ?? fix.links[0];
   return (
     <section aria-labelledby="next-fix" className="rounded border border-line bg-raised p-5">
-      <p className="text-xs font-medium uppercase tracking-widest text-muted">Your next best fix</p>
+      <p className="text-sm font-medium text-muted">Your next best fix</p>
       <h3 id="next-fix" className="mt-1 font-display text-2xl">{fix.title} <span className="text-lg text-muted">{fix.score}%</span><Delta d={fix.delta} /></h3>
       {fix.belowMinimum && <p className="mt-1 text-sm text-muted">This one has to reach {fix.minScore}% to pass, so it is the best place to start.</p>}
       <dl className="mt-3 space-y-3 text-sm">
