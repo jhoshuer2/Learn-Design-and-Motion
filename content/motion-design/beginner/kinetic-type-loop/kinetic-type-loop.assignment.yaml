@@ -1,0 +1,29 @@
+slug: kinetic-type-loop
+kind: MODULE_ASSESSMENT
+title: Make a 10-second kinetic type loop
+objective: "Show that you can animate words with sensible timing and easing, make the result loop without a visible jump, and explain your choices with the numbers you used."
+scenario: >
+  Fernhill Bakery, the small neighbourhood bakery from the brand exercises, wants a looping square animation for its
+  social page. The message is three words, in this order: FRESH, EVERY, MORNING. The loop is about 10 seconds long, 1080
+  by 1080, and should feel warm and friendly, not frantic. You will share a filmstrip of its frames, because the buddy
+  looks at still frames, not at the moving video. The bakery is fictional: nothing you make is used by a real business.
+requirements:
+  - "Animate the three words FRESH, EVERY and MORNING in that order, each entering, resting long enough to read, and leaving."
+  - "Use a stagger or a reveal for at least one word, and ease the motion rather than moving at constant speed."
+  - "Make the loop close: the last frame should lead back to the first with no visible jump."
+  - "Share a filmstrip: 6 to 8 frames from across the loop, in order, in one image. Include the first and the last frame."
+  - "Keep the words readable in the small preview."
+  - "In your rationale give the numbers you used: total length, how long each word rests, the delay between letters, the easing you chose, and how you made the loop close. Explain three choices."
+constraints:
+  - "Original work only. Any font or shape must be one you are licensed to use. Use no music."
+  - "Do not copy an existing animation or template."
+  - "Use only these three words. Do not add other text or a logo."
+deliverables:
+  - { key: final, label: Filmstrip, description: "PNG, JPEG or WebP of 6 to 8 frames from your loop in order, left to right (or in a grid), first frame to last.", role: final, required: true }
+  - { key: preview, label: Small-scale preview, description: "The same filmstrip at about 400 px on its long side, to check the words still read.", role: preview, required: true }
+  - { key: process, label: Timeline screenshot, description: "A screenshot of your editor's timeline showing your keyframes, if you want to show your process.", role: process, required: false }
+difficulty: 2
+estimatedMinutes: 180
+rubric: { slug: kinetic-type-loop, version: 1 }
+maxAttempts: 3
+status: DRAFT

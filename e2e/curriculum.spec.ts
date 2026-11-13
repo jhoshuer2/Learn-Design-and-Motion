@@ -24,11 +24,11 @@ const PATHS = [
   { slug: "ui-design", row: "UI Design", modules: ["interface-hierarchy-and-accessibility", "forms-navigation-and-feedback"] },
 ];
 
-test("the dashboard lists all three paths with correct titles, in a stable order", async ({ page }) => {
+test("the dashboard lists every path with correct titles, in a stable order", async ({ page }) => {
   await signUp(page);
   await page.goto("/dashboard");
   const rows = await page.getByRole("listitem").filter({ hasText: /module\(s\)/ }).allInnerTexts();
-  expect(rows.map((r) => r.split("\n")[0])).toEqual(["Brand Design: Brand Design", "Graphic Design: Graphic Design", "UI Design: UI Design"]);
+  expect(rows.map((r) => r.split("\n")[0])).toEqual(["Brand Design: Brand Design", "Graphic Design: Graphic Design", "Motion Design: Motion Design", "UI Design: UI Design"]);
 });
 
 for (const p of PATHS) {

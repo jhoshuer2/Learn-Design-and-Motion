@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: "What makes a loop seamless?"
+    options: [The last frame matches the first, The video is very long, The sound is loud, It uses many colours]
+    answer: The last frame matches the first
+    explanation: "When the end matches the start the restart cannot be seen."
+    competency: motion-looping
+  - type: MULTIPLE_CHOICE
+    prompt: "What is a quick fix for a visible jump at the seam?"
+    options: [Copy the first keyframe to the end, Delete the last second, Make the file smaller, Add a new font]
+    answer: Copy the first keyframe to the end
+    explanation: "Matching end values to start values closes the loop."
+    competency: motion-looping
+  - type: MULTIPLE_SELECT
+    prompt: "Which of these help hide the seam? Select all that apply."
+    options: [Match end values to start values, Overlap one thing leaving with the next arriving, Use symmetrical easing, Cut to black halfway through]
+    answer: [Match end values to start values, Overlap one thing leaving with the next arriving, Use symmetrical easing]
+    explanation: "Matching ends and overlaps and symmetrical easing keep the join invisible. Cutting to black makes a visible break."
+    competency: motion-looping
+  - type: ERROR_DETECTION
+    prompt: "Your loop pops at the restart. The word ends at the far right but starts at the far left. What is wrong?"
+    options: [The end position does not match the start position, The word is too short, The background is blue, The export is too small]
+    answer: The end position does not match the start position
+    explanation: "The loop only closes when the last frame leads back to the first."
+    competency: motion-looping
+  - type: VISUAL_IDENTIFICATION
+    prompt: "In the make-it-loop explainer's seam scene, which ball loops smoothly?"
+    options: [The one that ends where it started, The one that jumps, Both of them]
+    answer: The one that ends where it started
+    explanation: "Ending where it began makes the restart invisible."
+    competency: motion-looping
+  - type: MULTIPLE_CHOICE
+    prompt: "Why watch a loop several times before exporting?"
+    options: [To spot a jump at the seam, To make the file larger, Because tools require it, To change the colours]
+    answer: To spot a jump at the seam
+    explanation: "A seam you miss once becomes obvious after several repeats."
+    competency: motion-looping

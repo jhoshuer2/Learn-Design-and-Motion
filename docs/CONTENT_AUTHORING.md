@@ -52,3 +52,10 @@ All of it is `DRAFT` and **AI-drafted without review by a working practitioner**
 
 ### Editorial checklist before any of this is published
 Brand Design: do the lesson definitions match how working studios use *brand*, *identity*, *lockup* and *clearspace*? Are the proportions guidance and the fictional bakery brief fair for a beginner? UI Design: are the target-size (about 44 points), type-size (about 16 points) and WCAG 2.x figures current for the platforms you teach? Is a single-screen assessment a fair test of hierarchy? Both: replace generically described real-world examples with licensed ones, and calibrate the rubrics against real submissions with the real grader.
+
+## Media, outcomes and the motion slice (M12)
+- **Own videos:** `<<video:name|caption>>` on its own line in a block. Needs `public/lessons/<name>.mp4` and `<name>.vtt` (captions are required; the loader refuses a lesson without them). A transcript is built from the captions. Videos are silent: the captions carry the explanation. `npx tsx scripts/make-lesson-videos.ts [name]` renders the current set from code (`scripts/videos/`), plus a poster `<name>.jpg`.
+- **Curated outside tutorials:** `<<watch:youtube|<11-char id>|title|why>>`. The reason line is required. Loads a privacy-friendly player only on request and links out.
+- **Watch / Read:** a lesson with media gets a toggle (remembered in a cookie). Watch leads with the video and tucks the text under "Read the written version"; Read does the opposite. Blocks without media are unchanged.
+- **Outcomes:** `content/outcomes/<slug>.yaml` (the thing a learner will make, its skills, the path that teaches it, an optional showcase clip). Public page at `/learn/outcome/<slug>`. Skills and path are checked against the rest of the content.
+- **Motion slice:** `content/motion-design`: one module (five short lessons around a 10-second kinetic type loop, free tools), one module assessment (`kinetic-type-loop`, judged from a filmstrip of frames) and **no capstone yet**, so the level cannot complete. `SLICES` in `tests/curriculum.test.ts` lists paths allowed to be like that.

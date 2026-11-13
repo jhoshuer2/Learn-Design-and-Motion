@@ -2,7 +2,7 @@
 export function LessonVideo({ name, caption, transcript }: { name: string; caption: string; transcript: string[] }) {
   return (
     <figure className="rounded border border-line bg-raised p-4">
-      <video controls preload="metadata" playsInline className="w-full rounded bg-black" aria-label={caption}>
+      <video controls preload="metadata" playsInline poster={`/lessons/${name}.jpg`} className="w-full rounded bg-black" aria-label={caption}>
         <source src={`/lessons/${name}.mp4`} type="video/mp4" />
         <track kind="captions" src={`/lessons/${name}.vtt`} srcLang="en" label="English" default />
       </video>

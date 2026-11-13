@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: "What is a stagger in text animation?"
+    options: [A small delay between each letter or word starting, Making every letter start together, Deleting some letters, A heavier font weight]
+    answer: A small delay between each letter or word starting
+    explanation: "Staggering offsets the start times so letters arrive like a wave."
+    competency: motion-kinetic-type
+  - type: MULTIPLE_CHOICE
+    prompt: "About how long should the delay between letters usually be?"
+    options: [About 0.05 to 0.1 seconds, About 5 seconds, Zero seconds always, About a minute]
+    answer: About 0.05 to 0.1 seconds
+    explanation: "Small delays read as a smooth wave. Large ones feel slow and disconnected."
+    competency: motion-kinetic-type
+  - type: MULTIPLE_SELECT
+    prompt: "Which of these help text stay readable? Select all that apply."
+    options: [Bring words in reading order, Hold each line long enough to read, Make sure the word is clear at the end of its entrance, Move words so fast nobody can read them]
+    answer: [Bring words in reading order, Hold each line long enough to read, Make sure the word is clear at the end of its entrance]
+    explanation: "Order and hold time and clear end states keep text readable. Speed alone does not."
+    competency: motion-kinetic-type
+  - type: ERROR_DETECTION
+    prompt: "Every letter flies in over 0.4 seconds and leaves 0.2 seconds later so viewers cannot read it. What is the fix?"
+    options: [Hold the line still for about a second before it leaves, Add more letters, Use a lighter colour, Make the delay between letters five seconds]
+    answer: Hold the line still for about a second before it leaves
+    explanation: "The words need time to rest on screen. A hold lets people read before the exit."
+    competency: motion-kinetic-type
+  - type: VISUAL_IDENTIFICATION
+    prompt: "In the animate-words explainer, which version feels flat?"
+    options: [Everything fading in at once, The staggered letters, The masked reveal]
+    answer: Everything fading in at once
+    explanation: "Without a stagger or reveal nothing leads the eye, so it feels flat."
+    competency: motion-kinetic-type
+  - type: MULTIPLE_CHOICE
+    prompt: "What does a mask do in a text reveal?"
+    options: [Hides part of the text and uncovers it over time, Changes the font, Adds sound, Rotates the whole video]
+    answer: Hides part of the text and uncovers it over time
+    explanation: "A mask acts like a window that opens to show the text."
+    competency: motion-kinetic-type

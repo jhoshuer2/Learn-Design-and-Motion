@@ -183,7 +183,7 @@ export default async function LessonPage({
         )}
         {block.kind === "task" && (
           <p className="mt-4 rounded border border-line bg-raised p-3 text-sm text-muted">
-            Prototype note: submitting and assessing this task is not built yet (milestone M3). It does not count towards completion in this milestone.
+            Practice only: make it, keep the file, and compare it with the example. This step is not graded and does not change your progress. The module assessment is where your work is assessed.
           </p>
         )}
       </section>

@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: "What is a good first polish step?"
+    options: [Remove things that do not help the message, Add more effects, Make everything move at once, Use five fonts]
+    answer: Remove things that do not help the message
+    explanation: "Cutting clutter makes the message clearer and the animation more confident."
+    competency: motion-polish
+  - type: MULTIPLE_CHOICE
+    prompt: "What is a good rule of thumb for how long to hold text?"
+    options: [About a quarter of a second per word plus a beat, One tenth of a second in total, Ten seconds for every line, No hold at all]
+    answer: About a quarter of a second per word plus a beat
+    explanation: "People need time to read. This is a starting point you can adjust."
+    competency: motion-polish
+  - type: MULTIPLE_SELECT
+    prompt: "Which items belong on the export checklist? Select all that apply."
+    options: [Square at 1080 by 1080, 30 frames per second, MP4 under 8 MB, 2000 frames per second]
+    answer: [Square at 1080 by 1080, 30 frames per second, MP4 under 8 MB]
+    explanation: "These are sensible defaults for a short social loop."
+    competency: motion-polish
+  - type: ERROR_DETECTION
+    prompt: "Your text is unreadable when the animation is small on a phone. What is the best fix?"
+    options: [Make the text bigger and bolder, Make it smaller, Add more shapes, Speed it up]
+    answer: Make the text bigger and bolder
+    explanation: "Small screens need larger bolder text to stay readable."
+    competency: motion-polish
+  - type: VISUAL_IDENTIFICATION
+    prompt: "In the check-it-small scene, what are you looking for at thumbnail size?"
+    options: [Whether the words and motion are still clear, Whether the file name is short, Whether it has sound, Whether the logo is red]
+    answer: Whether the words and motion are still clear
+    explanation: "If it works tiny it works on a phone."
+    competency: motion-polish
+  - type: MULTIPLE_CHOICE
+    prompt: "Why watch your export on a phone?"
+    options: [That is where most people will see it, Phones are faster than computers, It reduces the file size, It is required by law]
+    answer: That is where most people will see it
+    explanation: "Check it on the screen your audience will use."
+    competency: motion-polish

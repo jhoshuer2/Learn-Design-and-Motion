@@ -38,3 +38,7 @@ body { background: var(--surface); color: var(--ink); font-family: var(--font-sa
 
 @keyframes demo-slide { from { left: 4%; } to { left: calc(96% - 2rem); } }
 .demo-slide { animation: demo-slide 2.4s ease-in-out infinite alternate; left: 4%; }
+
+/* Motion lesson demos */
+@keyframes demo-slide-restart { from { left: 4%; } to { left: calc(96% - 2rem); } }
+@keyframes letter-in { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }

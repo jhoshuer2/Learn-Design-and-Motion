@@ -1,0 +1,41 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:02.288
+A keyframe is a saved value at one moment in time.
+
+2
+00:00:02.288 --> 00:00:05.033
+The yellow diamond says: at this moment, the square is here.
+
+3
+00:00:05.033 --> 00:00:07.000
+Nothing moves until there are at least two.
+
+4
+00:00:07.000 --> 00:00:10.563
+Add a second keyframe later in time and change the value.
+
+5
+00:00:10.563 --> 00:00:13.563
+The tool animates everything in between for you.
+
+6
+00:00:13.563 --> 00:00:15.000
+Two diamonds, one move.
+
+7
+00:00:15.000 --> 00:00:17.278
+Each property has its own row of keyframes.
+
+8
+00:00:17.278 --> 00:00:23.000
+Scale up from a little smaller and fade in while it moves, and the entrance feels richer than a plain slide.
+
+9
+00:00:23.000 --> 00:00:25.161
+By default most tools move at a constant speed.
+
+10
+00:00:25.161 --> 00:00:31.000
+Choose an easing for the keyframes, usually ease in-out or ease out, and the curve bends so the motion starts and stops gently.

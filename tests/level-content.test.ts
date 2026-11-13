@@ -14,7 +14,7 @@ function withEdit(edit: (root: string) => void) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "cm-content-"));
   fs.cpSync(SRC, root, { recursive: true });
   edit(root);
-  return () => loadContent(root);
+  return () => loadContent(root, path.join(process.cwd(), "public"));
 }
 const levelFile = (r: string) => path.join(r, "graphic-design/beginner/level.yaml");
 const capFile = (r: string) => path.join(r, "graphic-design/beginner/campaign.assignment.yaml");
@@ -75,7 +75,7 @@ describe("level and capstone content", () => {
   });
 
   it("allows legacy content with no level.yaml at all, but not a module whose level is missing when others exist", () => {
-    expect(withEdit((r) => { for (const p of ["graphic-design", "brand-design", "ui-design"]) fs.rmSync(path.join(r, p, "beginner/level.yaml"), { force: true }); })()).toMatchObject({ levels: [] });
+    expect(withEdit((r) => { for (const p of ["graphic-design", "brand-design", "ui-design", "motion-design"]) fs.rmSync(path.join(r, p, "beginner/level.yaml"), { force: true }); })()).toMatchObject({ levels: [] });
     expect(withEdit((r) => edit(levelFile(r), (o) => { o.tier = "INTERMEDIATE"; }))).toThrow(/no level.yaml for/);
   });
 });

@@ -16,7 +16,7 @@ const WATCH = "<<watch:youtube|dQw4w9WgXcQ|Easing explained|Shows the same ease 
 function scratch() {
   const base = fs.mkdtempSync(path.join(os.tmpdir(), "cm-media-"));
   fs.cpSync(path.join(process.cwd(), "content"), path.join(base, "content"), { recursive: true });
-  fs.mkdirSync(path.join(base, "public", "lessons"), { recursive: true });
+  fs.cpSync(path.join(process.cwd(), "public", "lessons"), path.join(base, "public", "lessons"), { recursive: true });
   return { root: path.join(base, "content"), pub: path.join(base, "public", "lessons") };
 }
 const lessonFile = (root: string) => path.join(root, "graphic-design", "beginner", "visual-foundations", "contrast", fs.readdirSync(path.join(root, "graphic-design", "beginner", "visual-foundations", "contrast")).find((f) => f.endsWith(".mdx"))!);

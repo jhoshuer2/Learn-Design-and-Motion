@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: "What is a keyframe?"
+    options: [A saved value at a moment in time, A kind of font, A video file format, An export setting]
+    answer: A saved value at a moment in time
+    explanation: "A keyframe stores a property value at one moment. The tool fills in the frames between keyframes."
+    competency: motion-keyframes
+  - type: MULTIPLE_CHOICE
+    prompt: "How many keyframes does a property need before it can move?"
+    options: [At least two, Exactly one, Ten, None]
+    answer: At least two
+    explanation: "One keyframe saves a value but nothing changes. You need a second one with a different value at a different time."
+    competency: motion-keyframes
+  - type: MULTIPLE_SELECT
+    prompt: "Which of these can you animate with keyframes? Select all that apply."
+    options: [Position, Scale, Opacity, The phone model of the viewer]
+    answer: [Position, Scale, Opacity]
+    explanation: "Position and scale and opacity are common animatable properties. A viewer's phone is not part of your project."
+    competency: motion-keyframes
+  - type: ERROR_DETECTION
+    prompt: "You set the position of a square once at the start and it never moves. What is missing?"
+    options: [A second keyframe with a different value later in time, A bigger square, A louder soundtrack, A different font]
+    answer: A second keyframe with a different value later in time
+    explanation: "Movement comes from change between two or more keyframes."
+    competency: motion-keyframes
+  - type: VISUAL_IDENTIFICATION
+    prompt: "In the keyframes explainer timeline, what do the yellow diamonds show?"
+    options: [Saved values at moments in time, The length of the video, Mistakes to fix, Audio levels]
+    answer: Saved values at moments in time
+    explanation: "Each diamond is a keyframe: a value saved at a moment."
+    competency: motion-keyframes
+  - type: MULTIPLE_CHOICE
+    prompt: "How do you make a move start and stop gently?"
+    options: [Apply an easing to the keyframes, Add more keyframes at the same time, Shrink the square, Delete the first keyframe]
+    answer: Apply an easing to the keyframes
+    explanation: "Easing bends the speed so the move eases in and out instead of running at constant speed."
+    competency: motion-keyframes

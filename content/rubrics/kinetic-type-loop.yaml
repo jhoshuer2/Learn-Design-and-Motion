@@ -1,0 +1,58 @@
+slug: kinetic-type-loop
+title: Kinetic type loop
+version: 1
+threshold: 80
+criteria:
+  - key: timing-and-easing
+    title: Timing and easing
+    weight: 20
+    mandatory: true
+    minScore: 60
+    competency: motion-timing-easing
+    description: |
+      Does the filmstrip suggest eased motion with sensible timing (frames bunch up near the start and end of a move), and does the rationale report durations and an easing choice that fit a warm, friendly mood? You cannot measure speed or smoothness from still frames: judge what is visible, say it is an estimate, and compare with the numbers the rationale reports.
+      Strong (85-100): spacing between frames and the reported numbers both point to eased, unhurried motion that suits the brief.
+      Adequate (60-84): plausible easing, but timing looks rushed or the numbers are thin.
+      Weak (0-59): motion looks mechanical or frantic, or no timing or easing is reported.
+  - key: keyframe-craft
+    title: Keyframe craft
+    weight: 15
+    competency: motion-keyframes
+    description: |
+      Does the work show deliberate use of keyframes (move, scale or fade combined), supported by the rationale or an optional timeline screenshot? You cannot see keyframes in stills alone; credit only what the frames, the timeline screenshot or the reported numbers support.
+      Strong (85-100): several properties combine in a considered way, supported by evidence.
+      Adequate (60-84): simple movement only, or keyframes claimed without support.
+      Weak (0-59): little or no evidence of keyframed motion.
+  - key: kinetic-type
+    title: Kinetic type
+    weight: 20
+    mandatory: true
+    minScore: 60
+    competency: motion-kinetic-type
+    description: |
+      Are FRESH, EVERY and MORNING shown in that order, with a visible stagger or reveal on at least one, and is each word clearly readable at rest in the frames?
+      Strong (85-100): all three words, in order, with a clear stagger or reveal and each fully readable at rest.
+      Adequate (60-84): words present but the stagger or reveal is hard to see, or one word is unclear.
+      Weak (0-59): a word is missing or out of order, or the words are hard to read.
+  - key: loop-seam
+    title: Loop seam
+    weight: 15
+    competency: motion-looping
+    description: |
+      Does the last frame lead back to the first (matching or near-matching state), and does the rationale say how the loop was closed? You cannot test the restart from stills: compare the first and last frames and check the stated method.
+      Strong (85-100): first and last frames match and the method (matched keyframes, overlap) is stated.
+      Adequate (60-84): close but not identical, or the method is unclear.
+      Weak (0-59): first and last frames clearly differ, or the work does not claim to loop.
+  - key: legibility-at-small-size
+    title: Legibility at small size
+    weight: 15
+    competency: motion-polish
+    description: |
+      Judge the small-scale preview only from the preview image itself. Are the words and the order of frames still readable, and is the composition clean (no clutter)?
+      Strong (85-100): words and frame order survive clearly and the composition is clean. Adequate (60-84): readable but strained, or slightly cluttered. Weak (0-59): words are unreadable, or the preview is missing or not a smaller version of the final.
+  - key: design-rationale
+    title: Design rationale
+    weight: 15
+    description: |
+      Does the rationale explain three real choices, report the numbers (total length, rest time per word, delay between letters, easing, how the loop closes), and match what is visible? Judge reasoning, not writing style.
+      Strong (85-100): three specific choices with reasons and numbers that match the frames. Adequate (60-84): choices named, numbers thin. Weak (0-59): generic statements, or claims the frames do not show.

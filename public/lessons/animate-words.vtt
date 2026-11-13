@@ -1,0 +1,53 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:02.714
+Here the whole word fades in together.
+
+2
+00:00:02.714 --> 00:00:07.000
+It works, but it feels flat, because nothing leads your eye.
+
+3
+00:00:07.000 --> 00:00:11.487
+Now each letter starts a fraction of a second after the one before it.
+
+4
+00:00:11.487 --> 00:00:13.090
+This is called a stagger.
+
+5
+00:00:13.090 --> 00:00:13.667
+Around 0.
+
+6
+00:00:13.667 --> 00:00:14.179
+05 to 0.
+
+7
+00:00:14.179 --> 00:00:17.000
+1 seconds per letter reads as a smooth wave.
+
+8
+00:00:17.000 --> 00:00:18.325
+Another option is a mask.
+
+9
+00:00:18.325 --> 00:00:21.662
+The text sits still while a window slides open and uncovers it.
+
+10
+00:00:21.662 --> 00:00:25.000
+Combine the mask with a small slide and the reveal feels crisp.
+
+11
+00:00:25.000 --> 00:00:28.448
+When there is more than one word, bring them in the order people read.
+
+12
+00:00:28.448 --> 00:00:30.369
+Then hold each line still for a moment.
+
+13
+00:00:30.369 --> 00:00:35.000
+A good rule of thumb is about a quarter of a second per word, plus a beat, before it moves on.

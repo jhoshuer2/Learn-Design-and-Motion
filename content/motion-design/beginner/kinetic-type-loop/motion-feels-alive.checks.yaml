@@ -1,0 +1,37 @@
+questions:
+  - type: MULTIPLE_CHOICE
+    prompt: "What does easing change about a move?"
+    options: [How the speed changes along the move, The colour of the object, The length of the file, The font size]
+    answer: How the speed changes along the move
+    explanation: "Easing changes the spacing between frames so the object speeds up and slows down instead of moving at one constant speed."
+    competency: motion-timing-easing
+  - type: MULTIPLE_CHOICE
+    prompt: "A move that takes about 0.25 seconds usually feels:"
+    options: [Snappy, Heavy and slow, Broken, Silent]
+    answer: Snappy
+    explanation: "Short moves feel quick and snappy. Long ones feel heavier."
+    competency: motion-timing-easing
+  - type: MULTIPLE_SELECT
+    prompt: "Which of these are true about spacing? Select all that apply."
+    options: [Dots close together mean slow, Dots far apart mean fast, Easing changes the spacing along a move, Spacing never changes in animation]
+    answer: [Dots close together mean slow, Dots far apart mean fast, Easing changes the spacing along a move]
+    explanation: "Spacing is where the object sits from moment to moment. Easing is spacing that changes along the move."
+    competency: motion-timing-easing
+  - type: ERROR_DETECTION
+    prompt: "A button slides in at one constant speed over 2 seconds and feels robotic and slow. What is the best fix?"
+    options: [Add easing and shorten the move to about half a second, Make it slower so it feels smoother, Remove the button, Add more colours]
+    answer: Add easing and shorten the move to about half a second
+    explanation: "Constant speed feels mechanical, and a long move feels heavy. Easing plus a shorter duration fixes both."
+    competency: motion-timing-easing
+  - type: VISUAL_IDENTIFICATION
+    prompt: "In the easing-compare demo, which ball feels most alive?"
+    options: [The one that starts slowly then speeds up then settles, The one at one constant speed, Neither because they take the same time]
+    answer: The one that starts slowly then speeds up then settles
+    explanation: "The eased ball changes speed, which reads as natural. The constant one feels mechanical even though the time is the same."
+    competency: motion-timing-easing
+  - type: MULTIPLE_CHOICE
+    prompt: "Why try the same move at three different durations?"
+    options: [The right timing is found by feel when you compare options, Because tools require three exports, To make the file bigger, To avoid using easing]
+    answer: The right timing is found by feel when you compare options
+    explanation: "There is no single right duration. Comparing short, medium and long shows which one suits your mood."
+    competency: motion-timing-easing

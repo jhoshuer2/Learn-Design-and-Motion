@@ -1,0 +1,37 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:02.832
+A loop replays forever, so there is no real start or end.
+
+2
+00:00:02.832 --> 00:00:08.000
+The last moment has to flow straight into the first one, like the dot going all the way around a circle.
+
+3
+00:00:08.000 --> 00:00:10.373
+The seam is the moment where the end meets the start.
+
+4
+00:00:10.373 --> 00:00:13.687
+On the left the ball ends in a different place than it began, so it jumps.
+
+5
+00:00:13.687 --> 00:00:17.000
+On the right it ends exactly where it started, so you cannot see the join.
+
+6
+00:00:17.000 --> 00:00:21.919
+The easiest fix is to copy the very first keyframe and paste it at the end of the timeline.
+
+7
+00:00:21.919 --> 00:00:25.000
+Same values at both ends means the loop closes perfectly.
+
+8
+00:00:25.000 --> 00:00:29.507
+For text, let the old word begin leaving while the new word is already arriving.
+
+9
+00:00:29.507 --> 00:00:33.000
+That overlap hides the handover, so your eye never sees a gap.
