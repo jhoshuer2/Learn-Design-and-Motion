@@ -120,3 +120,41 @@ test("the capstone is locked until the module is done, then asks for three forma
   await page.goto("/learn");
   await expect(page.getByText(/does not show mastery of motion design/)).toBeVisible();
 });
+
+test("anyone can check where they are on the outcome page, and it only recommends", async ({ page }) => {
+  await page.goto("/learn/outcome/kinetic-type-loop");
+  await expect(page.getByRole("heading", { name: "Where are you now?" })).toBeVisible();
+  await expect(page.getByText(/quick questions, about two minutes\. Not graded/)).toBeVisible();
+  const groups = page.locator("#where-are-you").getByRole("group"); // (the transcript above is a group too)
+  await expect(groups).toHaveCount(6);
+  for (const g of await groups.all()) await g.locator("input[type=radio], input[type=checkbox]").first().check(); // some right, some not
+  await page.getByRole("button", { name: "Check where I am" }).click();
+  await expect(page).toHaveURL(/placed=[01]{6}/);
+  await expect(page.getByText(/You know this:|Worth learning:/).first()).toBeVisible();
+  await expect(page.getByText(/This is a guide, not a result\./)).toBeVisible();
+  await expect(page.getByRole("link", { name: "Create a free account to start" })).toBeVisible(); // still starts at the start
+  expect((await new AxeBuilder({ page }).analyze()).violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
+  await page.screenshot({ path: "test-results/screens/m12-placement.png", fullPage: true });
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.screenshot({ path: "test-results/screens/m12-placement-390.png", fullPage: true });
+
+  // A made-up result is ignored, not rendered.
+  await page.goto("/learn/outcome/kinetic-type-loop?placed=<script>");
+  await expect(page.getByText(/This is a guide, not a result\./)).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Check where I am" })).toBeVisible();
+});
+
+test("a learner who checks and then starts still begins at lesson one, with later lessons locked", async ({ page }) => {
+  const email = await signUp(page);
+  await page.goto("/learn/outcome/kinetic-type-loop");
+  for (const g of await page.locator("#where-are-you").getByRole("group").all()) await g.locator("input[type=radio], input[type=checkbox]").first().check();
+  await page.getByRole("button", { name: "Check where I am" }).click();
+  await expect(page.getByText(/This is a guide, not a result\./)).toBeVisible();
+  await page.getByRole("button", { name: "Start this path" }).click();
+  await expect(page).toHaveURL(/\/learn$/);
+  await expect(page.getByRole("link", { name: "Make motion feel alive" }).first()).toBeVisible();
+  await expect(page.getByText("Complete first: Make motion feel alive")).toBeVisible(); // the next lesson is still locked
+  const user = await db.user.findUniqueOrThrow({ where: { email } });
+  expect(await db.skillEvidence.count({ where: { userId: user.id } })).toBe(0);
+  expect(await db.progress.count({ where: { userId: user.id } })).toBe(0);
+});

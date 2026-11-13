@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/session";
@@ -10,6 +11,9 @@ import { loadOutcome } from "@/lib/content/outcomes";
 import { vttToTranscript } from "@/lib/content/media";
 import { LessonVideo } from "@/components/Media";
 import { Button } from "@/components/ui/Button";
+import { PlacementCheck } from "@/components/PlacementCheck";
+import { getPlacementQuestions, parseBits, scorePlacement, summarise, toBits } from "@/lib/placement";
+import { LIMITS, clientKey, hit } from "@/lib/ratelimit";
 
 /** Public on purpose: this is the page you share. Enrolling asks you to sign in. */
 export const dynamic = "force-dynamic";
@@ -24,7 +28,20 @@ async function start(formData: FormData) {
   redirect("/learn");
 }
 
-export default async function OutcomePage({ params }: { params: { slug: string } }) {
+async function check(formData: FormData) {
+  "use server";
+  const slug = String(formData.get("slug"));
+  const o = loadOutcome(slug);
+  if (!o) redirect("/");
+  // Public scoring could be used to probe answers, so it is limited per (hashed) visitor.
+  if (!(await hit(clientKey(headers()), LIMITS.placement())).allowed) redirect(`/learn/outcome/${slug}?placed=limited#where-are-you`);
+  const answers: Record<string, string[]> = {};
+  for (const id of formData.getAll("qid").map(String)) answers[id] = formData.getAll(`q_${id}`).map(String);
+  const rows = await scorePlacement(o, answers);
+  redirect(`/learn/outcome/${slug}?placed=${toBits(rows)}#where-are-you`);
+}
+
+export default async function OutcomePage({ params, searchParams }: { params: { slug: string }; searchParams: { placed?: string } }) {
   const o = loadOutcome(params.slug);
   if (!o) notFound();
   const session = await auth();
@@ -34,6 +51,12 @@ export default async function OutcomePage({ params }: { params: { slug: string }
   if (o.showcase) {
     try { transcript = vttToTranscript(fs.readFileSync(path.join(process.cwd(), "public", "lessons", `${o.showcase}.vtt`), "utf8")); } catch { /* none */ }
   }
+  const questions = await getPlacementQuestions(o);
+  const bits = parseBits(searchParams.placed, questions.length);
+  const result = bits ? (() => {
+    const rows = questions.map((q, i) => ({ skill: q.skill, skillTitle: q.skillTitle, lessonTitle: q.lessonTitle, known: bits[i] }));
+    return { rows, summary: summarise(rows) };
+  })() : null;
   const enrolled = session?.user?.id && pathRow
     ? !!(await db.enrollment.findUnique({ where: { userId_pathId: { userId: session.user.id, pathId: pathRow.id } } }))
     : false;
@@ -63,6 +86,8 @@ export default async function OutcomePage({ params }: { params: { slug: string }
           <p className="mt-3 text-sm text-muted">For: {o.forWho}.{o.tools.length > 0 && <> Works with free tools: {o.tools.join(", ")}.</>}</p>
         </div>
       </section>
+
+      <PlacementCheck slug={o.slug} action={check} questions={questions} result={result} limited={searchParams.placed === "limited"} />
 
       <div className="mt-10">
         {!pathRow ? (
