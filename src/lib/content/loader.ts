@@ -8,6 +8,8 @@ import {
   type AssignmentDef, type LessonFrontmatter, type LevelDef, type ModuleDef, type Question, type RubricDef,
 } from "./schemas";
 import { DEMO_NAMES, DEMO_TOKEN } from "./demos";
+import { isMediaLine, parseMediaLine } from "./media";
+import { checkOutcomes, loadOutcomes, type OutcomeDef } from "./outcomes";
 import { MACHINE_SCORED } from "../progression/scoring";
 
 export type Block = { kind: (typeof BLOCK_KINDS)[number]; title: string; body: string };
@@ -19,6 +21,7 @@ export type LoadedContent = {
   modules: LoadedModule[];
   levels: LoadedLevel[];
   rubrics: RubricDef[];
+  outcomes: OutcomeDef[];
 };
 
 const HEADING = /^## \{(\w+)\}\s*(.*)$/;
@@ -67,7 +70,7 @@ function walk(dir: string, name: string, out: string[] = []): string[] {
   return out;
 }
 
-export function loadContent(root = path.join(process.cwd(), "content")): LoadedContent {
+export function loadContent(root = path.join(process.cwd(), "content"), publicDir = path.join(root, "..", "public")): LoadedContent {
   const comp = competenciesSchema.parse(readYaml(path.join(root, "competencies.yaml"))).competencies;
   const known = new Set(comp.map((c) => c.slug));
 
@@ -96,6 +99,16 @@ export function loadContent(root = path.join(process.cwd(), "content")): LoadedC
       for (const q of questions) if (q.competency && !known.has(q.competency)) throw new Error(`${cf}: unknown competency "${q.competency}"`);
       for (const b of blocks) {
         for (const line of b.body.split("\n")) {
+          if (isMediaLine(line)) {
+            const m = parseMediaLine(line);
+            if (!m) throw new Error(`${lf}: malformed media line (video needs a caption; watch needs youtube|id|title|why): ${line.trim()}`);
+            if (m.type === "video") {
+              for (const ext of ["mp4", "vtt"]) {
+                if (!fs.existsSync(path.join(publicDir, "lessons", `${m.name}.${ext}`))) throw new Error(`${lf}: video "${m.name}" needs public/lessons/${m.name}.${ext} (captions are required)`);
+              }
+            }
+            continue;
+          }
           if (!line.trim().startsWith("<<demo")) continue;
           const m = DEMO_TOKEN.exec(line.trim());
           if (!m) throw new Error(`${lf}: malformed demo token (needs a caption): ${line.trim()}`);
@@ -164,7 +177,9 @@ export function loadContent(root = path.join(process.cwd(), "content")): LoadedC
     }
   }
 
-  return { competencies: comp, modules, levels, rubrics };
+  const outcomes = loadOutcomes(root);
+  checkOutcomes(outcomes, known, new Set(modules.map((m) => m.def.path)), publicDir);
+  return { competencies: comp, modules, levels, rubrics, outcomes };
 }
 
 function assertAcyclic(lessons: LoadedLesson[], file: string) {

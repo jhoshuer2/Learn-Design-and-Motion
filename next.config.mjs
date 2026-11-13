@@ -15,7 +15,14 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   // Submissions carry up to 4 images of 8 MB each through a server action.
-  experimental: { serverActions: { bodySizeLimit: "34mb" } },
+  experimental: {
+    serverActions: { bodySizeLimit: "34mb" },
+    // Files read at request time must be bundled with the serverless function.
+    outputFileTracingIncludes: {
+      "/learn/lesson/[lessonId]": ["./public/lessons/*.vtt"],
+      "/learn/outcome/[slug]": ["./content/outcomes/*.yaml", "./content/competencies.yaml", "./public/lessons/*.vtt"],
+    },
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

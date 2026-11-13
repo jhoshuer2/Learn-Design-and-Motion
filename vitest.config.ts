@@ -3,6 +3,8 @@ import path from "node:path";
 
 export default defineConfig({
   resolve: { alias: { "@": path.resolve(__dirname, "src") } },
+  // Next keeps jsx as "preserve" for its own compiler; tests that render components need it compiled (Vite 8 uses oxc).
+  oxc: { jsx: { runtime: "automatic" } },
   test: {
     include: ["tests/**/*.test.ts"],
     // Integration tests share one Postgres database and the content publisher rewrites rows,

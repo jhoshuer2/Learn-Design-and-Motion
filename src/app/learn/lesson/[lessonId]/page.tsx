@@ -1,5 +1,9 @@
 import Link from "next/link";
+import fs from "node:fs";
+import path from "node:path";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { blockHasMedia, parseMediaLine, vttToTranscript } from "@/lib/content/media";
 import { requireUser } from "@/lib/session";
 import {
   AccessError, getAttemptView, getLessonView, recordBlockView, submitCheck, type LessonView,
@@ -54,6 +58,27 @@ async function submit(formData: FormData) {
   }
 }
 
+async function setMode(formData: FormData) {
+  "use server";
+  await requireUser();
+  const mode = formData.get("mode") === "read" ? "read" : "watch";
+  const lessonId = String(formData.get("lessonId")).replace(/[^A-Za-z0-9_-]/g, "");
+  const step = Math.max(0, Math.floor(Number(formData.get("step")) || 0));
+  cookies().set("lesson-mode", mode, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax", httpOnly: true });
+  redirect(`/learn/lesson/${lessonId}?step=${step}`);
+}
+
+/** Caption cues of the videos a block uses, as readable text. A missing file just means no transcript. */
+function transcriptsFor(body: string): Record<string, string[]> {
+  const out: Record<string, string[]> = {};
+  for (const line of body.split("\n")) {
+    const m = parseMediaLine(line);
+    if (m?.type !== "video") continue;
+    try { out[m.name] = vttToTranscript(fs.readFileSync(path.join(process.cwd(), "public", "lessons", `${m.name}.vtt`), "utf8")); } catch { /* no transcript */ }
+  }
+  return out;
+}
+
 function prefixLength(view: LessonView) {
   let n = 0;
   while (view.viewed.includes(n)) n++;
@@ -89,6 +114,8 @@ export default async function LessonPage({
   const last = step === view.blocks.length - 1;
   const attempt = searchParams.attempt ? await getAttemptView(user.id, view.id, searchParams.attempt) : null;
   const passedCheck = view.completed || attempt?.passed;
+  const mode = cookies().get("lesson-mode")?.value === "read" ? "read" : "watch";
+  const lessonHasMedia = view.blocks.some((b) => blockHasMedia(b.body));
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
@@ -99,13 +126,21 @@ export default async function LessonPage({
         <span>Step {step + 1} of {view.blocks.length}: <strong>{KIND_LABEL[block.kind] ?? block.kind}</strong></span>
         {view.completed && <StateBadge state="completed" />}
       </div>
+      {lessonHasMedia && (
+        <form action={setMode} className="mt-3 inline-flex rounded border border-line p-0.5 text-sm" aria-label="How do you want to learn?">
+          <input type="hidden" name="lessonId" value={view.id} />
+          <input type="hidden" name="step" value={step} />
+          <button name="mode" value="watch" aria-pressed={mode === "watch"} className={`min-h-11 rounded px-4 ${mode === "watch" ? "bg-accent text-accent-ink" : ""}`}>Watch</button>
+          <button name="mode" value="read" aria-pressed={mode === "read"} className={`min-h-11 rounded px-4 ${mode === "read" ? "bg-accent text-accent-ink" : ""}`}>Read</button>
+        </form>
+      )}
       <div className="mt-2 h-1.5 rounded bg-line" role="progressbar" aria-label="Lesson progress" aria-valuemin={0} aria-valuemax={view.blocks.length} aria-valuenow={step + 1}>
         <div className="h-full rounded bg-accent" style={{ width: `${((step + 1) / view.blocks.length) * 100}%` }} />
       </div>
 
       <section className="mt-8">
         <h2 className="font-display text-2xl">{block.title}</h2>
-        <div className="mt-4"><Prose body={block.body} /></div>
+        <div className="mt-4"><Prose body={block.body} mode={mode} transcripts={transcriptsFor(block.body)} /></div>
 
         {block.kind === "check" && (
           <div className="mt-6">
