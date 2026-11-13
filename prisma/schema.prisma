@@ -141,6 +141,7 @@ model User {
   blockedBy        ReviewerBlock[]    @relation("BlockTarget")
   reports          Report[]
   auditEvents      AuditEvent[]
+  practiceSessions PracticeSession[]
 }
 
 // ───────── Curriculum (content is versioned; see docs/CONTENT_AUTHORING.md)
@@ -289,6 +290,26 @@ model QuizAttempt {
   createdAt DateTime @default(now())
 
   @@index([userId, lessonId])
+}
+
+/// Daily practice. NOT evidence: it never writes SkillEvidence and never changes a result or unlocks anything.
+model PracticeSession {
+  id           String     @id @default(cuid())
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// The learner's local date (YYYY-MM-DD) in their own time zone, so "today" means their today.
+  day          String
+  kind         String // WARMUP
+  competencyId String
+  competency   Competency @relation(fields: [competencyId], references: [id])
+  total        Int
+  correct      Int
+  questionIds  Json
+  createdAt    DateTime   @default(now())
+
+  /// One warm-up per learner per day, even if two submits race.
+  @@unique([userId, day, kind])
+  @@index([userId, createdAt])
 }
 
 // ───────── Rubrics (published versions are immutable)
@@ -469,6 +490,7 @@ model Competency {
   criteria  RubricCriterion[]
   lessons   LessonCompetency[]
   evidence  SkillEvidence[]
+  practice  PracticeSession[]
 }
 
 model LessonCompetency {

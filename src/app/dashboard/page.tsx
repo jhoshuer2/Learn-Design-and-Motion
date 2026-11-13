@@ -71,6 +71,7 @@ export default async function Dashboard() {
           <h2 className="text-sm font-medium text-muted">Do next</h2>
           {next ? <Link className="mt-2 inline-block font-display text-2xl underline underline-offset-4" href={nextHref(next)}>{next.title}</Link>
             : <p className="mt-2 text-muted">Enroll in a path to get a next step.</p>}
+          <Link href="/today" className="mt-2 block text-sm font-semibold underline">Today&rsquo;s session</Link>
         </div>
         <div>
           <h2 className="text-sm font-medium text-muted">Improve</h2>
