@@ -2,6 +2,7 @@ import type { Role } from "@prisma/client";
 import { db } from "@/lib/db";
 import { getAssignmentAccess, type AssignmentAccess } from "@/lib/progression";
 import { remediationLessons } from "@/lib/progression/remediation";
+import { buildBuddyFrom, competencyLinks, type Buddy, type CriterionInput } from "./buddy";
 import { FAKE_PROVIDER_NAME } from "@/lib/assessment/provider";
 import { canReadSubmission, slotOf, type StoredFile } from "./access";
 
@@ -24,6 +25,8 @@ export type SubmissionView = {
   };
   criteria: CriterionView[];
   remediation: { lessonId: string; title: string; competency: string }[];
+  /** Warm, structured summary with deep links; null until there is a completed evaluation. */
+  buddy: Buddy | null;
   appeal: null | { status: string; reason: string; resolution: string | null };
   canAppeal: boolean;
   access: AssignmentAccess | null; // for the owner: can they retry / resubmit?
@@ -66,6 +69,26 @@ export async function getSubmissionView(viewer: { id: string; role: Role }, subm
   // Targeted practice: the lessons that teach what this evaluation found weak (shared with remediation).
   const remediation = ev?.status === "complete" ? await remediationLessons(db, ev.id) : [];
 
+  let buddy: Buddy | null = null;
+  if (ev?.status === "complete" && ev.overallScore !== null && ev.passed !== null) {
+    const asg = sub.assignment;
+    const full = await db.assignment.findUnique({ where: { id: asg.id }, include: { module: { include: { level: true } }, level: true } });
+    const pathId = full?.level?.pathId ?? full?.module?.level.pathId;
+    const inputs: CriterionInput[] = rv.criteria.map((c) => {
+      const s = ev.scores.find((x) => x.criterionId === c.id); const d = detail.get(c.key);
+      return { key: c.key, title: c.title, weight: c.weight, mandatory: c.mandatory, minScore: c.minScore, score: s?.score ?? 0, evidence: s?.evidence ?? "", improvement: s?.improvement ?? "", where: d?.where, principle: d?.principle, competencyId: c.competencyId };
+    });
+    const prev = await db.evaluation.findFirst({
+      where: { status: "complete", createdAt: { lt: ev.createdAt }, submission: { userId: sub.userId, assignmentId: asg.id } },
+      orderBy: { createdAt: "desc" }, include: { scores: { include: { criterion: true } } },
+    });
+    const links = await competencyLinks(db, [...new Set(inputs.map((i) => i.competencyId).filter((x): x is string => !!x))], pathId);
+    buddy = buildBuddyFrom({
+      passed: ev.passed, score: ev.overallScore, previousScore: prev?.overallScore ?? null, criteria: inputs, links,
+      previous: new Map((prev?.scores ?? []).map((s) => [s.criterion.key, s.score])),
+    });
+  }
+
   const isOwner = sub.userId === viewer.id;
   return {
     id: sub.id, attempt: sub.attempt, status: sub.status, rationale: sub.rationale, changesNote: sub.changesNote, isOwner,
@@ -78,7 +101,7 @@ export async function getSubmissionView(viewer: { id: string; role: Role }, subm
       missingRequirements: arr(fb.missingRequirements), criticalFailures: arr(fb.criticalFailures), missingEvidence: ev.missingEvidence,
       failureReason: typeof fb.reason === "string" ? fb.reason : null,
     },
-    criteria, remediation,
+    criteria, remediation, buddy,
     appeal: ev?.appeal ? { status: ev.appeal.status, reason: ev.appeal.reason, resolution: ev.appeal.resolution } : null,
     canAppeal: isOwner && ev?.status === "complete" && ev.passed === false && !ev.humanReviewed && !ev.appeal && sub.status === "EVALUATED",
     access: isOwner ? await getAssignmentAccess(sub.userId, sub.assignmentId) : null,

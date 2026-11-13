@@ -85,6 +85,10 @@ test("lock, brief, fail with feedback, revise, pass, and module completes", asyn
   await expect(page.getByText("below the 80% pass mark")).toBeVisible();
   await expect(page.getByText("How to check it worked").first()).toBeVisible();
   await expect(page.getByRole("heading", { name: "Practise these next" })).toBeVisible();
+  // The buddy leads with one next fix and sends the learner to the exact lesson step.
+  await expect(page.getByRole("heading", { name: /Your buddy.s read/ })).toBeVisible();
+  await expect(page.getByText("Your next best fix")).toBeVisible();
+  await page.screenshot({ path: "test-results/screens/m12-buddy-feedback.png", fullPage: true });
   const resultA11y = await new AxeBuilder({ page }).analyze();
   expect(resultA11y.violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
 
@@ -98,6 +102,7 @@ test("lock, brief, fail with feedback, revise, pass, and module completes", asyn
   await page.getByLabel(/What did you change/).fill("Made the date darker and grouped the venue with it.");
   await page.getByRole("button", { name: "Submit for assessment" }).click();
   await expect(page.getByRole("heading", { name: /Passed: 92%/ })).toBeVisible();
+  await expect(page.getByText("+32 since last time").first()).toBeVisible(); // the buddy shows progress against attempt 1
 
   // The module is complete only now, and a second submission is closed.
   await page.goto("/learn");

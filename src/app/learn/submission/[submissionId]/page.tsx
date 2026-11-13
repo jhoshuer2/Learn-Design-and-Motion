@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { AssessmentWatcher } from "@/components/submission/AssessmentWatcher";
 import { getAssessmentStatus } from "@/lib/jobs/status";
 import { StateBadge } from "@/components/ui/StateBadge";
+import { BuddyCard } from "@/components/submission/BuddyCard";
 
 async function retry(formData: FormData) {
   "use server";
@@ -137,6 +138,11 @@ export default async function SubmissionPage({ params, searchParams }: { params:
             <p className="mt-3 text-sm text-muted">{ev.provider === "human" ? "This was assessed by a person against the published rubric." : "This was assessed by an AI assessor against the published rubric. It is a learning aid, not an unquestionable verdict."}</p>
           </section>
 
+          {v.buddy && v.isOwner && (() => {
+            const f = v.files.find((x) => x.slot === "final") ?? v.files[0];
+            return <BuddyCard buddy={v.buddy} imageSrc={f ? `/api/submissions/${v.id}/files/${f.idx}` : undefined} imageAlt={f ? `Your submitted ${f.label}` : undefined} />;
+          })()}
+
           <section className="mt-8 grid gap-6 sm:grid-cols-2">
             <List title="Strengths" items={ev.strengths} />
             <List title="To work on" items={ev.weaknesses} />
@@ -145,7 +151,7 @@ export default async function SubmissionPage({ params, searchParams }: { params:
           </section>
 
           <section className="mt-10">
-            <h2 className="font-display text-2xl">Criterion by criterion</h2>
+            <h2 className="font-display text-2xl">All the details, criterion by criterion</h2>
             <ol className="mt-4 space-y-4">{v.criteria.map((c) => <Criterion key={c.key} c={c} />)}</ol>
           </section>
 
