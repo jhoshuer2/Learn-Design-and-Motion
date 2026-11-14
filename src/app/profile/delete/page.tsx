@@ -24,13 +24,13 @@ export default async function DeleteAccount({ searchParams }: { searchParams: { 
   await requireUser();
   return (
     <div className="mx-auto max-w-xl px-6 py-16">
-      <nav className="text-sm"><Link href="/profile" className="underline">Profile</Link></nav>
-      <h1 className="mt-4 font-display text-4xl">Delete my account</h1>
-      <p className="mt-3 text-muted">This cannot be undone. There is no waiting period and no way to get anything back.</p>
+      <nav className="text-sm"><Link href="/profile" className="link-quiet font-semibold">Profile</Link></nav>
+      <h1 className="mt-4 display display-m">Delete my account</h1>
+      <p className="mt-3 text-ink-2">This cannot be undone. There is no waiting period and no way to get anything back.</p>
       <section className="mt-6 grid gap-6 sm:grid-cols-2" aria-label="What happens">
         <div>
           <h2 className="font-medium">Deleted immediately</h2>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink-2">
             <li>Your account, email address and password.</li>
             <li>Every submission, uploaded file, assessment and appeal.</li>
             <li>All progress, quiz attempts, skill evidence and level records.</li>
@@ -41,11 +41,11 @@ export default async function DeleteAccount({ searchParams }: { searchParams: { 
         </div>
         <div>
           <h2 className="font-medium">Kept</h2>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink-2">
             <li>An operational log of actions (for example &ldquo;submission assessed&rdquo;) with <strong>no</strong> link to you.</li>
             <li>If you were a reviewer, your decisions on other people&rsquo;s work stay, without your name.</li>
           </ul>
-          <p className="mt-3 text-sm text-muted">We do not offer a data export yet. People who already saw or copied your shared work may still have it. Backups, if any are kept by whoever runs this site, are outside what this button can reach.</p>
+          <p className="mt-3 text-sm text-ink-2">We do not offer a data export yet. People who already saw or copied your shared work may still have it. Backups, if any are kept by whoever runs this site, are outside what this button can reach.</p>
         </div>
       </section>
       {searchParams.error && <p role="alert" className="mt-6 text-danger">{searchParams.error}</p>}

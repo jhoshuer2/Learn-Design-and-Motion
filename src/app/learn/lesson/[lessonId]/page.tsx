@@ -9,7 +9,8 @@ import {
   AccessError, getAttemptView, getLessonView, recordBlockView, submitCheck, type LessonView,
 } from "@/lib/progression";
 import { Prose } from "@/components/Prose";
-import { Button } from "@/components/ui/Button";
+import { Button, PillLink, Arrow } from "@/components/ui/Button";
+import { PipSays } from "@/components/ui/Pip";
 import { StateBadge } from "@/components/ui/StateBadge";
 import { KeyframeProgress } from "@/components/ui/Keyframes";
 
@@ -96,12 +97,12 @@ export default async function LessonPage({
   } catch (e) {
     if (e instanceof AccessError) {
       return (
-        <div className="mx-auto max-w-xl px-6 py-24">
+        <div className="mx-auto max-w-2xl px-6 py-24">
           <StateBadge state="locked" />
-          <h1 className="mt-4 font-display text-3xl">Not available</h1>
-          <p className="mt-3 text-muted">{DENIED[e.reason]}</p>
+          <h1 className="display display-l mt-5">Not available</h1>
+          <p className="lede mt-4">{DENIED[e.reason]}</p>
           {e.missing && <p className="mt-2">Complete first: {e.missing.join(", ")}.</p>}
-          <Link href="/learn" className="mt-6 inline-block underline">Back to my learning</Link>
+          <div className="mt-8"><PillLink href="/learn" variant="secondary">Back to my learning</PillLink></div>
         </div>
       );
     }
@@ -119,93 +120,100 @@ export default async function LessonPage({
   const lessonHasMedia = view.blocks.some((b) => blockHasMedia(b.body));
 
   return (
-    <article className="mx-auto max-w-3xl px-6 pb-16 pt-10">
-      <nav className="text-sm"><Link href="/learn" className="underline">My learning</Link></nav>
-      <h1 className="mt-4 font-display text-6xl">{view.title}</h1>
-      <p className="mt-2 max-w-measure text-muted">{view.objective}</p>
-      <div className="mt-6 flex items-center justify-between text-sm">
-        <span>Step {step + 1} of {view.blocks.length}: <strong>{KIND_LABEL[block.kind] ?? block.kind}</strong></span>
-        {view.completed && <StateBadge state="completed" />}
-      </div>
-      {lessonHasMedia && (
-        <form action={setMode} className="mt-3 inline-flex rounded-full border-2 border-ink p-0.5 text-sm" aria-label="How do you want to learn?">
-          <input type="hidden" name="lessonId" value={view.id} />
-          <input type="hidden" name="step" value={step} />
-          <button name="mode" value="watch" aria-pressed={mode === "watch"} className={`min-h-11 rounded-full px-5 font-semibold ${mode === "watch" ? "bg-accent text-accent-ink" : ""}`}>Watch</button>
-          <button name="mode" value="read" aria-pressed={mode === "read"} className={`min-h-11 rounded-full px-5 font-semibold ${mode === "read" ? "bg-accent text-accent-ink" : ""}`}>Read</button>
-        </form>
-      )}
-      <KeyframeProgress total={view.blocks.length} current={step} />
+    <article className="mx-auto grid max-w-page gap-x-16 px-6 pb-24 pt-10 lg:grid-cols-[14rem_1fr]">
+      <aside className="lg:sticky lg:top-8 lg:self-start">
+        <nav className="text-sm"><Link href="/learn" className="link-quiet font-semibold">My learning</Link></nav>
+        {view.completed && <div className="mt-6 hidden lg:block"><StateBadge state="completed" /></div>}
+      </aside>
 
-      <section className="mt-8">
-        <h2 className="font-display text-4xl">{block.title}</h2>
-        <div className="mt-4"><Prose body={block.body} mode={mode} transcripts={transcriptsFor(block.body)} /></div>
+      <div className="max-w-3xl">
+        <p className="label rise">Lesson</p>
+        <h1 className="display display-l mt-3 rise" style={{ ["--d" as string]: 1 }}>{view.title}</h1>
+        <p className="lede mt-4">{view.objective}</p>
+        <p className="mt-6 text-sm text-ink-2">Step {step + 1} of {view.blocks.length}: <strong className="text-ink">{KIND_LABEL[block.kind] ?? block.kind}</strong></p>
+        <div className="mt-6 flex flex-wrap items-center gap-6">
+          {lessonHasMedia && (
+            <form action={setMode} className="switch" data-mode={mode} aria-label="How do you want to learn?">
+              <input type="hidden" name="lessonId" value={view.id} />
+              <input type="hidden" name="step" value={step} />
+              <span className="thumb" aria-hidden />
+              <button name="mode" value="watch" aria-pressed={mode === "watch"}><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden><path d="M4 2.5v11l9-5.5z" fill="currentColor" /></svg>Watch</button>
+              <button name="mode" value="read" aria-pressed={mode === "read"}><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden><path d="M2 3h12M2 7h12M2 11h8" /></svg>Read</button>
+            </form>
+          )}
+          <div className="min-w-[10rem] flex-1"><KeyframeProgress total={view.blocks.length} current={step} /></div>
+        </div>
 
-        {block.kind === "check" && (
-          <div className="mt-6">
-            {attempt && (
-              <div role="status" className="mb-6 rounded border border-line bg-raised p-4">
-                <p className="font-medium">
-                  Score {attempt.score}% · {attempt.passed ? "Passed" : `Not yet. You need ${view.checkThreshold}%.`}
+        <section className="mt-12">
+          <h2 className="display display-m">{block.title}</h2>
+          <div className="mt-5"><Prose body={block.body} mode={mode} transcripts={transcriptsFor(block.body)} /></div>
+
+          {block.kind === "check" && (
+            <div className="mt-8">
+              {attempt && (
+                <div role="status" className="surface-card mb-6 p-6">
+                  <p className="title">
+                    Score {attempt.score}% · {attempt.passed ? "Passed" : `Not yet. You need ${view.checkThreshold}%.`}
+                  </p>
+                  {attempt.items.map((it, i) => !it.correct && (
+                    <p key={i} className="mt-3 text-[0.9375rem] text-ink-2"><strong>Question {i + 1}:</strong> {it.explanation}</p>
+                  ))}
+                </div>
+              )}
+              {view.completed && !attempt && (
+                <p className="mb-5 rounded-card bg-paper-2 p-4 text-sm text-ink-2">
+                  You have already passed this check. You can retake it to refresh your result, for example when remediation or a level requirement asks for it. Your latest result is the one that counts.
                 </p>
-                {attempt.items.map((it, i) => !it.correct && (
-                  <p key={i} className="mt-3 text-sm"><strong>Question {i + 1}:</strong> {it.explanation}</p>
-                ))}
-              </div>
-            )}
-            {view.completed && !attempt && (
-              <p className="mb-4 rounded border border-line bg-raised p-3 text-sm text-muted">
-                You have already passed this check. You can retake it to refresh your result, for example when remediation or a level requirement asks for it. Your latest result is the one that counts.
-              </p>
-            )}
-            {!attempt?.passed && (
-              <form action={submit} className="space-y-6">
-                <input type="hidden" name="lessonId" value={view.id} />
-                <input type="hidden" name="index" value={step} />
-                {view.questions.map((q, qi) => (
-                  <fieldset key={q.id} className="space-y-2">
-                    <input type="hidden" name="qid" value={q.id} />
-                    <legend className="font-medium">{qi + 1}. {q.prompt}</legend>
-                    {q.type === "MULTIPLE_SELECT" && <p className="text-sm text-muted">Select all that apply.</p>}
-                    {q.options.map((o) => (
-                      <label key={o} className="flex min-h-11 items-center gap-3">
-                        <input type={q.type === "MULTIPLE_SELECT" ? "checkbox" : "radio"} name={`q_${q.id}`} value={o} />
-                        <span>{o}</span>
-                      </label>
-                    ))}
-                  </fieldset>
-                ))}
-                <Button type="submit">Submit answers</Button>
-              </form>
-            )}
-          </div>
-        )}
-        {block.kind === "task" && (
-          <p className="mt-4 rounded border border-line bg-raised p-3 text-sm text-muted">
-            Practice only: make it, keep the file, and compare it with the example. This step is not graded and does not change your progress. The module assessment is where your work is assessed.
+              )}
+              {!attempt?.passed && (
+                <form action={submit} className="space-y-8">
+                  <input type="hidden" name="lessonId" value={view.id} />
+                  <input type="hidden" name="index" value={step} />
+                  {view.questions.map((q, qi) => (
+                    <fieldset key={q.id} className="surface-card space-y-1 p-6">
+                      <input type="hidden" name="qid" value={q.id} />
+                      <legend className="title mb-2 !text-xl">{qi + 1}. {q.prompt}</legend>
+                      {q.type === "MULTIPLE_SELECT" && <p className="label">Select all that apply.</p>}
+                      {q.options.map((o) => (
+                        <label key={o} className="flex min-h-11 cursor-pointer items-center gap-3 rounded-input px-2 transition hover:bg-paper-2">
+                          <input className="h-4 w-4 accent-[var(--accent)]" type={q.type === "MULTIPLE_SELECT" ? "checkbox" : "radio"} name={`q_${q.id}`} value={o} />
+                          <span>{o}</span>
+                        </label>
+                      ))}
+                    </fieldset>
+                  ))}
+                  <Button type="submit" variant="accent">Submit answers</Button>
+                </form>
+              )}
+            </div>
+          )}
+          {block.kind === "task" && (
+            <div className="mt-8">
+              <PipSays>Practice only: make it, keep the file, and compare it with the example. This step is not graded and does not change your progress. The module assessment is where your work is assessed.</PipSays>
+            </div>
+          )}
+        </section>
+
+        <div className="sticky bottom-24 mt-12 flex w-fit items-center gap-2 rounded-full bg-card py-2 pl-5 pr-2 shadow-float">
+          {step > 0 && <Link href={`/learn/lesson/${view.id}?step=${step - 1}`} className="link-quiet mr-2 text-sm font-semibold">Back</Link>}
+          {(block.kind !== "check" || passedCheck) && (
+            <form action={advance}>
+              <input type="hidden" name="lessonId" value={view.id} />
+              <input type="hidden" name="index" value={step} />
+              <input type="hidden" name="last" value={last ? "1" : "0"} />
+              <Button type="submit">{last ? "Finish lesson" : "Continue"}<Arrow /></Button>
+            </form>
+          )}
+        </div>
+        {searchParams.done && (
+          <p role="status" className="surface-card mt-8 p-5">
+            {view.completed ? "Lesson complete." : "You reached the end, but this lesson is not complete yet. Finish the required steps."}{" "}
+            <Link className="link-quiet font-semibold" href={view.completed && view.nextLessonId ? `/learn/lesson/${view.nextLessonId}` : "/learn"}>
+              {view.completed && view.nextLessonId ? "Next lesson" : "Back to my learning"}
+            </Link>
           </p>
         )}
-      </section>
-
-      <div className="sticky bottom-0 -mx-6 mt-10 flex items-center gap-4 border-t-2 border-line bg-surface px-6 py-3">
-        {step > 0 && <Link href={`/learn/lesson/${view.id}?step=${step - 1}`} className="underline">Back</Link>}
-        {(block.kind !== "check" || passedCheck) && (
-          <form action={advance}>
-            <input type="hidden" name="lessonId" value={view.id} />
-            <input type="hidden" name="index" value={step} />
-            <input type="hidden" name="last" value={last ? "1" : "0"} />
-            <Button type="submit">{last ? "Finish lesson" : "Continue"}</Button>
-          </form>
-        )}
       </div>
-      {searchParams.done && (
-        <p role="status" className="mt-8 rounded border border-line bg-raised p-4">
-          {view.completed ? "Lesson complete." : "You reached the end, but this lesson is not complete yet. Finish the required steps."}{" "}
-          <Link className="underline" href={view.completed && view.nextLessonId ? `/learn/lesson/${view.nextLessonId}` : "/learn"}>
-            {view.completed && view.nextLessonId ? "Next lesson" : "Back to my learning"}
-          </Link>
-        </p>
-      )}
     </article>
   );
 }

@@ -15,9 +15,9 @@ export default async function Skills() {
   const skills = await getSkillProfile(user.id);
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <nav className="text-sm"><Link href="/learn" className="underline">My learning</Link></nav>
-      <h1 className="mt-4 font-display text-4xl">My skills</h1>
-      <p className="mt-2 max-w-measure text-muted">
+      <nav className="text-sm"><Link href="/learn" className="link-quiet font-semibold">My learning</Link></nav>
+      <h1 className="mt-4 display display-m">My skills</h1>
+      <p className="mt-2 max-w-measure text-ink-2">
         Each skill is shown only from assessed evidence: knowledge checks and assessed work. A skill counts as demonstrated at a level when your latest result there is 80% or more.
         Time spent on the platform is never counted, and a skill with no evidence is shown as not assessed.
       </p>
@@ -26,8 +26,8 @@ export default async function Skills() {
           <li key={s.slug} className="py-4">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <h2 className="font-medium">{s.title}{s.critical && <span className="ml-2 text-sm font-normal text-muted">(required skill)</span>}</h2>
-                <p className="text-sm text-muted">
+                <h2 className="font-medium">{s.title}{s.critical && <span className="ml-2 text-sm font-normal text-ink-2">(required skill)</span>}</h2>
+                <p className="text-sm text-ink-2">
                   {s.status === "not_assessed" ? "No evidence yet."
                     : `${s.status === "demonstrated" ? `Demonstrated at ${TIER(s.tier!)} level. ` : ""}Latest result ${s.latestScore}%. ${s.evidenceCount} piece${s.evidenceCount === 1 ? "" : "s"} of evidence (${s.quizEvidence} knowledge check, ${s.assessedEvidence} assessed work).`}
                 </p>

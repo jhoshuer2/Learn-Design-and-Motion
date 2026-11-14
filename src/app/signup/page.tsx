@@ -33,13 +33,13 @@ export default function SignUp({ searchParams }: { searchParams: { error?: strin
   return (
     <AuthShell>
     <form action={signup} className="flex w-full max-w-sm flex-col gap-5 py-12">
-      <h1 className="font-display text-5xl">Create your account</h1>
+      <h1 className="display display-m">Create your account</h1>
       {searchParams.error && <p role="alert" className="text-danger">{searchParams.error}</p>}
       <Field id="name" label="Name" required autoComplete="name" />
       <Field id="email" label="Email" type="email" required autoComplete="email" />
       <Field id="password" label="Password (10+ characters)" type="password" required minLength={10} autoComplete="new-password" />
       <Button type="submit">Sign up</Button>
-      <p className="text-sm text-muted">We will email you a link to confirm your address. By signing up you agree to the <Link className="underline" href="/terms">terms</Link> and <Link className="underline" href="/policy">content policy</Link>.</p>
+      <p className="text-sm text-ink-2">We will email you a link to confirm your address. By signing up you agree to the <Link className="link-quiet font-semibold" href="/terms">terms</Link> and <Link className="link-quiet font-semibold" href="/policy">content policy</Link>.</p>
     </form>
     </AuthShell>
   );

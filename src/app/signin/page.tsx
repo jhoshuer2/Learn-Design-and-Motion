@@ -31,14 +31,14 @@ export default function SignIn({ searchParams }: { searchParams: { error?: strin
   return (
     <AuthShell>
     <form action={login} className="flex w-full max-w-sm flex-col gap-5 py-12">
-      <h1 className="font-display text-5xl">Sign in</h1>
-      {searchParams.error === "locked" && <p role="alert" className="text-danger">Too many failed attempts. Wait a few minutes and try again, or <Link className="underline" href="/forgot-password">reset your password</Link>.</p>}
+      <h1 className="display display-m">Sign in</h1>
+      {searchParams.error === "locked" && <p role="alert" className="text-danger">Too many failed attempts. Wait a few minutes and try again, or <Link className="link-quiet font-semibold" href="/forgot-password">reset your password</Link>.</p>}
       {searchParams.error && searchParams.error !== "locked" && <p role="alert" className="text-danger">Email or password is incorrect.</p>}
       {searchParams.reset && <p role="status" className="text-success">Your password was changed. Sign in with the new one.</p>}
       <Field id="email" label="Email" type="email" required autoComplete="email" />
       <Field id="password" label="Password" type="password" required autoComplete="current-password" />
       <Button type="submit">Sign in</Button>
-      <p className="text-sm"><Link className="underline" href="/forgot-password">Forgot your password?</Link></p>
+      <p className="text-sm"><Link className="link-quiet font-semibold" href="/forgot-password">Forgot your password?</Link></p>
     </form>
     </AuthShell>
   );

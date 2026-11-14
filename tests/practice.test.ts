@@ -65,7 +65,8 @@ describe("the warm-up", () => {
   const mod = content.modules.find((m) => m.def.slug === "kinetic-type-loop")!;
   let motionPathId: string, gdPathId: string;
   const lessonIds: Record<string, string> = {};
-  const NOW = new Date("2026-11-13T10:00:00Z");
+  // Same UTC day as the real clock: rows the code creates are stamped by the database, so a fixed date breaks once the real day rolls over.
+  const NOW = new Date(); NOW.setUTCHours(10, 0, 0, 0);
 
   beforeAll(async () => {
     await useTempStorage();

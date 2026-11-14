@@ -27,22 +27,22 @@ export function Prose({ body, mode = "read", transcripts = {} }: { body: string;
         {parts.filter((p) => "media" in p).map((p, i) => <MediaFigure key={i} media={(p as { media: MediaPart }).media} transcripts={transcripts} />)}
         {parts.filter((p) => "demo" in p).map((p, i) => <DemoFigure key={`d${i}`} p={p as { demo: DemoName; caption: string }} />)}
         {text.length > 0 && (
-          <details className="rounded-card border border-line bg-raised p-4 shadow-card">
-            <summary className="cursor-pointer font-medium">Read the written version</summary>
-            <div className="mt-3 max-w-measure space-y-3 leading-relaxed">{text.map((t, i) => <ReactMarkdown key={i}>{t.md}</ReactMarkdown>)}</div>
+          <details className="surface-card p-5">
+            <summary className="cursor-pointer font-semibold">Read the written version</summary>
+            <div className="mt-3 max-w-measure space-y-4 text-lg leading-relaxed">{text.map((t, i) => <ReactMarkdown key={i}>{t.md}</ReactMarkdown>)}</div>
           </details>
         )}
       </div>
     );
   }
   return (
-    <div className="space-y-5 [&_a]:underline [&_li]:ml-5 [&_li]:list-disc [&_strong]:font-semibold [&_table]:w-full [&_td]:border [&_td]:border-line [&_td]:p-2 [&_th]:border [&_th]:border-line [&_th]:p-2 [&_th]:text-left">
+    <div className="space-y-5 [&_a]:link-quiet [&_a]:font-semibold [&_li]:ml-5 [&_li]:list-disc [&_li]:pl-1 [&_li]:marker:text-accent [&_strong]:font-semibold [&_table]:w-full [&_td]:border [&_td]:border-line [&_td]:p-2 [&_th]:border [&_th]:border-line [&_th]:p-2 [&_th]:text-left">
       {parts.map((p, i) =>
         "md" in p ? (
-          <div key={i} className="max-w-measure space-y-3 leading-relaxed"><ReactMarkdown>{p.md}</ReactMarkdown></div>
+          <div key={i} className="max-w-measure space-y-4 text-lg leading-relaxed"><ReactMarkdown>{p.md}</ReactMarkdown></div>
         ) : "media" in p ? (
           hasMedia && mode === "read"
-            ? <details key={i} className="rounded-card border border-line bg-raised p-4 shadow-card"><summary className="cursor-pointer font-medium">Watch instead</summary><div className="mt-3"><MediaFigure media={p.media} transcripts={transcripts} /></div></details>
+            ? <details key={i} className="surface-card p-5"><summary className="cursor-pointer font-semibold">Watch instead</summary><div className="mt-3"><MediaFigure media={p.media} transcripts={transcripts} /></div></details>
             : <MediaFigure key={i} media={p.media} transcripts={transcripts} />
         ) : (
           <DemoFigure key={i} p={p} />
@@ -54,9 +54,9 @@ export function Prose({ body, mode = "read", transcripts = {} }: { body: string;
 
 function DemoFigure({ p }: { p: { demo: DemoName; caption: string } }) {
   return (
-    <figure className="rounded-card border border-line bg-raised p-4 shadow-card">
+    <figure className="surface-card p-5">
       {DEMOS[p.demo]()}
-      <figcaption className="mt-3 max-w-measure text-sm text-muted">{p.caption}</figcaption>
+      <figcaption className="mt-3 max-w-measure text-sm text-ink-2">{p.caption}</figcaption>
     </figure>
   );
 }

@@ -24,21 +24,21 @@ export default async function Portfolio({ searchParams }: { searchParams: { erro
   const [projects, eligible] = await Promise.all([listMyProjects(user.id), listEligibleSubmissions(user.id)]);
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <nav className="flex gap-4 text-sm"><Link href="/dashboard" className="underline">Dashboard</Link><Link href="/profile" className="underline">Profile</Link><Link href="/community" className="underline">Community</Link></nav>
-      <h1 className="mt-4 font-display text-4xl">My portfolio</h1>
-      <p className="mt-3 max-w-measure text-muted">
+      <nav className="flex gap-4 text-sm"><Link href="/dashboard" className="link-quiet font-semibold">Dashboard</Link><Link href="/profile" className="link-quiet font-semibold">Profile</Link><Link href="/community" className="link-quiet font-semibold">Community</Link></nav>
+      <h1 className="mt-4 display display-m">My portfolio</h1>
+      <p className="mt-3 max-w-measure text-ink-2">
         A portfolio project is a shareable view of work you submitted and had assessed. Every project starts private. Nothing is visible to anyone until you choose to share it.
       </p>
       {searchParams.error && <p role="alert" className="mt-4 text-danger">{searchParams.error}</p>}
 
-      <h2 className="mt-10 font-display text-2xl">Projects</h2>
-      {projects.length === 0 ? <p className="mt-3 text-muted">No projects yet.</p> : (
+      <h2 className="mt-10 title">Projects</h2>
+      {projects.length === 0 ? <p className="mt-3 text-ink-2">No projects yet.</p> : (
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {projects.map((p) => (
             <li key={p.id} className="flex items-center justify-between gap-4 py-4">
               <div>
-                <Link className="font-medium underline" href={`/portfolio/${p.id}`}>{p.title}</Link>
-                <p className="text-sm text-muted">{p.submission.assignment.title} · {VIS[p.visibility]}{p.moderationHold ? " · on hold" : ""} · {p._count.reviews} review{p._count.reviews === 1 ? "" : "s"}</p>
+                <Link className="font-medium link-quiet font-semibold" href={`/portfolio/${p.id}`}>{p.title}</Link>
+                <p className="text-sm text-ink-2">{p.submission.assignment.title} · {VIS[p.visibility]}{p.moderationHold ? " · on hold" : ""} · {p._count.reviews} review{p._count.reviews === 1 ? "" : "s"}</p>
               </div>
               <StateBadge state={p.moderationHold ? "failed" : p.visibility === "PRIVATE" ? "locked" : "completed"} />
             </li>
@@ -46,12 +46,12 @@ export default async function Portfolio({ searchParams }: { searchParams: { erro
         </ul>
       )}
 
-      <h2 className="mt-10 font-display text-2xl">Add a project</h2>
-      {eligible.length === 0 ? <p className="mt-3 text-muted">You have no assessed work to add yet. Work becomes available once it has received an assessment.</p> : (
+      <h2 className="mt-10 title">Add a project</h2>
+      {eligible.length === 0 ? <p className="mt-3 text-ink-2">You have no assessed work to add yet. Work becomes available once it has received an assessment.</p> : (
         <ul className="mt-3 divide-y divide-line border-y border-line">
           {eligible.map((s) => (
             <li key={s.submissionId} className="flex items-center justify-between gap-4 py-4">
-              <div><p className="font-medium">{s.assignment}</p><p className="text-sm text-muted">Attempt {s.attempt}{s.score !== null ? ` · scored ${s.score}%` : ""}</p></div>
+              <div><p className="font-medium">{s.assignment}</p><p className="text-sm text-ink-2">Attempt {s.attempt}{s.score !== null ? ` · scored ${s.score}%` : ""}</p></div>
               <form action={add}><input type="hidden" name="submissionId" value={s.submissionId} /><Button type="submit" variant="secondary">Add (private)</Button></form>
             </li>
           ))}

@@ -41,13 +41,13 @@ export function AssessmentWatcher({ submissionId, initial }: { submissionId: str
 
   return (
     <div role="status" aria-live="polite" data-phase={status.phase}>
-      <p className="text-muted">
+      <p className="text-ink-2">
         {status.message}
         {status.phase === "queued" && status.position !== null && status.position > 0 && ` ${status.position} ahead of you.`}
       </p>
-      <p className="mt-2 text-sm text-muted">
+      <p className="mt-2 text-sm text-ink-2">
         {gaveUp ? "We stopped checking automatically. " : "This page updates by itself. "}
-        <a className="underline" href={`/learn/submission/${submissionId}`}>Refresh</a> to check now. No score or attempt is used until a result is recorded.
+        <a className="link-quiet font-semibold" href={`/learn/submission/${submissionId}`}>Refresh</a> to check now. No score or attempt is used until a result is recorded.
       </p>
     </div>
   );

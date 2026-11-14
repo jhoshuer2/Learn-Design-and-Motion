@@ -53,18 +53,18 @@ export default async function Profile({ searchParams }: { searchParams: { error?
   const me = await db.user.findUniqueOrThrow({ where: { id: user.id }, select: { displayName: true, email: true, emailVerifiedAt: true } });
   return (
     <div className="mx-auto max-w-xl px-6 py-16">
-      <nav className="flex gap-4 text-sm"><Link href="/dashboard" className="underline">Dashboard</Link><Link href="/portfolio" className="underline">My portfolio</Link></nav>
-      <h1 className="mt-4 font-display text-4xl">Profile</h1>
-      <p className="mt-3 max-w-measure text-muted">
+      <nav className="flex gap-4 text-sm"><Link href="/dashboard" className="link-quiet font-semibold">Dashboard</Link><Link href="/portfolio" className="link-quiet font-semibold">My portfolio</Link></nav>
+      <h1 className="mt-4 display display-m">Profile</h1>
+      <p className="mt-3 max-w-measure text-ink-2">
         Your display name is the only name other people see on shared work and on feedback you leave. It is separate from your account,
         and your email address is never shown. You need one before you can share work or review someone else&rsquo;s.
       </p>
       {searchParams.error && <p role="alert" className="mt-4 text-danger">{searchParams.error}</p>}
       {searchParams.saved && <p role="status" className="mt-4 text-success">Saved.</p>}
       {searchParams.mail && <p role="status" className="mt-4">{searchParams.mail === "sent" ? "We sent a confirmation link. It works for 48 hours." : searchParams.mail === "already_verified" ? "Your email is already confirmed." : "Email delivery is not set up on this server, so no message could be sent. Tell the site operator."}</p>}
-      <section className="mt-8 rounded border border-line bg-raised p-4" aria-labelledby="email-status">
+      <section className="mt-8 surface-card p-4" aria-labelledby="email-status">
         <h2 id="email-status" className="font-medium">Email address</h2>
-        <p className="mt-1 text-sm text-muted">{me.email}: {me.emailVerifiedAt ? "confirmed" : "not confirmed yet. Sharing work, leaving feedback, reporting and appeals need a confirmed address."}</p>
+        <p className="mt-1 text-sm text-ink-2">{me.email}: {me.emailVerifiedAt ? "confirmed" : "not confirmed yet. Sharing work, leaving feedback, reporting and appeals need a confirmed address."}</p>
         {!me.emailVerifiedAt && <form action={resend} className="mt-3"><Button type="submit" variant="secondary">Send the confirmation email again</Button></form>}
       </section>
       <form action={save} className="mt-6 flex flex-col gap-4">
@@ -72,16 +72,16 @@ export default async function Profile({ searchParams }: { searchParams: { error?
         <Button type="submit">Save display name</Button>
       </form>
       <section className="mt-12 border-t border-line pt-8" aria-labelledby="security">
-        <h2 id="security" className="font-display text-2xl">Password and sessions</h2>
+        <h2 id="security" className="title">Password and sessions</h2>
         <form action={change} className="mt-4 flex flex-col gap-4">
           <Field id="current" label="Current password" type="password" required autoComplete="current-password" />
           <Field id="next" label={`New password (${MIN_PASSWORD}+ characters)`} type="password" required minLength={MIN_PASSWORD} autoComplete="new-password" />
           <Button type="submit">Change password</Button>
-          <p className="text-sm text-muted">Changing your password signs you out everywhere, including here.</p>
+          <p className="text-sm text-ink-2">Changing your password signs you out everywhere, including here.</p>
         </form>
         <form action={everywhere} className="mt-6"><Button type="submit" variant="secondary">Sign out everywhere</Button></form>
       </section>
-      <p className="mt-12 border-t border-line pt-6 text-sm text-muted">Want to leave? <Link className="underline" href="/profile/delete">Delete my account</Link>.</p>
+      <p className="mt-12 border-t border-line pt-6 text-sm text-ink-2">Want to leave? <Link className="link-quiet font-semibold" href="/profile/delete">Delete my account</Link>.</p>
     </div>
   );
 }

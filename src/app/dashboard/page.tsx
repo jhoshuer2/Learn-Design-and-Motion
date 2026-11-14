@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { revalidatePath } from "next/cache";
 import { loadOutcomes } from "@/lib/content/outcomes";
 import { signOut } from "@/auth";
@@ -7,7 +8,8 @@ import { unreadCount } from "@/lib/notify";
 import { requireUser } from "@/lib/session";
 import { getTimeline, getWeakCompetencies } from "@/lib/progression";
 import { nextHref } from "@/lib/progression/links";
-import { Button } from "@/components/ui/Button";
+import { Button, Arrow } from "@/components/ui/Button";
+import { Pip } from "@/components/ui/Pip";
 import { StateBadge } from "@/components/ui/StateBadge";
 
 async function enroll(formData: FormData) {
@@ -41,68 +43,77 @@ export default async function Dashboard() {
   const weak = await getWeakCompetencies(user.id);
   const unread = await unreadCount(user.id);
 
+  const sharing = [
+    ["/portfolio", "My portfolio"], ["/community", "Community"], ["/profile", "Profile"],
+    ["/notifications", `Notices${unread > 0 ? ` (${unread} unread)` : ""}`],
+    ...(user.role === "REVIEWER" || user.role === "ADMIN"
+      ? [["/review", "Review appeals"], ["/review/moderation", "Approvals and reports"], ["/review/takedowns", "Takedown requests"], ["/admin/assessments", "Assessment queue"]]
+      : []),
+  ];
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <header className="flex items-baseline justify-between">
-        <h1 className="font-display text-5xl">Welcome, {user.name ?? user.email}</h1>
+    <div className="mx-auto max-w-page px-6 pb-16 pt-10 sm:pt-16">
+      <header className="flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p className="label">Dashboard</p>
+          <h1 className="display display-l mt-3">Welcome, <em>{user.name ?? user.email}</em></h1>
+        </div>
         <form action={logout}><Button variant="secondary" type="submit">Sign out</Button></form>
       </header>
-      <nav aria-label="Sharing" className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm">
-        <Link href="/portfolio" className="underline">My portfolio</Link>
-        <Link href="/community" className="underline">Community</Link>
-        <Link href="/profile" className="underline">Profile</Link>
-        <Link href="/notifications" className="underline">Notices{unread > 0 ? ` (${unread} unread)` : ""}</Link>
-        {(user.role === "REVIEWER" || user.role === "ADMIN") && (
-          <>
-            <Link href="/review" className="underline">Review appeals</Link>
-            <Link href="/review/moderation" className="underline">Approvals and reports</Link>
-            <Link href="/review/takedowns" className="underline">Takedown requests</Link>
-            <Link href="/admin/assessments" className="underline">Assessment queue</Link>
-          </>
-        )}
+      <nav aria-label="Sharing" className="mt-8 flex flex-wrap gap-2">
+        {sharing.map(([href, label]) => (
+          <Link key={href} href={href} className="rounded-full bg-paper-2 px-4 py-2 text-sm font-semibold transition hover:bg-ink hover:text-paper">{label}</Link>
+        ))}
       </nav>
-      <section className="mt-8 grid gap-6 rounded-card border border-line bg-raised p-6 shadow-card sm:grid-cols-3">
-        <div>
-          <h2 className="text-sm font-medium text-muted">Where am I</h2>
-          <p className="mt-2">{timelines.find((t) => t)?.pathTitle ?? "Not enrolled yet"}</p>
-          <Link href="/learn" className="text-sm underline">My learning</Link>
+
+      <section className="mt-12 grid gap-5 lg:grid-cols-[1.5fr_1fr_1fr]" aria-label="Where you are">
+        <div className="relative overflow-hidden rounded-window bg-ink p-8 text-paper sm:p-10" data-reveal>
+          <h2 className="label !text-paper opacity-70">Do next</h2>
+          {next ? (
+            <Link className="display mt-4 block max-w-[16ch] text-4xl underline-offset-[6px] hover:underline sm:text-5xl" href={nextHref(next)}>{next.title}</Link>
+          ) : (
+            <p className="mt-4 max-w-xs text-paper/70">Enroll in a path to get a next step.</p>
+          )}
+          <Link href="/today" className="pill pill-accent mt-8">Today&rsquo;s session<Arrow /></Link>
+          <div className="pointer-events-none absolute -bottom-2 right-6 hidden opacity-95 sm:block"><Pip size={130} /></div>
         </div>
-        <div>
-          <h2 className="text-sm font-medium text-muted">Do next</h2>
-          {next ? <Link className="mt-2 inline-block font-display text-2xl underline underline-offset-4" href={nextHref(next)}>{next.title}</Link>
-            : <p className="mt-2 text-muted">Enroll in a path to get a next step.</p>}
-          <Link href="/today" className="mt-2 block text-sm font-semibold underline">Today&rsquo;s session</Link>
+        <div className="surface-card p-7" data-reveal style={{ ["--d" as string]: 1 }}>
+          <h2 className="label">Where am I</h2>
+          <p className="display mt-4 text-3xl">{timelines.find((t) => t)?.pathTitle ?? "Not enrolled yet"}</p>
+          <Link href="/learn" className="link-quiet mt-4 inline-block text-sm font-semibold">My learning</Link>
         </div>
-        <div>
-          <h2 className="text-sm font-medium text-muted">Improve</h2>
-          {weak.length === 0 ? <p className="mt-2 text-muted">No weak areas found yet. This is based on assessed evidence only.</p>
-            : <ul className="mt-2 text-sm">{weak.map((w) => <li key={w.title}>{w.title} ({w.score}%)</li>)}</ul>}
-          <Link href="/profile/skills" className="mt-2 inline-block text-sm underline">All my skills</Link>
+        <div className="surface-card p-7" data-reveal style={{ ["--d" as string]: 2 }}>
+          <h2 className="label">Improve</h2>
+          {weak.length === 0 ? (
+            <p className="mt-4 text-[0.9375rem] text-ink-2">No weak areas found yet. This is based on assessed evidence only.</p>
+          ) : (
+            <ul className="mt-4 text-[0.9375rem]">{weak.map((w) => <li key={w.title}>{w.title} ({w.score}%)</li>)}</ul>
+          )}
+          <Link href="/profile/skills" className="link-quiet mt-4 inline-block text-sm font-semibold">All my skills</Link>
         </div>
       </section>
+
       {loadOutcomes().map((o) => (
-        <section key={o.slug} className="mt-10" aria-label="Something to make">
-          <Link href={`/learn/outcome/${o.slug}`} className="group grid items-center gap-5 sm:grid-cols-[14rem_1fr]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/lessons/${o.showcase ?? o.slug}.jpg`} alt="" className="aspect-video w-full rounded-card border border-line object-cover shadow-card" />
+        <section key={o.slug} className="mt-16" aria-label="Something to make" data-reveal>
+          <Link href={`/learn/outcome/${o.slug}`} className="lift grid items-center gap-8 sm:grid-cols-[1fr_1.2fr]">
+            <div className="frame aspect-[16/10]"><img src="/art/path-motion.webp" width={1280} height={720} alt="" className="h-full w-full object-cover" /></div>
             <span>
-              <span className="block text-sm font-medium text-muted">Want something to make?</span>
-              <span className="mt-1 block font-display text-2xl underline-offset-4 group-hover:underline">{o.title}</span>
-              <span className="mt-1 block text-muted">{o.promise}</span>
+              <span className="label block">Want something to make?</span>
+              <span className="display display-m mt-3 block">{o.title}</span>
+              <span className="lede mt-3 block !text-base">{o.promise}</span>
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold">See the path<Arrow /></span>
             </span>
           </Link>
         </section>
       ))}
-      <h2 className="mt-12 font-display text-4xl">Learning paths</h2>
-      {paths.length === 0 && <p className="mt-4 text-muted">No paths published yet. Run the seed script.</p>}
-      <ul className="mt-4 divide-y divide-line overflow-hidden rounded-card border border-line bg-raised px-5 shadow-card">
+
+      <h2 className="display display-m mt-20">Learning paths</h2>
+      {paths.length === 0 && <p className="mt-4 text-ink-2">No paths published yet. Run the seed script.</p>}
+      <ul className="mt-6 divide-y divide-line border-y border-line">
         {paths.map((p) => (
-          <li key={p.id} className="flex items-center justify-between gap-4 py-4">
+          <li key={p.id} className="flex items-center justify-between gap-4 py-5">
             <div>
-              <p className="font-medium">{p.discipline.title}: {p.title}</p>
-              <p className="text-sm text-muted">
-                {p.levels.reduce((n, l) => n + l.modules.length, 0)} module(s) · content in draft
-              </p>
+              <p className="title">{p.discipline.title}: {p.title}</p>
+              <p className="label mt-1">{p.levels.reduce((n, l) => n + l.modules.length, 0)} module(s) · content in draft</p>
             </div>
             {enrolled.has(p.id) ? (
               <StateBadge state="active" />

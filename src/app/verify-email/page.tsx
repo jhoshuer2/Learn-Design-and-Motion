@@ -20,15 +20,15 @@ export default async function VerifyEmail({ searchParams }: { searchParams: { to
   const live = searchParams.token ? await peekToken(searchParams.token, "VERIFY_EMAIL") : false;
   return (
     <div className="mx-auto max-w-sm px-6 py-24">
-      <h1 className="font-display text-3xl">Confirm your email</h1>
-      {searchParams.done ? <p role="status" className="mt-6 rounded border border-line bg-raised p-4">Thank you. Your email address is confirmed. <Link className="underline" href="/dashboard">Continue</Link>.</p>
+      <h1 className="display display-m">Confirm your email</h1>
+      {searchParams.done ? <p role="status" className="mt-6 surface-card p-4">Thank you. Your email address is confirmed. <Link className="link-quiet font-semibold" href="/dashboard">Continue</Link>.</p>
         : live ? (
           <form action={confirm} className="mt-6">
             <input type="hidden" name="token" value={searchParams.token} />
-            <p className="mb-4 text-muted">Press the button to confirm this address.</p>
+            <p className="mb-4 text-ink-2">Press the button to confirm this address.</p>
             <Button type="submit">Confirm my email</Button>
           </form>
-        ) : <p role="alert" className="mt-6 rounded border border-line bg-raised p-4">This link has expired or was already used. Sign in and ask for a new one from your <Link className="underline" href="/profile">profile</Link>.</p>}
+        ) : <p role="alert" className="mt-6 surface-card p-4">This link has expired or was already used. Sign in and ask for a new one from your <Link className="link-quiet font-semibold" href="/profile">profile</Link>.</p>}
     </div>
   );
 }

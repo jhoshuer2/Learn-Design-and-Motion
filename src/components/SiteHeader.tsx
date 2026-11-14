@@ -1,15 +1,22 @@
 import Link from "next/link";
+import { auth } from "@/auth";
 
-/** A small wordmark with a keyframe diamond. It is the only thing in the header: every page already has its own navigation. */
-export function SiteHeader() {
+/** Wordmark left; signed-out visitors get Sign in and a Start pill on the right. Signed-in navigation is the dock. */
+export async function SiteHeader() {
+  const session = await auth();
+  const signedIn = Boolean(session?.user?.id);
   return (
-    <header className="mx-auto flex max-w-5xl items-center px-6 pt-6">
-      <Link href="/" className="inline-flex min-h-11 items-center gap-2 font-display text-lg" aria-label="Creative Mastery, home">
-        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden>
-          <rect x="4.5" y="4.5" width="13" height="13" transform="rotate(45 11 11)" fill="var(--key)" stroke="var(--ink)" strokeWidth="2" />
-        </svg>
-        Creative Mastery
+    <header className="mx-auto flex max-w-page items-center justify-between px-6 pt-6">
+      <Link href={signedIn ? "/dashboard" : "/"} className="inline-flex min-h-11 items-center gap-2.5">
+        <span aria-hidden className="grid h-8 w-8 place-items-center rounded-full bg-ink text-paper"><span className="display text-lg italic leading-none">c</span></span>
+        <span className="display text-xl">Creative Mastery</span>
       </Link>
+      {!signedIn && (
+        <nav aria-label="Account" className="flex items-center gap-2">
+          <Link href="/signin" className="link-quiet hidden px-3 text-sm font-semibold sm:inline">Sign in</Link>
+          <Link href="/signup" className="pill pill-ink !min-h-10 !px-5 !text-sm">Start</Link>
+        </nav>
+      )}
     </header>
   );
 }

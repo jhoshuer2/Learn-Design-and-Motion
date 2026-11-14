@@ -87,9 +87,9 @@ export default async function AssignmentPage({
     return (
       <div className="mx-auto max-w-xl px-6 py-24">
         <StateBadge state="locked" />
-        <h1 className="mt-4 font-display text-3xl">Not available</h1>
-        <p className="mt-3 text-muted">{DENIED[(blocked ?? "not_found") as AssignmentDenied]}</p>
-        <Link href="/learn" className="mt-6 inline-block underline">Back to my learning</Link>
+        <h1 className="mt-4 display display-m">Not available</h1>
+        <p className="mt-3 text-ink-2">{DENIED[(blocked ?? "not_found") as AssignmentDenied]}</p>
+        <Link href="/learn" className="mt-6 inline-block link-quiet font-semibold">Back to my learning</Link>
       </div>
     );
   }
@@ -101,31 +101,31 @@ export default async function AssignmentPage({
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
-      <nav className="text-sm"><Link href="/learn" className="underline">My learning</Link></nav>
-      <p className="mt-6 text-sm font-medium text-muted">{a.kind === "CAPSTONE" ? "Level capstone" : "Module assessment"}</p>
-      <h1 className="mt-1 font-display text-4xl">{a.title}</h1>
-      <p className="mt-3 max-w-measure text-muted">{a.objective}</p>
-      <p className="mt-2 text-sm text-muted">About {a.estimatedMinutes} minutes · difficulty {a.difficulty} of 5 · pass mark {rv.threshold}%</p>
+      <nav className="text-sm"><Link href="/learn" className="link-quiet font-semibold">My learning</Link></nav>
+      <p className="mt-6 text-sm font-medium text-ink-2">{a.kind === "CAPSTONE" ? "Level capstone" : "Module assessment"}</p>
+      <h1 className="mt-1 display display-m">{a.title}</h1>
+      <p className="mt-3 max-w-measure text-ink-2">{a.objective}</p>
+      <p className="mt-2 text-sm text-ink-2">About {a.estimatedMinutes} minutes · difficulty {a.difficulty} of 5 · pass mark {rv.threshold}%</p>
 
       <section className="mt-8 space-y-6">
-        <div><h2 className="font-display text-2xl">Scenario</h2><p className="mt-2 max-w-measure">{a.scenario}</p></div>
-        <div><h2 className="font-display text-2xl">Requirements</h2><ul className="mt-2 list-disc space-y-1 pl-5">{brief.requirements.map((r) => <li key={r}>{r}</li>)}</ul></div>
-        <div><h2 className="font-display text-2xl">Constraints</h2><ul className="mt-2 list-disc space-y-1 pl-5">{brief.constraints.map((r) => <li key={r}>{r}</li>)}</ul></div>
+        <div><h2 className="title">Scenario</h2><p className="mt-2 max-w-measure">{a.scenario}</p></div>
+        <div><h2 className="title">Requirements</h2><ul className="mt-2 list-disc space-y-1 pl-5">{brief.requirements.map((r) => <li key={r}>{r}</li>)}</ul></div>
+        <div><h2 className="title">Constraints</h2><ul className="mt-2 list-disc space-y-1 pl-5">{brief.constraints.map((r) => <li key={r}>{r}</li>)}</ul></div>
         <div>
-          <h2 className="font-display text-2xl">What to submit</h2>
+          <h2 className="title">What to submit</h2>
           <ul className="mt-2 space-y-1">{brief.deliverables.map((d) => (
             <li key={d.key}><strong>{d.label}</strong> {d.required ? "(required)" : "(optional)"}. {d.description}</li>
           ))}</ul>
-          <p className="mt-2 text-sm text-muted">Only images are inspected: PNG, JPEG or WebP, up to 8 MB each. PDFs, videos and prototype links are not assessed yet.</p>
+          <p className="mt-2 text-sm text-ink-2">Only images are inspected: PNG, JPEG or WebP, up to 8 MB each. PDFs, videos and prototype links are not assessed yet.</p>
         </div>
         <div>
-          <h2 className="font-display text-2xl">How it is assessed</h2>
-          <p className="mt-2 max-w-measure text-muted">This is the published rubric. You are scored on each criterion and the weighted total must reach {rv.threshold}%. Criteria marked required must also reach their own minimum, whatever your total.</p>
+          <h2 className="title">How it is assessed</h2>
+          <p className="mt-2 max-w-measure text-ink-2">This is the published rubric. You are scored on each criterion and the weighted total must reach {rv.threshold}%. Criteria marked required must also reach their own minimum, whatever your total.</p>
           <table className="mt-3 w-full text-sm [&_th]:py-2 [&_th]:text-left">
             <thead><tr><th scope="col">Criterion</th><th scope="col">Weight</th><th scope="col">Required minimum</th></tr></thead>
             <tbody>{rv.criteria.map((c) => (
               <tr key={c.id} className="border-t border-line align-top">
-                <td className="py-2 pr-3"><strong>{c.title}</strong><details className="mt-1"><summary className="cursor-pointer text-muted">What is assessed</summary><p className="mt-1 whitespace-pre-line text-muted">{c.description.trim()}</p></details></td>
+                <td className="py-2 pr-3"><strong>{c.title}</strong><details className="mt-1"><summary className="cursor-pointer text-ink-2">What is assessed</summary><p className="mt-1 whitespace-pre-line text-ink-2">{c.description.trim()}</p></details></td>
                 <td className="py-2">{c.weight}%</td>
                 <td className="py-2">{c.mandatory ? `${c.minScore}%` : "None"}</td>
               </tr>
@@ -135,8 +135,8 @@ export default async function AssignmentPage({
       </section>
 
       <section className="mt-12 border-t border-line pt-8">
-        <h2 className="font-display text-2xl">Your submission</h2>
-        <p className="mt-2 text-sm text-muted">
+        <h2 className="title">Your submission</h2>
+        <p className="mt-2 text-sm text-ink-2">
           Attempt {access.allowed ? access.attempt : (access.attemptsUsed ?? 0)} of {access.maxAttempts ?? 3}.
           Attempts are used only when you receive a completed assessment.
         </p>
@@ -144,37 +144,37 @@ export default async function AssignmentPage({
           <p role="alert" className="mt-4 text-danger">{searchParams.upload ?? DENIED[error!] ?? "Something went wrong."}</p>
         )}
         {!access.allowed ? (
-          <div className="mt-4 rounded border border-line bg-raised p-4">
+          <div className="mt-4 surface-card p-4">
             <StateBadge state={access.reason === "already_passed" ? "completed" : access.reason === "in_progress" || access.reason === "retry_evaluation" ? "awaiting" : access.reason === "remediation_required" ? "failed" : "locked"} />
             <p className="mt-3">{DENIED[access.reason]}</p>
-            {access.missing && <p className="mt-2 text-sm text-muted">Still to complete: {access.missing.join(", ")}.</p>}
-            {access.submissionId && <p className="mt-3"><Link className="underline" href={`/learn/submission/${access.submissionId}`}>Open your submission</Link></p>}
-            {access.reason === "remediation_required" && <p className="mt-3"><Link className="underline" href={`/learn/remediation/${a.id}`}>Go to remediation</Link></p>}
-            {access.reason === "already_passed" && a.kind === "CAPSTONE" && a.levelId && <p className="mt-3"><Link className="underline" href={`/learn/level/${a.levelId}`}>See your level status</Link></p>}
+            {access.missing && <p className="mt-2 text-sm text-ink-2">Still to complete: {access.missing.join(", ")}.</p>}
+            {access.submissionId && <p className="mt-3"><Link className="link-quiet font-semibold" href={`/learn/submission/${access.submissionId}`}>Open your submission</Link></p>}
+            {access.reason === "remediation_required" && <p className="mt-3"><Link className="link-quiet font-semibold" href={`/learn/remediation/${a.id}`}>Go to remediation</Link></p>}
+            {access.reason === "already_passed" && a.kind === "CAPSTONE" && a.levelId && <p className="mt-3"><Link className="link-quiet font-semibold" href={`/learn/level/${a.levelId}`}>See your level status</Link></p>}
           </div>
         ) : (
           <form action={submitWork} encType="multipart/form-data" className="mt-4 space-y-5">
             <input type="hidden" name="assignmentId" value={a.id} />
-            {amending && <p className="rounded border border-line bg-raised p-3 text-sm">Your last submission needs more evidence. Add the missing items below and it will be assessed again. This does not use another attempt.</p>}
+            {amending && <p className="surface-card p-3 text-sm">Your last submission needs more evidence. Add the missing items below and it will be assessed again. This does not use another attempt.</p>}
             {brief.deliverables.map((d) => direct ? (
               <DirectUploadInput key={d.key} assignmentId={a.id} slotKey={d.key} label={d.label} hint={d.description} required={d.required} />
             ) : (
               <div key={d.key}>
                 <label htmlFor={d.key} className="block text-sm font-medium">{d.label} ({d.required ? "required" : "optional"})</label>
-                <p id={`${d.key}-hint`} className="text-sm text-muted">{d.description}</p>
+                <p id={`${d.key}-hint`} className="text-sm text-ink-2">{d.description}</p>
                 {/* Only the first required file is browser-required: a missing one is reported by the server as needs-evidence. */}
                 <input id={d.key} name={d.key} type="file" accept="image/png,image/jpeg,image/webp" aria-describedby={`${d.key}-hint`} className="mt-1 block min-h-11" />
               </div>
             ))}
             <div><label htmlFor="rationale" className="block text-sm font-medium">Rationale: explain three design decisions and how each uses contrast</label>
-              <textarea id="rationale" name="rationale" required rows={6} maxLength={4000} className="mt-1 w-full rounded border border-line bg-raised p-3" /></div>
+              <textarea id="rationale" name="rationale" required rows={6} maxLength={4000} className="mt-1 w-full surface-card p-3" /></div>
             {!amending && access.attemptsUsed > 0 && (
               <div><label htmlFor="changesNote" className="block text-sm font-medium">What did you change after the last feedback?</label>
-                <textarea id="changesNote" name="changesNote" required rows={3} className="mt-1 w-full rounded border border-line bg-raised p-3" /></div>
+                <textarea id="changesNote" name="changesNote" required rows={3} className="mt-1 w-full surface-card p-3" /></div>
             )}
             {direct && <BlockWhileUploading />}
             <Button type="submit">Submit for assessment</Button>
-            <p className="text-sm text-muted">Assessment can take a minute. Please keep this page open after you submit.</p>
+            <p className="text-sm text-ink-2">Assessment can take a minute. Please keep this page open after you submit.</p>
           </form>
         )}
       </section>

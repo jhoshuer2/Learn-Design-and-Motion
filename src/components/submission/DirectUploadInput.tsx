@@ -42,13 +42,13 @@ export function DirectUploadInput({ assignmentId, slotKey, label, hint, required
   return (
     <div>
       <label htmlFor={slotKey} className="block text-sm font-medium">{label} ({required ? "required" : "optional"})</label>
-      <p id={`${slotKey}-hint`} className="text-sm text-muted">{hint}</p>
+      <p id={`${slotKey}-hint`} className="text-sm text-ink-2">{hint}</p>
       <input ref={input} id={slotKey} name={slotKey} type="file" accept="image/png,image/jpeg,image/webp" aria-describedby={`${slotKey}-hint`} onChange={onChange} className="mt-1 block min-h-11" />
       <input type="hidden" name={`upload_${slotKey}`} value={token} />
       <input type="hidden" name={`name_${slotKey}`} value={name} />
       {/* The submit button reads this: it stays disabled while any upload is in progress. */}
       <input type="hidden" data-upload-busy={status.kind === "busy" ? "true" : "false"} />
-      <p role="status" aria-live="polite" className={status.kind === "error" ? "mt-1 text-sm text-danger" : "mt-1 text-sm text-muted"}>{status.text}</p>
+      <p role="status" aria-live="polite" className={status.kind === "error" ? "mt-1 text-sm text-danger" : "mt-1 text-sm text-ink-2"}>{status.text}</p>
     </div>
   );
 }

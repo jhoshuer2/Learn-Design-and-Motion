@@ -7,6 +7,8 @@ export default defineConfig({
   expect: { timeout: 20_000 },
   use: {
     baseURL: "http://localhost:3100",
+    // Deterministic runs: the entrance animations fade text in, which axe would measure mid-flight.
+    reducedMotion: "reduce",
     launchOptions: process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {},
   },
   webServer: {

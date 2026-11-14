@@ -10,7 +10,7 @@ import { loadContentCompetencyTitles } from "@/lib/content/titles";
 import { loadOutcome } from "@/lib/content/outcomes";
 import { vttToTranscript } from "@/lib/content/media";
 import { LessonVideo } from "@/components/Media";
-import { Button } from "@/components/ui/Button";
+import { Button, PillLink, Arrow } from "@/components/ui/Button";
 import { StatCard } from "@/components/ui/StatCard";
 import { PlacementCheck } from "@/components/PlacementCheck";
 import { getPlacementQuestions, parseBits, scorePlacement, summarise, toBits } from "@/lib/placement";
@@ -64,48 +64,50 @@ export default async function OutcomePage({ params, searchParams }: { params: { 
     : false;
 
   return (
-    <article className="mx-auto max-w-3xl px-6 py-12">
-      <p className="text-sm font-medium text-muted">By the end you can make</p>
-      <h1 className="mt-2 font-display text-6xl sm:text-7xl">{o.title}</h1>
-      <p className="mt-4 max-w-measure text-xl">{o.promise}</p>
-      {o.status === "DRAFT" && <p className="mt-3 inline-block rounded border border-line px-3 py-1 text-sm text-muted">Draft: still being written and checked</p>}
+    <article className="mx-auto max-w-page px-6 pb-20 pt-10 sm:pt-16">
+      <p className="label rise">By the end you can make</p>
+      <h1 className="display display-xl mt-4 max-w-[16ch] rise" style={{ ["--d" as string]: 1 }}>{o.title}</h1>
+      <p className="lede mt-6 rise" style={{ ["--d" as string]: 3 }}>{o.promise}</p>
+      {o.status === "DRAFT" && <p className="label mt-5 inline-block rounded-full bg-paper-2 px-4 py-2">Draft: still being written and checked</p>}
 
-      {o.showcase && <div className="mt-8"><LessonVideo name={o.showcase} caption={`What you will make: ${o.title}`} transcript={transcript} /></div>}
+      {o.showcase && <div className="mx-auto mt-12 max-w-4xl"><LessonVideo name={o.showcase} caption={`What you will make: ${o.title}`} transcript={transcript} /></div>}
 
-      <section className="mt-10 grid gap-4 sm:grid-cols-3" aria-label="At a glance">
-        <StatCard value={String(o.hours)} label="hours, at your own pace" tone="accent" />
-        <StatCard value={String(o.skills.length)} label="skills you will practise" />
-        <StatCard value={String(lessonCount)} label="short lessons" />
+      <section className="mt-16 grid gap-5 sm:grid-cols-3" aria-label="At a glance" data-reveal>
+        <StatCard value={String(o.hours)} label="hours, at your own pace" tone="butter" />
+        <StatCard value={String(o.skills.length)} label="skills you will practise" tone="sage" />
+        <StatCard value={String(lessonCount)} label="short lessons" tone="terra" />
       </section>
 
-      <section className="mt-12 grid gap-8 sm:grid-cols-2">
+      <section className="mt-24 grid gap-14 lg:grid-cols-2" data-reveal>
         <div>
-          <h2 className="font-display text-4xl">What you will learn</h2>
-          <ul className="mt-3 space-y-2">{o.skills.map((s) => <li key={s} className="flex gap-2"><span aria-hidden>✓</span><span>{titles[s] ?? s}</span></li>)}</ul>
+          <p className="label">Skills</p>
+          <h2 className="display display-m mt-3">What you will <em>learn</em></h2>
+          <ul className="mt-6 divide-y divide-line border-y border-line">{o.skills.map((s) => <li key={s} className="flex gap-3 py-4"><span aria-hidden className="text-accent">✓</span><span>{titles[s] ?? s}</span></li>)}</ul>
         </div>
         <div>
-          <h2 className="font-display text-4xl">How it works</h2>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-muted">
+          <p className="label">The way it goes</p>
+          <h2 className="display display-m mt-3">How it works</h2>
+          <ul className="mt-6 list-disc space-y-3 pl-5 text-lg text-ink-2 marker:text-accent">
             <li>Short steps. Watch or read, your choice.</li>
             <li>You make a small piece at every step.</li>
             <li>Stuck? Your buddy shows what to fix, using your own work.</li>
             <li>About {o.hours} hours in total. Go at your own pace.</li>
           </ul>
-          <p className="mt-3 text-sm text-muted">For: {o.forWho}.{o.tools.length > 0 && <> Works with free tools: {o.tools.join(", ")}.</>}</p>
+          <p className="label mt-8">For: {o.forWho}.{o.tools.length > 0 && <> Works with free tools: {o.tools.join(", ")}.</>}</p>
         </div>
       </section>
 
       <PlacementCheck slug={o.slug} action={check} questions={questions} result={result} limited={searchParams.placed === "limited"} />
 
-      <div className="mt-10">
+      <div className="mt-14">
         {!pathRow ? (
-          <p className="rounded border border-line bg-raised p-4 text-muted">This path is not open yet. Check back soon.</p>
+          <p className="surface-card p-5 text-ink-2">This path is not open yet. Check back soon.</p>
         ) : enrolled ? (
-          <Link href="/learn"><Button>Continue where you left off</Button></Link>
+          <PillLink href="/learn" arrow>Continue where you left off</PillLink>
         ) : session?.user ? (
-          <form action={start}><input type="hidden" name="path" value={o.path} /><Button type="submit">Start this path</Button></form>
+          <form action={start}><input type="hidden" name="path" value={o.path} /><Button type="submit" variant="accent">Start this path<Arrow /></Button></form>
         ) : (
-          <Link href="/signup"><Button>Create a free account to start</Button></Link>
+          <PillLink href="/signup" variant="accent" arrow>Create a free account to start</PillLink>
         )}
       </div>
     </article>

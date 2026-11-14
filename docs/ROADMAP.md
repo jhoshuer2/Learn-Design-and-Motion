@@ -110,3 +110,6 @@ Move towards "start from what you want to make, watch or read, short steps, a bu
 
 ## Later
 Admin CMS, Brand + UI paths as content, recommendations, pilot QA with real beginners, other disciplines.
+
+## Design system rebuild (ui-craft)
+Replaced the earlier premium-ui skill and patch passes with a new system: `skills/ui-craft/` (packaged at `skills/dist/ui-craft.skill`), tokens in `src/app/globals.css` and `tailwind.config.ts`, components in `src/components/ui`, a specimen page at `/design`, and original gouache art in `public/art` (prompts in `public/art/PROMPTS.md`). Rebuilt: home, auth, dock navigation, dashboard, My learning, lesson player, Today, outcome and placement check, buddy card. Other pages inherit the tokens through a class-level restyle and have not been individually redesigned.

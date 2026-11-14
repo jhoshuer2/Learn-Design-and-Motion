@@ -44,21 +44,21 @@ export default async function AssessmentsAdmin({ searchParams }: { searchParams:
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
-      <Link href="/dashboard" className="text-sm underline">Dashboard</Link>
-      <h1 className="mt-4 font-display text-4xl">Assessments</h1>
-      <p className="mt-2 text-muted">The automatic assessment queue, and work that needs a person.{!admin && " You can see this page; only administrators can pause, resume or requeue."}</p>
+      <Link href="/dashboard" className="text-sm link-quiet font-semibold">Dashboard</Link>
+      <h1 className="mt-4 display display-m">Assessments</h1>
+      <p className="mt-2 text-ink-2">The automatic assessment queue, and work that needs a person.{!admin && " You can see this page; only administrators can pause, resume or requeue."}</p>
       {searchParams.error && <p role="alert" className="mt-4 text-danger">{searchParams.error}</p>}
 
       {snap.pause ? (
         <section className="mt-6 rounded border border-warn p-5" aria-labelledby="paused">
           <StateBadge state="awaiting" />
-          <h2 id="paused" className="mt-3 font-display text-2xl">Assessment is paused: {snap.pause.reason.replace("_", " ")}</h2>
+          <h2 id="paused" className="mt-3 title">Assessment is paused: {snap.pause.reason.replace("_", " ")}</h2>
           <p className="mt-2 max-w-measure">{REASON[snap.pause.reason]}</p>
-          <p className="mt-1 text-sm text-muted">Since {snap.pause.since.slice(0, 16).replace("T", " ")} UTC. Learners see: &ldquo;Assessment is temporarily paused. Your work is saved and queued.&rdquo; Nothing is lost and no attempts are used while paused.</p>
+          <p className="mt-1 text-sm text-ink-2">Since {snap.pause.since.slice(0, 16).replace("T", " ")} UTC. Learners see: &ldquo;Assessment is temporarily paused. Your work is saved and queued.&rdquo; Nothing is lost and no attempts are used while paused.</p>
           {admin && <form action={act} className="mt-4"><input type="hidden" name="what" value="resume" /><Button type="submit">Resume assessment</Button></form>}
         </section>
       ) : (
-        <section className="mt-6 rounded border border-line bg-raised p-5">
+        <section className="mt-6 surface-card p-5">
           <StateBadge state="completed" />
           <p className="mt-2">Assessment is running.</p>
           {admin && <form action={act} className="mt-3"><input type="hidden" name="what" value="pause" /><Button type="submit" variant="secondary">Pause assessment</Button></form>}
@@ -67,28 +67,28 @@ export default async function AssessmentsAdmin({ searchParams }: { searchParams:
 
       <section className="mt-8 grid gap-4 sm:grid-cols-4" aria-label="Queue">
         {[["Waiting", snap.queued], ["Running", snap.running], ["Oldest waiting", oldest], ["Gave up", snap.failedFinal]].map(([label, value]) => (
-          <div key={String(label)} className="rounded border border-line bg-raised p-4"><p className="text-sm text-muted">{label}</p><p className="font-display text-3xl">{value}</p></div>
+          <div key={String(label)} className="surface-card p-4"><p className="text-sm text-ink-2">{label}</p><p className="display display-m">{value}</p></div>
         ))}
       </section>
-      <p className="mt-3 text-sm text-muted">
+      <p className="mt-3 text-sm text-ink-2">
         Spend today (UTC): about ${snap.spentTodayUsd.toFixed(2)}{snap.budgetUsd !== null ? ` of a $${snap.budgetUsd} cap` : ", no cap set"}. This is an estimate from recorded token counts at list prices, not your invoice.
       </p>
       {snap.failedByKind.length > 0 && (
-        <p className="mt-1 text-sm text-muted">Gave up, by reason: {snap.failedByKind.map((f) => `${f.kind} (${f.count})`).join(", ")}.</p>
+        <p className="mt-1 text-sm text-ink-2">Gave up, by reason: {snap.failedByKind.map((f) => `${f.kind} (${f.count})`).join(", ")}.</p>
       )}
 
       <section className="mt-10" aria-labelledby="attention">
-        <h2 id="attention" className="font-display text-2xl">Needs a person</h2>
-        {attention.length === 0 ? <p className="mt-3 text-muted">Nothing needs attention.</p> : (
+        <h2 id="attention" className="title">Needs a person</h2>
+        {attention.length === 0 ? <p className="mt-3 text-ink-2">Nothing needs attention.</p> : (
           <ul className="mt-4 divide-y divide-line border-y border-line">
             {attention.map((a) => (
               <li key={`${a.submissionId}-${a.kind}`} className="flex flex-wrap items-center justify-between gap-3 py-4">
                 <div>
                   <p className="font-medium">{a.assignment}, attempt {a.attempt}</p>
-                  <p className="text-sm text-muted">{KIND[a.kind]} · {a.detail} · {age(a.since)} ago</p>
+                  <p className="text-sm text-ink-2">{KIND[a.kind]} · {a.detail} · {age(a.since)} ago</p>
                 </div>
                 <div className="flex gap-3">
-                  {a.kind !== "low_confidence" && <Link className="underline" href={`/review/assess/${a.submissionId}`}>Assess it yourself</Link>}
+                  {a.kind !== "low_confidence" && <Link className="link-quiet font-semibold" href={`/review/assess/${a.submissionId}`}>Assess it yourself</Link>}
                   {admin && a.kind !== "low_confidence" && (
                     <form action={act}><input type="hidden" name="what" value="requeue" /><input type="hidden" name="submissionId" value={a.submissionId} /><Button type="submit" variant="secondary">Try automatic again</Button></form>
                   )}

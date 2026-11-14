@@ -61,11 +61,11 @@ const REVIEW_BLOCKED: Record<string, string> = {
 function Report({ slug, reviewId }: { slug: string; reviewId?: string }) {
   return (
     <details className="text-sm">
-      <summary className="cursor-pointer text-muted underline">Report {reviewId ? "this feedback" : "this project"}</summary>
+      <summary className="cursor-pointer text-ink-2 link-quiet font-semibold">Report {reviewId ? "this feedback" : "this project"}</summary>
       <form action={reportThis} className="mt-2 space-y-2">
         <input type="hidden" name="slug" value={slug} />
         {reviewId && <input type="hidden" name="reviewId" value={reviewId} />}
-        <label className="block">What is wrong? <textarea name="reason" required minLength={10} maxLength={500} rows={3} className="mt-1 w-full rounded border border-line bg-raised p-2" /></label>
+        <label className="block">What is wrong? <textarea name="reason" required minLength={10} maxLength={500} rows={3} className="mt-1 w-full surface-card p-2" /></label>
         <Button type="submit" variant="secondary">Send report</Button>
       </form>
     </details>
@@ -84,63 +84,63 @@ export default async function ProjectPage({ params, searchParams }: { params: { 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
       <nav className="flex gap-4 text-sm">
-        {viewer ? <><Link href="/community" className="underline">Community</Link>{v.isOwner && <Link href="/portfolio" className="underline">My portfolio</Link>}</> : <Link href="/" className="underline">Creative Mastery</Link>}
+        {viewer ? <><Link href="/community" className="link-quiet font-semibold">Community</Link>{v.isOwner && <Link href="/portfolio" className="link-quiet font-semibold">My portfolio</Link>}</> : <Link href="/" className="link-quiet font-semibold">Creative Mastery</Link>}
       </nav>
 
       {v.isOwner && (
-        <p role="note" className="mt-4 rounded border border-line bg-raised p-3 text-sm">
+        <p role="note" className="mt-4 surface-card p-3 text-sm">
           This is how others see your project. It is currently <strong>{v.held ? "on hold" : v.visibility === "PRIVATE" ? "private, so only you can see it" : v.visibility === "LINK" ? "shared by link" : v.approval?.status === "APPROVED" ? "public" : "waiting for review, so only you can see it"}</strong>.{" "}
-          <Link className="underline" href="/portfolio">Change sharing</Link>
+          <Link className="link-quiet font-semibold" href="/portfolio">Change sharing</Link>
         </p>
       )}
       {searchParams.notice && <p role="status" className="mt-4 text-success">{searchParams.notice}</p>}
       {searchParams.error && <p role="alert" className="mt-4 text-danger">{searchParams.error}</p>}
 
-      <p className="mt-8 text-sm font-medium text-muted">{v.assignment.kind === "CAPSTONE" ? "Capstone" : "Assessed project"} · {v.assignment.title}</p>
-      <h1 className="mt-1 font-display text-4xl">{v.title}</h1>
-      <p className="mt-2 text-muted">
-        By {v.owner.handle ? <Link className="underline" href={`/u/${v.owner.handle}`}>{v.owner.displayName}</Link> : v.owner.displayName}
+      <p className="mt-8 text-sm font-medium text-ink-2">{v.assignment.kind === "CAPSTONE" ? "Capstone" : "Assessed project"} · {v.assignment.title}</p>
+      <h1 className="mt-1 display display-m">{v.title}</h1>
+      <p className="mt-2 text-ink-2">
+        By {v.owner.handle ? <Link className="link-quiet font-semibold" href={`/u/${v.owner.handle}`}>{v.owner.displayName}</Link> : v.owner.displayName}
       </p>
       {v.summary && <p className="mt-4 max-w-measure whitespace-pre-line">{v.summary}</p>}
 
       <section className="mt-8 grid gap-4 sm:grid-cols-2" aria-label="Work">
         {v.images.map((i) => (
-          <figure key={i.idx} className="rounded border border-line bg-raised p-3">
+          <figure key={i.idx} className="surface-card p-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/api/portfolio/${v.slug}/files/${i.idx}`} alt={`${i.label}: ${v.title}, by ${v.owner.displayName}`} width={i.width} height={i.height} className="max-h-[32rem] w-full object-contain" />
-            <figcaption className="mt-2 text-sm text-muted">{i.label}</figcaption>
+            <figcaption className="mt-2 text-sm text-ink-2">{i.label}</figcaption>
           </figure>
         ))}
       </section>
 
       {v.rationale && (
-        <section className="mt-8"><h2 className="font-display text-2xl">Designer&rsquo;s rationale</h2><p className="mt-2 max-w-measure whitespace-pre-line text-muted">{v.rationale}</p></section>
+        <section className="mt-8"><h2 className="title">Designer&rsquo;s rationale</h2><p className="mt-2 max-w-measure whitespace-pre-line text-ink-2">{v.rationale}</p></section>
       )}
 
       {e && (
-        <section className="mt-10 rounded border border-line bg-raised p-5" aria-labelledby="assessment">
-          <h2 id="assessment" className="font-display text-2xl">Assessment</h2>
+        <section className="mt-10 surface-card p-5" aria-labelledby="assessment">
+          <h2 id="assessment" className="title">Assessment</h2>
           {e.testEvaluator && <p role="note" className="mt-3 rounded border border-warn p-3 text-sm text-warn">TEST EVALUATOR. This result came from a deterministic test evaluator that did not look at the work. It is not a genuine assessment.</p>}
-          <p className="mt-3 font-display text-3xl">{e.score}%{e.verified && <span className="ml-3 align-middle font-sans text-base"><StateBadge state="completed" /> <span className="text-sm text-muted">Verified</span></span>}</p>
-          <p className="text-sm text-muted">Pass mark {e.threshold}% · {e.passed ? "passed" : "not passed"} · assessed by {e.assessedBy}{e.humanReviewed ? ", confirmed by a person" : ""} · rubric {e.rubric.slug} v{e.rubric.version} · {e.date.toISOString().slice(0, 10)}</p>
+          <p className="mt-3 display display-m">{e.score}%{e.verified && <span className="ml-3 align-middle font-sans text-base"><StateBadge state="completed" /> <span className="text-sm text-ink-2">Verified</span></span>}</p>
+          <p className="text-sm text-ink-2">Pass mark {e.threshold}% · {e.passed ? "passed" : "not passed"} · assessed by {e.assessedBy}{e.humanReviewed ? ", confirmed by a person" : ""} · rubric {e.rubric.slug} v{e.rubric.version} · {e.date.toISOString().slice(0, 10)}</p>
           <table className="mt-4 w-full text-sm [&_th]:py-1 [&_th]:text-left">
             <thead><tr><th scope="col">Criterion</th><th scope="col">Score</th><th scope="col">Weight</th></tr></thead>
             <tbody>{e.criteria.map((c) => <tr key={c.title} className="border-t border-line"><td className="py-1.5">{c.title}{c.mandatory ? " (required)" : ""}</td><td>{c.score}%</td><td>{c.weight}%</td></tr>)}</tbody>
           </table>
-          {e.strengths.length > 0 && <><h3 className="mt-4 font-medium">Strengths noted</h3><ul className="mt-1 list-disc pl-5 text-sm text-muted">{e.strengths.map((s) => <li key={s}>{s}</li>)}</ul></>}
+          {e.strengths.length > 0 && <><h3 className="mt-4 font-medium">Strengths noted</h3><ul className="mt-1 list-disc pl-5 text-sm text-ink-2">{e.strengths.map((s) => <li key={s}>{s}</li>)}</ul></>}
           {v.skills.length > 0 && <p className="mt-4 text-sm"><strong>Skills shown in this work, as assessed:</strong> {v.skills.join(", ")}.</p>}
-          <p className="mt-4 text-sm text-muted">This is a learning assessment against a published rubric. It is not a qualification and does not by itself show professional competence.{!e.verified && " It is not marked verified."}</p>
+          <p className="mt-4 text-sm text-ink-2">This is a learning assessment against a published rubric. It is not a qualification and does not by itself show professional competence.{!e.verified && " It is not marked verified."}</p>
         </section>
       )}
 
       <section className="mt-12 border-t border-line pt-8" aria-labelledby="feedback">
-        <h2 id="feedback" className="font-display text-2xl">Peer feedback</h2>
-        <p className="mt-1 text-sm text-muted">Feedback from other learners is for learning. It does not affect anyone&rsquo;s progress or results.</p>
-        {v.reviews.length === 0 && <p className="mt-4 text-muted">No feedback yet.</p>}
+        <h2 id="feedback" className="title">Peer feedback</h2>
+        <p className="mt-1 text-sm text-ink-2">Feedback from other learners is for learning. It does not affect anyone&rsquo;s progress or results.</p>
+        {v.reviews.length === 0 && <p className="mt-4 text-ink-2">No feedback yet.</p>}
         <ul className="mt-4 space-y-4">
           {v.reviews.map((r) => (
-            <li key={r.id} className="rounded border border-line bg-raised p-4">
-              <p className="text-sm text-muted">{r.reviewer} · {r.createdAt.toISOString().slice(0, 10)}{r.hidden ? " · hidden from others" : ""}</p>
+            <li key={r.id} className="surface-card p-4">
+              <p className="text-sm text-ink-2">{r.reviewer} · {r.createdAt.toISOString().slice(0, 10)}{r.hidden ? " · hidden from others" : ""}</p>
               <h3 className="mt-2 font-medium">What works</h3><p className="whitespace-pre-line">{r.strengths}</p>
               <h3 className="mt-3 font-medium">Suggestions</h3><p className="whitespace-pre-line">{r.improvements}</p>
               {r.question && <><h3 className="mt-3 font-medium">A question</h3><p className="whitespace-pre-line">{r.question}</p></>}
@@ -164,16 +164,16 @@ export default async function ProjectPage({ params, searchParams }: { params: { 
             <form action={review} className="space-y-4" aria-label="Leave feedback">
               <h3 className="font-display text-xl">Leave feedback</h3>
               <input type="hidden" name="slug" value={v.slug} />
-              <p className="text-sm text-muted">Think about what this work was asked to show: {v.reviewRubric.map((c) => c.title).join(", ")}. Be specific and kind. At least 20 characters in each box.</p>
-              <label className="block text-sm font-medium">What works, and why <textarea name="strengths" required minLength={20} maxLength={1500} rows={4} className="mt-1 w-full rounded border border-line bg-raised p-3 font-normal" /></label>
-              <label className="block text-sm font-medium">What could be improved, and how <textarea name="improvements" required minLength={20} maxLength={1500} rows={4} className="mt-1 w-full rounded border border-line bg-raised p-3 font-normal" /></label>
-              <label className="block text-sm font-medium">A question for the designer (optional) <textarea name="question" maxLength={500} rows={2} className="mt-1 w-full rounded border border-line bg-raised p-3 font-normal" /></label>
+              <p className="text-sm text-ink-2">Think about what this work was asked to show: {v.reviewRubric.map((c) => c.title).join(", ")}. Be specific and kind. At least 20 characters in each box.</p>
+              <label className="block text-sm font-medium">What works, and why <textarea name="strengths" required minLength={20} maxLength={1500} rows={4} className="mt-1 w-full surface-card p-3 font-normal" /></label>
+              <label className="block text-sm font-medium">What could be improved, and how <textarea name="improvements" required minLength={20} maxLength={1500} rows={4} className="mt-1 w-full surface-card p-3 font-normal" /></label>
+              <label className="block text-sm font-medium">A question for the designer (optional) <textarea name="question" maxLength={500} rows={2} className="mt-1 w-full surface-card p-3 font-normal" /></label>
               <Button type="submit">Send feedback</Button>
             </form>
           ) : v.viewer.reviewBlockedReason === "sign_in" ? (
-            <p className="text-muted"><Link className="underline" href="/signin">Sign in</Link> to leave feedback.</p>
+            <p className="text-ink-2"><Link className="link-quiet font-semibold" href="/signin">Sign in</Link> to leave feedback.</p>
           ) : (
-            !v.isOwner && <p className="text-muted">{REVIEW_BLOCKED[v.viewer.reviewBlockedReason ?? "cannot_review"]} {v.viewer.reviewBlockedReason === "display_name" && <Link className="underline" href="/profile">Open profile</Link>}</p>
+            !v.isOwner && <p className="text-ink-2">{REVIEW_BLOCKED[v.viewer.reviewBlockedReason ?? "cannot_review"]} {v.viewer.reviewBlockedReason === "display_name" && <Link className="link-quiet font-semibold" href="/profile">Open profile</Link>}</p>
           )}
         </div>
       </section>

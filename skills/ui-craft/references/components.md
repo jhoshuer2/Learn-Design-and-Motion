@@ -1,0 +1,14 @@
+# Components (build once, reuse)
+- **Pill button** (`primary` ink fill / accent fill, `secondary` outlined, `text`): height 48, padding 0 24, label 15 px 600; hover: lift 2 px, magnetic pull up to 6 px toward cursor, arrow slides 4 px; focus ring 2 px accent offset 3; disabled 40% opacity.
+- **Label** (kicker): uppercase 11.5 px tracking .14em ink-3.
+- **Display heading** with `<em>` accent support.
+- **Hero image frame**: radius 28, aspect 16:9 or 4:5, grain overlay, settle animation, `alt` text describing the scene or empty if decorative.
+- **Card**: card colour, radius 20, shadow-1, no border; media top optional.
+- **Counter**: "02 / 10" tiny label with a thin progress hairline.
+- **Dock**: fixed bottom pill, backdrop blur 12, ink on paper inverted (ink bg, paper text), icons 20 px, active item has accent dot; keyboard reachable, `nav` landmark labelled.
+- **Switch (Watch/Read)**: two-option pill with a sliding thumb; thumb carries a tiny icon (play / page); changes with 320 ms ease-out-expo; real radio semantics.
+- **Progress dots**: N dots; done = ink filled, current = accent ring that pulses once, upcoming = hairline.
+- **Chip / filter**: pill with count, selected = ink fill.
+- **Companion bubble**: Pip illustration (96 px) + speech card (card colour, radius 20, small tail), used for hints and feedback; text is the buddy's voice (warm, never judging).
+- **Form field**: label above, 14 radius, hairline border, focus ring accent, error text with icon.
+- **Empty state**: companion illustration, one serif sentence, one pill.
